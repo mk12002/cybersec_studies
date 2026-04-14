@@ -30,11 +30,11 @@ Contains the navigation and execution layer:
 Path: [study material](study material)
 
 Contains the deep study modules and quick references:
-- Fundamentals: [study material/cybersecurity_fundamentals_study_material.md](study material/cybersecurity_fundamentals_study_material.md)
-- Crypto: [study material/cryptography_study_material.md](study material/cryptography_study_material.md)
-- AppSec: [study material/appsec_study_material.md](study material/appsec_study_material.md)
-- CloudSec: [study material/cloudsec_study_material.md](study material/cloudsec_study_material.md)
-- ML Security: [study material/ml_security_study_material.md](study material/ml_security_study_material.md)
+- Fundamentals: [study material/cybersecurity_fundamentals_study_material.md](study%20material/cybersecurity_fundamentals_study_material.md)
+- Crypto: [study material/cryptography_study_material.md](study%20material/cryptography_study_material.md)
+- AppSec: [study material/appsec_study_material.md](study%20material/appsec_study_material.md)
+- CloudSec: [study material/cloudsec_study_material.md](study%20material/cloudsec_study_material.md)
+- ML Security: [study material/ml_security_study_material.md](study%20material/ml_security_study_material.md)
 - Quick revision and tools cheatsheets
 
 ## How To Start Using The Repo

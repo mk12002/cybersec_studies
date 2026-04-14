@@ -19,10 +19,10 @@ Artifacts you’ll produce by Week 12
 - 1 “security design doc” per project (threat model + controls + logging)
 
 Where this plan references your existing materials
-- AppSec text: [appsec_study_material.md](../study material/appsec_study_material.md)
-- CloudSec text: [cloudsec_study_material.md](../study material/cloudsec_study_material.md)
-- Crypto text: [cryptography_study_material.md](../study material/cryptography_study_material.md)
-- Foundations+: [cybersecurity_foundations_plus.md](../study material/cybersecurity_foundations_plus.md)
+- AppSec text: [appsec_study_material.md](../study%20material/appsec_study_material.md)
+- CloudSec text: [cloudsec_study_material.md](../study%20material/cloudsec_study_material.md)
+- Crypto text: [cryptography_study_material.md](../study%20material/cryptography_study_material.md)
+- Foundations+: [cybersecurity_foundations_plus.md](../study%20material/cybersecurity_foundations_plus.md)
 
 
 
@@ -134,7 +134,7 @@ Tooling (minimum)
 
 ## WEEK 1 — AppSec foundation: AuthN/AuthZ and IDOR
 ## Session A (3h)
-- Read: [appsec_study_material.md](../study material/appsec_study_material.md) sections on AuthN/AuthZ + access control + API security mental model
+- Read: [appsec_study_material.md](../study%20material/appsec_study_material.md) sections on AuthN/AuthZ + access control + API security mental model
 - Lab: PortSwigger “Access control” (at least 2 labs)
 - Artifact: 1 write-up: IDOR/BOLA with fix patterns + detection signals
 
@@ -149,7 +149,7 @@ Session B (3h)
 
 ## WEEK 2 — AppSec foundation: injection basics (SQLi/NoSQLi)
 ## Session A (3h)
-- Read: injection checklist in [appsec_study_material.md](../study material/appsec_study_material.md)
+- Read: injection checklist in [appsec_study_material.md](../study%20material/appsec_study_material.md)
 - Lab: PortSwigger SQLi (2 labs)
 - Artifact: write-up focusing on root cause + parameterization fix
 
@@ -166,13 +166,13 @@ Session B (3h)
 - Artifact: write-up: CSRF defenses + what breaks them
 
 Session B (3h)
-- Read: [cryptography_study_material.md](../study material/cryptography_study_material.md) sections on MAC vs signature vs AEAD
+- Read: [cryptography_study_material.md](../study%20material/cryptography_study_material.md) sections on MAC vs signature vs AEAD
 - Artifact: note mapping session security to crypto primitives (what is bearer, what is bound)
 
 
 ## WEEK 4 — CloudSec foundation: identity and control-plane logging
 ## Session A (3h)
-- Read: [cloudsec_study_material.md](../study material/cloudsec_study_material.md) CS0A + CS4 + AWS/Azure runbooks sections
+- Read: [cloudsec_study_material.md](../study%20material/cloudsec_study_material.md) CS0A + CS4 + AWS/Azure runbooks sections
 - Artifact: 1-page checklist: “Day-0 Cloud baseline” (AWS and Azure)
 
 Session B (3h)
@@ -197,7 +197,7 @@ Session B (3h)
 
 ## WEEK 6 — Detection mindset: make AppSec + CloudSec observable
 ## Session A (3h)
-- Read: [cybersecurity_foundations_plus.md](../study material/cybersecurity_foundations_plus.md) logging/detection module
+- Read: [cybersecurity_foundations_plus.md](../study%20material/cybersecurity_foundations_plus.md) logging/detection module
 - Artifact: “Top 20 security events to log” for your future services
 
 Session B (3h)
@@ -212,7 +212,7 @@ Session B (3h)
 
 ## WEEK 7 — ML Security foundation: threat model for ML systems
 ## Session A (3h)
-- Read: [ml_security_study_material.md](../study material/ml_security_study_material.md) (Covers ML threat model + core attack types)
+- Read: [ml_security_study_material.md](../study%20material/ml_security_study_material.md) (Covers ML threat model + core attack types)
 - Artifact: 1-page “ML system DFD + assets + trust boundaries”
 
 Session B (3h)
@@ -265,7 +265,7 @@ Session B (3h)
 
 ## WEEK 11 — Portfolio integration: one project, end-to-end
 ## Session A (3h)
-- Pick ONE portfolio project to polish (see portfolio_projects_blueprints in [ml_security_study_material.md](../study material/ml_security_study_material.md))
+- Pick ONE portfolio project to polish (see portfolio_projects_blueprints in [ml_security_study_material.md](../study%20material/ml_security_study_material.md))
 - Add: threat model + logging plan + tests
 
 Session B (3h)

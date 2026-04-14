@@ -15,8 +15,8 @@ STUDY_INDEX.md
 | Document | Purpose | Lines |
 |----------|---------|-------|
 | [BEGINNER_START_HERE.md](BEGINNER_START_HERE.md) | **Read this first!** Environment setup, glossary, mindset | ~350 |
-| [FLASHCARDS_QUICK_REF.md](../study material/FLASHCARDS_QUICK_REF.md) | Daily review — key concepts to memorize | ~380 |
-| [TOOLS_CHEAT_SHEET.md](../study material/TOOLS_CHEAT_SHEET.md) | Command reference for common security tools | ~380 |
+| [FLASHCARDS_QUICK_REF.md](../study%20material/FLASHCARDS_QUICK_REF.md) | Daily review — key concepts to memorize | ~380 |
+| [TOOLS_CHEAT_SHEET.md](../study%20material/TOOLS_CHEAT_SHEET.md) | Command reference for common security tools | ~380 |
 | [HANDS_ON_EXERCISES.md](HANDS_ON_EXERCISES.md) | Step-by-step labs with detailed walkthroughs | ~700 |
 
 ---
@@ -36,7 +36,7 @@ STUDY_INDEX.md
 |----------|---------|-------|
 | [CERTIFICATIONS_ROADMAP_INDIA.md](CERTIFICATIONS_ROADMAP_INDIA.md) | 4 career paths, certification details, study strategies, budget planning, salary matrix | ~1,220 |
 | [CTF_AND_BUG_BOUNTY_GUIDE.md](CTF_AND_BUG_BOUNTY_GUIDE.md) | 12-week practice plan, methodology checklists, write-up templates, platform guides | ~920 |
-| [RESOURCE_LIBRARY.md](../study material/RESOURCE_LIBRARY.md) | Curated high-ROI resources by domain (AppSec, Cloud, Detection, ML), India communities | ~720 |
+| [RESOURCE_LIBRARY.md](../study%20material/RESOURCE_LIBRARY.md) | Curated high-ROI resources by domain (AppSec, Cloud, Detection, ML), India communities | ~720 |
 | [WEEKLY_STUDY_TEMPLATE.md](WEEKLY_STUDY_TEMPLATE.md) | Session templates, 4-week sprints, 12-week rotation, progress tracking | ~760 |
 | [TEMPLATES_PACK.md](TEMPLATES_PACK.md) | LinkedIn optimization, resume bullets, outreach scripts, interview prep, salary negotiation | ~810 |
 
@@ -47,12 +47,12 @@ STUDY_INDEX.md
 | # | Document | Focus | Lines |
 |---|----------|-------|-------|
 | 1 | [syllabus.md](syllabus.md) | Master roadmap with all 17 modules | ~1,166 |
-| 2 | [cybersecurity_fundamentals_study_material.md](../study material/cybersecurity_fundamentals_study_material.md) | OS, networking, protocols, Python security | ~3,405 |
-| 3 | [cryptography_study_material.md](../study material/cryptography_study_material.md) | AEAD, hashing, PKI, TLS, key management | ~776 |
-| 4 | [appsec_study_material.md](../study material/appsec_study_material.md) | OWASP Top 10, API security, XSS/SSRF/injection | ~1,594 |
-| 5 | [cloudsec_study_material.md](../study material/cloudsec_study_material.md) | IAM, storage, AWS/Azure, incident response | ~1,326 |
-| 6 | [cybersecurity_foundations_plus.md](../study material/cybersecurity_foundations_plus.md) | Secure SDLC, identity, detection engineering | ~309 |
-| 7 | [ml_security_study_material.md](../study material/ml_security_study_material.md) | ML threats, LLM security, portfolio projects | ~382 |
+| 2 | [cybersecurity_fundamentals_study_material.md](../study%20material/cybersecurity_fundamentals_study_material.md) | OS, networking, protocols, Python security | ~3,405 |
+| 3 | [cryptography_study_material.md](../study%20material/cryptography_study_material.md) | AEAD, hashing, PKI, TLS, key management | ~776 |
+| 4 | [appsec_study_material.md](../study%20material/appsec_study_material.md) | OWASP Top 10, API security, XSS/SSRF/injection | ~1,594 |
+| 5 | [cloudsec_study_material.md](../study%20material/cloudsec_study_material.md) | IAM, storage, AWS/Azure, incident response | ~1,326 |
+| 6 | [cybersecurity_foundations_plus.md](../study%20material/cybersecurity_foundations_plus.md) | Secure SDLC, identity, detection engineering | ~309 |
+| 7 | [ml_security_study_material.md](../study%20material/ml_security_study_material.md) | ML threats, LLM security, portfolio projects | ~382 |
 | 8 | [execution_plan_12_ml_app_cloud.md](execution_plan_12_ml_app_cloud.md) | Weekly schedule with labs and deliverables | ~293 |
 
 ---
@@ -88,8 +88,8 @@ STUDY_INDEX.md
 ### Week 2+: Structured Learning
 1. Follow [execution_plan_12_ml_app_cloud.md](execution_plan_12_ml_app_cloud.md)
 2. Reference the core study materials as you go
-3. Review [FLASHCARDS_QUICK_REF.md](../study material/FLASHCARDS_QUICK_REF.md) daily (10 min)
-4. Use [TOOLS_CHEAT_SHEET.md](../study material/TOOLS_CHEAT_SHEET.md) when practicing
+3. Review [FLASHCARDS_QUICK_REF.md](../study%20material/FLASHCARDS_QUICK_REF.md) daily (10 min)
+4. Use [TOOLS_CHEAT_SHEET.md](../study%20material/TOOLS_CHEAT_SHEET.md) when practicing
 
 ### Every Lab/Finding
 Use the **Finding Template** from [BEGINNER_START_HERE.md](BEGINNER_START_HERE.md):

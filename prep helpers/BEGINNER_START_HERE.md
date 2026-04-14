@@ -444,7 +444,7 @@ data = json.loads(user_input)  # Safer than eval()
 After completing this guide:
 
 1. **Read** → [syllabus.md](syllabus.md) for the full roadmap
-2. **Study** → [cybersecurity_fundamentals_study_material.md](../study material/cybersecurity_fundamentals_study_material.md)
+2. **Study** → [cybersecurity_fundamentals_study_material.md](../study%20material/cybersecurity_fundamentals_study_material.md)
 3. **Execute** → [execution_plan_12_ml_app_cloud.md](execution_plan_12_ml_app_cloud.md)
 4. **Track** → Use the finding template for every lab
 
