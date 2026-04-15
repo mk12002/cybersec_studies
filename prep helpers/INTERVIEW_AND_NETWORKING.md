@@ -1,5 +1,3 @@
-INTERVIEW_AND_NETWORKING.md
-
 # 🎯 INTERVIEW PREP & CAREER NETWORKING GUIDE
 **Everything You Need to Land a Security Role**
 
@@ -1767,21 +1765,21 @@ Company Career Pages (Apply Directly!):
 ├── amazon.jobs (search: security Bangalore)
 ├── careers.microsoft.com
 ├── flipkartcareers.com
-├── phonepe.com/careers
-├── razorpay.com/careers
+├── [phonepe.com/careers](https://www.phonepe.com/careers/)
+├── [razorpay.com/careers](https://razorpay.com/careers/)
 └── Check each target company's site
 
 Security-Specific:
 ├── null community job posts
-├── https://infosec-jobs.com/ (global)
+├── [infosec-jobs.com](https://infosec-jobs.com/) (global)
 ├── Company security team Twitter posts
 └── Referrals from null community (BEST!)
 
 Remote/Global (Work for US from India):
-├── RemoteOK.io
-├── WeWorkRemotely
-├── Turing.com (US companies hiring in India)
-├── Toptal (if experienced)
+├── [RemoteOK.io](https://remoteok.io/)
+├── [WeWorkRemotely](https://weworkremotely.com/)
+├── [Turing.com](https://www.turing.com/) (US companies hiring in India)
+├── [Toptal](https://www.toptal.com/) (if experienced)
 ├── Arc.dev
 ├── Working Nomads
 └── FlexJobs
@@ -1948,4 +1946,3 @@ Remote Option:
 **The Indian security community is incredibly welcoming. null Bangalore will become your professional family. Show up, contribute, learn, and doors will open!** 🇮🇳🚀
 
 **Pro tip: Your ML + Security combination is RARE in India. Most security folks don't have ML background. Most ML folks don't understand security. You're the bridge. USE IT!** 💪
-
