@@ -1,5 +1,3 @@
-RESOURCE_LIBRARY.md
-
 # RESOURCE LIBRARY (CURATED FOR BANGALORE SECURITY CAREERS)
 
 **Goal:** Save you time with the highest ROI resources across AppSec, CloudSec, Detection, and ML/AI Security.
@@ -57,7 +55,7 @@ Before investing time in any resource, check:
 ### Primary Learning (Pick ONE)
 
 #### PortSwigger Web Security Academy [FREE]
-**Link:** https://portswigger.net/web-security
+**Link:** [https://portswigger.net/web-security](https://portswigger.net/web-security)
 **Best For:** Web application security mastery
 **Time:** 80-120 hours for full completion
 **Why It's Best:**
@@ -82,11 +80,11 @@ Before investing time in any resource, check:
 
 | Resource | Link | Use For |
 |----------|------|---------|
-| OWASP Top 10 | owasp.org/Top10 | Web vulnerability baseline |
-| OWASP API Top 10 | owasp.org/API-Security | API security focus |
-| OWASP ASVS | owasp.org/ASVS | Security verification standard |
-| OWASP Testing Guide | owasp.org/testing-guide | Testing methodology |
-| Cheat Sheet Series | cheatsheetseries.owasp.org | Quick reference |
+| OWASP Top 10 | [owasp.org/Top10](https://owasp.org/Top10) | Web vulnerability baseline |
+| OWASP API Top 10 | [owasp.org/API-Security](https://owasp.org/www-project-api-security/) | API security focus |
+| OWASP ASVS | [owasp.org/ASVS](https://owasp.org/www-project-application-security-verification-standard/) | Security verification standard |
+| OWASP Testing Guide | [owasp.org/testing-guide](https://owasp.org/www-project-web-security-testing-guide/) | Testing methodology |
+| Cheat Sheet Series | [cheatsheetseries.owasp.org](https://cheatsheetseries.owasp.org/) | Quick reference |
 
 **How to Use OWASP:**
 ```
@@ -124,9 +122,9 @@ docker run -d -p 8080:8080 -p 9090:9090 webgoat/webgoat
 | Resource | Type | Link |
 |----------|------|------|
 | OWASP API Security Top 10 | Guide | owasp.org/API-Security |
-| API Security Checklist | Checklist | github.com/shieldfy/API-Security-Checklist |
-| Postman Learning Center | Course | learning.postman.com |
-| crAPI (OWASP) | Vulnerable API | github.com/OWASP/crAPI |
+| API Security Checklist | Checklist | [github.com/shieldfy/API-Security-Checklist](https://github.com/shieldfy/API-Security-Checklist) |
+| Postman Learning Center | Course | [learning.postman.com](https://learning.postman.com/) |
+| crAPI (OWASP) | Vulnerable API | [github.com/OWASP/crAPI](https://github.com/OWASP/crAPI) |
 
 ### Burp Suite Learning
 
@@ -147,8 +145,8 @@ docker run -d -p 8080:8080 -p 9090:9090 webgoat/webgoat
 | Resource | Type | Cost | Quality |
 |----------|------|------|---------|
 | AWS Security Specialty Path (Skill Builder) | Course | Free tier | Excellent |
-| flaws.cloud | CTF | Free | Excellent |
-| flaws2.cloud | CTF | Free | Excellent |
+| [flaws.cloud](http://flaws.cloud) | CTF | Free | Excellent |
+| [flaws2.cloud](http://flaws2.cloud) | CTF | Free | Excellent |
 | AWS Security Best Practices (Whitepaper) | Doc | Free | Essential |
 
 **AWS Security Learning Path:**
@@ -188,10 +186,10 @@ Week 9-10: Incident Response
 
 | Document | Link | Priority |
 |----------|------|----------|
-| Security Pillar | docs.aws.amazon.com/wellarchitected | Essential |
-| IAM Best Practices | docs.aws.amazon.com/IAM | Essential |
-| Security Best Practices | docs.aws.amazon.com/security | High |
-| Incident Response Guide | AWS IR whitepaper | High |
+| Security Pillar | [docs.aws.amazon.com/wellarchitected](https://docs.aws.amazon.com/wellarchitected/latest/userguide/workload-review.html) | Essential |
+| IAM Best Practices | [docs.aws.amazon.com/IAM](https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html) | Essential |
+| Security Best Practices | [docs.aws.amazon.com/security](https://docs.aws.amazon.com/security/) | High |
+| Incident Response Guide | [AWS IR whitepaper](https://aws.amazon.com/incident-response/) | High |
 
 #### Hands-On AWS Labs
 
@@ -244,18 +242,18 @@ Week 7-8: Security Operations
 
 | Document | Link |
 |----------|------|
-| Azure Security Documentation | docs.microsoft.com/azure/security |
-| Azure Security Benchmark | Microsoft Security Benchmark |
-| Defender for Cloud Docs | Defender documentation |
-| Sentinel Documentation | Sentinel docs |
+| Azure Security Documentation | [docs.microsoft.com/azure/security](https://docs.microsoft.com/en-us/azure/security/) |
+| Azure Security Benchmark | [Microsoft Security Benchmark](https://docs.microsoft.com/en-us/security/benchmark/azure/) |
+| Defender for Cloud Docs | [Defender documentation](https://docs.microsoft.com/en-us/azure/defender-for-cloud/) |
+| Sentinel Documentation | [Sentinel docs](https://docs.microsoft.com/en-us/azure/sentinel/) |
 
 ### Multi-Cloud & General
 
 | Resource | Focus | Link |
 |----------|-------|------|
-| CIS Benchmarks | Compliance baselines | cisecurity.org/cis-benchmarks |
-| Cloud Security Alliance | Research/frameworks | cloudsecurityalliance.org |
-| NIST Cloud Guidelines | SP 800-144, 800-145 | nist.gov |
+| CIS Benchmarks | Compliance baselines | [cisecurity.org/cis-benchmarks](https://www.cisecurity.org/cis-benchmarks/) |
+| Cloud Security Alliance | Research/frameworks | [cloudsecurityalliance.org](https://cloudsecurityalliance.org/) |
+| NIST Cloud Guidelines | SP 800-144, 800-145 | [nist.gov](https://csrc.nist.gov/publications/detail/sp/800-144/final) |
 
 ---
 
@@ -265,10 +263,10 @@ Week 7-8: Security Operations
 
 | Resource | Type | Link |
 |----------|------|------|
-| ATT&CK Matrix | Framework | attack.mitre.org |
-| ATT&CK Navigator | Visualization | mitre-attack.github.io/attack-navigator |
-| ATT&CK Workbench | Customization | github.com/center-for-threat-informed-defense |
-| MITRE ATLAS | ML threats | atlas.mitre.org |
+| ATT&CK Matrix | Framework | [attack.mitre.org](https://attack.mitre.org/) |
+| ATT&CK Navigator | Visualization | [mitre-attack.github.io/attack-navigator](https://mitre-attack.github.io/attack-navigator/) |
+| ATT&CK Workbench | Customization | [github.com/center-for-threat-informed-defense](https://github.com/center-for-threat-informed-defense) |
+| MITRE ATLAS | ML threats | [atlas.mitre.org](https://atlas.mitre.org/) |
 
 **How to Use ATT&CK:**
 ```
@@ -283,10 +281,10 @@ Week 7-8: Security Operations
 
 | Resource | Type | Link |
 |----------|------|------|
-| Sigma HQ Repository | Rules | github.com/SigmaHQ/sigma |
-| Sigma Specification | Docs | github.com/SigmaHQ/sigma-specification |
-| Sigma CLI | Tool | github.com/SigmaHQ/sigma-cli |
-| pySigma | Python library | github.com/SigmaHQ/pySigma |
+| Sigma HQ Repository | Rules | [github.com/SigmaHQ/sigma](https://github.com/SigmaHQ/sigma) |
+| Sigma Specification | Docs | [github.com/SigmaHQ/sigma-specification](https://github.com/SigmaHQ/sigma-specification) |
+| Sigma CLI | Tool | [github.com/SigmaHQ/sigma-cli](https://github.com/SigmaHQ/sigma-cli) |
+| pySigma | Python library | [github.com/SigmaHQ/pySigma](https://github.com/SigmaHQ/pySigma) |
 
 **Sigma Learning Path:**
 ```
@@ -918,3 +916,259 @@ Every 3 months, review:
 
 **Remember:** Depth beats breadth. Master one area before expanding.
 
+
+---
+
+# ADDITIONAL HIGH-VALUE RESOURCES
+
+## FREE Online Courses & Learning Platforms
+
+### Cybersecurity Fundamentals
+
+| Resource | Link | Description |
+|----------|------|-------------|
+| Cybrary | [cybrary.it](https://www.cybrary.it/) | Free security courses, career paths |
+| SANS Cyber Aces | [cyberaces.org](https://www.cyberaces.org/) | Free intro courses from SANS |
+| Open Security Training | [opensecuritytraining.info](https://opensecuritytraining.info/) | Free advanced security training |
+| Cisco Networking Academy | [netacad.com](https://www.netacad.com/) | Free networking + security courses |
+| edX Cybersecurity | [edx.org/learn/cybersecurity](https://www.edx.org/learn/cybersecurity) | University courses, many free |
+| Coursera Security | [coursera.org](https://www.coursera.org/browse/information-technology/security) | Audit for free |
+| MIT OpenCourseware | [ocw.mit.edu](https://ocw.mit.edu/search/?t=Computer%20Security) | Computer security courses |
+
+### Web Security (Additional)
+
+| Resource | Link | Description |
+|----------|------|-------------|
+| PentesterLab | [pentesterlab.com](https://pentesterlab.com/) | Hands-on web security (free tier) |
+| HackerOne Hacktivity | [hackerone.com/hacktivity](https://hackerone.com/hacktivity) | Real bug reports to learn from |
+| Bugcrowd University | [bugcrowd.com/hackers/bugcrowd-university](https://www.bugcrowd.com/hackers/bugcrowd-university/) | Free bug bounty training |
+| Hacker101 | [hacker101.com](https://www.hacker101.com/) | Free web security course by HackerOne |
+| Web Security Academy | [websec.fr](https://websec.fr/) | French web security challenges |
+| XSS Game | [xss-game.appspot.com](https://xss-game.appspot.com/) | Google XSS learning game |
+| Kontra OWASP Top 10 | [application.security](https://application.security/) | Interactive OWASP training |
+
+### Cloud Security (Additional)
+
+| Resource | Link | Description |
+|----------|------|-------------|
+| AWS Security Workshops | [workshops.aws](https://workshops.aws/categories/Security) | Official AWS security labs |
+| Azure Security Labs | [microsoftlearning.github.io](https://microsoftlearning.github.io/AZ500-AzureSecurityTechnologies/) | AZ-500 labs |
+| GCP Security Best Practices | [cloud.google.com/security](https://cloud.google.com/security/best-practices) | Google Cloud security |
+| Kubernetes Goat | [madhuakula.com/kubernetes-goat](https://madhuakula.com/kubernetes-goat/) | Vulnerable K8s for learning |
+| CloudSecDocs | [cloudsecdocs.com](https://cloudsecdocs.com/) | Cloud security documentation |
+| Thunder CTF | [thunder-ctf.cloud](https://thunder-ctf.cloud/) | GCP security CTF |
+| IAM Vulnerable | [github.com/BishopFox/iam-vulnerable](https://github.com/BishopFox/iam-vulnerable) | AWS IAM exploitation practice |
+| AWSGoat | [github.com/ine-labs/AWSGoat](https://github.com/ine-labs/AWSGoat) | AWS vulnerable by design |
+| AzureGoat | [github.com/ine-labs/AzureGoat](https://github.com/ine-labs/AzureGoat) | Azure vulnerable by design |
+
+### Offensive Security / Penetration Testing
+
+| Resource | Link | Description |
+|----------|------|-------------|
+| PentestMonkey | [pentestmonkey.net](http://pentestmonkey.net/) | Cheat sheets and tools |
+| PayloadsAllTheThings | [github.com/swisskyrepo/PayloadsAllTheThings](https://github.com/swisskyrepo/PayloadsAllTheThings) | Payload lists for pentest |
+| HackTricks | [book.hacktricks.xyz](https://book.hacktricks.xyz/) | Massive pentest knowledge base |
+| GTFOBins | [gtfobins.github.io](https://gtfobins.github.io/) | Unix binaries for privesc |
+| LOLBAS | [lolbas-project.github.io](https://lolbas-project.github.io/) | Windows living-off-the-land |
+| Exploit Database | [exploit-db.com](https://www.exploit-db.com/) | Exploits and papers |
+| VulnHub | [vulnhub.com](https://www.vulnhub.com/) | Vulnerable VMs to practice |
+| Proving Grounds | [portal.offensive-security.com](https://portal.offensive-security.com/labs/play) | OffSec practice labs |
+
+### Blue Team / Defense
+
+| Resource | Link | Description |
+|----------|------|-------------|
+| Blue Team Labs Online | [blueteamlabs.online](https://blueteamlabs.online/) | Defensive security challenges |
+| LetsDefend | [letsdefend.io](https://letsdefend.io/) | SOC analyst training |
+| CyberDefenders | [cyberdefenders.org](https://cyberdefenders.org/) | Blue team CTF challenges |
+| Security Blue Team | [securityblue.team](https://securityblue.team/) | Blue Team Level 1 cert prep |
+| DFIR Training | [dfir.training](https://www.dfir.training/) | Forensics resources |
+| MalwareBazaar | [bazaar.abuse.ch](https://bazaar.abuse.ch/) | Malware samples for analysis |
+| Any.Run | [any.run](https://any.run/) | Interactive malware sandbox |
+
+### CTF & Wargames
+
+| Resource | Link | Description |
+|----------|------|-------------|
+| OverTheWire | [overthewire.org/wargames](https://overthewire.org/wargames/) | Classic wargames (Bandit, Natas) |
+| picoCTF | [picoctf.org](https://picoctf.org/) | Beginner-friendly CTF |
+| CTFtime | [ctftime.org](https://ctftime.org/) | CTF calendar and writeups |
+| Root Me | [root-me.org](https://www.root-me.org/) | Challenges across categories |
+| RingZer0 | [ringzer0ctf.com](https://ringzer0ctf.com/) | Various security challenges |
+| CryptoHack | [cryptohack.org](https://cryptohack.org/) | Cryptography challenges |
+| pwnable.kr | [pwnable.kr](http://pwnable.kr/) | Binary exploitation |
+| Reversing.kr | [reversing.kr](http://reversing.kr/) | Reverse engineering |
+| W3Challs | [w3challs.com](https://w3challs.com/) | Web challenges |
+
+### Programming & Scripting
+
+| Resource | Link | Description |
+|----------|------|-------------|
+| Python.org Tutorial | [docs.python.org/3/tutorial](https://docs.python.org/3/tutorial/) | Official Python tutorial |
+| Real Python | [realpython.com](https://realpython.com/) | Python tutorials and articles |
+| Codecademy Python | [codecademy.com/learn/learn-python-3](https://www.codecademy.com/learn/learn-python-3) | Interactive Python |
+| Learn Shell | [learnshell.org](https://www.learnshell.org/) | Interactive bash scripting |
+| PowerShell 101 | [docs.microsoft.com/powershell](https://docs.microsoft.com/en-us/powershell/scripting/learn/ps101/00-introduction) | Microsoft PowerShell guide |
+| Go Tour | [go.dev/tour](https://go.dev/tour/) | Interactive Go tutorial |
+| Exercism | [exercism.org](https://exercism.org/) | Practice any language free |
+
+---
+
+## Documentation & Reference Sites
+
+### Official Security Documentation
+
+| Resource | Link | Description |
+|----------|------|-------------|
+| NIST Cybersecurity | [nist.gov/cybersecurity](https://www.nist.gov/cybersecurity) | Standards and frameworks |
+| CWE (Common Weakness) | [cwe.mitre.org](https://cwe.mitre.org/) | Weakness enumeration |
+| CVE (Vulnerabilities) | [cve.mitre.org](https://cve.mitre.org/) | Vulnerability database |
+| NVD (National Vuln DB) | [nvd.nist.gov](https://nvd.nist.gov/) | Detailed vulnerability info |
+| CAPEC (Attack Patterns) | [capec.mitre.org](https://capec.mitre.org/) | Attack pattern catalog |
+| SANS Reading Room | [sans.org/white-papers](https://www.sans.org/white-papers/) | Security whitepapers |
+| RFC Security | [rfc-editor.org](https://www.rfc-editor.org/) | Protocol specifications |
+
+### Cheat Sheets & Quick References
+
+| Resource | Link | Description |
+|----------|------|-------------|
+| OWASP Cheat Sheet Series | [cheatsheetseries.owasp.org](https://cheatsheetseries.owasp.org/) | Developer security guides |
+| SANS Cheat Sheets | [sans.org/posters](https://www.sans.org/posters/) | Security posters |
+| HackTricks | [book.hacktricks.xyz](https://book.hacktricks.xyz/) | Pentest methodology |
+| HighOn.Coffee | [highon.coffee/blog](https://highon.coffee/blog/) | Pentest cheat sheets |
+| Pentest Monkey | [pentestmonkey.net/cheat-sheet](http://pentestmonkey.net/cheat-sheet) | Reverse shell cheat sheets |
+| Exploit Notes | [exploit-notes.hdks.org](https://exploit-notes.hdks.org/) | Exploit techniques |
+
+---
+
+## Threat Intelligence & Research
+
+| Resource | Link | Description |
+|----------|------|-------------|
+| Mandiant Threat Research | [mandiant.com/resources](https://www.mandiant.com/resources) | APT reports |
+| CrowdStrike Research | [crowdstrike.com/blog](https://www.crowdstrike.com/blog/) | Threat intelligence |
+| Unit 42 (Palo Alto) | [unit42.paloaltonetworks.com](https://unit42.paloaltonetworks.com/) | Threat research |
+| Recorded Future | [recordedfuture.com/blog](https://www.recordedfuture.com/blog/) | Intelligence reports |
+| AlienVault OTX | [otx.alienvault.com](https://otx.alienvault.com/) | Open threat exchange |
+| VirusTotal | [virustotal.com](https://www.virustotal.com/) | File/URL analysis |
+| Shodan | [shodan.io](https://www.shodan.io/) | Internet device search |
+| Censys | [search.censys.io](https://search.censys.io/) | Internet asset search |
+| GreyNoise | [greynoise.io](https://www.greynoise.io/) | Internet scanning analysis |
+
+---
+
+## Career & Certification Resources
+
+| Resource | Link | Description |
+|----------|------|-------------|
+| CyberSeek | [cyberseek.org](https://www.cyberseek.org/) | Career pathway tool |
+| NICE Framework | [niccs.cisa.gov/workforce-development](https://niccs.cisa.gov/workforce-development/nice-framework) | Workforce framework |
+| Security Certification Roadmap | [pauljerimy.com/security-certification-roadmap](https://pauljerimy.com/security-certification-roadmap/) | Cert comparison chart |
+| CompTIA Security+ Objectives | [comptia.org/certifications/security](https://www.comptia.org/certifications/security) | Cert objectives |
+| ISC2 CISSP Domains | [isc2.org/certifications/cissp](https://www.isc2.org/certifications/cissp) | CISSP info |
+| OSCP Prep | [help.offsec.com](https://help.offsec.com/hc/en-us/articles/360040165632-OSCP-Exam-Guide) | OSCP exam guide |
+
+---
+
+## GitHub Repositories Worth Starring
+
+### Learning & Practice
+
+| Repository | Link | Description |
+|------------|------|-------------|
+| Awesome Security | [github.com/sbilly/awesome-security](https://github.com/sbilly/awesome-security) | Curated security resources |
+| Awesome Hacking | [github.com/Hack-with-Github/Awesome-Hacking](https://github.com/Hack-with-Github/Awesome-Hacking) | Hacking resources |
+| Awesome Pentest | [github.com/enaqx/awesome-pentest](https://github.com/enaqx/awesome-pentest) | Pentest resources |
+| Awesome AppSec | [github.com/paragonie/awesome-appsec](https://github.com/paragonie/awesome-appsec) | AppSec resources |
+| Awesome Cloud Security | [github.com/4ndersonLin/awesome-cloud-security](https://github.com/4ndersonLin/awesome-cloud-security) | Cloud security |
+| Awesome Malware Analysis | [github.com/rshipp/awesome-malware-analysis](https://github.com/rshipp/awesome-malware-analysis) | Malware analysis |
+| SecLists | [github.com/danielmiessler/SecLists](https://github.com/danielmiessler/SecLists) | Security testing lists |
+| Payloads All The Things | [github.com/swisskyrepo/PayloadsAllTheThings](https://github.com/swisskyrepo/PayloadsAllTheThings) | Attack payloads |
+
+### Tools
+
+| Repository | Link | Description |
+|------------|------|-------------|
+| ProjectDiscovery | [github.com/projectdiscovery](https://github.com/projectdiscovery) | Security tools suite |
+| OWASP Projects | [github.com/OWASP](https://github.com/OWASP) | OWASP tools |
+| Rapid7 | [github.com/rapid7](https://github.com/rapid7) | Metasploit and more |
+| ImPacket | [github.com/fortra/impacket](https://github.com/fortra/impacket) | Network protocols |
+| BloodHound | [github.com/BloodHoundAD](https://github.com/BloodHoundAD) | AD attack paths |
+| Aqua Security | [github.com/aquasecurity](https://github.com/aquasecurity) | Container security |
+
+---
+
+## Browser Extensions for Security Learning
+
+| Extension | Browser | Purpose |
+|-----------|---------|---------|
+| Wappalyzer | Chrome/Firefox | Technology profiler |
+| BuiltWith | Chrome | Tech stack identifier |
+| Cookie Editor | Chrome/Firefox | Cookie manipulation |
+| FoxyProxy | Firefox | Proxy switcher |
+| HackBar | Firefox | Security testing |
+| ModHeader | Chrome | Header modification |
+| Retire.js | Chrome | JS library scanner |
+
+---
+
+## Mobile Apps for Learning
+
+| App | Platform | Purpose |
+|-----|----------|---------|
+| TryHackMe | iOS/Android | Mobile challenges |
+| Hacksplaining | Web | Interactive security lessons |
+| Cybrary | iOS/Android | Video courses |
+| Udemy | iOS/Android | Offline course viewing |
+| Pocket | iOS/Android | Save articles to read |
+
+---
+
+## Free Ebooks & PDFs
+
+| Resource | Link |
+|----------|------|
+| OWASP Testing Guide | https://owasp.org/www-project-web-security-testing-guide/ |
+| Crypto101 | https://www.crypto101.io/ |
+| CTF Field Guide | https://trailofbits.github.io/ctf/ |
+| Security Engineering (Ross Anderson) | https://www.cl.cam.ac.uk/~rja14/book.html |
+| Threat Modeling (Adam Shostack) - Resources | https://shostack.org/resources |
+| AWS Security Whitepapers | https://aws.amazon.com/whitepapers/?whitepapers-main.sort-by=item.additionalFields.sortDate |
+| Azure Security Documentation | https://docs.microsoft.com/en-us/azure/security/ |
+
+---
+
+## Bookmarks Starter Pack
+
+**Save these URLs for daily/weekly reference:**
+
+```
+# Daily Check
+https://www.reddit.com/r/netsec/
+https://news.ycombinator.com/
+https://krebsonsecurity.com/
+
+# Weekly Learning
+https://portswigger.net/web-security
+https://tryhackme.com/
+https://www.youtube.com/@JohnHammond010
+
+# Research & Reference
+https://attack.mitre.org/
+https://cve.mitre.org/
+https://cheatsheetseries.owasp.org/
+
+# Tools & Utilities
+https://gchq.github.io/CyberChef/
+https://www.virustotal.com/
+https://crt.sh/
+
+# Job Hunting
+https://www.linkedin.com/jobs/
+https://infosec-jobs.com/
+https://null.community/jobs
+```
+
+---
+
+**Remember: Quality over quantity. Pick 2-3 resources and master them before adding more.**
