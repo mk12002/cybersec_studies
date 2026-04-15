@@ -1,5 +1,3 @@
-TEMPLATES_PACK.md
-
 # TEMPLATES PACK (RESUME + LINKEDIN + OUTREACH + INTERVIEWS)
 
 **Goal:** Ready-to-use templates for job applications, networking, and professional communication tailored for Bangalore security market.
@@ -178,7 +176,7 @@ FIRSTNAME LASTNAME
 Security Engineer | [Focus Area]
 
 Bangalore, India | +91-XXXXX-XXXXX | email@domain.com
-LinkedIn: linkedin.com/in/yourprofile | GitHub: github.com/yourusername
+LinkedIn: [linkedin.com/in/yourprofile](https://linkedin.com/in/yourprofile) | GitHub: [github.com/yourusername](https://github.com/yourusername)
 Blog: yourblog.com (if applicable)
 ```
 
@@ -1127,4 +1125,3 @@ compensation at my 6-month review based on performance?"
 ---
 
 **Remember:** Customize every template. Generic messages get ignored. Specific, thoughtful outreach gets responses.
-
