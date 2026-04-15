@@ -1,5 +1,3 @@
-cybersecurity_fundamentals_study_material.md 
-
 # CYBERSECURITY FUNDAMENTALS — DETAILED STUDY MATERIAL (2026)
 Audience: final-year undergrad + current intern (strong ML background)
 Purpose: deep fundamentals before specializing (AppSec / CloudSec / AISec)
@@ -273,9 +271,6 @@ Safety & ethics (mandatory)
 - [(Write your answers first. Only then check references. Keep answers in your notes.)](#write-your-answers-first-only-then-check-references-keep-answers-in-your-notes)
 - [APPENDIX D — CURATED RESOURCES (COURSES, YOUTUBE, LABS, DATASETS)](#appendix-d-curated-resources-courses-youtube-labs-datasets)
 - [Core references](#core-references)
-  - [- RFC Editor (official RFC archive): https://www.rfc-editor.org/](#rfc-editor-official-rfc-archive-httpswwwrfc-editororg)
-  - [- Wireshark user guide: https://www.wireshark.org/docs/](#wireshark-user-guide-httpswwwwiresharkorgdocs)
-  - [- Linux man pages (online): https://man7.org/linux/man-pages/](#linux-man-pages-online-httpsman7orglinuxman-pages)
   - [Core Python docs (read these like reference manuals)](#core-python-docs-read-these-like-reference-manuals)
 - [APPENDIX E — PORTFOLIO ARTIFACTS (EVIDENCE OF FUNDAMENTALS)](#appendix-e-portfolio-artifacts-evidence-of-fundamentals)
 - [Create 6 artifacts (these prove fundamentals better than certificates):](#create-6-artifacts-these-prove-fundamentals-better-than-certificates)
@@ -515,7 +510,7 @@ right references when you go deep.
 
 Systems & OS fundamentals
 - Operating Systems: Three Easy Pieces (OSTEP) — free online textbook
-  https://pages.cs.wisc.edu/~remzi/OSTEP/
+  [https://pages.cs.wisc.edu/~remzi/OSTEP/](https://pages.cs.wisc.edu/~remzi/OSTEP/)
 - Computer Systems: A Programmer’s Perspective (CS:APP) — for processes, memory, linking
   (Paid book; widely used in top universities)
 - Windows Internals (Parts 1 & 2) — the definitive Windows internals reference
@@ -533,9 +528,9 @@ Applied cryptography
 
 Web security
 - OWASP Cheat Sheet Series — practical defensive guidance
-  https://cheatsheetseries.owasp.org/
+  [https://cheatsheetseries.owasp.org/](https://cheatsheetseries.owasp.org/)
 - OWASP ASVS — requirements-oriented view of web security
-  https://owasp.org/www-project-application-security-verification-standard/
+  [https://owasp.org/www-project-application-security-verification-standard/](https://owasp.org/www-project-application-security-verification-standard/)
 
 Malware / reversing
 - Practical Malware Analysis — excellent workflow for triage and reversing
@@ -543,9 +538,9 @@ Malware / reversing
 
 Incident response & logging
 - NIST SP 800-61 Rev. 3 — Incident Handling Guide
-  https://csrc.nist.gov/pubs/sp/800/61/r3/final
+  [https://csrc.nist.gov/pubs/sp/800/61/r3/final](https://csrc.nist.gov/pubs/sp/800/61/r3/final)
 - NIST SP 800-92 — Log Management
-  https://csrc.nist.gov/publications/detail/sp/800-92/final
+  [https://csrc.nist.gov/publications/detail/sp/800-92/final](https://csrc.nist.gov/publications/detail/sp/800-92/final)
 
 How to read effectively (important)
 1) Read one chapter.
@@ -1601,111 +1596,111 @@ Networking
 
 ## APPENDIX D — CURATED RESOURCES (COURSES, YOUTUBE, LABS, DATASETS)
 ## Core references
-- MITRE ATT&CK: https://attack.mitre.org/
-- OWASP Top 10 (2025): https://owasp.org/Top10/2025/
-- OWASP Cheat Sheets: https://cheatsheetseries.owasp.org/
-- OWASP ASVS: https://owasp.org/www-project-application-security-verification-standard/
-- CIS Benchmarks: https://www.cisecurity.org/cis-benchmarks
-- Sysinternals: https://learn.microsoft.com/sysinternals/
-- Sysmon: https://learn.microsoft.com/sysinternals/downloads/sysmon
-- NIST SP 800-61 Rev. 3 (IR): https://csrc.nist.gov/pubs/sp/800/61/r3/final
-- NIST SP 800-92 (Logs): https://csrc.nist.gov/publications/detail/sp/800-92/final
+- MITRE ATT&CK: [https://attack.mitre.org/](https://attack.mitre.org/)
+- OWASP Top 10 (2025): [https://owasp.org/Top10/2025/](https://owasp.org/Top10/2025/)
+- OWASP Cheat Sheets: [https://cheatsheetseries.owasp.org/](https://cheatsheetseries.owasp.org/)
+- OWASP ASVS: [https://owasp.org/www-project-application-security-verification-standard/](https://owasp.org/www-project-application-security-verification-standard/)
+- CIS Benchmarks: [https://www.cisecurity.org/cis-benchmarks](https://www.cisecurity.org/cis-benchmarks)
+- Sysinternals: [https://learn.microsoft.com/sysinternals/](https://learn.microsoft.com/sysinternals/)
+- Sysmon: [https://learn.microsoft.com/sysinternals/downloads/sysmon](https://learn.microsoft.com/sysinternals/downloads/sysmon)
+- NIST SP 800-61 Rev. 3 (IR): [https://csrc.nist.gov/pubs/sp/800/61/r3/final](https://csrc.nist.gov/pubs/sp/800/61/r3/final)
+- NIST SP 800-92 (Logs): [https://csrc.nist.gov/publications/detail/sp/800-92/final](https://csrc.nist.gov/publications/detail/sp/800-92/final)
 
 Primary texts for protocols (authoritative references)
-### - RFC Editor (official RFC archive): https://www.rfc-editor.org/
+- RFC Editor (official RFC archive): [https://www.rfc-editor.org/](https://www.rfc-editor.org/)
 - IANA service names and port numbers registry (ground truth for defaults):
-  https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml
+  [https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml](https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml)
 
 Packet analysis references
-### - Wireshark user guide: https://www.wireshark.org/docs/
-- Wireshark sample captures: https://wiki.wireshark.org/SampleCaptures
+- Wireshark user guide: [https://www.wireshark.org/docs/](https://www.wireshark.org/docs/)
+- Wireshark sample captures: [https://wiki.wireshark.org/SampleCaptures](https://wiki.wireshark.org/SampleCaptures)
 
 OS primary references
-### - Linux man pages (online): https://man7.org/linux/man-pages/
+- Linux man pages (online): [https://man7.org/linux/man-pages/](https://man7.org/linux/man-pages/)
 - Microsoft Learn: Windows security auditing (starting point):
-  https://learn.microsoft.com/windows/security/
+  [https://learn.microsoft.com/windows/security/](https://learn.microsoft.com/windows/security/)
 
 Coursera
 - Google Cybersecurity Professional Certificate:
-  https://www.coursera.org/professional-certificates/google-cybersecurity
+  [https://www.coursera.org/professional-certificates/google-cybersecurity](https://www.coursera.org/professional-certificates/google-cybersecurity)
 - Introduction to Cyber Security Specialization (NYU):
-  https://www.coursera.org/specializations/intro-cyber-security
+  [https://www.coursera.org/specializations/intro-cyber-security](https://www.coursera.org/specializations/intro-cyber-security)
 - The Bits and Bytes of Computer Networking:
-  https://www.coursera.org/learn/computer-networking
+  [https://www.coursera.org/learn/computer-networking](https://www.coursera.org/learn/computer-networking)
 - Operating Systems and You: Becoming a Power User:
-  https://www.coursera.org/learn/os-power-user
+  [https://www.coursera.org/learn/os-power-user](https://www.coursera.org/learn/os-power-user)
 - Cryptography (Jonathan Katz):
-  https://www.coursera.org/learn/cryptography
+  [https://www.coursera.org/learn/cryptography](https://www.coursera.org/learn/cryptography)
 
 Python for cybersecurity automation (Coursera course inside the Google program)
 - Automate Cybersecurity Tasks with Python:
-  https://www.coursera.org/learn/automate-cybersecurity-tasks-with-python
+  [https://www.coursera.org/learn/automate-cybersecurity-tasks-with-python](https://www.coursera.org/learn/automate-cybersecurity-tasks-with-python)
 
 Python general fundamentals (optional if you already code confidently)
 - Python for Everybody (University of Michigan):
-  https://www.coursera.org/specializations/python
+  [https://www.coursera.org/specializations/python](https://www.coursera.org/specializations/python)
 
 Web security (best free curriculum)
 - PortSwigger Web Security Academy:
-  https://portswigger.net/web-security
+  [https://portswigger.net/web-security](https://portswigger.net/web-security)
 
 Local vulnerable apps (run in your lab)
 - OWASP WebGoat:
-  https://owasp.org/www-project-webgoat/
+  [https://owasp.org/www-project-webgoat/](https://owasp.org/www-project-webgoat/)
 - OWASP Juice Shop:
-  https://owasp.org/www-project-juice-shop/
+  [https://owasp.org/www-project-juice-shop/](https://owasp.org/www-project-juice-shop/)
 
 Hands-on platforms
-- TryHackMe: https://tryhackme.com/
-- Hack The Box: https://www.hackthebox.com/
-- OverTheWire: https://overthewire.org/wargames/
-- Blue Team Labs Online: https://blueteamlabs.online/
-- CyberDefenders: https://cyberdefenders.org/
+- TryHackMe: [https://tryhackme.com/](https://tryhackme.com/)
+- Hack The Box: [https://www.hackthebox.com/](https://www.hackthebox.com/)
+- OverTheWire: [https://overthewire.org/wargames/](https://overthewire.org/wargames/)
+- Blue Team Labs Online: [https://blueteamlabs.online/](https://blueteamlabs.online/)
+- CyberDefenders: [https://cyberdefenders.org/](https://cyberdefenders.org/)
 
 PCAPs and IR write-ups
-- Malware Traffic Analysis: https://www.malware-traffic-analysis.net/
-- The DFIR Report: https://thedfirreport.com/
-- Wireshark sample captures: https://wiki.wireshark.org/SampleCaptures
+- Malware Traffic Analysis: [https://www.malware-traffic-analysis.net/](https://www.malware-traffic-analysis.net/)
+- The DFIR Report: [https://thedfirreport.com/](https://thedfirreport.com/)
+- Wireshark sample captures: [https://wiki.wireshark.org/SampleCaptures](https://wiki.wireshark.org/SampleCaptures)
 
 Python coding for security (docs + tooling + libraries)
 ### Core Python docs (read these like reference manuals)
-- Python 3 docs (start page): https://docs.python.org/3/
-- `logging` (structured logging mindset): https://docs.python.org/3/library/logging.html
-- `secrets` (secure randomness for tokens): https://docs.python.org/3/library/secrets.html
-- `hashlib` (hashes): https://docs.python.org/3/library/hashlib.html
-- `hmac` (authenticity/integrity with shared secret): https://docs.python.org/3/library/hmac.html
-- `ssl` (TLS basics from Python): https://docs.python.org/3/library/ssl.html
-- `subprocess` (avoid shell injection; use safely): https://docs.python.org/3/library/subprocess.html
-- `urllib.parse` (URL parsing/normalization): https://docs.python.org/3/library/urllib.parse.html
-- `ipaddress` (safe IP/subnet parsing): https://docs.python.org/3/library/ipaddress.html
+- Python 3 docs (start page): [https://docs.python.org/3/](https://docs.python.org/3/)
+- `logging` (structured logging mindset): [https://docs.python.org/3/library/logging.html](https://docs.python.org/3/library/logging.html)
+- `secrets` (secure randomness for tokens): [https://docs.python.org/3/library/secrets.html](https://docs.python.org/3/library/secrets.html)
+- `hashlib` (hashes): [https://docs.python.org/3/library/hashlib.html](https://docs.python.org/3/library/hashlib.html)
+- `hmac` (authenticity/integrity with shared secret): [https://docs.python.org/3/library/hmac.html](https://docs.python.org/3/library/hmac.html)
+- `ssl` (TLS basics from Python): [https://docs.python.org/3/library/ssl.html](https://docs.python.org/3/library/ssl.html)
+- `subprocess` (avoid shell injection; use safely): [https://docs.python.org/3/library/subprocess.html](https://docs.python.org/3/library/subprocess.html)
+- `urllib.parse` (URL parsing/normalization): [https://docs.python.org/3/library/urllib.parse.html](https://docs.python.org/3/library/urllib.parse.html)
+- `ipaddress` (safe IP/subnet parsing): [https://docs.python.org/3/library/ipaddress.html](https://docs.python.org/3/library/ipaddress.html)
 - `pathlib` + `tempfile` (safe file/path handling):
-  - https://docs.python.org/3/library/pathlib.html
-  - https://docs.python.org/3/library/tempfile.html
+  - [https://docs.python.org/3/library/pathlib.html](https://docs.python.org/3/library/pathlib.html)
+  - [https://docs.python.org/3/library/tempfile.html](https://docs.python.org/3/library/tempfile.html)
 
 Security libraries (use these; don’t reinvent)
-- `cryptography` (recommended Python crypto library): https://cryptography.io/
-- `requests` (HTTP client): https://requests.readthedocs.io/
-- `httpx` (modern HTTP client, async friendly): https://www.python-httpx.org/
-- `scapy` (packet crafting/analysis in labs): https://scapy.net/
+- `cryptography` (recommended Python crypto library): [https://cryptography.io/](https://cryptography.io/)
+- `requests` (HTTP client): [https://requests.readthedocs.io/](https://requests.readthedocs.io/)
+- `httpx` (modern HTTP client, async friendly): [https://www.python-httpx.org/](https://www.python-httpx.org/)
+- `scapy` (packet crafting/analysis in labs): [https://scapy.net/](https://scapy.net/)
 
 Secure coding guidance (high ROI)
-- OWASP Cheat Sheet Series (pick relevant sheets per topic): https://cheatsheetseries.owasp.org/
+- OWASP Cheat Sheet Series (pick relevant sheets per topic): [https://cheatsheetseries.owasp.org/](https://cheatsheetseries.owasp.org/)
 - OWASP Secure Coding Practices (quick reference):
-  https://owasp.org/www-project-secure-coding-practices-quick-reference-guide/
+  [https://owasp.org/www-project-secure-coding-practices-quick-reference-guide/](https://owasp.org/www-project-secure-coding-practices-quick-reference-guide/)
 
 Security tooling for Python projects (recommended defaults)
-- `pytest` (tests): https://docs.pytest.org/
-- `ruff` (fast linter): https://docs.astral.sh/ruff/
-- `black` (formatter): https://black.readthedocs.io/
-- `mypy` (type checking, optional but strong): https://mypy.readthedocs.io/
-- `bandit` (Python security linter): https://bandit.readthedocs.io/
-- `pip-audit` (dependency vulnerability scanning): https://pypi.org/project/pip-audit/
-- Semgrep (SAST patterns, includes security rules): https://semgrep.dev/
-- pre-commit (run checks automatically on commits): https://pre-commit.com/
+- `pytest` (tests): [https://docs.pytest.org/](https://docs.pytest.org/)
+- `ruff` (fast linter): [https://docs.astral.sh/ruff/](https://docs.astral.sh/ruff/)
+- `black` (formatter): [https://black.readthedocs.io/](https://black.readthedocs.io/)
+- `mypy` (type checking, optional but strong): [https://mypy.readthedocs.io/](https://mypy.readthedocs.io/)
+- `bandit` (Python security linter): [https://bandit.readthedocs.io/](https://bandit.readthedocs.io/)
+- `pip-audit` (dependency vulnerability scanning): [https://pypi.org/project/pip-audit/](https://pypi.org/project/pip-audit/)
+- Semgrep (SAST patterns, includes security rules): [https://semgrep.dev/](https://semgrep.dev/)
+- pre-commit (run checks automatically on commits): [https://pre-commit.com/](https://pre-commit.com/)
 
 Practice datasets and projects (use for coding exercises)
-- Wireshark Sample Captures (PCAPs): https://wiki.wireshark.org/SampleCaptures
-- Malware Traffic Analysis (PCAPs + explanations): https://www.malware-traffic-analysis.net/
+- Wireshark Sample Captures (PCAPs): [https://wiki.wireshark.org/SampleCaptures](https://wiki.wireshark.org/SampleCaptures)
+- Malware Traffic Analysis (PCAPs + explanations): [https://www.malware-traffic-analysis.net/](https://www.malware-traffic-analysis.net/)
 
 Project ideas (portfolio-grade, safe)
 - Build a log normalizer that converts many log formats to JSON lines.
@@ -1714,30 +1709,30 @@ Project ideas (portfolio-grade, safe)
 - Build a DNS audit tool that records changes (TTL/IP drift) over time.
 
 Detection engineering practice
-- Sigma rules: https://github.com/SigmaHQ/sigma
-- Atomic Red Team: https://github.com/redcanaryco/atomic-red-team
+- Sigma rules: [https://github.com/SigmaHQ/sigma](https://github.com/SigmaHQ/sigma)
+- Atomic Red Team: [https://github.com/redcanaryco/atomic-red-team](https://github.com/redcanaryco/atomic-red-team)
 
 Reverse engineering tools
-- Ghidra: https://ghidra-sre.org/
-- x64dbg: https://x64dbg.com/
-- FLARE-VM: https://github.com/mandiant/flare-vm
-- REMnux: https://remnux.org/
+- Ghidra: [https://ghidra-sre.org/](https://ghidra-sre.org/)
+- x64dbg: [https://x64dbg.com/](https://x64dbg.com/)
+- FLARE-VM: [https://github.com/mandiant/flare-vm](https://github.com/mandiant/flare-vm)
+- REMnux: [https://remnux.org/](https://remnux.org/)
 
 YouTube
 - Sysinternals Update playlist:
-  https://www.youtube.com/playlist?list=PLhFhDWFYccZ_GvdJ11NZwaBAhwDCWmni_
+  [https://www.youtube.com/playlist?list=PLhFhDWFYccZ_GvdJ11NZwaBAhwDCWmni_](https://www.youtube.com/playlist?list=PLhFhDWFYccZ_GvdJ11NZwaBAhwDCWmni_)
 - PortSwigger playlists:
-  https://www.youtube.com/@PortSwigger/playlists
+  [https://www.youtube.com/@PortSwigger/playlists](https://www.youtube.com/@PortSwigger/playlists)
 - OWASP Global:
-  https://www.youtube.com/user/OWASPGLOBAL
+  [https://www.youtube.com/user/OWASPGLOBAL](https://www.youtube.com/user/OWASPGLOBAL)
 - Wireshark channel:
-  https://www.youtube.com/@Wireshark
+  [https://www.youtube.com/@Wireshark](https://www.youtube.com/@Wireshark)
 - LiveOverflow playlists:
-  https://www.youtube.com/@LiveOverflow/playlists
+  [https://www.youtube.com/@LiveOverflow/playlists](https://www.youtube.com/@LiveOverflow/playlists)
 - John Hammond playlists:
-  https://www.youtube.com/@JohnHammond010/playlists
+  [https://www.youtube.com/@JohnHammond010/playlists](https://www.youtube.com/@JohnHammond010/playlists)
 - Professor Messer playlists:
-  https://www.youtube.com/@professormesser/playlists
+  [https://www.youtube.com/@professormesser/playlists](https://www.youtube.com/@professormesser/playlists)
 
 
 ## APPENDIX E — PORTFOLIO ARTIFACTS (EVIDENCE OF FUNDAMENTALS)
@@ -1945,8 +1940,8 @@ TLS checklist
   - repeated short connections (beaconing)
 
 Safe practice sources
-- Malware Traffic Analysis: https://www.malware-traffic-analysis.net/
-- Wireshark Sample Captures: https://wiki.wireshark.org/SampleCaptures
+- Malware Traffic Analysis: [https://www.malware-traffic-analysis.net/](https://www.malware-traffic-analysis.net/)
+- Wireshark Sample Captures: [https://wiki.wireshark.org/SampleCaptures](https://wiki.wireshark.org/SampleCaptures)
 
 
 ### X5) Applied crypto deep dive: use it safely, recognize broken designs
@@ -2018,7 +2013,7 @@ Vulnerability → root cause → fix (high-level map)
   - evidence: server outbound requests to unusual internal endpoints
 
 Best free lab curriculum
-- PortSwigger Academy: https://portswigger.net/web-security
+- PortSwigger Academy: [https://portswigger.net/web-security](https://portswigger.net/web-security)
 
 How to learn web vulns safely
 - Do NOT test random websites.
@@ -3069,7 +3064,7 @@ Common mistakes (conceptual)
 - confusing “authentication” with “authorization”
 
 Best lab curriculum
-- PortSwigger Academy: https://portswigger.net/web-security
+- PortSwigger Academy: [https://portswigger.net/web-security](https://portswigger.net/web-security)
 
 End-of-module questions (H)
 1) Why is CORS not an authorization control?
@@ -3404,5 +3399,4 @@ End-of-module questions (O)
 
 
 ## END OF STUDY MATERIAL
-
 
