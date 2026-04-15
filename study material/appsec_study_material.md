@@ -1,5 +1,3 @@
-appsec_study_material.md
-
 # APPLICATION SECURITY (APPSEC) — VERY DETAILED STUDY MATERIAL (2026)
 Goal: become strong in AppSec basics before specializing further
 Audience: you already finished cybersecurity fundamentals
@@ -150,11 +148,8 @@ Use training labs (PortSwigger/WebGoat/Juice Shop/CTFs) for offensive practice.
   - [A good finding includes](#a-good-finding-includes)
 - [PART 6 — STANDARDS](#part-6-standards)
   - [6.1 OWASP Top 10 (2025)](#61-owasp-top-10-2025)
-  - [https://owasp.org/Top10/2025/](#httpsowasporgtop102025)
   - [6.2 OWASP ASVS](#62-owasp-asvs)
-  - [https://owasp.org/www-project-application-security-verification-standard/](#httpsowasporgwww-project-application-security-verification-standard)
   - [6.3 OWASP Cheat Sheets](#63-owasp-cheat-sheets)
-  - [https://cheatsheetseries.owasp.org/](#httpscheatsheetseriesowasporg)
 - [PART 7 — CASE STUDIES (TEMPLATES)](#part-7-case-studies-templates)
 - [These are patterns you’ll see repeatedly.](#these-are-patterns-youll-see-repeatedly)
   - [7.1 IDOR breach pattern](#71-idor-breach-pattern)
@@ -167,13 +162,9 @@ Use training labs (PortSwigger/WebGoat/Juice Shop/CTFs) for offensive practice.
   - [8.1 Best free AppSec lab curriculum](#81-best-free-appsec-lab-curriculum)
   - [PortSwigger Web Security Academy (free learn + labs)](#portswigger-web-security-academy-free-learn-labs)
   - [8.2 Local vulnerable apps](#82-local-vulnerable-apps)
-  - [- OWASP WebGoat: https://owasp.org/www-project-webgoat/](#owasp-webgoat-httpsowasporgwww-project-webgoat)
   - [8.3 AppSec references](#83-appsec-references)
-  - [- OWASP Cheat Sheets: https://cheatsheetseries.owasp.org/](#owasp-cheat-sheets-httpscheatsheetseriesowasporg)
   - [8.4 Tools (learning)](#84-tools-learning)
-  - [- Burp Suite Community (free): https://portswigger.net/burp/communitydownload](#burp-suite-community-free-httpsportswiggernetburpcommunitydownload)
   - [8.5 YouTube (curated)](#85-youtube-curated)
-  - [- PortSwigger playlists: https://www.youtube.com/@PortSwigger/playlists](#portswigger-playlists-httpswwwyoutubecomportswiggerplaylists)
   - [8.6 How to build portfolio for AppSec](#86-how-to-build-portfolio-for-appsec)
   - [Produce 10 write-ups (even from labs):](#produce-10-write-ups-even-from-labs)
 - [APPSEC DEEP DIVE ADDENDUM (FULLER COVERAGE)](#appsec-deep-dive-addendum-fuller-coverage)
@@ -680,7 +671,7 @@ Do NOT log
 ## PART 6 — STANDARDS
 
 ### 6.1 OWASP Top 10 (2025)
-https://owasp.org/Top10/2025/
+[https://owasp.org/Top10/2025/](https://owasp.org/Top10/2025/)
 
 Mapping to your study (priority order for AppSec roles):
 | Rank | Category | Your Focus Area |
@@ -697,7 +688,7 @@ Mapping to your study (priority order for AppSec roles):
 | A10 | SSRF | Server fetches attacker URL, cloud metadata theft |
 
 ### 6.2 OWASP ASVS (Application Security Verification Standard)
-https://owasp.org/www-project-application-security-verification-standard/
+[https://owasp.org/www-project-application-security-verification-standard/](https://owasp.org/www-project-application-security-verification-standard/)
 
 How to use ASVS:
 - Level 1: Minimum baseline (all apps)
@@ -710,7 +701,7 @@ ASVS as a checklist workflow:
 3. Document gaps and prioritize fixes
 
 ### 6.3 OWASP Cheat Sheets
-https://cheatsheetseries.owasp.org/
+[https://cheatsheetseries.owasp.org/](https://cheatsheetseries.owasp.org/)
 
 Must-read cheat sheets for AppSec:
 - Input Validation
@@ -746,7 +737,7 @@ Must-read cheat sheets for AppSec:
 
 ### 8.1 Best free AppSec lab curriculum
 ### PortSwigger Web Security Academy (free learn + labs)
-- https://portswigger.net/web-security
+- [https://portswigger.net/web-security](https://portswigger.net/web-security)
 
 Suggested order (high ROI)
 - Authentication
@@ -760,20 +751,20 @@ Suggested order (high ROI)
 - CORS
 
 ### 8.2 Local vulnerable apps
-### - OWASP WebGoat: https://owasp.org/www-project-webgoat/
-- OWASP Juice Shop: https://owasp.org/www-project-juice-shop/
+- OWASP WebGoat: [https://owasp.org/www-project-webgoat/](https://owasp.org/www-project-webgoat/)
+- OWASP Juice Shop: [https://owasp.org/www-project-juice-shop/](https://owasp.org/www-project-juice-shop/)
 
 ### 8.3 AppSec references
-### - OWASP Cheat Sheets: https://cheatsheetseries.owasp.org/
-- OWASP ASVS: https://owasp.org/www-project-application-security-verification-standard/
+- OWASP Cheat Sheets: [https://cheatsheetseries.owasp.org/](https://cheatsheetseries.owasp.org/)
+- OWASP ASVS: [https://owasp.org/www-project-application-security-verification-standard/](https://owasp.org/www-project-application-security-verification-standard/)
 
 ### 8.4 Tools (learning)
-### - Burp Suite Community (free): https://portswigger.net/burp/communitydownload
+- Burp Suite Community (free): [https://portswigger.net/burp/communitydownload](https://portswigger.net/burp/communitydownload)
 - Browser DevTools
 
 ### 8.5 YouTube (curated)
-### - PortSwigger playlists: https://www.youtube.com/@PortSwigger/playlists
-- OWASP Global: https://www.youtube.com/user/OWASPGLOBAL
+- PortSwigger playlists: [https://www.youtube.com/@PortSwigger/playlists](https://www.youtube.com/@PortSwigger/playlists)
+- OWASP Global: [https://www.youtube.com/user/OWASPGLOBAL](https://www.youtube.com/user/OWASPGLOBAL)
 
 ### 8.6 How to build portfolio for AppSec
 ### Produce 10 write-ups (even from labs):
@@ -790,16 +781,16 @@ It also adds AppSec-specific standards (OWASP API Security, OWASP Testing Guide)
 ### Use these as your “ground truth” texts for AppSec.
 
 OWASP
-- OWASP Top 10 (2025): https://owasp.org/Top10/2025/
-- OWASP ASVS: https://owasp.org/www-project-application-security-verification-standard/
-- OWASP Cheat Sheet Series: https://cheatsheetseries.owasp.org/
-- OWASP Testing Guide (methodology reference): https://owasp.org/www-project-web-security-testing-guide/
+- OWASP Top 10 (2025): [https://owasp.org/Top10/2025/](https://owasp.org/Top10/2025/)
+- OWASP ASVS: [https://owasp.org/www-project-application-security-verification-standard/](https://owasp.org/www-project-application-security-verification-standard/)
+- OWASP Cheat Sheet Series: [https://cheatsheetseries.owasp.org/](https://cheatsheetseries.owasp.org/)
+- OWASP Testing Guide (methodology reference): [https://owasp.org/www-project-web-security-testing-guide/](https://owasp.org/www-project-web-security-testing-guide/)
 
 API security
-- OWASP API Security Project (contains API Top 10): https://owasp.org/www-project-api-security/
+- OWASP API Security Project (contains API Top 10): [https://owasp.org/www-project-api-security/](https://owasp.org/www-project-api-security/)
 
 PortSwigger
-- Web Security Academy (free learn + labs): https://portswigger.net/web-security
+- Web Security Academy (free learn + labs): [https://portswigger.net/web-security](https://portswigger.net/web-security)
 
 
 ### AD1) AppSec mental model: data, identity, and interpreters
@@ -1437,27 +1428,27 @@ Suggested deep study order (repeat for mastery)
 ### If you only use a few resources, prioritize: OWASP + PortSwigger + one solid book + consistent labs.
 
 Standards and reference docs (authoritative)
-- OWASP Cheat Sheets: https://cheatsheetseries.owasp.org/
-- OWASP ASVS: https://owasp.org/www-project-application-security-verification-standard/
-- OWASP Web Security Testing Guide: https://owasp.org/www-project-web-security-testing-guide/
-- OWASP API Security Project: https://owasp.org/www-project-api-security/
-- OWASP Proactive Controls: https://top10proactive.owasp.org/
+- OWASP Cheat Sheets: [https://cheatsheetseries.owasp.org/](https://cheatsheetseries.owasp.org/)
+- OWASP ASVS: [https://owasp.org/www-project-application-security-verification-standard/](https://owasp.org/www-project-application-security-verification-standard/)
+- OWASP Web Security Testing Guide: [https://owasp.org/www-project-web-security-testing-guide/](https://owasp.org/www-project-web-security-testing-guide/)
+- OWASP API Security Project: [https://owasp.org/www-project-api-security/](https://owasp.org/www-project-api-security/)
+- OWASP Proactive Controls: [https://top10proactive.owasp.org/](https://top10proactive.owasp.org/)
 
 Web platform references (must-have for modern web/AppSec)
-- MDN Web Docs (cookies, CORS, CSP, fetch, DOM): https://developer.mozilla.org/
+- MDN Web Docs (cookies, CORS, CSP, fetch, DOM): [https://developer.mozilla.org/](https://developer.mozilla.org/)
 
 Protocol / token specs (useful when you go deeper)
-- RFC Editor (search portal): https://www.rfc-editor.org/
-- OAuth 2.0 (RFC 6749): https://www.rfc-editor.org/rfc/rfc6749
-- HTTP Semantics (RFC 9110): https://www.rfc-editor.org/rfc/rfc9110
-- Cookies (RFC 6265): https://www.rfc-editor.org/rfc/rfc6265
-- JWT (RFC 7519): https://www.rfc-editor.org/rfc/rfc7519
+- RFC Editor (search portal): [https://www.rfc-editor.org/](https://www.rfc-editor.org/)
+- OAuth 2.0 (RFC 6749): [https://www.rfc-editor.org/rfc/rfc6749](https://www.rfc-editor.org/rfc/rfc6749)
+- HTTP Semantics (RFC 9110): [https://www.rfc-editor.org/rfc/rfc9110](https://www.rfc-editor.org/rfc/rfc9110)
+- Cookies (RFC 6265): [https://www.rfc-editor.org/rfc/rfc6265](https://www.rfc-editor.org/rfc/rfc6265)
+- JWT (RFC 7519): [https://www.rfc-editor.org/rfc/rfc7519](https://www.rfc-editor.org/rfc/rfc7519)
 
 Labs / learning platforms (high ROI)
-- PortSwigger Web Security Academy: https://portswigger.net/web-security
-- OWASP Juice Shop: https://owasp.org/www-project-juice-shop/
-- WebGoat: https://owasp.org/www-project-webgoat/
-- DVWA (Damn Vulnerable Web Application): https://dvwa.co.uk/
+- PortSwigger Web Security Academy: [https://portswigger.net/web-security](https://portswigger.net/web-security)
+- OWASP Juice Shop: [https://owasp.org/www-project-juice-shop/](https://owasp.org/www-project-juice-shop/)
+- WebGoat: [https://owasp.org/www-project-webgoat/](https://owasp.org/www-project-webgoat/)
+- DVWA (Damn Vulnerable Web Application): [https://dvwa.co.uk/](https://dvwa.co.uk/)
 
 Books (high-signal)
 - Web Application Hacker’s Handbook (classic reference)
@@ -1472,12 +1463,12 @@ YouTube (good for reinforcement)
 - OWASP Foundation / OWASP Global
 
 Tooling docs (learn the tool from the source)
-- Burp Suite docs: https://portswigger.net/burp/documentation
-- OWASP ZAP: https://www.zaproxy.org/
+- Burp Suite docs: [https://portswigger.net/burp/documentation](https://portswigger.net/burp/documentation)
+- OWASP ZAP: [https://www.zaproxy.org/](https://www.zaproxy.org/)
 
 Secure coding + code review (especially useful with Python/Java)
-- OWASP Code Review Guide: https://owasp.org/www-project-code-review-guide/
-- OWASP Secure Coding Practices: https://owasp.org/www-project-secure-coding-practices-quick-reference-guide/
+- OWASP Code Review Guide: [https://owasp.org/www-project-code-review-guide/](https://owasp.org/www-project-code-review-guide/)
+- OWASP Secure Coding Practices: [https://owasp.org/www-project-secure-coding-practices-quick-reference-guide/](https://owasp.org/www-project-secure-coding-practices-quick-reference-guide/)
 
 If you want “one path”
 1) PortSwigger Academy (systematically)
@@ -1505,7 +1496,7 @@ What to test
 - Can you cause large/slow queries?
 
 References
-- OWASP GraphQL Security Cheat Sheet: https://cheatsheetseries.owasp.org/cheatsheets/GraphQL_Cheat_Sheet.html
+- OWASP GraphQL Security Cheat Sheet: [https://cheatsheetseries.owasp.org/cheatsheets/GraphQL_Cheat_Sheet.html](https://cheatsheetseries.owasp.org/cheatsheets/GraphQL_Cheat_Sheet.html)
 
 
 AD9.2 WebSockets / real-time APIs
@@ -1529,13 +1520,177 @@ AD9.3 Cloud metadata SSRF (why SSRF is worse in cloud)
 - Many cloud environments expose instance metadata endpoints.
 - SSRF can become credential theft.
 
-Defenses (layered)
-- app-level allowlists and URL parsing
-- block private IP ranges + link-local ranges
-- network egress controls
-- cloud hardening:
-  - prefer workload identity where possible
-  - restrict metadata access when supported
+### AD9.3A Cloud SSRF Deep Dive (Critical Knowledge)
+
+**Why SSRF is devastating in cloud:**
+```
+Traditional SSRF: Access internal services, port scan
+Cloud SSRF: Steal IAM credentials → full account compromise
+
+The metadata service is an internal API that provides:
+- Instance identity
+- Temporary credentials
+- Configuration data
+- Network information
+```
+
+**AWS Metadata Service (IMDS):**
+```
+IMDSv1 (legacy, vulnerable):
+  curl http://169.254.169.254/latest/meta-data/
+  curl http://169.254.169.254/latest/meta-data/iam/security-credentials/
+  curl http://169.254.169.254/latest/meta-data/iam/security-credentials/role-name
+
+IMDSv2 (more secure):
+  # Requires a token obtained via PUT request
+  TOKEN=$(curl -X PUT "http://169.254.169.254/latest/api/token" \
+    -H "X-aws-ec2-metadata-token-ttl-seconds: 21600")
+  curl -H "X-aws-ec2-metadata-token: $TOKEN" \
+    http://169.254.169.254/latest/meta-data/
+```
+
+**SSRF bypassing IMDSv2:**
+```
+IMDSv2 helps but isn't perfect:
+- Some SSRF vulnerabilities allow setting headers (full bypass)
+- DNS rebinding can work in some cases
+- Containers/ECS tasks may use different metadata endpoints
+```
+
+**Azure Instance Metadata:**
+```
+curl -H "Metadata: true" \
+  "http://169.254.169.254/metadata/instance?api-version=2021-02-01"
+
+# Get managed identity token
+curl -H "Metadata: true" \
+  "http://169.254.169.254/metadata/identity/oauth2/token?api-version=2018-02-01&resource=https://management.azure.com/"
+```
+
+**GCP Metadata:**
+```
+curl -H "Metadata-Flavor: Google" \
+  "http://metadata.google.internal/computeMetadata/v1/instance/"
+
+# Get service account token
+curl -H "Metadata-Flavor: Google" \
+  "http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/token"
+```
+
+**Kubernetes Service Account Tokens:**
+```
+# In a pod, credentials are mounted:
+/var/run/secrets/kubernetes.io/serviceaccount/token
+/var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+
+# SSRF to internal K8s API
+curl -k https://kubernetes.default.svc/api/v1/namespaces
+```
+
+**SSRF Defense Layers:**
+```python
+from urllib.parse import urlparse
+import ipaddress
+import socket
+
+# Layer 1: URL scheme validation
+ALLOWED_SCHEMES = {'http', 'https'}
+
+# Layer 2: Blocked IP ranges
+BLOCKED_RANGES = [
+    '10.0.0.0/8',       # Private
+    '172.16.0.0/12',    # Private
+    '192.168.0.0/16',   # Private
+    '169.254.0.0/16',   # Link-local (METADATA!)
+    '127.0.0.0/8',      # Localhost
+    '0.0.0.0/8',        # Current network
+    '100.64.0.0/10',    # Carrier-grade NAT
+    'fd00::/8',         # IPv6 private
+    '::1/128',          # IPv6 localhost
+]
+
+# Layer 3: Domain allowlist (most secure)
+ALLOWED_DOMAINS = {'api.example.com', 'cdn.example.com'}
+
+def is_safe_url(url: str) -> tuple[bool, str]:
+    try:
+        parsed = urlparse(url)
+        
+        # Check scheme
+        if parsed.scheme not in ALLOWED_SCHEMES:
+            return False, "Invalid scheme"
+        
+        # Check domain allowlist
+        if parsed.hostname not in ALLOWED_DOMAINS:
+            return False, "Domain not allowed"
+        
+        # Resolve and check IP
+        ip = socket.gethostbyname(parsed.hostname)
+        ip_obj = ipaddress.ip_address(ip)
+        
+        for cidr in BLOCKED_RANGES:
+            if ip_obj in ipaddress.ip_network(cidr):
+                return False, f"Blocked IP range: {cidr}"
+        
+        return True, "OK"
+    except Exception as e:
+        return False, str(e)
+```
+
+**Cloud-level defenses:**
+```yaml
+AWS:
+  - Require IMDSv2 (blocks simple SSRF)
+  - Use VPC endpoints for AWS services
+  - Use workload identity (IRSA) instead of instance roles
+  - Enable metadata endpoint restrictions
+
+Azure:
+  - Use managed identities with minimal permissions
+  - Implement NSG rules
+  - Use private endpoints
+
+GCP:
+  - Enable Workload Identity
+  - Use VPC Service Controls
+  - Restrict metadata access
+```
+
+### AD9.3B SSRF Testing Checklist
+
+```yaml
+ssrf_testing:
+  discovery:
+    - Find URL input parameters (url=, src=, dest=, redirect=)
+    - Find webhook configurations
+    - Find URL preview/unfurl features
+    - Find file import from URL features
+    - Find PDF/image generators that fetch URLs
+    
+  basic_tests:
+    - http://127.0.0.1/
+    - http://localhost/
+    - http://[::1]/
+    - http://0.0.0.0/
+    
+  cloud_metadata:
+    - http://169.254.169.254/ (AWS/Azure)
+    - http://metadata.google.internal/ (GCP)
+    - http://100.100.100.200/ (Alibaba)
+    
+  bypass_attempts:
+    - URL encoding: http://169.254.169.254 → http://%31%36%39%2e%32%35%34...
+    - Decimal IP: http://2852039166/ (169.254.169.254 as integer)
+    - Redirect: http://attacker.com/redirect?to=http://169.254.169.254
+    - DNS rebinding: Use a domain that resolves to internal IP
+    - IPv6: http://[::ffff:169.254.169.254]/
+    
+  what_to_log:
+    - All outbound HTTP requests with destination
+    - Failed requests (blocked by firewall)
+    - Requests to internal IP ranges
+    - Unusual URL patterns
+```
 
 
 AD9.4 CI/CD and build pipeline security (supply chain reality)
@@ -1552,7 +1707,132 @@ Controls
 - least privilege for CI tokens
 
 References
-- SLSA (Supply-chain Levels for Software Artifacts): https://slsa.dev/
+- SLSA (Supply-chain Levels for Software Artifacts): [https://slsa.dev/](https://slsa.dev/)
+
+
+### AD9.4A Deserialization Vulnerabilities Deep Dive
+
+**What is Deserialization?**
+```
+Serialization: Object → Bytes (for storage/transmission)
+Deserialization: Bytes → Object
+
+The danger: Deserializing untrusted data can execute arbitrary code
+```
+
+**Why it's dangerous:**
+```
+1. Many serialization formats allow code execution during deserialization
+2. Attackers can craft payloads that:
+   - Execute system commands
+   - Create reverse shells
+   - Read/write files
+   - Establish persistence
+```
+
+**Language-Specific Examples:**
+
+**Python (pickle):**
+```python
+import pickle
+
+# Malicious payload that executes code on unpickle
+class Exploit:
+    def __reduce__(self):
+        import os
+        return (os.system, ('id',))  # Executes 'id' command
+
+# When unpickled, this runs arbitrary code
+payload = pickle.dumps(Exploit())
+pickle.loads(payload)  # DANGER: Executes 'id'
+```
+
+**Java (ObjectInputStream):**
+```java
+// Vulnerable code
+ObjectInputStream ois = new ObjectInputStream(untrustedInput);
+Object obj = ois.readObject();  // DANGER!
+
+// This has led to many CVEs:
+// - Apache Commons Collections gadget chains
+// - Log4Shell (CVE-2021-44228) partially related
+// - Many application server vulnerabilities
+```
+
+**PHP (unserialize):**
+```php
+// Vulnerable code
+$data = unserialize($_POST['data']);  // DANGER!
+
+// Magic methods like __wakeup(), __destruct() can be abused
+```
+
+**YAML (unsafe load):**
+```python
+import yaml
+
+# VULNERABLE
+data = yaml.load(user_input)  # Can execute code!
+
+# SAFE
+data = yaml.safe_load(user_input)  # Only basic types
+```
+
+**Defenses:**
+
+```python
+# 1. Don't deserialize untrusted data (best)
+# 2. Use safe formats (JSON, protobuf)
+# 3. Sign serialized data
+
+import json
+import hmac
+import hashlib
+import base64
+
+SECRET_KEY = b"your-secret-key"
+
+def safe_serialize(obj):
+    """Serialize with integrity protection."""
+    json_data = json.dumps(obj)
+    signature = hmac.new(SECRET_KEY, json_data.encode(), hashlib.sha256).hexdigest()
+    return base64.b64encode(f"{json_data}|{signature}".encode()).decode()
+
+def safe_deserialize(data):
+    """Deserialize with signature verification."""
+    decoded = base64.b64decode(data).decode()
+    json_data, signature = decoded.rsplit('|', 1)
+    
+    expected = hmac.new(SECRET_KEY, json_data.encode(), hashlib.sha256).hexdigest()
+    if not hmac.compare_digest(signature, expected):
+        raise ValueError("Invalid signature")
+    
+    return json.loads(json_data)
+```
+
+**Detection:**
+```yaml
+detection_signals:
+  - Unusual POST bodies with serialized objects
+  - Java: "aced0005" magic bytes (serialized Java)
+  - Python: Pickle magic bytes
+  - Errors mentioning deserialization, ObjectInputStream, pickle
+  - Unexpected outbound connections after processing data
+```
+
+**Testing:**
+```
+Tools:
+- ysoserial (Java gadget chains)
+- marshalsec (Java/other)
+- Custom pickle payloads (Python)
+
+Manual testing:
+1. Identify deserialization points
+2. Try standard gadget chains
+3. Monitor for code execution indicators
+4. Check for out-of-band callbacks
+```
 
 
 AD9.5 SAST/DAST/SCA (what they are and how to use them)
@@ -1572,9 +1852,9 @@ What to learn as a beginner
 - how to write “fix PRs” rather than just reports
 
 Good starter tools to know (not mandatory)
-- Semgrep: https://semgrep.dev/
-- OWASP Dependency-Check: https://owasp.org/www-project-dependency-check/
-- OWASP ZAP (DAST): https://www.zaproxy.org/
+- Semgrep: [https://semgrep.dev/](https://semgrep.dev/)
+- OWASP Dependency-Check: [https://owasp.org/www-project-dependency-check/](https://owasp.org/www-project-dependency-check/)
+- OWASP ZAP (DAST): [https://www.zaproxy.org/](https://www.zaproxy.org/)
 
 
 AD9.6 Secrets management basics
@@ -1582,7 +1862,7 @@ AD9.6 Secrets management basics
 - Use secret scanners and rotate credentials.
 
 References
-- OWASP Secrets Management Cheat Sheet: https://cheatsheetseries.owasp.org/cheatsheets/Secrets_Management_Cheat_Sheet.html
+- OWASP Secrets Management Cheat Sheet: [https://cheatsheetseries.owasp.org/cheatsheets/Secrets_Management_Cheat_Sheet.html](https://cheatsheetseries.owasp.org/cheatsheets/Secrets_Management_Cheat_Sheet.html)
 
 
 AD9.7 Infrastructure-as-Code (IaC) security (only the minimum)
@@ -1590,8 +1870,7 @@ AD9.7 Infrastructure-as-Code (IaC) security (only the minimum)
 - Learn to review IaC like code.
 
 References
-- CIS Benchmarks (general hardening): https://www.cisecurity.org/cis-benchmarks/
+- CIS Benchmarks (general hardening): [https://www.cisecurity.org/cis-benchmarks/](https://www.cisecurity.org/cis-benchmarks/)
 
 
 END OF APPSEC STUDY MATERIAL
-
