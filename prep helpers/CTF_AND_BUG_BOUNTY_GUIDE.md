@@ -1,5 +1,3 @@
-CTF_AND_BUG_BOUNTY_GUIDE.md
-
 # CTF AND BUG BOUNTY GUIDE (BEGINNER TO JOB-READY)
 
 **Focus:** Ethical, legal, portfolio-friendly learning for Bangalore job market
@@ -955,9 +953,9 @@ security-writeups/
 - **Platform Ranks:** [TryHackMe rank, HTB rank]
 
 ## Featured Write-ups
-1. Interesting Challenge 1 (add URL) - Brief description
-2. Interesting Challenge 2 (add URL) - Brief description
-3. Interesting Challenge 3 (add URL) - Brief description
+1. [Interesting Challenge 1](link) - Brief description
+2. [Interesting Challenge 2](link) - Brief description
+3. [Interesting Challenge 3](link) - Brief description
 
 ## Skills Demonstrated
 - Web Application Security
@@ -1025,18 +1023,16 @@ Monthly Goals:
 #### null Community (Primary)
 
 **What:** India's largest security community
-**Where:** null.community + city chapters
+**Where:** [null.community](https://null.community) + city chapters
 **Bangalore Chapter:** Very active, monthly meetups
 
 **How to Engage:**
-```
-1. Join null.community
+1. Join [https://null.community](https://null.community)
 2. Join Bangalore chapter
 3. Attend monthly meetups
 4. Present a 5-minute lightning talk
 5. Volunteer for events
 6. Join CTF teams
-```
 
 **Meetup Types:**
 - null Puliya (beginner-friendly sessions)
@@ -1160,4 +1156,3 @@ Monthly Goals:
 ---
 
 **Remember:** Consistency beats intensity. 6 hours/week for 12 months beats 60 hours for 1 month.
-
