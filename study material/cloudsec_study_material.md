@@ -1,9 +1,7 @@
-cloudsec_study_material.md
-
 # CLOUD SECURITY STUDY MATERIAL (TEXTBOOK-STYLE)
 Version: April 2026
 Audience: final-year undergrad / security intern; strong fundamentals; wants CloudSec track
-Prereqs: see cybersecurity_fundamentals_study_material.md (networking, OS, crypto, identity, logging)
+Prereqs: see [cybersecurity_fundamentals_study_material.md](cybersecurity_fundamentals_study_material.md) (networking, OS, crypto, identity, logging)
 
 
 ## Generated Table of Contents
@@ -144,9 +142,9 @@ Assumptions
 ## If cloud terms feel fuzzy, start here. Most CloudSec confusion is vocabulary.
 
 Link to fundamentals (when needed)
-- Networking (TCP/IP, DNS, TLS): see cybersecurity_fundamentals_study_material.md
-- OS basics (Linux/Windows processes, permissions, logs): see cybersecurity_fundamentals_study_material.md
-- Web/AppSec concepts (SSRF, auth): see appsec_study_material.md
+- Networking (TCP/IP, DNS, TLS): see [cybersecurity_fundamentals_study_material.md](cybersecurity_fundamentals_study_material.md)
+- OS basics (Linux/Windows processes, permissions, logs): see [cybersecurity_fundamentals_study_material.md](cybersecurity_fundamentals_study_material.md)
+- Web/AppSec concepts (SSRF, auth): see [appsec_study_material.md](appsec_study_material.md)
 
 CS0A.1 “Cloud is an API”: control plane vs data plane
 - Control plane: management actions (create VM, change firewall rule, attach policy).
@@ -590,8 +588,8 @@ Defensive patterns
 - audit logging
 
 Resources
-- Kubernetes docs security overview: https://kubernetes.io/docs/concepts/security/
-- CIS Kubernetes Benchmark (reference via CIS Benchmarks site)
+- Kubernetes docs security overview: [https://kubernetes.io/docs/concepts/security/](https://kubernetes.io/docs/concepts/security/)
+- CIS Kubernetes Benchmark (reference via CIS Benchmarks site): [https://www.cisecurity.org/cis-benchmarks/](https://www.cisecurity.org/cis-benchmarks/)
 
 
 ## CS9) Secrets & key management (KMS/HSM, rotation, envelopes)
@@ -630,7 +628,7 @@ Concrete example
   - if you must use secrets: rotate automatically and alert on use from new locations.
 
 Reference
-- OWASP Secrets Management Cheat Sheet: https://cheatsheetseries.owasp.org/cheatsheets/Secrets_Management_Cheat_Sheet.html
+- OWASP Secrets Management Cheat Sheet: [https://cheatsheetseries.owasp.org/cheatsheets/Secrets_Management_Cheat_Sheet.html](https://cheatsheetseries.owasp.org/cheatsheets/Secrets_Management_Cheat_Sheet.html)
 
 
 ## CS10) Logging, detection, and cloud forensics
@@ -709,9 +707,9 @@ Why this matters
 - Track drift from baseline.
 
 ### 11.3 Reference frameworks
-- CSA Cloud Controls Matrix (CCM): https://cloudsecurityalliance.org/research/cloud-controls-matrix
-- NIST CSF: https://www.nist.gov/cyberframework
-- CIS Benchmarks: https://www.cisecurity.org/cis-benchmarks/
+- CSA Cloud Controls Matrix (CCM): [https://cloudsecurityalliance.org/research/cloud-controls-matrix](https://cloudsecurityalliance.org/research/cloud-controls-matrix)
+- NIST CSF: [https://www.nist.gov/cyberframework](https://www.nist.gov/cyberframework)
+- CIS Benchmarks: [https://www.cisecurity.org/cis-benchmarks/](https://www.cisecurity.org/cis-benchmarks/)
 
 
 ## CS12) Cloud incident response (IR) playbooks
@@ -758,8 +756,8 @@ L4) Detection baseline
 - alerts on public exposure
 
 Local/cheap practice options
-- kind (Kubernetes in Docker): https://kind.sigs.k8s.io/
-- Terraform (IaC): https://www.terraform.io/
+- kind (Kubernetes in Docker): [https://kind.sigs.k8s.io/](https://kind.sigs.k8s.io/)
+- Terraform (IaC): [https://www.terraform.io/](https://www.terraform.io/)
 
 
 ## CS14) Case studies (templates)
@@ -786,71 +784,71 @@ CS14.3 SSRF → metadata creds → data exfil
 
 ## CS15) Resource index (complete set)
 ## Foundations
-- CSA CCM: https://cloudsecurityalliance.org/research/cloud-controls-matrix
-- NIST CSF: https://www.nist.gov/cyberframework
-- CIS Benchmarks: https://www.cisecurity.org/cis-benchmarks/
-- MITRE ATT&CK (Cloud): https://attack.mitre.org/
+- CSA CCM: [https://cloudsecurityalliance.org/research/cloud-controls-matrix](https://cloudsecurityalliance.org/research/cloud-controls-matrix)
+- NIST CSF: [https://www.nist.gov/cyberframework](https://www.nist.gov/cyberframework)
+- CIS Benchmarks: [https://www.cisecurity.org/cis-benchmarks/](https://www.cisecurity.org/cis-benchmarks/)
+- MITRE ATT&CK (Cloud): [https://attack.mitre.org/](https://attack.mitre.org/)
 
 Cloud fundamentals (structured learning)
-- AWS Skill Builder: https://skillbuilder.aws/
-- Microsoft Learn (Azure training): https://learn.microsoft.com/training/
+- AWS Skill Builder: [https://skillbuilder.aws/](https://skillbuilder.aws/)
+- Microsoft Learn (Azure training): [https://learn.microsoft.com/training/](https://learn.microsoft.com/training/)
 
 Provider security reference (choose one cloud first)
-- AWS Well-Architected Framework (Security Pillar): https://docs.aws.amazon.com/wellarchitected/latest/security-pillar/welcome.html
-- Azure Cloud Adoption Framework (Security): https://learn.microsoft.com/azure/cloud-adoption-framework/
-- Google Cloud security foundations (start point): https://cloud.google.com/security
+- AWS Well-Architected Framework (Security Pillar): [https://docs.aws.amazon.com/wellarchitected/latest/security-pillar/welcome.html](https://docs.aws.amazon.com/wellarchitected/latest/security-pillar/welcome.html)
+- Azure Cloud Adoption Framework (Security): [https://learn.microsoft.com/azure/cloud-adoption-framework/](https://learn.microsoft.com/azure/cloud-adoption-framework/)
+- Google Cloud security foundations (start point): [https://cloud.google.com/security](https://cloud.google.com/security)
 
 Architected-practice (practical guidance)
-- AWS Well-Architected Labs (Security): https://www.wellarchitectedlabs.com/
-- Azure Well-Architected Framework (overview): https://learn.microsoft.com/azure/well-architected/
+- AWS Well-Architected Labs (Security): [https://www.wellarchitectedlabs.com/](https://www.wellarchitectedlabs.com/)
+- Azure Well-Architected Framework (overview): [https://learn.microsoft.com/azure/well-architected/](https://learn.microsoft.com/azure/well-architected/)
 
 Provider “security services” overviews
-- AWS Security Hub: https://docs.aws.amazon.com/securityhub/latest/userguide/what-is-securityhub.html
-- AWS GuardDuty: https://docs.aws.amazon.com/guardduty/latest/ug/what-is-guardduty.html
-- Microsoft Defender for Cloud: https://learn.microsoft.com/azure/defender-for-cloud/
+- AWS Security Hub: [https://docs.aws.amazon.com/securityhub/latest/userguide/what-is-securityhub.html](https://docs.aws.amazon.com/securityhub/latest/userguide/what-is-securityhub.html)
+- AWS GuardDuty: [https://docs.aws.amazon.com/guardduty/latest/ug/what-is-guardduty.html](https://docs.aws.amazon.com/guardduty/latest/ug/what-is-guardduty.html)
+- Microsoft Defender for Cloud: [https://learn.microsoft.com/azure/defender-for-cloud/](https://learn.microsoft.com/azure/defender-for-cloud/)
 
 Logging/monitoring
-- AWS CloudTrail: https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-user-guide.html
-- Azure Activity Log: https://learn.microsoft.com/azure/azure-monitor/essentials/activity-log
-- Google Cloud Audit Logs: https://cloud.google.com/logging/docs/audit
-- Azure Monitor (overview): https://learn.microsoft.com/azure/azure-monitor/
+- AWS CloudTrail: [https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-user-guide.html](https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-user-guide.html)
+- Azure Activity Log: [https://learn.microsoft.com/azure/azure-monitor/essentials/activity-log](https://learn.microsoft.com/azure/azure-monitor/essentials/activity-log)
+- Google Cloud Audit Logs: [https://cloud.google.com/logging/docs/audit](https://cloud.google.com/logging/docs/audit)
+- Azure Monitor (overview): [https://learn.microsoft.com/azure/azure-monitor/](https://learn.microsoft.com/azure/azure-monitor/)
 
 IAM and authorization references
-- AWS IAM: https://docs.aws.amazon.com/IAM/latest/UserGuide/introduction.html
-- AWS Organizations: https://docs.aws.amazon.com/organizations/latest/userguide/orgs_introduction.html
-- Azure RBAC: https://learn.microsoft.com/azure/role-based-access-control/overview
-- Microsoft Entra ID overview: https://learn.microsoft.com/entra/fundamentals/what-is-entra
-- Azure PIM (privileged access): https://learn.microsoft.com/entra/id-governance/privileged-identity-management/pim-configure
+- AWS IAM: [https://docs.aws.amazon.com/IAM/latest/UserGuide/introduction.html](https://docs.aws.amazon.com/IAM/latest/UserGuide/introduction.html)
+- AWS Organizations: [https://docs.aws.amazon.com/organizations/latest/userguide/orgs_introduction.html](https://docs.aws.amazon.com/organizations/latest/userguide/orgs_introduction.html)
+- Azure RBAC: [https://learn.microsoft.com/azure/role-based-access-control/overview](https://learn.microsoft.com/azure/role-based-access-control/overview)
+- Microsoft Entra ID overview: [https://learn.microsoft.com/entra/fundamentals/what-is-entra](https://learn.microsoft.com/entra/fundamentals/what-is-entra)
+- Azure PIM (privileged access): [https://learn.microsoft.com/entra/id-governance/privileged-identity-management/pim-configure](https://learn.microsoft.com/entra/id-governance/privileged-identity-management/pim-configure)
 
 Network references
-- AWS VPC: https://docs.aws.amazon.com/vpc/
-- Azure Virtual Network: https://learn.microsoft.com/azure/virtual-network/virtual-networks-overview
-- Azure Private Link / Private Endpoint: https://learn.microsoft.com/azure/private-link/private-endpoint-overview
+- AWS VPC: [https://docs.aws.amazon.com/vpc/](https://docs.aws.amazon.com/vpc/)
+- Azure Virtual Network: [https://learn.microsoft.com/azure/virtual-network/virtual-networks-overview](https://learn.microsoft.com/azure/virtual-network/virtual-networks-overview)
+- Azure Private Link / Private Endpoint: [https://learn.microsoft.com/azure/private-link/private-endpoint-overview](https://learn.microsoft.com/azure/private-link/private-endpoint-overview)
 
 Storage and data protection
-- AWS S3 Block Public Access: https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-control-block-public-access.html
-- AWS KMS: https://docs.aws.amazon.com/kms/latest/developerguide/overview.html
-- Azure Storage security guide: https://learn.microsoft.com/azure/storage/common/storage-security-guide
-- Azure Key Vault: https://learn.microsoft.com/azure/key-vault/general/overview
-- Azure Managed Identities: https://learn.microsoft.com/entra/identity/managed-identities-azure-resources/overview
+- AWS S3 Block Public Access: [https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-control-block-public-access.html](https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-control-block-public-access.html)
+- AWS KMS: [https://docs.aws.amazon.com/kms/latest/developerguide/overview.html](https://docs.aws.amazon.com/kms/latest/developerguide/overview.html)
+- Azure Storage security guide: [https://learn.microsoft.com/azure/storage/common/storage-security-guide](https://learn.microsoft.com/azure/storage/common/storage-security-guide)
+- Azure Key Vault: [https://learn.microsoft.com/azure/key-vault/general/overview](https://learn.microsoft.com/azure/key-vault/general/overview)
+- Azure Managed Identities: [https://learn.microsoft.com/entra/identity/managed-identities-azure-resources/overview](https://learn.microsoft.com/entra/identity/managed-identities-azure-resources/overview)
 
 Compute identity hardening
-- AWS EC2 instance metadata service (IMDSv2): https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/configuring-instance-metadata-service.html
+- AWS EC2 instance metadata service (IMDSv2): [https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/configuring-instance-metadata-service.html](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/configuring-instance-metadata-service.html)
 
 Governance benchmarks
-- Microsoft cloud security benchmark: https://learn.microsoft.com/security/benchmark/azure/
+- Microsoft cloud security benchmark: [https://learn.microsoft.com/security/benchmark/azure/](https://learn.microsoft.com/security/benchmark/azure/)
 
 Kubernetes security
-- Kubernetes security docs: https://kubernetes.io/docs/concepts/security/
+- Kubernetes security docs: [https://kubernetes.io/docs/concepts/security/](https://kubernetes.io/docs/concepts/security/)
 
 Hands-on labs (intentionally vulnerable training)
-- CloudGoat (AWS): https://github.com/RhinoSecurityLabs/cloudgoat
-- Flaws.cloud (AWS): https://flaws.cloud/
-- Azure Goat: https://github.com/ine-labs/AzureGoat
+- CloudGoat (AWS): [https://github.com/RhinoSecurityLabs/cloudgoat](https://github.com/RhinoSecurityLabs/cloudgoat)
+- Flaws.cloud (AWS): [https://flaws.cloud/](https://flaws.cloud/)
+- Azure Goat: [https://github.com/ine-labs/AzureGoat](https://github.com/ine-labs/AzureGoat)
 
 OWASP (relevant because cloud incidents often start as AppSec)
-- SSRF Cheat Sheet: https://cheatsheetseries.owasp.org/cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html
-- Secrets management cheat sheet: https://cheatsheetseries.owasp.org/cheatsheets/Secrets_Management_Cheat_Sheet.html
+- SSRF Cheat Sheet: [https://cheatsheetseries.owasp.org/cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html](https://cheatsheetseries.owasp.org/cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html)
+- Secrets management cheat sheet: [https://cheatsheetseries.owasp.org/cheatsheets/Secrets_Management_Cheat_Sheet.html](https://cheatsheetseries.owasp.org/cheatsheets/Secrets_Management_Cheat_Sheet.html)
 
 
 ## CS16) AWS CloudSec appendix (services, guardrails, labs)
@@ -921,11 +919,11 @@ Lab D: Network segmentation
 - Build VPC with public LB and private app tier; verify app tier has no public IP.
 
 CS16.5 AWS official references
-- CloudTrail: https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-user-guide.html
-- AWS Config: https://docs.aws.amazon.com/config/latest/developerguide/WhatIsConfig.html
-- GuardDuty: https://docs.aws.amazon.com/guardduty/latest/ug/what-is-guardduty.html
-- Security Hub: https://docs.aws.amazon.com/securityhub/latest/userguide/what-is-securityhub.html
-- IAM Access Analyzer: https://docs.aws.amazon.com/IAM/latest/UserGuide/what-is-access-analyzer.html
+- CloudTrail: [https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-user-guide.html](https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-user-guide.html)
+- AWS Config: [https://docs.aws.amazon.com/config/latest/developerguide/WhatIsConfig.html](https://docs.aws.amazon.com/config/latest/developerguide/WhatIsConfig.html)
+- GuardDuty: [https://docs.aws.amazon.com/guardduty/latest/ug/what-is-guardduty.html](https://docs.aws.amazon.com/guardduty/latest/ug/what-is-guardduty.html)
+- Security Hub: [https://docs.aws.amazon.com/securityhub/latest/userguide/what-is-securityhub.html](https://docs.aws.amazon.com/securityhub/latest/userguide/what-is-securityhub.html)
+- IAM Access Analyzer: [https://docs.aws.amazon.com/IAM/latest/UserGuide/what-is-access-analyzer.html](https://docs.aws.amazon.com/IAM/latest/UserGuide/what-is-access-analyzer.html)
 
 
 ## CS17) Azure CloudSec appendix (services, guardrails, labs)
@@ -988,11 +986,11 @@ Lab D: Policy guardrail
 - Assign a policy that denies public storage; verify non-compliant deploy is blocked.
 
 CS17.5 Azure official references
-- Activity Log: https://learn.microsoft.com/azure/azure-monitor/essentials/activity-log
-- Azure Monitor: https://learn.microsoft.com/azure/azure-monitor/
-- Azure Policy: https://learn.microsoft.com/azure/governance/policy/
-- Defender for Cloud: https://learn.microsoft.com/azure/defender-for-cloud/
-- Private Endpoint: https://learn.microsoft.com/azure/private-link/private-endpoint-overview
+- Activity Log: [https://learn.microsoft.com/azure/azure-monitor/essentials/activity-log](https://learn.microsoft.com/azure/azure-monitor/essentials/activity-log)
+- Azure Monitor: [https://learn.microsoft.com/azure/azure-monitor/](https://learn.microsoft.com/azure/azure-monitor/)
+- Azure Policy: [https://learn.microsoft.com/azure/governance/policy/](https://learn.microsoft.com/azure/governance/policy/)
+- Defender for Cloud: [https://learn.microsoft.com/azure/defender-for-cloud/](https://learn.microsoft.com/azure/defender-for-cloud/)
+- Private Endpoint: [https://learn.microsoft.com/azure/private-link/private-endpoint-overview](https://learn.microsoft.com/azure/private-link/private-endpoint-overview)
 
 
 ## CS18) AWS ↔ Azure quick mapping cheat sheet
@@ -1327,3 +1325,941 @@ How to use
 
 END OF CLOUD SECURITY STUDY MATERIAL
 
+
+---
+
+# CLOUDSEC DEEP DIVE ADDENDUM
+
+## CSD1) GCP Cloud Security Appendix
+
+### CSD1.1 GCP Core Security Concepts
+
+**GCP Hierarchy:**
+```
+Organization
++-- Folders (optional grouping)
+�   +-- Projects (primary security boundary)
+�       +-- Resources
+```
+
+**Key Services Mapping:**
+| Purpose | AWS | Azure | GCP |
+|---------|-----|-------|-----|
+| IAM | IAM | Azure AD + RBAC | Cloud IAM |
+| Audit Logs | CloudTrail | Activity Log | Cloud Audit Logs |
+| Object Storage | S3 | Blob Storage | Cloud Storage |
+| Secrets | Secrets Manager | Key Vault | Secret Manager |
+| KMS | KMS | Key Vault | Cloud KMS |
+| Guardrails | SCPs + Config | Azure Policy | Org Policies |
+| Security Posture | Security Hub | Defender for Cloud | Security Command Center |
+
+### CSD1.2 GCP IAM Model
+
+**IAM Principals:**
+```yaml
+google_account: user@gmail.com              # Human user
+service_account: name@project.iam.gserviceaccount.com  # Workload identity
+group: group@domain.com                      # Group of users
+domain: domain.com                           # All users in domain
+allUsers: (public)                           # DANGEROUS
+allAuthenticatedUsers: (any Google account)  # Still DANGEROUS
+```
+
+**IAM Binding Structure:**
+```yaml
+# Role bindings connect principals to roles on resources
+binding:
+  role: roles/storage.objectViewer
+  members:
+    - serviceAccount:myapp@myproject.iam.gserviceaccount.com
+  condition:  # Optional - add restrictions
+    expression: resource.name.startsWith("projects/myproject/buckets/allowed-bucket")
+```
+
+### CSD1.3 GCP Logging and Detection
+
+**Cloud Audit Logs Types:**
+```yaml
+log_types:
+  admin_activity:    # Always on, free
+    - Resource creation/deletion
+    - IAM changes
+    - Settings changes
+    
+  data_access:       # Must be enabled per service
+    - Read operations
+    - Data access
+    
+  system_event:      # Always on, free
+    - GCP internal operations
+    
+  policy_denied:     # Always on
+    - VPC Service Controls denials
+    - Org Policy denials
+```
+
+**Log Query Example (Cloud Logging):**
+```
+# Find IAM changes
+protoPayload.methodName="SetIamPolicy"
+
+# Find who accessed a bucket
+protoPayload.serviceName="storage.googleapis.com"
+protoPayload.methodName=~"storage.objects.(get|list)"
+resource.labels.bucket_name="my-sensitive-bucket"
+```
+
+### CSD1.4 GCP Security Best Practices
+
+**Day-0 GCP Baseline:**
+```yaml
+organization_setup:
+  - Set up Organization (not just standalone projects)
+  - Enable Cloud Identity for user management
+  - Configure Organization Policy constraints
+  - Set up centralized logging (org-level sink)
+  
+identity:
+  - Require 2FA for all users
+  - Use groups for access (not individual bindings)
+  - Prefer service accounts for workloads
+  - Enable Workload Identity for GKE
+  
+logging:
+  - Admin Activity logs -> central bucket/BigQuery
+  - Enable Data Access logs for sensitive services
+  - Set appropriate retention
+  - Alert on log export changes
+```
+
+**Critical Org Policy Constraints:**
+```yaml
+# Deny public access to storage
+constraints/storage.publicAccessPrevention: enforced
+
+# Restrict where resources can be created
+constraints/gcp.resourceLocations:
+  allowedValues:
+    - us-central1
+    - europe-west1
+
+# Require VPC for Cloud Functions/Run
+constraints/cloudfunctions.requireVPCConnector: enforced
+```
+
+
+## CSD2) Cloud Incident Response Deep Dive
+
+### CSD2.1 IR Playbook - Compromised IAM Credentials
+
+**Scenario:** Access keys or credentials suspected stolen
+
+**Immediate Actions (First 15 minutes):**
+```yaml
+step_1_contain:
+  aws:
+    - Disable the access key (don't delete - preserve evidence)
+    - aws iam update-access-key --access-key-id AKIA... --status Inactive
+    
+  azure:
+    - Revoke user sessions
+    - Disable/reset service principal credentials
+    - az ad sp credential reset --id sp-id
+    
+  gcp:
+    - Disable service account key
+    - gcloud iam service-accounts keys disable key-id
+    
+step_2_assess_scope:
+  - What role/permissions did this identity have?
+  - What resources could it access?
+  - When was it potentially compromised?
+```
+
+**Investigation (Next 30 minutes):**
+```yaml
+log_queries:
+  aws:
+    - CloudTrail - filter by userIdentity.accessKeyId
+    - Look for unusual regions, times, API calls
+    
+  azure:
+    - Activity Log - filter by caller
+    - Sign-in logs - look for anomalous locations
+    
+  gcp:
+    - Cloud Audit Logs - filter by principalEmail
+    - Look for data access, IAM changes, new resources
+    
+what_to_look_for:
+  - API calls not normally made by this workload
+  - Access from unexpected IP/region
+  - Creation of new credentials (persistence)
+  - Data access (exfiltration)
+  - Resource creation (cryptomining)
+```
+
+**Recovery:**
+```yaml
+actions:
+  - Generate new credentials (if legitimate workload)
+  - Review and tighten permissions
+  - Check for persistence:
+    - New users/service accounts created?
+    - New access keys created?
+    - New role assignments?
+  - Review data access:
+    - What was read?
+    - What was modified/deleted?
+  - Update secrets that this identity had access to
+```
+
+### CSD2.2 IR Playbook - Public Data Exposure
+
+**Scenario:** Data discovered to be publicly accessible
+
+**Immediate Actions:**
+```yaml
+step_1_confirm_and_contain:
+  - Verify the exposure (check ACLs/policies)
+  - Remove public access immediately
+  - Don't delete data yet (preserve evidence)
+  
+  aws_s3:
+    aws s3api put-public-access-block --bucket BUCKET --public-access-block-configuration BlockPublicAcls=true,IgnorePublicAcls=true,BlockPublicPolicy=true,RestrictPublicBuckets=true
+      
+  azure_storage:
+    az storage account update -n ACCOUNT -g RG --allow-blob-public-access false
+    
+  gcp_storage:
+    gsutil iam ch -d allUsers gs://BUCKET
+    gsutil iam ch -d allAuthenticatedUsers gs://BUCKET
+```
+
+**Investigation:**
+```yaml
+questions_to_answer:
+  - When did the exposure start? (log timeline)
+  - How did it become public? (who changed settings)
+  - What data was exposed? (data classification)
+  - Was it accessed? (data access logs)
+  - By whom? (IP addresses, user agents)
+```
+
+### CSD2.3 IR Playbook - Cryptomining Detection
+
+**Indicators:**
+```yaml
+detection_signals:
+  compute:
+    - Unusual CPU utilization (sustained high)
+    - New instances in unusual regions
+    - GPU instances appearing
+    - Instances with no known purpose
+    
+  billing:
+    - Unexpected cost spikes
+    - Compute costs in regions you don't use
+    
+  network:
+    - Connections to mining pools
+    - Unusual outbound traffic patterns
+```
+
+**Response:**
+```yaml
+immediate:
+  - Isolate/stop suspicious instances
+  - Preserve disk/memory for forensics
+  - Identify how attacker got in
+  
+investigation:
+  - Check for compromised credentials
+  - Check for exposed keys/tokens in code
+  - Review all recent IAM changes
+  - Look for persistence mechanisms
+  
+prevention:
+  - Budget alerts
+  - Region restrictions
+  - Instance type restrictions
+  - Monitoring for unusual compute patterns
+```
+
+
+## CSD3) Multi-Cloud Security Patterns
+
+### CSD3.1 Common Multi-Cloud Challenges
+
+```yaml
+challenges:
+  identity:
+    - Different IAM models
+    - No native federation between clouds
+    - Service accounts work differently
+    
+  logging:
+    - Different log formats
+    - Different retention defaults
+    - Correlation across clouds is hard
+    
+  policy:
+    - Different policy languages
+    - Different enforcement points
+    - Governance complexity increases
+```
+
+### CSD3.2 Universal Cloud Security Checklist (Extended)
+
+```yaml
+identity:
+  - Single source of truth for human identities
+  - MFA required for all admin access
+  - Workloads use native identity (not long-lived keys)
+  - Regular access reviews across all clouds
+  - Privileged access is time-limited
+
+logging:
+  - All control-plane logs enabled
+  - Logs centralized (or at least indexed together)
+  - Retention meets compliance requirements
+  - Logs protected from deletion
+  - Alert on logging changes
+
+network:
+  - Default deny inbound
+  - No admin ports open to internet
+  - Private connectivity for sensitive data
+  - Egress filtering for sensitive workloads
+  - Cross-cloud connectivity secured
+
+data:
+  - Data classified by sensitivity
+  - Encryption at rest (customer-managed keys for sensitive)
+  - No public data stores without explicit approval
+  - Backup/DR tested and protected
+
+guardrails:
+  - Preventive controls (deny public, require encryption)
+  - Detective controls (CSPM, anomaly detection)
+  - Corrective controls (auto-remediation where safe)
+
+incident_response:
+  - IR playbooks for each cloud
+  - Contact info for cloud provider security
+  - Forensic capabilities (disk/memory capture)
+  - Tested recovery procedures
+```
+
+
+## CSD4) Kubernetes Security Deep Dive
+
+### CSD4.1 K8s Attack Surface
+
+```yaml
+attack_vectors:
+  control_plane:
+    - API server exposure
+    - etcd access
+    - Kubelet API
+    
+  workload:
+    - Container escapes
+    - Pod-to-pod lateral movement
+    - Service account token theft
+    
+  supply_chain:
+    - Malicious images
+    - Compromised base images
+    - Vulnerable dependencies
+    
+  network:
+    - Unrestricted pod communication
+    - Exposed services
+    - Ingress misconfigurations
+```
+
+### CSD4.2 K8s Security Controls
+
+**Pod Security Standards:**
+```yaml
+# Restricted policy (most secure)
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: secure-app
+  labels:
+    pod-security.kubernetes.io/enforce: restricted
+    pod-security.kubernetes.io/warn: restricted
+    pod-security.kubernetes.io/audit: restricted
+```
+
+**Network Policy Example:**
+```yaml
+# Deny all ingress by default
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: default-deny-ingress
+spec:
+  podSelector: {}
+  policyTypes:
+  - Ingress
+```
+
+**Service Account Best Practices:**
+```yaml
+# Disable automount of service account token
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: my-app
+automountServiceAccountToken: false
+
+# In pod spec, explicitly mount only if needed
+spec:
+  serviceAccountName: my-app
+  automountServiceAccountToken: false  # or true if actually needed
+```
+
+### CSD4.3 K8s Security Checklist
+
+```yaml
+cluster_hardening:
+  - API server not exposed to internet
+  - RBAC enabled and configured
+  - etcd encrypted at rest
+  - Audit logging enabled
+  - Node OS hardened
+
+workload_security:
+  - Pod Security Standards enforced
+  - No privileged containers
+  - Read-only root filesystem
+  - Resource limits set
+  - Security contexts defined
+
+network_security:
+  - Network policies defined
+  - Ingress controller hardened
+  - mTLS between services (service mesh)
+  - Egress filtering
+
+supply_chain:
+  - Image scanning in CI/CD
+  - Signed images required
+  - Private registry
+  - Regular vulnerability patching
+```
+
+
+## CSD5) Container Security
+
+### CSD5.1 Dockerfile Security
+
+**Secure Dockerfile Example:**
+```dockerfile
+# Use specific version, not latest
+FROM python:3.11-slim-bookworm
+
+# Create non-root user
+RUN groupadd -r appgroup && useradd -r -g appgroup appuser
+
+# Set working directory
+WORKDIR /app
+
+# Copy and install dependencies first (better caching)
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy application code
+COPY --chown=appuser:appgroup . .
+
+# Switch to non-root user
+USER appuser
+
+# Use ENTRYPOINT for the main command
+ENTRYPOINT ["python", "app.py"]
+```
+
+**Container Security Checklist:**
+```yaml
+image_building:
+  - Use minimal base images (alpine, distroless, slim)
+  - Pin image versions (sha256 digest best)
+  - Don't install unnecessary packages
+  - Remove build tools after use
+  - Scan for vulnerabilities before pushing
+
+runtime:
+  - Run as non-root
+  - Drop all capabilities, add only needed
+  - Read-only filesystem where possible
+  - No privileged mode
+  - Resource limits defined
+
+secrets:
+  - Never bake secrets into images
+  - Use secret management (K8s secrets, Vault, cloud KMS)
+  - Environment variables visible in process list - be careful
+```
+
+### CSD5.2 Container Runtime Security
+
+```yaml
+runtime_protections:
+  seccomp:
+    - Filter system calls
+    - Default Docker profile blocks ~44 syscalls
+    
+  apparmor:
+    - Mandatory access control
+    - Restricts file/network/capability access
+    
+  selinux:
+    - Label-based access control
+    - Alternative to AppArmor
+    
+  capabilities:
+    - Drop ALL, add only needed
+    - Common needed: NET_BIND_SERVICE, SETUID, SETGID
+```
+
+
+ENHANCED END OF CLOUD SECURITY STUDY MATERIAL
+
+
+---
+
+## CSD6) AWS Attack Scenarios Deep Dive
+
+### CSD6.1 Lambda/Serverless Security
+
+**Attack Surface:**
+```yaml
+lambda_threats:
+  code_injection:
+    - Untrusted input in event data
+    - Environment variable manipulation
+    - Dependency vulnerabilities
+    
+  privilege_escalation:
+    - Over-permissioned execution role
+    - iam:PassRole abuse
+    - Resource-based policy misconfig
+    
+  data_exposure:
+    - /tmp persistence between invocations
+    - Logging sensitive data
+    - Return value exposure
+    
+  denial_of_service:
+    - Reserved concurrency exhaustion
+    - Timeout manipulation
+    - Recursive invocation
+```
+
+**Secure Lambda Checklist:**
+```yaml
+code_security:
+  - [ ] Input validation on all event sources
+  - [ ] No secrets in environment variables (use Secrets Manager)
+  - [ ] Dependencies scanned and minimal
+  - [ ] No sensitive data in logs
+  
+iam_security:
+  - [ ] Least privilege execution role
+  - [ ] No wildcard permissions
+  - [ ] Resource-based policies reviewed
+  - [ ] No iam:PassRole unless required
+  
+runtime_security:
+  - [ ] /tmp cleaned between invocations if sensitive
+  - [ ] Timeouts set appropriately
+  - [ ] Reserved concurrency configured
+  - [ ] Dead letter queue for failures
+```
+
+### CSD6.2 S3 Attack Patterns
+
+**Common S3 Misconfigurations:**
+```yaml
+public_access:
+  bucket_acl_public:
+    risk: "Anyone can list/read objects"
+    detect: "aws s3api get-bucket-acl"
+    fix: "Block public access at account level"
+    
+  bucket_policy_public:
+    risk: "Policy allows Principal: *"
+    detect: "aws s3api get-bucket-policy"
+    fix: "Remove public principal, add conditions"
+    
+  object_acl_public:
+    risk: "Individual objects world-readable"
+    detect: "aws s3api get-object-acl"
+    fix: "Bucket-level ACL enforcement"
+
+data_exposure:
+  versioning_disabled:
+    risk: "No recovery from deletion/overwrite"
+    detect: "aws s3api get-bucket-versioning"
+    fix: "Enable versioning + MFA delete"
+    
+  no_encryption:
+    risk: "Data at rest unencrypted"
+    detect: "aws s3api get-bucket-encryption"
+    fix: "SSE-S3 minimum, SSE-KMS for sensitive"
+    
+  logging_disabled:
+    risk: "No visibility into access"
+    detect: "aws s3api get-bucket-logging"
+    fix: "Enable server access logging"
+```
+
+**S3 Privilege Escalation Paths:**
+```yaml
+attack_chains:
+  bucket_takeover:
+    - Find dangling S3 reference (CNAME, CloudFront)
+    - Create bucket with same name
+    - Serve malicious content
+    
+  policy_manipulation:
+    - Attacker has s3:PutBucketPolicy
+    - Add policy granting themselves access
+    - Exfiltrate data
+    
+  presigned_url_abuse:
+    - Leaked/stolen presigned URL
+    - Access objects without credentials
+    - May persist beyond credential rotation
+```
+
+### CSD6.3 IAM Privilege Escalation Techniques
+
+**High-Risk IAM Permissions:**
+```yaml
+critical_permissions:
+  # Direct escalation
+  iam:CreateUser: "Create new identity"
+  iam:CreateAccessKey: "Get persistent creds for any user"
+  iam:AttachUserPolicy: "Grant any permissions"
+  iam:PutUserPolicy: "Inline policy to grant permissions"
+  iam:CreateLoginProfile: "Enable console access"
+  iam:UpdateLoginProfile: "Reset password"
+  
+  # Indirect escalation
+  iam:PassRole: "Assume permissions of passed role"
+  sts:AssumeRole: "Become another role"
+  lambda:CreateFunction: "Run code as Lambda role"
+  lambda:UpdateFunctionCode: "Inject code into existing"
+  ec2:RunInstances: "Launch with instance profile"
+  cloudformation:CreateStack: "Deploy with service role"
+  
+  # Persistence
+  iam:CreateRole: "Create backdoor role"
+  iam:UpdateAssumeRolePolicy: "Add trust to existing role"
+```
+
+**Escalation Detection Queries (CloudTrail):**
+```json
+{
+  "eventSource": "iam.amazonaws.com",
+  "eventName": [
+    "CreateUser",
+    "CreateAccessKey", 
+    "AttachUserPolicy",
+    "PutUserPolicy",
+    "CreateLoginProfile",
+    "UpdateAssumeRolePolicy"
+  ]
+}
+```
+
+
+## CSD7) Azure Attack Scenarios
+
+### CSD7.1 Azure AD/Entra ID Attacks
+
+**Common Attack Vectors:**
+```yaml
+identity_attacks:
+  password_spray:
+    target: "Azure AD authentication endpoint"
+    technique: "Common passwords across many accounts"
+    detection: "Sign-in logs: many accounts, few passwords"
+    defense: "Smart lockout, password protection"
+    
+  consent_phishing:
+    target: "OAuth app consent flow"
+    technique: "Trick user into granting app permissions"
+    detection: "Audit logs: high-risk app consent"
+    defense: "Admin consent required, app governance"
+    
+  token_theft:
+    target: "Access/refresh tokens"
+    technique: "Steal from browser, token cache"
+    detection: "Sign-in anomalies, impossible travel"
+    defense: "CAE, token binding, session policies"
+    
+  directory_enumeration:
+    target: "Azure AD Graph/MS Graph"
+    technique: "Enumerate users, groups, apps"
+    detection: "Audit large read operations"
+    defense: "Restrict user enumeration settings"
+```
+
+### CSD7.2 Azure Resource Attacks
+
+**Storage Account Attacks:**
+```yaml
+blob_storage_misconfig:
+  anonymous_access:
+    - Container set to Blob or Container access
+    - Storage account allows public access
+    - Defense: Disable at account level
+    
+  shared_key_exposure:
+    - Storage account keys leaked
+    - Full access to all data
+    - Defense: Disable shared key, use Azure AD
+    
+  sas_token_abuse:
+    - Over-permissioned SAS tokens
+    - Long-lived tokens
+    - Defense: Stored access policies, short expiry
+```
+
+**Key Vault Attacks:**
+```yaml
+key_vault_risks:
+  overly_permissive_access:
+    - Too many users with Get secret
+    - No access reviews
+    - Defense: RBAC, just-in-time access
+    
+  soft_delete_disabled:
+    - Secrets permanently deleted
+    - No recovery possible
+    - Defense: Enable soft-delete + purge protection
+    
+  no_monitoring:
+    - Secret access not logged
+    - Exfiltration undetected
+    - Defense: Diagnostic settings, alerts
+```
+
+
+## CSD8) Detection Engineering for Cloud
+
+### CSD8.1 CloudTrail Detection Rules
+
+**High-Fidelity Detections:**
+```yaml
+# Rule 1: Root account usage
+root_account_login:
+  source: CloudTrail
+  condition: |
+    userIdentity.type = "Root" AND
+    eventType = "AwsConsoleSignIn"
+  severity: CRITICAL
+  response: Immediate investigation
+
+# Rule 2: IAM user created
+new_iam_user:
+  source: CloudTrail
+  condition: |
+    eventSource = "iam.amazonaws.com" AND
+    eventName = "CreateUser"
+  severity: HIGH
+  response: Verify with change management
+
+# Rule 3: Security group opened to internet
+sg_opened_to_world:
+  source: CloudTrail
+  condition: |
+    eventSource = "ec2.amazonaws.com" AND
+    eventName IN ("AuthorizeSecurityGroupIngress", "AuthorizeSecurityGroupEgress") AND
+    requestParameters.cidrIp = "0.0.0.0/0"
+  severity: HIGH
+  response: Review and restrict
+
+# Rule 4: S3 bucket made public
+s3_public_access:
+  source: CloudTrail
+  condition: |
+    eventSource = "s3.amazonaws.com" AND
+    eventName IN ("PutBucketAcl", "PutBucketPolicy") AND
+    (requestParameters contains "AllUsers" OR 
+     requestParameters contains "AuthenticatedUsers")
+  severity: CRITICAL
+  response: Immediate remediation
+
+# Rule 5: CloudTrail stopped
+cloudtrail_stopped:
+  source: CloudTrail
+  condition: |
+    eventSource = "cloudtrail.amazonaws.com" AND
+    eventName IN ("StopLogging", "DeleteTrail")
+  severity: CRITICAL
+  response: Immediate investigation - possible attacker covering tracks
+```
+
+### CSD8.2 Azure Sentinel/KQL Detection Queries
+
+**Identity Threats:**
+```kql
+// Brute force detection
+SigninLogs
+| where TimeGenerated > ago(1h)
+| where ResultType != 0
+| summarize FailedAttempts = count(), 
+            DistinctUsers = dcount(UserPrincipalName)
+  by IPAddress, bin(TimeGenerated, 5m)
+| where FailedAttempts > 10
+
+// Impossible travel
+SigninLogs
+| where TimeGenerated > ago(24h)
+| where ResultType == 0
+| project UserPrincipalName, Location, TimeGenerated
+| order by UserPrincipalName, TimeGenerated
+| serialize
+| extend PrevLocation = prev(Location), 
+         PrevTime = prev(TimeGenerated),
+         PrevUser = prev(UserPrincipalName)
+| where UserPrincipalName == PrevUser
+| extend TimeDiff = datetime_diff('minute', TimeGenerated, PrevTime)
+| where Location != PrevLocation and TimeDiff < 60
+
+// High-risk app consent
+AuditLogs
+| where OperationName == "Consent to application"
+| where Result == "success"
+| extend AppName = tostring(TargetResources[0].displayName)
+| extend Permissions = tostring(TargetResources[0].modifiedProperties)
+| where Permissions contains "ReadWrite" or Permissions contains "All"
+```
+
+**Resource Threats:**
+```kql
+// Storage account key access
+AzureActivity
+| where OperationNameValue == "MICROSOFT.STORAGE/STORAGEACCOUNTS/LISTKEYS/ACTION"
+| project TimeGenerated, Caller, ResourceGroup, _ResourceId
+
+// Key Vault secret access spike
+AzureDiagnostics
+| where ResourceProvider == "MICROSOFT.KEYVAULT"
+| where OperationName == "SecretGet"
+| summarize AccessCount = count() by CallerIPAddress, bin(TimeGenerated, 1h)
+| where AccessCount > 100
+
+// Public IP created
+AzureActivity
+| where OperationNameValue == "MICROSOFT.NETWORK/PUBLICIPADDRESSES/WRITE"
+| where ActivityStatusValue == "Success"
+```
+
+
+## CSD9) Cloud Security Architecture Patterns
+
+### CSD9.1 Zero Trust Network Architecture
+
+```
+                    ZERO TRUST CLOUD ARCHITECTURE
+===========================================================================
+
+                         +---------------------+
+                         �   Identity Provider �
+                         �   (Azure AD/Okta)   �
+                         +---------------------+
+                                    � Verify Identity
+                                    ?
++-------------+    +-------------------------------------+
+�   User      �---?�         Policy Engine              �
+�   Device    �    �  - Check identity                   �
++-------------+    �  - Check device compliance          �
+                   �  - Check location/context           �
+                   �  - Determine access level           �
+                   +-------------------------------------+
+                                  �
+              +-------------------+-------------------+
+              ?                   ?                   ?
+    +-----------------+ +-----------------+ +-----------------+
+    �  Micro-segment  � �  Micro-segment  � �  Micro-segment  �
+    �   (Web Tier)    � �   (App Tier)    � �   (Data Tier)   �
+    �                 � �                 � �                 �
+    � +-------------+ � � +-------------+ � � +-------------+ �
+    � �  Workload   � � � �  Workload   � � � �  Database   � �
+    � �  Identity   � � � �  Identity   � � � �  Identity   � �
+    � +-------------+ � � +-------------+ � � +-------------+ �
+    +-----------------+ +-----------------+ +-----------------+
+           �                    �                    �
+           +-----------------------------------------+
+                               �
+                    +---------------------+
+                    �    Logging/SIEM     �
+                    �  (Every request     �
+                    �   logged & analyzed)�
+                    +---------------------+
+
+Key Principles:
+1. Never trust, always verify
+2. Assume breach
+3. Verify explicitly
+4. Least privilege access
+5. Micro-segmentation
+```
+
+### CSD9.2 Landing Zone Security Pattern
+
+```yaml
+aws_landing_zone:
+  management_account:
+    - CloudTrail (org-wide)
+    - AWS Config (org-wide)
+    - SCPs for guardrails
+    - Billing/cost management
+    
+  security_account:
+    - Security Hub aggregation
+    - GuardDuty delegated admin
+    - Centralized logging
+    - IR tooling
+    
+  log_archive_account:
+    - Immutable log storage
+    - Long-term retention
+    - Cross-account access controls
+    
+  shared_services_account:
+    - DNS (Route 53)
+    - Directory services
+    - Shared networking (Transit Gateway)
+    
+  workload_accounts:
+    - Development
+    - Staging
+    - Production
+    - (Separate accounts per workload)
+
+azure_landing_zone:
+  management_groups:
+    root:
+      - platform (connectivity, identity, management)
+      - landing_zones (corp, online)
+      - decommissioned
+      - sandbox
+      
+  key_components:
+    - Hub VNet for connectivity
+    - Azure Firewall/NVA
+    - Log Analytics workspace
+    - Azure Policy assignments
+    - Microsoft Defender for Cloud
+```
+
+
+FINAL END OF CLOUD SECURITY STUDY MATERIAL
