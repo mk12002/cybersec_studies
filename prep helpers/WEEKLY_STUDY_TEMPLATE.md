@@ -1,5 +1,3 @@
-WEEKLY_STUDY_TEMPLATE.md
-
 # WEEKLY STUDY TEMPLATE (6 HOURS/WEEK)
 
 **Goal:** Maintain consistency, reduce decision fatigue, and produce portfolio artifacts every week.
@@ -985,4 +983,3 @@ Or: 50/10 Blocks (better for deep work):
 **Remember:** Consistency beats intensity. 6 hours every week for a year beats 60 hours for one month.
 
 Start small. Stay consistent. Build over time.
-
