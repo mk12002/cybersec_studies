@@ -1,5 +1,3 @@
-PORTFOLIO_PROJECTS.md
-
 # 🚀 PORTFOLIO PROJECTS FOR SECURITY + ML
 **Build Real Projects That Get You Hired**
 
@@ -4018,9 +4016,9 @@ One paragraph explaining the project.
 \`\`\`
 
 ## 📖 Documentation
-- Threat Model: docs/THREAT_MODEL.md
-- Security Controls: docs/SECURITY.md
-- API Docs: docs/API.md
+- [Threat Model](docs/THREAT_MODEL.md)
+- [Security Controls](docs/SECURITY.md)
+- [API Docs](docs/API.md)
 
 ## 🧪 Testing
 \`\`\`bash
@@ -4116,4 +4114,3 @@ Key takeaways from building this.
 **Remember: One well-documented project > Five half-finished repos** 🎯
 
 **The best time to start was yesterday. The second best time is now.** 🚀
-
