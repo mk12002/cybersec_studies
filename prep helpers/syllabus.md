@@ -1,5 +1,3 @@
-sullabus.md
-
 # CYBERSECURITY FUNDAMENTALS MASTERY GUIDE (2026)
 For a final-year undergrad with a strong ML background
 Goal: “unshakeable fundamentals” before specialization (AppSec/CloudSec/AISec)
@@ -1047,111 +1045,111 @@ APPENDIX E: COURSES (COURSERA) + YOUTUBE + LABS + DATASETS (LINKS)
 ### This appendix is intentionally link-heavy. Pick ONE primary course per topic and fill gaps with labs.
 
 E0) Core “always-open” references
-- MITRE ATT&CK (tactics/techniques vocabulary): https://attack.mitre.org/
-- OWASP Top 10 (web risk map): https://owasp.org/Top10/2025/
-- OWASP ASVS (what “good web security” looks like): https://owasp.org/www-project-application-security-verification-standard/
-- OWASP Cheat Sheet Series (high ROI): https://cheatsheetseries.owasp.org/
-- CIS Benchmarks (hardening baselines): https://www.cisecurity.org/cis-benchmarks
-- Sysinternals (Windows investigation tools hub): https://learn.microsoft.com/sysinternals/
-- Sysmon (host telemetry): https://learn.microsoft.com/sysinternals/downloads/sysmon
-- Wireshark: https://www.wireshark.org/
+- MITRE ATT&CK (tactics/techniques vocabulary): [https://attack.mitre.org/](https://attack.mitre.org/)
+- OWASP Top 10 (web risk map): [https://owasp.org/Top10/2025/](https://owasp.org/Top10/2025/)
+- OWASP ASVS (what “good web security” looks like): [https://owasp.org/www-project-application-security-verification-standard/](https://owasp.org/www-project-application-security-verification-standard/)
+- OWASP Cheat Sheet Series (high ROI): [https://cheatsheetseries.owasp.org/](https://cheatsheetseries.owasp.org/)
+- CIS Benchmarks (hardening baselines): [https://www.cisecurity.org/cis-benchmarks](https://www.cisecurity.org/cis-benchmarks)
+- Sysinternals (Windows investigation tools hub): [https://learn.microsoft.com/sysinternals/](https://learn.microsoft.com/sysinternals/)
+- Sysmon (host telemetry): [https://learn.microsoft.com/sysinternals/downloads/sysmon](https://learn.microsoft.com/sysinternals/downloads/sysmon)
+- Wireshark: [https://www.wireshark.org/](https://www.wireshark.org/)
 
 Incident response & logging standards (excellent fundamentals reading):
-- NIST SP 800-61 Rev. 3 (Incident Handling Guide): https://csrc.nist.gov/pubs/sp/800/61/r3/final
-- NIST SP 800-92 (Log Management): https://csrc.nist.gov/publications/detail/sp/800-92/final
+- NIST SP 800-61 Rev. 3 (Incident Handling Guide): [https://csrc.nist.gov/pubs/sp/800/61/r3/final](https://csrc.nist.gov/pubs/sp/800/61/r3/final)
+- NIST SP 800-92 (Log Management): [https://csrc.nist.gov/publications/detail/sp/800-92/final](https://csrc.nist.gov/publications/detail/sp/800-92/final)
 
 E1) Coursera: high-signal picks (foundation-first)
 Cybersecurity foundations (broad overview + portfolio-ish):
-- Google Cybersecurity Professional Certificate: https://www.coursera.org/professional-certificates/google-cybersecurity
+- Google Cybersecurity Professional Certificate: [https://www.coursera.org/professional-certificates/google-cybersecurity](https://www.coursera.org/professional-certificates/google-cybersecurity)
 
 If you want extra “IT fundamentals” to make the security topics easier:
-- Google IT Support Professional Certificate: https://www.coursera.org/professional-certificates/google-it-support
+- Google IT Support Professional Certificate: [https://www.coursera.org/professional-certificates/google-it-support](https://www.coursera.org/professional-certificates/google-it-support)
 
 Intro survey (good for terminology, but don’t stop here):
-- Introduction to Cyber Security Specialization (NYU): https://www.coursera.org/specializations/intro-cyber-security
+- Introduction to Cyber Security Specialization (NYU): [https://www.coursera.org/specializations/intro-cyber-security](https://www.coursera.org/specializations/intro-cyber-security)
 
 Networking fundamentals:
-- The Bits and Bytes of Computer Networking: https://www.coursera.org/learn/computer-networking
+- The Bits and Bytes of Computer Networking: [https://www.coursera.org/learn/computer-networking](https://www.coursera.org/learn/computer-networking)
 
 Operating systems fundamentals:
-- Operating Systems and You: Becoming a Power User: https://www.coursera.org/learn/os-power-user
+- Operating Systems and You: Becoming a Power User: [https://www.coursera.org/learn/os-power-user](https://www.coursera.org/learn/os-power-user)
 
 Applied cryptography foundations:
-- Cryptography (Jonathan Katz, UMD): https://www.coursera.org/learn/cryptography
+- Cryptography (Jonathan Katz, UMD): [https://www.coursera.org/learn/cryptography](https://www.coursera.org/learn/cryptography)
 
 If a Coursera page is blocked in your region/network:
 - use Coursera search for the exact course name
 - or open in a different network and bookmark it
 
 E2) University-grade course materials (free, deep)
-- MIT 6.858 (Computer Systems Security): https://web.mit.edu/6.858/
-- Stanford CS155 (computer & network security): https://cs155.stanford.edu/
+- MIT 6.858 (Computer Systems Security): [https://web.mit.edu/6.858/](https://web.mit.edu/6.858/)
+- Stanford CS155 (computer & network security): [https://cs155.stanford.edu/](https://cs155.stanford.edu/)
 	- Includes projects/readings (some very advanced). Use for depth, not as your first exposure.
 
 E3) Web security: the best free lab curriculum
-- PortSwigger Web Security Academy (free learn + labs): https://portswigger.net/web-security
+- PortSwigger Web Security Academy (free learn + labs): [https://portswigger.net/web-security](https://portswigger.net/web-security)
 
 E4) Legal local web labs you can run in your own environment
-- OWASP WebGoat (deliberately insecure training app): https://owasp.org/www-project-webgoat/
-- OWASP Juice Shop (deliberately insecure store app): https://owasp.org/www-project-juice-shop/
+- OWASP WebGoat (deliberately insecure training app): [https://owasp.org/www-project-webgoat/](https://owasp.org/www-project-webgoat/)
+- OWASP Juice Shop (deliberately insecure store app): [https://owasp.org/www-project-juice-shop/](https://owasp.org/www-project-juice-shop/)
 	(If the OWASP page is blocked, search “OWASP Juice Shop GitHub” and use the official repo.)
 
 E5) Blue-team / DFIR practice platforms
-- Blue Team Labs Online: https://blueteamlabs.online/
+- Blue Team Labs Online: [https://blueteamlabs.online/](https://blueteamlabs.online/)
 	- Great for practical investigations (PCAPs, memory dumps, logs, phishing).
 
-- CyberDefenders (DFIR/SOC challenges): https://cyberdefenders.org/
+- CyberDefenders (DFIR/SOC challenges): [https://cyberdefenders.org/](https://cyberdefenders.org/)
 
 E6) General hands-on learning platforms (mixed red/blue)
-- TryHackMe: https://tryhackme.com/
-- Hack The Box: https://www.hackthebox.com/
-- OverTheWire (wargames): https://overthewire.org/wargames/
+- TryHackMe: [https://tryhackme.com/](https://tryhackme.com/)
+- Hack The Box: [https://www.hackthebox.com/](https://www.hackthebox.com/)
+- OverTheWire (wargames): [https://overthewire.org/wargames/](https://overthewire.org/wargames/)
 
 CTF discovery (find events + practice targets):
-- CTFtime: https://ctftime.org/
-- picoCTF (great beginner-friendly CTF): https://picoctf.org/
+- CTFtime: [https://ctftime.org/](https://ctftime.org/)
+- picoCTF (great beginner-friendly CTF): [https://picoctf.org/](https://picoctf.org/)
 
 E7) PCAPs, forensics, and incident write-ups (practice with real-ish data)
-- Malware Traffic Analysis (training PCAPs + write-ups): https://www.malware-traffic-analysis.net/
-- The DFIR Report (excellent incident narratives): https://thedfirreport.com/
+- Malware Traffic Analysis (training PCAPs + write-ups): [https://www.malware-traffic-analysis.net/](https://www.malware-traffic-analysis.net/)
+- The DFIR Report (excellent incident narratives): [https://thedfirreport.com/](https://thedfirreport.com/)
 
 Packet capture practice:
-- Wireshark Sample Captures (PCAP library): https://wiki.wireshark.org/SampleCaptures
+- Wireshark Sample Captures (PCAP library): [https://wiki.wireshark.org/SampleCaptures](https://wiki.wireshark.org/SampleCaptures)
 
 E8) Windows telemetry configs and references
-- SwiftOnSecurity Sysmon config (starter config): https://github.com/SwiftOnSecurity/sysmon-config
-- Sysinternals Live (browse/run tools via UNC path): https://live.sysinternals.com/
+- SwiftOnSecurity Sysmon config (starter config): [https://github.com/SwiftOnSecurity/sysmon-config](https://github.com/SwiftOnSecurity/sysmon-config)
+- Sysinternals Live (browse/run tools via UNC path): [https://live.sysinternals.com/](https://live.sysinternals.com/)
 
 Detection engineering starter repos (practice writing detections and mapping to ATT&CK):
-- Sigma rules: https://github.com/SigmaHQ/sigma
-- Atomic Red Team (safely simulate techniques in a lab): https://github.com/redcanaryco/atomic-red-team
+- Sigma rules: [https://github.com/SigmaHQ/sigma](https://github.com/SigmaHQ/sigma)
+- Atomic Red Team (safely simulate techniques in a lab): [https://github.com/redcanaryco/atomic-red-team](https://github.com/redcanaryco/atomic-red-team)
 
 E9) Reverse engineering & malware tooling
-- Ghidra: https://ghidra-sre.org/
-- x64dbg: https://x64dbg.com/
-- FLARE-VM (Windows malware analysis VM setup): https://github.com/mandiant/flare-vm
-- REMnux (Linux malware analysis distro): https://remnux.org/
+- Ghidra: [https://ghidra-sre.org/](https://ghidra-sre.org/)
+- x64dbg: [https://x64dbg.com/](https://x64dbg.com/)
+- FLARE-VM (Windows malware analysis VM setup): [https://github.com/mandiant/flare-vm](https://github.com/mandiant/flare-vm)
+- REMnux (Linux malware analysis distro): [https://remnux.org/](https://remnux.org/)
 
 E10) YouTube: channels/playlists that are consistently high-signal
 Windows internals + troubleshooting:
-- Sysinternals Update videos (Mark Russinovich playlist): https://www.youtube.com/playlist?list=PLhFhDWFYccZ_GvdJ11NZwaBAhwDCWmni_
+- Sysinternals Update videos (Mark Russinovich playlist): [https://www.youtube.com/playlist?list=PLhFhDWFYccZ_GvdJ11NZwaBAhwDCWmni_](https://www.youtube.com/playlist?list=PLhFhDWFYccZ_GvdJ11NZwaBAhwDCWmni_)
 
 Networking / Wireshark:
-- Wireshark channel (talks, training content): https://www.youtube.com/@Wireshark
+- Wireshark channel (talks, training content): [https://www.youtube.com/@Wireshark](https://www.youtube.com/@Wireshark)
 
 Web security:
-- PortSwigger (Burp/WebSec Academy content): https://www.youtube.com/@PortSwigger/playlists
-- OWASP Global channel: https://www.youtube.com/user/OWASPGLOBAL
+- PortSwigger (Burp/WebSec Academy content): [https://www.youtube.com/@PortSwigger/playlists](https://www.youtube.com/@PortSwigger/playlists)
+- OWASP Global channel: [https://www.youtube.com/user/OWASPGLOBAL](https://www.youtube.com/user/OWASPGLOBAL)
 
 Hands-on CTF-style learning (use responsibly, in labs only):
-- LiveOverflow (foundational security mindset): https://www.youtube.com/@LiveOverflow/playlists
-- John Hammond (CTFs + malware/DFIR content): https://www.youtube.com/@JohnHammond010/playlists
+- LiveOverflow (foundational security mindset): [https://www.youtube.com/@LiveOverflow/playlists](https://www.youtube.com/@LiveOverflow/playlists)
+- John Hammond (CTFs + malware/DFIR content): [https://www.youtube.com/@JohnHammond010/playlists](https://www.youtube.com/@JohnHammond010/playlists)
 
 Certification-style fundamentals (good structured explanations; still do labs):
-- Professor Messer (Security+/Network+ style fundamentals): https://www.youtube.com/@professormesser/playlists
+- Professor Messer (Security+/Network+ style fundamentals): [https://www.youtube.com/@professormesser/playlists](https://www.youtube.com/@professormesser/playlists)
 
 Malware/reversing (intro-to-intermediate):
-- MalwareAnalysisForHedgehogs: https://www.youtube.com/@MalwareAnalysisForHedgehogs/playlists
+- MalwareAnalysisForHedgehogs: [https://www.youtube.com/@MalwareAnalysisForHedgehogs/playlists](https://www.youtube.com/@MalwareAnalysisForHedgehogs/playlists)
 
 Note on YouTube:
 - Prefer playlists on official channels when possible.
