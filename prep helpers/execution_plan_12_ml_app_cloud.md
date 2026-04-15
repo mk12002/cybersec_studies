@@ -1,5 +1,3 @@
-execution_plan_12_ml_app_cloud.md
-
 # 12-WEEK EXECUTION PLAN (6 HOURS/WEEK)
 Track: ML Security + AppSec + CloudSec
 Primary language: Python
@@ -293,4 +291,3 @@ Session B (3h)
   - what you learned
 
 END OF 12-WEEK EXECUTION PLAN
-
