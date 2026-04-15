@@ -1,9 +1,7 @@
-cryptography_study_material.md
-
 # CRYPTOGRAPHY STUDY MATERIAL (BASIC → PRACTICAL)
 Version: April 2026
 Audience: beginner/intermediate security learner; wants strong fundamentals + practical intuition
-Prereqs (recommended): networking + OS basics from cybersecurity_fundamentals_study_material.md
+Prereqs (recommended): networking + OS basics from [cybersecurity_fundamentals_study_material.md](cybersecurity_fundamentals_study_material.md)
 
 
 ## Generated Table of Contents
@@ -726,14 +724,14 @@ Library hygiene
 
 ## C16) Resource index (high-quality and beginner-friendly)
 ## Free courses / lecture series
-- Dan Boneh (Stanford) Cryptography I (classic): https://crypto.stanford.edu/~dabo/courses/OnlineCrypto/
-- MIT OpenCourseWare (crypto-related courses): https://ocw.mit.edu/
+- Dan Boneh (Stanford) Cryptography I (classic): [https://crypto.stanford.edu/~dabo/courses/OnlineCrypto/](https://crypto.stanford.edu/~dabo/courses/OnlineCrypto/)
+- MIT OpenCourseWare (crypto-related courses): [https://ocw.mit.edu/](https://ocw.mit.edu/)
 
 Beginner-friendly references
-- Crypto 101 (free book): https://crypto101.io/
+- Crypto 101 (free book): [https://crypto101.io/](https://crypto101.io/)
 
 Practice (high ROI)
-- CryptoPals challenges: https://cryptopals.com/
+- CryptoPals challenges: [https://cryptopals.com/](https://cryptopals.com/)
 
 Books (excellent)
 - Serious Cryptography (Jean-Philippe Aumasson)
@@ -741,27 +739,27 @@ Books (excellent)
 - Real-World Cryptography (David Wong)
 
 Standards / references
-- NIST Crypto standards landing: https://csrc.nist.gov/
-- RFC Editor (TLS, JWT, etc.): https://www.rfc-editor.org/
+- NIST Crypto standards landing: [https://csrc.nist.gov/](https://csrc.nist.gov/)
+- RFC Editor (TLS, JWT, etc.): [https://www.rfc-editor.org/](https://www.rfc-editor.org/)
 
 Useful NIST references (for deeper understanding)
-- SP 800-38D (GCM): https://csrc.nist.gov/publications/detail/sp/800-38d/final
-- SP 800-132 (password-based key derivation guidance): https://csrc.nist.gov/publications/detail/sp/800-132/final
+- SP 800-38D (GCM): [https://csrc.nist.gov/publications/detail/sp/800-38d/final](https://csrc.nist.gov/publications/detail/sp/800-38d/final)
+- SP 800-132 (password-based key derivation guidance): [https://csrc.nist.gov/publications/detail/sp/800-132/final](https://csrc.nist.gov/publications/detail/sp/800-132/final)
 
 Web/app crypto best practices
-- OWASP Cryptographic Storage Cheat Sheet: https://cheatsheetseries.owasp.org/cheatsheets/Cryptographic_Storage_Cheat_Sheet.html
-- OWASP Password Storage Cheat Sheet: https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html
+- OWASP Cryptographic Storage Cheat Sheet: [https://cheatsheetseries.owasp.org/cheatsheets/Cryptographic_Storage_Cheat_Sheet.html](https://cheatsheetseries.owasp.org/cheatsheets/Cryptographic_Storage_Cheat_Sheet.html)
+- OWASP Password Storage Cheat Sheet: [https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html](https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html)
 
 Library docs (learn safe-by-default APIs)
-- Python cryptography docs: https://cryptography.io/en/latest/
-- libsodium docs: https://doc.libsodium.org/
-- Google Tink: https://developers.google.com/tink
+- Python cryptography docs: [https://cryptography.io/en/latest/](https://cryptography.io/en/latest/)
+- libsodium docs: [https://doc.libsodium.org/](https://doc.libsodium.org/)
+- Google Tink: [https://developers.google.com/tink](https://developers.google.com/tink)
 
 Tools
-- OpenSSL (reference tool, not a library recommendation): https://www.openssl.org/
+- OpenSSL (reference tool, not a library recommendation): [https://www.openssl.org/](https://www.openssl.org/)
 
 YouTube (good reinforcement)
-- Computerphile (intuitive explanations): https://www.youtube.com/user/Computerphile
+- Computerphile (intuitive explanations): [https://www.youtube.com/user/Computerphile](https://www.youtube.com/user/Computerphile)
 
 
 ## C17) Quick checklist (what you should be able to explain)
@@ -774,6 +772,420 @@ YouTube (good reinforcement)
 - [ ] What forward secrecy means
 - [ ] Why key management is as important as algorithms
 
+---
+
+# CRYPTOGRAPHY DEEP DIVE ADDENDUM
+
+## CD1) Post-Quantum Cryptography Awareness
+
+### CD1.1 Why This Matters Now
+
+**The Threat:**
+- Quantum computers (when sufficiently powerful) can break:
+  - RSA (factoring)
+  - ECDSA/ECDH (discrete log)
+  - Diffie-Hellman
+- They CANNOT easily break:
+  - AES (but may need larger keys: AES-256)
+  - SHA-256/SHA-3 (need larger outputs for same security)
+
+**"Harvest Now, Decrypt Later" Attack:**
+```
+Today: Attacker captures encrypted traffic
+Future: Quantum computer decrypts the captured data
+
+This is a real threat for data that must remain secret for decades:
+- Government secrets
+- Medical records
+- Long-term business secrets
+```
+
+### CD1.2 NIST Post-Quantum Standards (2024)
+
+NIST has standardized post-quantum algorithms:
+
+**For Key Encapsulation (replacing RSA/ECDH for key exchange):**
+- **ML-KEM (CRYSTALS-Kyber)** - Primary recommendation
+  - Based on lattice problems
+  - Relatively small keys and ciphertexts
+  - Already being deployed in Chrome, Cloudflare, etc.
+
+**For Digital Signatures (replacing RSA/ECDSA):**
+- **ML-DSA (CRYSTALS-Dilithium)** - Primary recommendation
+- **SLH-DSA (SPHINCS+)** - Stateless hash-based (conservative choice)
+
+### CD1.3 What You Need to Know (Practical)
+
+**Current State (2026):**
+```
+1. Hybrid deployments are starting
+   - TLS 1.3 with X25519 + ML-KEM
+   - Provides protection even if one algorithm breaks
+
+2. Migration is happening gradually
+   - Large organizations are inventorying crypto usage
+   - Critical systems are being upgraded first
+
+3. You probably don't need to implement PQC yourself
+   - Use updated libraries that handle it
+   - Focus on crypto agility (easy algorithm switching)
+```
+
+**What to do today:**
+```python
+# Crypto agility pattern
+class CryptoConfig:
+    """Centralize crypto choices for easy migration."""
+    
+    # Easy to change when standards update
+    SYMMETRIC_ALGORITHM = "AES-256-GCM"
+    HASH_ALGORITHM = "SHA-256"  # Consider SHA-3 for new systems
+    KEY_EXCHANGE = "X25519"  # Will migrate to hybrid X25519+ML-KEM
+    SIGNATURE = "Ed25519"  # Will migrate to ML-DSA
+    
+    @classmethod
+    def get_kex_algorithm(cls):
+        """Returns current key exchange algorithm."""
+        return cls.KEY_EXCHANGE
+```
+
+### CD1.4 Timeline and Recommendations
+
+```
+2024-2026: Awareness and planning
+  - Inventory your crypto usage
+  - Update libraries to latest versions
+  - Enable hybrid modes where available
+
+2026-2030: Migration begins
+  - Critical systems adopt PQC
+  - Browsers/TLS widely support hybrid
+  - Old algorithms deprecated
+
+2030+: Post-quantum becomes standard
+  - Pure PQC for new systems
+  - Legacy systems upgraded or isolated
+```
+
+**Key Takeaway:** You don't need to become a PQC expert, but you should:
+1. Know it's coming
+2. Keep your crypto libraries updated
+3. Design systems for crypto agility
+
+
+## CD2) Real-World Crypto Failures (Case Studies)
+
+### CD2.1 Case Study: WEP (Why Bad Crypto Breaks)
+
+**What went wrong:**
+```
+1. Weak IV (24 bits) → collisions after ~5000 packets
+2. IV transmitted in cleartext → attacker knows part of keystream
+3. Linear combination attack on RC4 → key recovery possible
+4. No integrity protection → packet injection possible
+```
+
+**Lesson:** Even "strong" algorithms fail with bad protocol design.
+
+### CD2.2 Case Study: Heartbleed (Implementation Failure)
+
+**What went wrong:**
+```
+1. OpenSSL's TLS heartbeat extension didn't validate length field
+2. Attacker could request more data than was sent
+3. Server returned adjacent memory (keys, passwords, session data)
+```
+
+**Lesson:** Crypto is only as strong as its implementation.
+
+### CD2.3 Case Study: Padding Oracle (CBC Mode Attacks)
+
+**What went wrong:**
+```
+1. Server decrypts CBC ciphertext
+2. Server checks padding BEFORE checking MAC
+3. Different errors for "bad padding" vs "bad MAC"
+4. Attacker uses timing/error differences to decrypt byte-by-byte
+```
+
+**Lesson:** This is why AEAD (encrypt-then-MAC built-in) is required.
+
+```python
+# VULNERABLE pattern
+def vulnerable_decrypt(ciphertext, key):
+    plaintext = aes_cbc_decrypt(ciphertext, key)
+    if not valid_padding(plaintext):  # Reveals information!
+        raise PaddingError()
+    if not valid_mac(plaintext):
+        raise MacError()
+    return plaintext
+
+# SECURE pattern (use AEAD)
+def secure_decrypt(ciphertext, key, nonce):
+    try:
+        return aes_gcm_decrypt(ciphertext, key, nonce)  # Single operation
+    except:
+        raise DecryptionError()  # Same error for any failure
+```
+
+### CD2.4 Case Study: JWT alg=none
+
+**What went wrong:**
+```
+1. JWT libraries supported "alg": "none" (no signature)
+2. Attackers changed algorithm from HS256 to none
+3. Removed signature entirely
+4. Servers accepted unsigned tokens
+```
+
+**Lesson:** Always use allowlists for algorithms.
+
+```python
+# VULNERABLE
+decoded = jwt.decode(token, key)  # Accepts any algorithm!
+
+# SECURE
+decoded = jwt.decode(token, key, algorithms=["HS256"])  # Allowlist!
+```
+
+
+## CD3) Crypto in Different Contexts
+
+### CD3.1 Crypto for Web Applications
+
+**Session Tokens:**
+```python
+import secrets
+
+# Generate cryptographically secure session token
+session_token = secrets.token_urlsafe(32)  # 256 bits of entropy
+```
+
+**Password Storage:**
+```python
+from argon2 import PasswordHasher
+
+ph = PasswordHasher(
+    time_cost=3,        # iterations
+    memory_cost=65536,  # 64 MB
+    parallelism=4       # threads
+)
+
+# Store
+hash = ph.hash(password)
+
+# Verify
+try:
+    ph.verify(hash, password)
+except:
+    return False
+```
+
+**API Request Signing:**
+```python
+import hmac
+import hashlib
+import time
+
+def sign_request(api_key, method, path, body, timestamp):
+    """Sign API request with HMAC-SHA256."""
+    message = f"{timestamp}\n{method}\n{path}\n{body}"
+    signature = hmac.new(
+        api_key.encode(),
+        message.encode(),
+        hashlib.sha256
+    ).hexdigest()
+    return signature
+```
+
+### CD3.2 Crypto for Data at Rest
+
+**Envelope Encryption Pattern:**
+```
+1. Generate a unique Data Encryption Key (DEK) for each file/record
+2. Encrypt data with DEK (AES-256-GCM)
+3. Encrypt DEK with Key Encryption Key (KEK) from KMS
+4. Store: encrypted_data + encrypted_DEK
+
+Benefits:
+- Fast (symmetric encryption for data)
+- Secure (KEK protected by HSM)
+- Scalable (can rotate KEK without re-encrypting data)
+```
+
+```python
+from cryptography.hazmat.primitives.ciphers.aead import AESGCM
+import os
+
+def envelope_encrypt(plaintext, kek_encrypt_func):
+    """Envelope encryption pattern."""
+    # Generate unique DEK
+    dek = os.urandom(32)  # 256-bit key
+    nonce = os.urandom(12)
+    
+    # Encrypt data with DEK
+    aesgcm = AESGCM(dek)
+    ciphertext = aesgcm.encrypt(nonce, plaintext, None)
+    
+    # Encrypt DEK with KEK (via KMS)
+    encrypted_dek = kek_encrypt_func(dek)
+    
+    return {
+        "encrypted_dek": encrypted_dek,
+        "nonce": nonce,
+        "ciphertext": ciphertext
+    }
+```
+
+### CD3.3 Crypto for Communication
+
+**TLS Configuration (Server):**
+```yaml
+# Modern TLS configuration (2026)
+tls:
+  minimum_version: TLS1.3  # Or TLS1.2 with careful cipher selection
+  
+  # TLS 1.3 cipher suites (ordered by preference)
+  ciphersuites:
+    - TLS_AES_256_GCM_SHA384
+    - TLS_CHACHA20_POLY1305_SHA256
+    - TLS_AES_128_GCM_SHA256
+  
+  # Enable HSTS
+  headers:
+    Strict-Transport-Security: "max-age=31536000; includeSubDomains"
+```
+
+
+## CD4) Crypto Anti-Patterns Checklist
+
+Use this checklist to review code for crypto issues:
+
+```yaml
+crypto_review_checklist:
+  
+  algorithm_issues:
+    - [ ] Using MD5 or SHA-1 for security purposes
+    - [ ] Using DES or 3DES (should be AES)
+    - [ ] Using ECB mode (should be GCM/CTR)
+    - [ ] Using CBC without proper IV handling
+    - [ ] Rolling your own encryption/hashing
+    
+  key_issues:
+    - [ ] Hardcoded keys in source code
+    - [ ] Keys derived from predictable values
+    - [ ] Same key used across environments
+    - [ ] No key rotation mechanism
+    - [ ] Keys stored in plaintext logs/configs
+    
+  randomness_issues:
+    - [ ] Using Math.random() / random() for security
+    - [ ] Predictable seeds
+    - [ ] Reusing nonces/IVs
+    - [ ] Insufficient entropy at boot time
+    
+  password_issues:
+    - [ ] Using fast hashes (SHA-256) for passwords
+    - [ ] Missing or weak salts
+    - [ ] Insufficient work factor
+    - [ ] Not using constant-time comparison
+    
+  protocol_issues:
+    - [ ] Encryption without authentication (no AEAD)
+    - [ ] MAC-then-encrypt instead of encrypt-then-MAC
+    - [ ] Missing certificate validation
+    - [ ] Accepting any TLS version/cipher
+    
+  implementation_issues:
+    - [ ] Side-channel leaks (timing, errors)
+    - [ ] Partial decryption/verification
+    - [ ] Not clearing sensitive data from memory
+```
+
+
+## CD5) Practical Crypto Exercises (Extended)
+
+### Exercise: Implement Secure Password Reset
+
+```python
+"""
+Secure password reset flow implementation.
+Study the security properties of each step.
+"""
+import secrets
+import hashlib
+import time
+from datetime import datetime, timedelta
+
+class SecurePasswordReset:
+    def __init__(self):
+        self.reset_tokens = {}  # In production: use database
+        self.TOKEN_VALIDITY_MINUTES = 15
+    
+    def request_reset(self, user_email: str) -> dict:
+        """
+        Generate secure reset token.
+        Security properties:
+        - Unpredictable (256 bits of entropy)
+        - Time-limited
+        - One-time use (consumed on use)
+        - Bound to specific user
+        """
+        # Generate unpredictable token
+        token = secrets.token_urlsafe(32)
+        
+        # Hash for storage (don't store raw token)
+        token_hash = hashlib.sha256(token.encode()).hexdigest()
+        
+        # Store with metadata
+        self.reset_tokens[token_hash] = {
+            "email": user_email,
+            "created": datetime.utcnow(),
+            "used": False
+        }
+        
+        # Return token (send via email, not in response!)
+        return {"token": token, "expires_in": self.TOKEN_VALIDITY_MINUTES}
+    
+    def validate_and_consume_token(self, token: str) -> dict:
+        """
+        Validate reset token with constant-time comparison.
+        """
+        token_hash = hashlib.sha256(token.encode()).hexdigest()
+        
+        if token_hash not in self.reset_tokens:
+            # Don't reveal whether token existed
+            time.sleep(0.1)  # Constant time
+            return {"valid": False, "reason": "Invalid or expired token"}
+        
+        record = self.reset_tokens[token_hash]
+        
+        # Check expiration
+        age = datetime.utcnow() - record["created"]
+        if age > timedelta(minutes=self.TOKEN_VALIDITY_MINUTES):
+            del self.reset_tokens[token_hash]
+            return {"valid": False, "reason": "Invalid or expired token"}
+        
+        # Check not already used
+        if record["used"]:
+            return {"valid": False, "reason": "Invalid or expired token"}
+        
+        # Mark as used (consume)
+        record["used"] = True
+        
+        return {"valid": True, "email": record["email"]}
+
+# Test it
+reset = SecurePasswordReset()
+result = reset.request_reset("user@example.com")
+print(f"Reset token: {result['token'][:20]}...")
+
+validation = reset.validate_and_consume_token(result['token'])
+print(f"Validation: {validation}")
+
+# Second use should fail
+validation2 = reset.validate_and_consume_token(result['token'])
+print(f"Second use: {validation2}")
+```
 
 END OF CRYPTOGRAPHY STUDY MATERIAL
-
