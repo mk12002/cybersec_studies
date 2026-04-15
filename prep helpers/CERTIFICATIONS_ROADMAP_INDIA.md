@@ -1,5 +1,3 @@
-CERTIFICATIONS_ROADMAP_INDIA.md
-
 # CERTIFICATIONS ROADMAP (INDIA + BANGALORE)
 
 **Goal:** Use certifications strategically (not as a substitute for projects) to unlock interviews, cloud access, and credibility.
@@ -1550,4 +1548,3 @@ Remember:
 ```
 
 **Your Next Action:** Pick your path and start this week!
-
