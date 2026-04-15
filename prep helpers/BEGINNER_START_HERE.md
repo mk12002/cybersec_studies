@@ -1,8 +1,22 @@
-BEGINNER_START_HERE.md
-
 # 🚀 BEGINNER'S GUIDE — START HERE
 **Version:** April 2026  
 **For:** Complete beginners to cybersecurity with programming background
+
+---
+
+## 🗺️ NAVIGATION: Where Does This Fit?
+
+> **You are reading:** BEGINNER_START_HERE.md (1 of 21 documents)
+> 
+> **Your reading path:**
+> ```
+> 1. BEGINNER_START_HERE.md ← YOU ARE HERE (setup + mindset)
+> 2. MASTER_STUDY_FLOW.md (complete 16-week schedule)
+> 3. cybersecurity_fundamentals_study_material.md (core learning)
+> 4. Week-by-week specialization (AppSec → CloudSec → ML Security)
+> ```
+> 
+> **Feeling overwhelmed?** Read [MASTER_STUDY_FLOW.md](MASTER_STUDY_FLOW.md) for the complete roadmap.
 
 ---
 
@@ -40,10 +54,10 @@ Don't start with "how to use Burp Suite." Start with "what is HTTP and why does 
 ```
 
 **Virtual Machine Setup (for safe practice)**
-```
+
 Option A: VirtualBox (free)
-1. Download VirtualBox: https://www.virtualbox.org/
-2. Download Kali Linux VM: https://www.kali.org/get-kali/#kali-virtual-machines
+1. Download VirtualBox: [https://www.virtualbox.org/](https://www.virtualbox.org/)
+2. Download Kali Linux VM: [https://www.kali.org/get-kali/#kali-virtual-machines](https://www.kali.org/get-kali/#kali-virtual-machines)
 3. Import the VM (File → Import Appliance)
 4. Allocate 4GB RAM, 2 CPUs minimum
 
@@ -51,14 +65,11 @@ Option B: WSL2 (lighter weight)
 1. Open PowerShell as Admin
 2. Run: wsl --install -d kali-linux
 3. Restart and set up username/password
-```
 
 **Web Security Tools**
-```
-✅ Burp Suite Community: https://portswigger.net/burp/communitydownload
-✅ Browser: Firefox (better for security testing)
-✅ Firefox extension: FoxyProxy (for Burp)
-```
+- ✅ Burp Suite Community: [https://portswigger.net/burp/communitydownload](https://portswigger.net/burp/communitydownload)
+- ✅ Browser: Firefox (better for security testing)
+- ✅ Firefox extension: FoxyProxy (for Burp)
 
 ### Step 2: Verify Your Setup
 Run these commands to confirm everything works:
@@ -151,9 +162,9 @@ Impact: Remote Code Execution (RCE)
 ```
 
 ### Where to Look Up CVEs
-- NVD (official): https://nvd.nist.gov/
-- CVE Details: https://www.cvedetails.com/
-- GitHub Security Advisories: https://github.com/advisories
+- NVD (official): [https://nvd.nist.gov/](https://nvd.nist.gov/)
+- CVE Details: [https://www.cvedetails.com/](https://www.cvedetails.com/)
+- GitHub Security Advisories: [https://github.com/advisories](https://github.com/advisories)
 
 ### What to Extract from a CVE
 1. **What's affected?** (software, version range)
@@ -445,8 +456,7 @@ After completing this guide:
 
 1. **Read** → [syllabus.md](syllabus.md) for the full roadmap
 2. **Study** → [cybersecurity_fundamentals_study_material.md](../study%20material/cybersecurity_fundamentals_study_material.md)
-3. **Execute** → [execution_plan_12_ml_app_cloud.md](execution_plan_12_ml_app_cloud.md)
+3. **Execute** → [execution_plan_12_weeks_ml_app_cloud.md](execution_plan_12_weeks_ml_app_cloud.md)
 4. **Track** → Use the finding template for every lab
 
 **You've got this! Security is a marathon, not a sprint.** 🎯
- 
