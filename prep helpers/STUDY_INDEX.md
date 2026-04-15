@@ -1,12 +1,70 @@
-STUDY_INDEX.md
-
 # Cybersecurity Study Materials Index
 **Track:** ML Security + AppSec + CloudSec  
 **Study Budget:** 6 hours/week  
 **Primary Language:** Python  
 **Location:** Bangalore, India 🇮🇳
 **Version:** April 2026
-**Total:** 20 files | ~19,100+ lines of content
+**Total:** 21 files | ~25,000+ lines of comprehensive content
+
+---
+
+## ⚡ CONFUSED WHERE TO START? READ THIS FIRST!
+
+> **If you're overwhelmed by the number of documents, start with the MASTER STUDY FLOW guide.**
+> It tells you exactly what to read, in what order, and why.
+
+| Document | Purpose |
+|----------|---------|
+| 🎯 **[MASTER_STUDY_FLOW.md](MASTER_STUDY_FLOW.md)** | **YOUR COMPLETE 16-WEEK ROADMAP** — Eliminates all confusion about study order |
+
+---
+
+## 🗺️ QUICK NAVIGATION: Which Document When?
+
+```
+┌─────────────────────────────────────────────────────────────────────────────────────┐
+│                        WHEN TO USE EACH DOCUMENT                                    │
+├─────────────────────────────────────────────────────────────────────────────────────┤
+│                                                                                     │
+│  "I'm just starting, help me set up"                                               │
+│     → BEGINNER_START_HERE.md                                                        │
+│                                                                                     │
+│  "I don't know what order to study"                                                │
+│     → MASTER_STUDY_FLOW.md (complete 16-week schedule)                             │
+│                                                                                     │
+│  "I'm learning web security concepts"                                              │
+│     → appsec_study_material.md (theory)                                            │
+│     → HANDS_ON_EXERCISES.md (labs)                                                  │
+│                                                                                     │
+│  "I'm learning cloud security"                                                     │
+│     → cloudsec_study_material.md (AWS/Azure/GCP theory)                            │
+│                                                                                     │
+│  "I'm learning ML security"                                                        │
+│     → ml_security_study_material.md (threats + defense)                            │
+│                                                                                     │
+│  "I'm doing hands-on practice"                                                     │
+│     → HANDS_ON_EXERCISES.md (step-by-step labs)                                    │
+│     → TOOLS_CHEAT_SHEET.md (command reference)                                     │
+│                                                                                     │
+│  "I need to review concepts quickly"                                               │
+│     → FLASHCARDS_QUICK_REF.md (10-min daily review)                                │
+│                                                                                     │
+│  "I'm building my portfolio"                                                       │
+│     → PORTFOLIO_PROJECTS.md (22+ project ideas)                                    │
+│     → CTF_AND_BUG_BOUNTY_GUIDE.md (practice platforms)                             │
+│                                                                                     │
+│  "I'm preparing for interviews"                                                    │
+│     → INTERVIEW_AND_NETWORKING.md (questions + answers)                            │
+│     → TEMPLATES_PACK.md (resume + LinkedIn)                                        │
+│                                                                                     │
+│  "I'm planning certifications"                                                     │
+│     → CERTIFICATIONS_ROADMAP_INDIA.md (which cert, when, cost)                     │
+│                                                                                     │
+│  "I want external resources"                                                       │
+│     → RESOURCE_LIBRARY.md (curated links)                                          │
+│                                                                                     │
+└─────────────────────────────────────────────────────────────────────────────────────┘
+```
 
 ---
 
@@ -53,7 +111,7 @@ STUDY_INDEX.md
 | 5 | [cloudsec_study_material.md](../study%20material/cloudsec_study_material.md) | IAM, storage, AWS/Azure, incident response | ~1,326 |
 | 6 | [cybersecurity_foundations_plus.md](../study%20material/cybersecurity_foundations_plus.md) | Secure SDLC, identity, detection engineering | ~309 |
 | 7 | [ml_security_study_material.md](../study%20material/ml_security_study_material.md) | ML threats, LLM security, portfolio projects | ~382 |
-| 8 | [execution_plan_12_ml_app_cloud.md](execution_plan_12_ml_app_cloud.md) | Weekly schedule with labs and deliverables | ~293 |
+| 8 | [execution_plan_12_weeks_ml_app_cloud.md](execution_plan_12_weeks_ml_app_cloud.md) | Weekly schedule with labs and deliverables | ~293 |
 
 ---
 
@@ -86,10 +144,10 @@ STUDY_INDEX.md
 3. Start [HANDS_ON_EXERCISES.md](HANDS_ON_EXERCISES.md) Exercise 1-2
 
 ### Week 2+: Structured Learning
-1. Follow [execution_plan_12_ml_app_cloud.md](execution_plan_12_ml_app_cloud.md)
+1. Follow [execution_plan_12_weeks_ml_app_cloud.md](execution_plan_12_weeks_ml_app_cloud.md)
 2. Reference the core study materials as you go
-3. Review [FLASHCARDS_QUICK_REF.md](../study%20material/FLASHCARDS_QUICK_REF.md) daily (10 min)
-4. Use [TOOLS_CHEAT_SHEET.md](../study%20material/TOOLS_CHEAT_SHEET.md) when practicing
+3. Review [FLASHCARDS_QUICK_REF.md](FLASHCARDS_QUICK_REF.md) daily (10 min)
+4. Use [TOOLS_CHEAT_SHEET.md](TOOLS_CHEAT_SHEET.md) when practicing
 
 ### Every Lab/Finding
 Use the **Finding Template** from [BEGINNER_START_HERE.md](BEGINNER_START_HERE.md):
