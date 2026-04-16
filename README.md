@@ -3,9 +3,9 @@
 **A comprehensive, self-paced study guide for breaking into cybersecurity**
 
 **Focus Areas:** Application Security (AppSec) | Cloud Security (CloudSec) | ML Security | Detection Engineering  
-**Target Location:** Bangalore, India 🇮🇳  
+**Target Location:** Bangalore now → Global in 2–3 years 🌍  
 **Study Budget:** 6 hours/week  
-**Total Content:** 21 files | ~30,000+ lines of curated material
+**Total Content:** 27 files | ~50,000+ lines of curated material
 
 ---
 
@@ -37,7 +37,7 @@ The materials are designed to be:
 - ✅ **Practical** — Hands-on labs, real tools, portfolio projects
 - ✅ **Comprehensive** — Covers fundamentals through advanced topics
 - ✅ **Structured** — Clear study order with weekly schedules
-- ✅ **Job-focused** — Aligned with actual job requirements in India
+- ✅ **Job-focused** — Aligned with India + global job requirements
 - ✅ **Self-contained** — Everything in one place
 
 ---
@@ -54,7 +54,7 @@ The materials are designed to be:
 - You can write Python code
 - You understand basic programming concepts
 - You have 6+ hours/week dedicated study time
-- You're targeting Bangalore/India security job market
+- You're targeting India now, and global roles in 2–3 years
 
 ---
 
@@ -68,6 +68,12 @@ study/
 │   ├── MASTER_STUDY_FLOW.md          ★ START HERE - Complete 16-week roadmap
 │   ├── STUDY_INDEX.md                 Index of all documents
 │   ├── BEGINNER_START_HERE.md         First-day setup and orientation
+│   ├── STUDY_ENGAGEMENT_SYSTEM.md      Motivation & consistency system
+│   ├── OMSCS_ML_SECURITY_TRACK_GUIDE.md   OMSCS ML track + security (main guide)
+│   ├── OMSCS_EXPANDED_SECTIONS.md         Ultra-detailed OMSCS expansions
+│   ├── OMSCS_ML_SECURITY_TRACK_GUIDE_COMPLETE.md  Full integrated version
+│   ├── OMSCS_ML_SECURITY_TRACK_GUIDE_COMPREHENSIVE.md  Alternate expanded version
+│   ├── README_OMSCS_FILES.md          How to use OMSCS files
 │   ├── syllabus.md                    Master topic list (17 modules)
 │   ├── execution_plan_12_weeks_ml_app_cloud.md   Weekly schedule
 │   ├── WEEKLY_STUDY_TEMPLATE.md       Session planning templates
@@ -95,26 +101,23 @@ study/
 ## 🚀 Quick Start Guide
 
 ### Day 1: Orientation (2 hours)
-```
+
 1. Read this README completely
-2. Open: prep helpers/MASTER_STUDY_FLOW.md (your complete roadmap)
-3. Open: prep helpers/BEGINNER_START_HERE.md (setup guide)
+2. Open: [MASTER_STUDY_FLOW.md](prep%20helpers/MASTER_STUDY_FLOW.md) (your complete roadmap)
+3. Open: [BEGINNER_START_HERE.md](prep%20helpers/BEGINNER_START_HERE.md) (setup guide)
 4. Set up your environment (VM/WSL, Burp Suite, Python)
-```
 
 ### Day 2-3: First Lab (4 hours)
-```
-1. Follow: prep helpers/HANDS_ON_EXERCISES.md → Exercise 1 (SQL Injection)
-2. Reference: study material/TOOLS_CHEAT_SHEET.md as needed
+
+1. Follow: [HANDS_ON_EXERCISES.md](prep%20helpers/HANDS_ON_EXERCISES.md) → Exercise 1 (SQL Injection)
+2. Reference: [TOOLS_CHEAT_SHEET.md](study%20material/TOOLS_CHEAT_SHEET.md) as needed
 3. Write up your findings (practice documentation)
-```
 
 ### Week 1+: Follow the Schedule
-```
-1. Follow: prep helpers/MASTER_STUDY_FLOW.md week-by-week
-2. Daily: Review study material/FLASHCARDS_QUICK_REF.md (10 min)
+
+1. Follow: [MASTER_STUDY_FLOW.md](prep%20helpers/MASTER_STUDY_FLOW.md) week-by-week
+2. Daily: Review [FLASHCARDS_QUICK_REF.md](study%20material/FLASHCARDS_QUICK_REF.md) (10 min)
 3. Weekly: Complete assigned reading + 1-2 labs
-```
 
 ---
 
@@ -147,42 +150,53 @@ study/
 
 | Document | Lines | Purpose | When to Use |
 |----------|-------|---------|-------------|
-| **MASTER_STUDY_FLOW.md** | ~600 | Complete 16-week roadmap | First thing to read, reference weekly |
-| **STUDY_INDEX.md** | ~150 | Quick navigation to all docs | When you need to find something |
-| **BEGINNER_START_HERE.md** | ~350 | Environment setup, glossary | Day 1, setup reference |
-| **syllabus.md** | ~1,200 | All topics in detail | Reference for coverage |
-| **execution_plan_12_weeks_ml_app_cloud.md** | ~300 | Detailed weekly schedule | Follow alongside MASTER_FLOW |
+| **[MASTER_STUDY_FLOW.md](prep%20helpers/MASTER_STUDY_FLOW.md)** | ~600 | Complete 16-week roadmap | First thing to read, reference weekly |
+| **[STUDY_INDEX.md](prep%20helpers/STUDY_INDEX.md)** | ~200 | Quick navigation to all docs | When you need to find something |
+| **[BEGINNER_START_HERE.md](prep%20helpers/BEGINNER_START_HERE.md)** | ~350 | Environment setup, glossary | Day 1, setup reference |
+| **[STUDY_ENGAGEMENT_SYSTEM.md](prep%20helpers/STUDY_ENGAGEMENT_SYSTEM.md)** | ~2,750 | Complete motivation system with XP, badges, 52 weekly challenges, burnout prevention | When you feel stuck or need structure |
+| **[syllabus.md](prep%20helpers/syllabus.md)** | ~1,200 | All topics in detail | Reference for coverage |
+| **[execution_plan_12_weeks_ml_app_cloud.md](prep%20helpers/execution_plan_12_weeks_ml_app_cloud.md)** | ~300 | Detailed weekly schedule | Follow alongside MASTER_FLOW |
+
+### 🎓 OMSCS Planning (5 Files)
+
+| Document | Lines | Purpose | When to Use |
+|----------|-------|---------|-------------|
+| **[OMSCS_ML_SECURITY_TRACK_GUIDE.md](prep%20helpers/OMSCS_ML_SECURITY_TRACK_GUIDE.md)** | ~1,900 | Main OMSCS guide: ML track, security courses, application timeline, costs | Primary reference for OMSCS planning |
+| **[OMSCS_EXPANDED_SECTIONS.md](prep%20helpers/OMSCS_EXPANDED_SECTIONS.md)** | ~770 | Ultra-detailed expansions: SOP writing, cost breakdown, admission tips, work-life balance | Deep dives on specific OMSCS topics |
+| **[OMSCS_ML_SECURITY_TRACK_GUIDE_COMPLETE.md](prep%20helpers/OMSCS_ML_SECURITY_TRACK_GUIDE_COMPLETE.md)** | ~1,900 | Full integrated version for merging | Working copy for customization |
+| **[OMSCS_ML_SECURITY_TRACK_GUIDE_COMPREHENSIVE.md](prep%20helpers/OMSCS_ML_SECURITY_TRACK_GUIDE_COMPREHENSIVE.md)** | ~770 | Alternate version of expanded sections | Backup/alternate reference |
+| **[README_OMSCS_FILES.md](prep%20helpers/README_OMSCS_FILES.md)** | ~140 | Explains how to use OMSCS files | Understanding OMSCS file structure |
 
 ### 📖 Core Study Material
 
 | Document | Lines | Topics Covered |
 |----------|-------|----------------|
-| **cybersecurity_fundamentals_study_material.md** | ~3,400 | OS internals, Linux/Windows, networking, TCP/IP, DNS, HTTP, TLS |
-| **appsec_study_material.md** | ~1,900 | OWASP Top 10, injection, XSS, SSRF, API security, SAST/DAST |
-| **cloudsec_study_material.md** | ~2,300 | AWS/Azure/GCP IAM, S3/Blob security, K8s, containers, IR playbooks |
-| **ml_security_study_material.md** | ~1,100 | LLM Top 10, prompt injection, model extraction, data poisoning |
-| **cryptography_study_material.md** | ~1,200 | Symmetric/asymmetric, hashing, PKI, TLS, post-quantum |
-| **cybersecurity_foundations_plus.md** | ~400 | Secure SDLC, identity, detection engineering |
+| **[cybersecurity_fundamentals_study_material.md](study%20material/cybersecurity_fundamentals_study_material.md)** | ~3,400 | OS internals, Linux/Windows, networking, TCP/IP, DNS, HTTP, TLS |
+| **[appsec_study_material.md](study%20material/appsec_study_material.md)** | ~1,900 | OWASP Top 10, injection, XSS, SSRF, API security, SAST/DAST |
+| **[cloudsec_study_material.md](study%20material/cloudsec_study_material.md)** | ~2,300 | AWS/Azure/GCP IAM, S3/Blob security, K8s, containers, IR playbooks |
+| **[ml_security_study_material.md](study%20material/ml_security_study_material.md)** | ~1,100 | LLM Top 10, prompt injection, model extraction, data poisoning |
+| **[cryptography_study_material.md](study%20material/cryptography_study_material.md)** | ~1,200 | Symmetric/asymmetric, hashing, PKI, TLS, post-quantum |
+| **[cybersecurity_foundations_plus.md](study%20material/cybersecurity_foundations_plus.md)** | ~400 | Secure SDLC, identity, detection engineering |
 
 ### 🛠️ Reference & Practice
 
 | Document | Lines | Purpose |
 |----------|-------|---------|
-| **FLASHCARDS_QUICK_REF.md** | ~1,300 | Daily review, interview prep, quick concepts |
-| **TOOLS_CHEAT_SHEET.md** | ~1,400 | 50+ tools with commands and examples |
-| **HANDS_ON_EXERCISES.md** | ~1,200 | 11 guided labs (SQLi, XSS, Cloud, JWT, etc.) |
-| **RESOURCE_LIBRARY.md** | ~1,300 | 200+ curated links to external resources |
+| **[FLASHCARDS_QUICK_REF.md](study%20material/FLASHCARDS_QUICK_REF.md)** | ~1,300 | Daily review, interview prep, quick concepts |
+| **[TOOLS_CHEAT_SHEET.md](study%20material/TOOLS_CHEAT_SHEET.md)** | ~1,400 | 50+ tools with commands and examples |
+| **[HANDS_ON_EXERCISES.md](prep%20helpers/HANDS_ON_EXERCISES.md)** | ~1,200 | 11 guided labs (SQLi, XSS, Cloud, JWT, etc.) |
+| **[RESOURCE_LIBRARY.md](study%20material/RESOURCE_LIBRARY.md)** | ~1,300 | 200+ curated links to external resources |
 
 ### 💼 Career & Portfolio
 
 | Document | Lines | Purpose |
 |----------|-------|---------|
-| **PORTFOLIO_PROJECTS.md** | ~3,750 | 22+ project ideas with implementation guides |
-| **INTERVIEW_AND_NETWORKING.md** | ~1,700 | Interview questions, networking strategies |
-| **CERTIFICATIONS_ROADMAP_INDIA.md** | ~1,200 | Cert comparison, study plans, ROI analysis |
-| **CTF_AND_BUG_BOUNTY_GUIDE.md** | ~920 | Platform guides, methodology |
-| **TEMPLATES_PACK.md** | ~810 | Resume bullets, LinkedIn, outreach scripts |
-| **WEEKLY_STUDY_TEMPLATE.md** | ~760 | Session planning, tracking |
+| **[PORTFOLIO_PROJECTS.md](prep%20helpers/PORTFOLIO_PROJECTS.md)** | ~3,750 | 22+ project ideas with implementation guides |
+| **[INTERVIEW_AND_NETWORKING.md](prep%20helpers/INTERVIEW_AND_NETWORKING.md)** | ~6,350 | Complete career guide: interview prep, salary data (US + India), networking strategies |
+| **[CERTIFICATIONS_ROADMAP_INDIA.md](prep%20helpers/CERTIFICATIONS_ROADMAP_INDIA.md)** | ~3,435 | 4 career paths, comprehensive cert guide, study strategies, salary matrix |
+| **[CTF_AND_BUG_BOUNTY_GUIDE.md](prep%20helpers/CTF_AND_BUG_BOUNTY_GUIDE.md)** | ~920 | Platform guides, methodology |
+| **[TEMPLATES_PACK.md](prep%20helpers/TEMPLATES_PACK.md)** | ~810 | Resume bullets, LinkedIn, outreach scripts |
+| **[WEEKLY_STUDY_TEMPLATE.md](prep%20helpers/WEEKLY_STUDY_TEMPLATE.md)** | ~760 | Session planning, tracking |
 
 ---
 
@@ -192,46 +206,32 @@ study/
 **Don't read everything at once.** Follow the MASTER_STUDY_FLOW.md week by week.
 
 ### Daily Routine (Recommended)
-```
-Morning (10 min):
-└── Review 5 flashcards from FLASHCARDS_QUICK_REF.md
 
-Study Session (2-3 hours, 2-3x per week):
-├── Follow the week's reading from MASTER_STUDY_FLOW.md
-├── Complete associated lab from HANDS_ON_EXERCISES.md
-└── Reference TOOLS_CHEAT_SHEET.md as needed
+**Morning (10 min):**
+- Review 5 flashcards from [FLASHCARDS_QUICK_REF.md](study%20material/FLASHCARDS_QUICK_REF.md)
 
-Evening (10 min):
-└── Note questions, update progress tracker
-```
+**Study Session (2-3 hours, 2-3x per week):**
+- Follow the week's reading from [MASTER_STUDY_FLOW.md](prep%20helpers/MASTER_STUDY_FLOW.md)
+- Complete associated lab from [HANDS_ON_EXERCISES.md](prep%20helpers/HANDS_ON_EXERCISES.md)
+- Reference [TOOLS_CHEAT_SHEET.md](study%20material/TOOLS_CHEAT_SHEET.md) as needed
+
+**Evening (10 min):**
+- Note questions, update progress tracker
 
 ### Which Document When?
 
-```
-"I'm just starting"
-    → BEGINNER_START_HERE.md → MASTER_STUDY_FLOW.md
-
-"I don't know what order to study"
-    → MASTER_STUDY_FLOW.md
-
-"I'm learning [topic]"
-    → Corresponding study material file
-
-"I'm doing hands-on practice"
-    → HANDS_ON_EXERCISES.md + TOOLS_CHEAT_SHEET.md
-
-"I need to review concepts quickly"
-    → FLASHCARDS_QUICK_REF.md
-
-"I'm building my portfolio"
-    → PORTFOLIO_PROJECTS.md
-
-"I'm preparing for interviews"
-    → INTERVIEW_AND_NETWORKING.md + FLASHCARDS_QUICK_REF.md
-
-"I want external resources"
-    → RESOURCE_LIBRARY.md
-```
+| If you're thinking... | Go to... |
+|-----------------------|----------|
+| "I'm just starting" | [BEGINNER_START_HERE.md](prep%20helpers/BEGINNER_START_HERE.md) → [MASTER_STUDY_FLOW.md](prep%20helpers/MASTER_STUDY_FLOW.md) |
+| "I don't know what order to study" | [MASTER_STUDY_FLOW.md](prep%20helpers/MASTER_STUDY_FLOW.md) |
+| "I'm learning [topic]" | Corresponding study material file |
+| "I'm doing hands-on practice" | [HANDS_ON_EXERCISES.md](prep%20helpers/HANDS_ON_EXERCISES.md) + [TOOLS_CHEAT_SHEET.md](study%20material/TOOLS_CHEAT_SHEET.md) |
+| "I need to review concepts quickly" | [FLASHCARDS_QUICK_REF.md](study%20material/FLASHCARDS_QUICK_REF.md) |
+| "I'm building my portfolio" | [PORTFOLIO_PROJECTS.md](prep%20helpers/PORTFOLIO_PROJECTS.md) |
+| "I'm preparing for interviews" | [INTERVIEW_AND_NETWORKING.md](prep%20helpers/INTERVIEW_AND_NETWORKING.md) + [FLASHCARDS_QUICK_REF.md](study%20material/FLASHCARDS_QUICK_REF.md) |
+| "I want external resources" | [RESOURCE_LIBRARY.md](study%20material/RESOURCE_LIBRARY.md) |
+| "I want motivation and study structure" | [STUDY_ENGAGEMENT_SYSTEM.md](prep%20helpers/STUDY_ENGAGEMENT_SYSTEM.md) |
+| "I want to plan OMSCS" | [OMSCS_ML_SECURITY_TRACK_GUIDE.md](prep%20helpers/OMSCS_ML_SECURITY_TRACK_GUIDE.md) |
 
 ---
 
@@ -267,38 +267,39 @@ Evening (10 min):
 ## 🛤️ Learning Paths
 
 ### Path A: Application Security Focus
-```
-Week 1:    BEGINNER_START_HERE.md
-Week 2-4:  cybersecurity_fundamentals (networking focus)
-Week 5-8:  appsec_study_material.md (complete)
-Week 9-10: PortSwigger Academy labs
-Week 11+:  Bug bounty + Portfolio projects
-```
+
+| Week | Focus |
+|------|-------|
+| Week 1 | [BEGINNER_START_HERE.md](prep%20helpers/BEGINNER_START_HERE.md) |
+| Week 2-4 | [cybersecurity_fundamentals](study%20material/cybersecurity_fundamentals_study_material.md) (networking focus) |
+| Week 5-8 | [appsec_study_material.md](study%20material/appsec_study_material.md) (complete) |
+| Week 9-10 | PortSwigger Academy labs |
+| Week 11+ | Bug bounty + [Portfolio projects](prep%20helpers/PORTFOLIO_PROJECTS.md) |
 
 ### Path B: Cloud Security Focus
-```
-Week 1:    BEGINNER_START_HERE.md
-Week 2-4:  cybersecurity_fundamentals (full)
-Week 5-6:  appsec_study_material.md (API security)
-Week 7-10: cloudsec_study_material.md (complete)
-Week 11+:  flaws.cloud + AWS/Azure certs
-```
+
+| Week | Focus |
+|------|-------|
+| Week 1 | [BEGINNER_START_HERE.md](prep%20helpers/BEGINNER_START_HERE.md) |
+| Week 2-4 | [cybersecurity_fundamentals](study%20material/cybersecurity_fundamentals_study_material.md) (full) |
+| Week 5-6 | [appsec_study_material.md](study%20material/appsec_study_material.md) (API security) |
+| Week 7-10 | [cloudsec_study_material.md](study%20material/cloudsec_study_material.md) (complete) |
+| Week 11+ | flaws.cloud + AWS/Azure certs |
 
 ### Path C: ML Security Focus
-```
-Week 1:    BEGINNER_START_HERE.md
-Week 2-4:  cybersecurity_fundamentals
-Week 5-6:  appsec_study_material.md (API, auth)
-Week 7-8:  cloudsec_study_material.md (basics)
-Week 9-12: ml_security_study_material.md (complete)
-Week 13+:  ML security portfolio projects
-```
+
+| Week | Focus |
+|------|-------|
+| Week 1 | [BEGINNER_START_HERE.md](prep%20helpers/BEGINNER_START_HERE.md) |
+| Week 2-4 | [cybersecurity_fundamentals](study%20material/cybersecurity_fundamentals_study_material.md) |
+| Week 5-6 | [appsec_study_material.md](study%20material/appsec_study_material.md) (API, auth) |
+| Week 7-8 | [cloudsec_study_material.md](study%20material/cloudsec_study_material.md) (basics) |
+| Week 9-12 | [ml_security_study_material.md](study%20material/ml_security_study_material.md) (complete) |
+| Week 13+ | ML security [portfolio projects](prep%20helpers/PORTFOLIO_PROJECTS.md) |
 
 ### Path D: Balanced (Recommended)
-```
-Follow MASTER_STUDY_FLOW.md exactly — it covers all areas
-in the optimal order over 16 weeks.
-```
+
+Follow [MASTER_STUDY_FLOW.md](prep%20helpers/MASTER_STUDY_FLOW.md) exactly — it covers all areas in the optimal order over 16 weeks.
 
 ---
 
@@ -308,25 +309,25 @@ in the optimal order over 16 weeks.
 At 6 hours/week: **16 weeks** to complete core material. Add 4-8 weeks for portfolio projects and job search prep.
 
 ### Do I need to read everything?
-No. Follow MASTER_STUDY_FLOW.md which tells you exactly what to read each week. Other documents are references.
+No. Follow [MASTER_STUDY_FLOW.md](prep%20helpers/MASTER_STUDY_FLOW.md) which tells you exactly what to read each week. Other documents are references.
 
 ### What if I get stuck?
-1. Check FLASHCARDS_QUICK_REF.md for concept refreshers
-2. Search RESOURCE_LIBRARY.md for external tutorials
+1. Check [FLASHCARDS_QUICK_REF.md](study%20material/FLASHCARDS_QUICK_REF.md) for concept refreshers
+2. Search [RESOURCE_LIBRARY.md](study%20material/RESOURCE_LIBRARY.md) for external tutorials
 3. Join null.community (Bangalore chapter) for help
 
 ### Is this enough to get a job?
 This material + hands-on practice + portfolio projects = strong foundation. You'll also need:
 - Networking (null community, LinkedIn)
 - Interview practice
-- Possibly 1 certification (see CERTIFICATIONS_ROADMAP_INDIA.md)
+- Possibly 1 certification (see [CERTIFICATIONS_ROADMAP_INDIA.md](prep%20helpers/CERTIFICATIONS_ROADMAP_INDIA.md))
 
 ### How do I track progress?
-Use the WEEKLY_STUDY_TEMPLATE.md to plan sessions and track completion.
+Use the [WEEKLY_STUDY_TEMPLATE.md](prep%20helpers/WEEKLY_STUDY_TEMPLATE.md) to plan sessions and track completion.
 
 ### What makes this different from random tutorials?
 - **Structured progression** — Topics build on each other
-- **India-focused** — Relevant certifications, communities, companies
+- **India + global focused** — Relevant certifications, communities, companies
 - **Portfolio-oriented** — Everything connects to demonstrable skills
 - **Comprehensive** — No gaps in coverage
 
@@ -337,8 +338,8 @@ Use the WEEKLY_STUDY_TEMPLATE.md to plan sessions and track completion.
 | Category | Files | Lines | Topics |
 |----------|-------|-------|--------|
 | Study Material | 9 | ~13,000 | Core security concepts |
-| Prep Helpers | 12 | ~12,000 | Planning, exercises, career |
-| **Total** | **21** | **~30,000** | Complete security education |
+| Prep Helpers | 18 | ~31,000 | Planning, exercises, career, OMSCS |
+| **Total** | **27** | **~50,000** | Complete security education |
 
 ### Coverage by Domain
 - ✅ Operating Systems (Linux, Windows)
@@ -348,7 +349,7 @@ Use the WEEKLY_STUDY_TEMPLATE.md to plan sessions and track completion.
 - ✅ ML/AI Security (LLMs, prompt injection)
 - ✅ Cryptography (applied, not theoretical)
 - ✅ Detection Engineering (SIEM, Sigma)
-- ✅ Career Prep (India-specific)
+- ✅ Career Prep (India + global)
 
 ---
 
