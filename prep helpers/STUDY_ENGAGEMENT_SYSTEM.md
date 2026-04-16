@@ -35,14 +35,14 @@ You have comprehensive study materials. You have goals. You have motivation — 
 
 **Documented Failure Patterns in Self-Study:**
 
-| Failure Pattern | Statistic |
-|---|---|
-| Self-learners who quit within 3 months | 87% |
-| Cite "loss of motivation" as primary reason | 73% |
-| Never complete their first certification | 68% |
-| Underestimate time required by 2–3× | 91% |
-| Have no tracking system whatsoever | 82% |
-| Study in isolation with zero accountability | 79% |
+| Failure Pattern                             | Statistic |
+| ------------------------------------------- | --------- |
+| Self-learners who quit within 3 months      | 87%       |
+| Cite "loss of motivation" as primary reason | 73%       |
+| Never complete their first certification    | 68%       |
+| Underestimate time required by 2–3×         | 91%       |
+| Have no tracking system whatsoever          | 82%       |
+| Study in isolation with zero accountability | 79%       |
 
 **Why the Traditional "Just Study More" Approach Fails:**
 
@@ -61,29 +61,29 @@ This is not a willpower problem. It is a **design problem**. The system was neve
 
 **The Six Core Problems This System Solves:**
 
-| Problem | Root Cause | This System's Solution |
-|---|---|---|
-| Motivation decay | Extrinsic novelty wears off | XP + visible progress replace novelty-driven motivation |
-| Overwhelm | Goals are too large and abstract | Daily micro-wins create achievable structure |
-| Inconsistency | Reliance on mood and willpower | Streak mechanics build automated habits |
-| Isolation | No social component to study | Accountability framework and community layer |
-| Burnout | Unsustainable intensity cycles | Built-in recovery protocols and pacing rules |
-| Plateau frustration | No variation or progression | Challenge variety, difficulty tiers, and theme rotation |
+| Problem             | Root Cause                       | This System's Solution                                  |
+| ------------------- | -------------------------------- | ------------------------------------------------------- |
+| Motivation decay    | Extrinsic novelty wears off      | XP + visible progress replace novelty-driven motivation |
+| Overwhelm           | Goals are too large and abstract | Daily micro-wins create achievable structure            |
+| Inconsistency       | Reliance on mood and willpower   | Streak mechanics build automated habits                 |
+| Isolation           | No social component to study     | Accountability framework and community layer            |
+| Burnout             | Unsustainable intensity cycles   | Built-in recovery protocols and pacing rules            |
+| Plateau frustration | No variation or progression      | Challenge variety, difficulty tiers, and theme rotation |
 
 ---
 
 ## 1.2 What This System Converts Study Into
 
-| Traditional Study | This System |
-|---|---|
-| Vague "study more" intention | Specific XP targets per activity |
-| No progress visibility | Daily / weekly / monthly / quarterly dashboards |
-| Willpower-dependent consistency | Habit-driven + gamification mechanics |
-| Isolated individual effort | Community participation + accountability partners |
-| All-or-nothing mentality | Minimum viable progress on bad days |
-| Burnout-prone intensity spikes | Sustainable pacing with built-in recovery |
-| Passive reading focus | Read → Do → Teach pipeline |
-| No external validation | Portfolio artifacts and public outputs |
+| Traditional Study               | This System                                       |
+| ------------------------------- | ------------------------------------------------- |
+| Vague "study more" intention    | Specific XP targets per activity                  |
+| No progress visibility          | Daily / weekly / monthly / quarterly dashboards   |
+| Willpower-dependent consistency | Habit-driven + gamification mechanics             |
+| Isolated individual effort      | Community participation + accountability partners |
+| All-or-nothing mentality        | Minimum viable progress on bad days               |
+| Burnout-prone intensity spikes  | Sustainable pacing with built-in recovery         |
+| Passive reading focus           | Read → Do → Teach pipeline                        |
+| No external validation          | Portfolio artifacts and public outputs            |
 
 ---
 
@@ -93,43 +93,43 @@ Understanding what "success" looks like at each level of the system is essential
 
 **Daily Metrics (minimum viable targets):**
 
-| Metric | Minimum | Target | Excellent |
-|---|---|---|---|
-| XP earned | 15 XP | 30–50 XP | 60+ XP |
-| Study time | 20 min | 45–60 min | 90–120 min |
-| Outputs created | 1 note | 1 summary / lab step | 1 artifact |
-| Energy logged | Yes | Yes | Yes |
-| Streak maintained | Yes | Yes | Yes |
+| Metric            | Minimum | Target               | Excellent  |
+| ----------------- | ------- | -------------------- | ---------- |
+| XP earned         | 15 XP   | 30–50 XP             | 60+ XP     |
+| Study time        | 20 min  | 45–60 min            | 90–120 min |
+| Outputs created   | 1 note  | 1 summary / lab step | 1 artifact |
+| Energy logged     | Yes     | Yes                  | Yes        |
+| Streak maintained | Yes     | Yes                  | Yes        |
 
 **Weekly Metrics:**
 
-| Metric | Minimum | Target | Excellent |
-|---|---|---|---|
-| Total XP | 100 XP | 250–400 XP | 500+ XP |
-| Labs completed | 1 | 2–4 | 5+ |
-| Weekly challenge done | No | Yes | Yes + bonus |
-| Hours logged | 5 hr | 10–20 hr | 20+ hr |
-| Portfolio artifacts | 0 | 1 | 2+ |
+| Metric                | Minimum | Target     | Excellent   |
+| --------------------- | ------- | ---------- | ----------- |
+| Total XP              | 100 XP  | 250–400 XP | 500+ XP     |
+| Labs completed        | 1       | 2–4        | 5+          |
+| Weekly challenge done | No      | Yes        | Yes + bonus |
+| Hours logged          | 5 hr    | 10–20 hr   | 20+ hr      |
+| Portfolio artifacts   | 0       | 1          | 2+          |
 
 **Monthly Metrics:**
 
-| Metric | Minimum | Target | Excellent |
-|---|---|---|---|
-| Total XP | 400 XP | 1,000–1,600 XP | 2,000+ XP |
-| Theme completion % | 50% | 75%+ | 100% |
-| Portfolio pieces added | 0 | 1 | 2–3 |
-| Skills visibly leveled | 1 | 2–3 | 4+ |
-| Community contributions | 0 | 2–4 | 5+ |
+| Metric                  | Minimum | Target         | Excellent |
+| ----------------------- | ------- | -------------- | --------- |
+| Total XP                | 400 XP  | 1,000–1,600 XP | 2,000+ XP |
+| Theme completion %      | 50%     | 75%+           | 100%      |
+| Portfolio pieces added  | 0       | 1              | 2–3       |
+| Skills visibly leveled  | 1       | 2–3            | 4+        |
+| Community contributions | 0       | 2–4            | 5+        |
 
 **Quarterly Metrics:**
 
-| Metric | Minimum | Target | Excellent |
-|---|---|---|---|
-| Capstone completion | Partial | Full | Full + bonus |
-| Hours logged | 60 hr | 150–250 hr | 300+ hr |
-| XP accumulated | 2,000 XP | 5,000+ XP | 8,000+ XP |
-| Level progression | +1 | +2 | +3 |
-| Badges earned | 3 | 6–10 | 15+ |
+| Metric              | Minimum  | Target     | Excellent    |
+| ------------------- | -------- | ---------- | ------------ |
+| Capstone completion | Partial  | Full       | Full + bonus |
+| Hours logged        | 60 hr    | 150–250 hr | 300+ hr      |
+| XP accumulated      | 2,000 XP | 5,000+ XP  | 8,000+ XP    |
+| Level progression   | +1       | +2         | +3           |
+| Badges earned       | 3        | 6–10       | 15+          |
 
 ---
 
@@ -184,13 +184,13 @@ Small Win → Dopamine Release → Motivation → Next Small Win
 
 **Designing Good Small Wins (The Specificity Rule):**
 
-| Poorly Designed Task | Well-Designed Small Win |
-|---|---|
-| "Study cryptography today" | "Summarize RSA key exchange in 4 bullets" |
-| "Do security labs" | "Complete the XSS reflected injection lab and note 3 payloads" |
-| "Read research papers" | "Read the abstract of one paper, extract 1 key insight, write 2 sentences" |
-| "Learn Wireshark" | "Capture local traffic for 5 minutes, identify 3 distinct protocol types" |
-| "Understand cloud security" | "List 5 IAM misconfigurations from AWS documentation" |
+| Poorly Designed Task        | Well-Designed Small Win                                                    |
+| --------------------------- | -------------------------------------------------------------------------- |
+| "Study cryptography today"  | "Summarize RSA key exchange in 4 bullets"                                  |
+| "Do security labs"          | "Complete the XSS reflected injection lab and note 3 payloads"             |
+| "Read research papers"      | "Read the abstract of one paper, extract 1 key insight, write 2 sentences" |
+| "Learn Wireshark"           | "Capture local traffic for 5 minutes, identify 3 distinct protocol types"  |
+| "Understand cloud security" | "List 5 IAM misconfigurations from AWS documentation"                      |
 
 **Win Stacking (Accumulating Momentum Through the Day):**
 
@@ -235,14 +235,14 @@ Humans are wired with two powerful cognitive biases that tracking exploits:
 
 **Recommended Tracking Tools (Ranked by Friction Level):**
 
-| Tool | Best For | Friction Level |
-|---|---|---|
-| Google Sheets | Full tracking, charts, formulas | Low |
-| Notion database | Visual kanban + tracking | Low–Medium |
-| Physical bullet journal | Tactile learners, no screen fatigue | Medium |
-| Habit tracking app (e.g., Streaks) | Streak-only, fast logging | Very Low |
-| GitHub contribution graph | Code-centric work | Very Low |
-| Obsidian / Logseq | PKM + daily notes integration | Medium |
+| Tool                               | Best For                            | Friction Level |
+| ---------------------------------- | ----------------------------------- | -------------- |
+| Google Sheets                      | Full tracking, charts, formulas     | Low            |
+| Notion database                    | Visual kanban + tracking            | Low–Medium     |
+| Physical bullet journal            | Tactile learners, no screen fatigue | Medium         |
+| Habit tracking app (e.g., Streaks) | Streak-only, fast logging           | Very Low       |
+| GitHub contribution graph          | Code-centric work                   | Very Low       |
+| Obsidian / Logseq                  | PKM + daily notes integration       | Medium         |
 
 ---
 
@@ -250,14 +250,14 @@ Humans are wired with two powerful cognitive biases that tracking exploits:
 
 **The Learning Retention Pyramid:**
 
-| Learning Method | Retention After 24 Hours |
-|---|---|
-| Passive reading | ~10% |
-| Listening to audio | ~20% |
-| Watching a demonstration | ~30% |
-| Discussion with peers | ~50% |
-| Active practice / doing | ~75% |
-| Teaching or explaining to others | ~90% |
+| Learning Method                  | Retention After 24 Hours |
+| -------------------------------- | ------------------------ |
+| Passive reading                  | ~10%                     |
+| Listening to audio               | ~20%                     |
+| Watching a demonstration         | ~30%                     |
+| Discussion with peers            | ~50%                     |
+| Active practice / doing          | ~75%                     |
+| Teaching or explaining to others | ~90%                     |
 
 This means: for every hour you spend reading, you should spend at least 2–3 hours doing. For every concept you learn, you should be able to perform at least one lab, exercise, or demonstration of that concept.
 
@@ -301,13 +301,13 @@ STAGE 3: TEACH (20% of time allocation)
 
 **The Accountability Effect (Research-Backed):**
 
-| Accountability Mechanism | Reported Goal Completion Rate |
-|---|---|
-| No accountability (intention only) | ~10% |
-| Writing the goal down | ~25% |
-| Telling someone about the goal | ~65% |
-| Having a specific accountability partner | ~76% |
-| Scheduled regular check-ins with partner | ~95% |
+| Accountability Mechanism                 | Reported Goal Completion Rate |
+| ---------------------------------------- | ----------------------------- |
+| No accountability (intention only)       | ~10%                          |
+| Writing the goal down                    | ~25%                          |
+| Telling someone about the goal           | ~65%                          |
+| Having a specific accountability partner | ~76%                          |
+| Scheduled regular check-ins with partner | ~95%                          |
 
 The difference between 10% and 95% is not intelligence, talent, or discipline. It is structure and social consequence.
 
@@ -441,28 +441,28 @@ You should be able to earn at least 15 XP on the worst day of your life. On a no
 
 These are your daily minimum. They take 5–30 minutes.
 
-| # | Activity | XP | Notes |
-|---|---|---|---|
-| A01 | Review 5 flashcards | 5 XP | Must include 1 flagged hard card |
-| A02 | Review 10 flashcards | 10 XP | Flag 2 for deeper review |
-| A03 | Review 20+ flashcards | 15 XP | Must log 2 new insights |
-| A04 | Summarize 1 concept in 3 bullets | 10 XP | Bullets must be in your own words |
-| A05 | Summarize 1 concept with an analogy | 15 XP | Analogy must make sense to a non-expert |
-| A06 | Run 1 command + note output | 10 XP | Include the exact command and 1 observation |
-| A07 | Run 3 commands + note differences | 15 XP | Compare outputs meaningfully |
-| A08 | Update cheat sheet (1 entry) | 10 XP | Must include syntax + use case |
-| A09 | Update cheat sheet (3+ entries) | 20 XP | Grouped by category |
-| A10 | Debug 1 error + document fix | 15 XP | Root cause + solution + lesson |
-| A11 | Read 1 short article + extract insight | 15 XP | Include source + 1 sentence takeaway |
-| A12 | Listen to 1 podcast episode + note | 15 XP | Include 2 bullet takeaways |
-| A13 | Sketch 1 threat model diagram | 20 XP | Even a rough hand-drawn sketch counts |
-| A14 | Install + test 1 new tool | 20 XP | Document installation steps |
-| A15 | Write 1 "why it matters" explanation | 15 XP | For a tool, attack, or concept |
-| A16 | Create 1 new alias or automation snippet | 20 XP | Must include comment explaining it |
-| A17 | Review 1 old note and improve it | 10 XP | Add examples or correct inaccuracies |
-| A18 | Write 5 new flashcard Q&A pairs | 15 XP | Must be in your own words |
-| A19 | Annotate 1 code sample with explanations | 15 XP | Line-by-line or block-by-block |
-| A20 | Draw a concept map for 1 topic | 20 XP | Connections must be labeled |
+| #   | Activity                                 | XP    | Notes                                       |
+| --- | ---------------------------------------- | ----- | ------------------------------------------- |
+| A01 | Review 5 flashcards                      | 5 XP  | Must include 1 flagged hard card            |
+| A02 | Review 10 flashcards                     | 10 XP | Flag 2 for deeper review                    |
+| A03 | Review 20+ flashcards                    | 15 XP | Must log 2 new insights                     |
+| A04 | Summarize 1 concept in 3 bullets         | 10 XP | Bullets must be in your own words           |
+| A05 | Summarize 1 concept with an analogy      | 15 XP | Analogy must make sense to a non-expert     |
+| A06 | Run 1 command + note output              | 10 XP | Include the exact command and 1 observation |
+| A07 | Run 3 commands + note differences        | 15 XP | Compare outputs meaningfully                |
+| A08 | Update cheat sheet (1 entry)             | 10 XP | Must include syntax + use case              |
+| A09 | Update cheat sheet (3+ entries)          | 20 XP | Grouped by category                         |
+| A10 | Debug 1 error + document fix             | 15 XP | Root cause + solution + lesson              |
+| A11 | Read 1 short article + extract insight   | 15 XP | Include source + 1 sentence takeaway        |
+| A12 | Listen to 1 podcast episode + note       | 15 XP | Include 2 bullet takeaways                  |
+| A13 | Sketch 1 threat model diagram            | 20 XP | Even a rough hand-drawn sketch counts       |
+| A14 | Install + test 1 new tool                | 20 XP | Document installation steps                 |
+| A15 | Write 1 "why it matters" explanation     | 15 XP | For a tool, attack, or concept              |
+| A16 | Create 1 new alias or automation snippet | 20 XP | Must include comment explaining it          |
+| A17 | Review 1 old note and improve it         | 10 XP | Add examples or correct inaccuracies        |
+| A18 | Write 5 new flashcard Q&A pairs          | 15 XP | Must be in your own words                   |
+| A19 | Annotate 1 code sample with explanations | 15 XP | Line-by-line or block-by-block              |
+| A20 | Draw a concept map for 1 topic           | 20 XP | Connections must be labeled                 |
 
 ---
 
@@ -470,28 +470,28 @@ These are your daily minimum. They take 5–30 minutes.
 
 These are the engine of real skill development. Aim for at least 2–3 per week.
 
-| # | Activity | XP | Notes |
-|---|---|---|---|
-| B01 | Complete 1 basic lab | 20 XP | With notes on what you did |
-| B02 | Complete 1 medium lab | 35 XP | With write-up (steps + learnings) |
-| B03 | Complete 1 hard lab | 55 XP | With detailed analysis |
-| B04 | Complete 1 guided lab + modify it | 40 XP | Changing 1 variable teaches more than following exactly |
-| B05 | Solve 1 easy CTF challenge | 30 XP | Document full methodology |
-| B06 | Solve 1 medium CTF challenge | 50 XP | Include failed attempts |
-| B07 | Solve 1 hard CTF challenge | 70 XP | Include research process |
-| B08 | Reproduce 1 known CVE in a lab | 55 XP | Include CVE reference + steps |
-| B09 | Write 1 detection rule (Sigma/YARA) | 40 XP | Include test case |
-| B10 | Write 1 threat hunting query (SIEM) | 40 XP | Include expected signal description |
-| B11 | Analyze 1 packet capture | 35 XP | Annotate ≥5 notable packets |
-| B12 | Perform 1 port scan + interpret results | 25 XP | Explain every open port |
-| B13 | Perform 1 web vulnerability test | 35 XP | Document with request/response |
-| B14 | Test 1 authentication bypass technique | 45 XP | In a safe lab environment |
-| B15 | Execute 1 social engineering simulation | 30 XP | Document approach + results |
-| B16 | Analyze 1 malware sample statically | 40 XP | List IOCs + suspicious strings |
-| B17 | Analyze 1 malware sample dynamically | 55 XP | Behavior log + process tree |
-| B18 | Exploit 1 misconfigured cloud resource | 45 XP | Include fix steps |
-| B19 | Test 1 API endpoint for vulnerabilities | 35 XP | Document method + findings |
-| B20 | Perform 1 privilege escalation lab | 55 XP | Include detection opportunities |
+| #   | Activity                                | XP    | Notes                                                   |
+| --- | --------------------------------------- | ----- | ------------------------------------------------------- |
+| B01 | Complete 1 basic lab                    | 20 XP | With notes on what you did                              |
+| B02 | Complete 1 medium lab                   | 35 XP | With write-up (steps + learnings)                       |
+| B03 | Complete 1 hard lab                     | 55 XP | With detailed analysis                                  |
+| B04 | Complete 1 guided lab + modify it       | 40 XP | Changing 1 variable teaches more than following exactly |
+| B05 | Solve 1 easy CTF challenge              | 30 XP | Document full methodology                               |
+| B06 | Solve 1 medium CTF challenge            | 50 XP | Include failed attempts                                 |
+| B07 | Solve 1 hard CTF challenge              | 70 XP | Include research process                                |
+| B08 | Reproduce 1 known CVE in a lab          | 55 XP | Include CVE reference + steps                           |
+| B09 | Write 1 detection rule (Sigma/YARA)     | 40 XP | Include test case                                       |
+| B10 | Write 1 threat hunting query (SIEM)     | 40 XP | Include expected signal description                     |
+| B11 | Analyze 1 packet capture                | 35 XP | Annotate ≥5 notable packets                             |
+| B12 | Perform 1 port scan + interpret results | 25 XP | Explain every open port                                 |
+| B13 | Perform 1 web vulnerability test        | 35 XP | Document with request/response                          |
+| B14 | Test 1 authentication bypass technique  | 45 XP | In a safe lab environment                               |
+| B15 | Execute 1 social engineering simulation | 30 XP | Document approach + results                             |
+| B16 | Analyze 1 malware sample statically     | 40 XP | List IOCs + suspicious strings                          |
+| B17 | Analyze 1 malware sample dynamically    | 55 XP | Behavior log + process tree                             |
+| B18 | Exploit 1 misconfigured cloud resource  | 45 XP | Include fix steps                                       |
+| B19 | Test 1 API endpoint for vulnerabilities | 35 XP | Document method + findings                              |
+| B20 | Perform 1 privilege escalation lab      | 55 XP | Include detection opportunities                         |
 
 ---
 
@@ -499,23 +499,23 @@ These are the engine of real skill development. Aim for at least 2–3 per week.
 
 Building tools and automations converts passive knowledge into active capability.
 
-| # | Activity | XP | Notes |
-|---|---|---|---|
-| C01 | Build a mini script (under 50 lines) | 40 XP | Must solve a real problem you had |
-| C02 | Build a script with args + error handling | 60 XP | Must include --help flag |
-| C03 | Build a tool with README + usage examples | 85 XP | README must be followable by a stranger |
-| C04 | Build an automation for a repeatable task | 90 XP | Must save you real time |
-| C05 | Build a web vulnerability test harness | 130 XP | Target: safe lab environment only |
-| C06 | Build a log parser or analysis script | 80 XP | Must produce actionable output |
-| C07 | Build a network monitoring script | 75 XP | Capture + interpret + alert |
-| C08 | Build a detection rule testing framework | 100 XP | Automated true/false positive testing |
-| C09 | Build a basic fuzzer | 90 XP | With configurable mutation strategies |
-| C10 | Build a config checker / hardening script | 80 XP | For one specific technology |
-| C11 | Build a dashboard (even a simple one) | 120 XP | Visualizes one data source |
-| C12 | Build a simple ML-based classifier | 150 XP | Applied to a security use case |
-| C13 | Refactor an old script for readability | 40 XP | Include before/after comments |
-| C14 | Write a unit test suite for existing code | 50 XP | At least 5 meaningful test cases |
-| C15 | Containerize a tool with Docker | 70 XP | Include Dockerfile + README |
+| #   | Activity                                  | XP     | Notes                                   |
+| --- | ----------------------------------------- | ------ | --------------------------------------- |
+| C01 | Build a mini script (under 50 lines)      | 40 XP  | Must solve a real problem you had       |
+| C02 | Build a script with args + error handling | 60 XP  | Must include --help flag                |
+| C03 | Build a tool with README + usage examples | 85 XP  | README must be followable by a stranger |
+| C04 | Build an automation for a repeatable task | 90 XP  | Must save you real time                 |
+| C05 | Build a web vulnerability test harness    | 130 XP | Target: safe lab environment only       |
+| C06 | Build a log parser or analysis script     | 80 XP  | Must produce actionable output          |
+| C07 | Build a network monitoring script         | 75 XP  | Capture + interpret + alert             |
+| C08 | Build a detection rule testing framework  | 100 XP | Automated true/false positive testing   |
+| C09 | Build a basic fuzzer                      | 90 XP  | With configurable mutation strategies   |
+| C10 | Build a config checker / hardening script | 80 XP  | For one specific technology             |
+| C11 | Build a dashboard (even a simple one)     | 120 XP | Visualizes one data source              |
+| C12 | Build a simple ML-based classifier        | 150 XP | Applied to a security use case          |
+| C13 | Refactor an old script for readability    | 40 XP  | Include before/after comments           |
+| C14 | Write a unit test suite for existing code | 50 XP  | At least 5 meaningful test cases        |
+| C15 | Containerize a tool with Docker           | 70 XP  | Include Dockerfile + README             |
 
 ---
 
@@ -523,23 +523,23 @@ Building tools and automations converts passive knowledge into active capability
 
 Writing solidifies understanding and creates durable artifacts. Publishing multiplies impact.
 
-| # | Activity | XP | Notes |
-|---|---|---|---|
-| D01 | Write a 1-page internal write-up | 30 XP | Private is fine; clarity is required |
-| D02 | Write a 2–3 page analysis / report | 60 XP | Must have a clear structure |
-| D03 | Write a detailed lab walkthrough | 70 XP | Steps + screenshots or commands |
-| D04 | Publish a blog post (any length) | 85 XP | Must be publicly accessible |
-| D05 | Create a GitHub repo with full README | 105 XP | README must explain purpose + usage |
-| D06 | Write a case study with visuals | 150 XP | Problem → approach → results → lessons |
-| D07 | Create a concept explainer with diagrams | 80 XP | Suitable for someone 1 level below you |
-| D08 | Write a threat intel report | 90 XP | Attribution + TTPs + indicators |
-| D09 | Write a vulnerability disclosure write-up | 100 XP | Include CVE-style structured data |
-| D10 | Create a cheat sheet (shareable, clean) | 60 XP | Organized, attributed, formatted |
-| D11 | Publish a LinkedIn learning post | 40 XP | At least 3 substantive insights |
-| D12 | Write an annual / quarterly review | 80 XP | Include metrics, learnings, and next goals |
-| D13 | Write a technical tutorial | 120 XP | Reproducible by someone else |
-| D14 | Create slide deck for a concept | 75 XP | At least 8 slides, each with a clear point |
-| D15 | Publish a comprehensive study guide | 200 XP | Structured, sourced, publicly available |
+| #   | Activity                                  | XP     | Notes                                      |
+| --- | ----------------------------------------- | ------ | ------------------------------------------ |
+| D01 | Write a 1-page internal write-up          | 30 XP  | Private is fine; clarity is required       |
+| D02 | Write a 2–3 page analysis / report        | 60 XP  | Must have a clear structure                |
+| D03 | Write a detailed lab walkthrough          | 70 XP  | Steps + screenshots or commands            |
+| D04 | Publish a blog post (any length)          | 85 XP  | Must be publicly accessible                |
+| D05 | Create a GitHub repo with full README     | 105 XP | README must explain purpose + usage        |
+| D06 | Write a case study with visuals           | 150 XP | Problem → approach → results → lessons     |
+| D07 | Create a concept explainer with diagrams  | 80 XP  | Suitable for someone 1 level below you     |
+| D08 | Write a threat intel report               | 90 XP  | Attribution + TTPs + indicators            |
+| D09 | Write a vulnerability disclosure write-up | 100 XP | Include CVE-style structured data          |
+| D10 | Create a cheat sheet (shareable, clean)   | 60 XP  | Organized, attributed, formatted           |
+| D11 | Publish a LinkedIn learning post          | 40 XP  | At least 3 substantive insights            |
+| D12 | Write an annual / quarterly review        | 80 XP  | Include metrics, learnings, and next goals |
+| D13 | Write a technical tutorial                | 120 XP | Reproducible by someone else               |
+| D14 | Create slide deck for a concept           | 75 XP  | At least 8 slides, each with a clear point |
+| D15 | Publish a comprehensive study guide       | 200 XP | Structured, sourced, publicly available    |
 
 ---
 
@@ -547,18 +547,18 @@ Writing solidifies understanding and creates durable artifacts. Publishing multi
 
 Learning in community compounds skill growth through feedback and teaching.
 
-| # | Activity | XP | Notes |
-|---|---|---|---|
-| E01 | Post a weekly progress update | 20 XP | Include metric: hours, XP, or artifact |
-| E02 | Help someone in a community forum | 30 XP | Log the question and your response |
-| E03 | Join a study group call | 30 XP | Must actively participate |
-| E04 | Present a 5–10 min mini-talk | 65 XP | Record it if async |
-| E05 | Review a peer's work and give feedback | 45 XP | Written feedback, not just verbal |
-| E06 | Complete a peer accountability check-in | 25 XP | With logged outcomes |
-| E07 | Participate in a capture-the-flag team event | 70 XP | Document your contributions |
-| E08 | Mentor a newer learner for 30+ min | 80 XP | On a specific topic |
-| E09 | Answer 5+ questions in a community forum | 50 XP | Must be substantive, not one-liners |
-| E10 | Organize or host a study session | 100 XP | Even a small one with 2–3 people |
+| #   | Activity                                     | XP     | Notes                                  |
+| --- | -------------------------------------------- | ------ | -------------------------------------- |
+| E01 | Post a weekly progress update                | 20 XP  | Include metric: hours, XP, or artifact |
+| E02 | Help someone in a community forum            | 30 XP  | Log the question and your response     |
+| E03 | Join a study group call                      | 30 XP  | Must actively participate              |
+| E04 | Present a 5–10 min mini-talk                 | 65 XP  | Record it if async                     |
+| E05 | Review a peer's work and give feedback       | 45 XP  | Written feedback, not just verbal      |
+| E06 | Complete a peer accountability check-in      | 25 XP  | With logged outcomes                   |
+| E07 | Participate in a capture-the-flag team event | 70 XP  | Document your contributions            |
+| E08 | Mentor a newer learner for 30+ min           | 80 XP  | On a specific topic                    |
+| E09 | Answer 5+ questions in a community forum     | 50 XP  | Must be substantive, not one-liners    |
+| E10 | Organize or host a study session             | 100 XP | Even a small one with 2–3 people       |
 
 ---
 
@@ -566,18 +566,18 @@ Learning in community compounds skill growth through feedback and teaching.
 
 Deep research connects concepts and builds expert-level intuition.
 
-| # | Activity | XP | Notes |
-|---|---|---|---|
-| F01 | Read 1 full academic paper + summary | 45 XP | Summary must be in your own words |
-| F02 | Implement a paper's core idea (mini) | 85 XP | Even partial implementation counts |
-| F03 | Compare 2 security tools with pros/cons | 55 XP | Must include a structured table |
-| F04 | Create a full threat model for a system | 65 XP | Include STRIDE or PASTA framework |
-| F05 | Build a small labeled dataset + analysis | 130 XP | Data collection + cleaning + insight |
-| F06 | Conduct a literature review (3+ papers) | 100 XP | Synthesis across papers, not just summaries |
-| F07 | Reproduce a published research experiment | 120 XP | Document divergence from original results |
-| F08 | Write a "state of the field" summary | 90 XP | For one narrow sub-domain |
-| F09 | Identify and document a novel attack path | 150 XP | In a safe lab; includes detection opportunity |
-| F10 | Create an annotated bibliography (10+ sources) | 70 XP | On one specific topic |
+| #   | Activity                                       | XP     | Notes                                         |
+| --- | ---------------------------------------------- | ------ | --------------------------------------------- |
+| F01 | Read 1 full academic paper + summary           | 45 XP  | Summary must be in your own words             |
+| F02 | Implement a paper's core idea (mini)           | 85 XP  | Even partial implementation counts            |
+| F03 | Compare 2 security tools with pros/cons        | 55 XP  | Must include a structured table               |
+| F04 | Create a full threat model for a system        | 65 XP  | Include STRIDE or PASTA framework             |
+| F05 | Build a small labeled dataset + analysis       | 130 XP | Data collection + cleaning + insight          |
+| F06 | Conduct a literature review (3+ papers)        | 100 XP | Synthesis across papers, not just summaries   |
+| F07 | Reproduce a published research experiment      | 120 XP | Document divergence from original results     |
+| F08 | Write a "state of the field" summary           | 90 XP  | For one narrow sub-domain                     |
+| F09 | Identify and document a novel attack path      | 150 XP | In a safe lab; includes detection opportunity |
+| F10 | Create an annotated bibliography (10+ sources) | 70 XP  | On one specific topic                         |
 
 ---
 
@@ -585,18 +585,18 @@ Deep research connects concepts and builds expert-level intuition.
 
 These are automatic bonuses triggered by maintaining streaks.
 
-| Streak Milestone | XP Bonus | Additional Reward |
-|---|---|---|
-| 3-day streak | +20 XP | — |
-| 7-day streak | +50 XP | Eligible for "Consistent" badge |
-| 14-day streak | +100 XP | 1 micro-win can be retroactively upgraded to lab credit |
-| 21-day streak | +150 XP | Unlock wildcard challenge choice |
-| 30-day streak | +250 XP | 1 "skip token" earned (use to protect streak on one future missed day) |
-| 45-day streak | +300 XP | — |
-| 60-day streak | +400 XP | Unlock monthly theme wildcard |
-| 90-day streak | +700 XP | Capstone fast-track option unlocked |
-| Perfect week (7/7) | +80 XP | — |
-| Perfect month (28+ days) | +300 XP | — |
+| Streak Milestone         | XP Bonus | Additional Reward                                                      |
+| ------------------------ | -------- | ---------------------------------------------------------------------- |
+| 3-day streak             | +20 XP   | —                                                                      |
+| 7-day streak             | +50 XP   | Eligible for "Consistent" badge                                        |
+| 14-day streak            | +100 XP  | 1 micro-win can be retroactively upgraded to lab credit                |
+| 21-day streak            | +150 XP  | Unlock wildcard challenge choice                                       |
+| 30-day streak            | +250 XP  | 1 "skip token" earned (use to protect streak on one future missed day) |
+| 45-day streak            | +300 XP  | —                                                                      |
+| 60-day streak            | +400 XP  | Unlock monthly theme wildcard                                          |
+| 90-day streak            | +700 XP  | Capstone fast-track option unlocked                                    |
+| Perfect week (7/7)       | +80 XP   | —                                                                      |
+| Perfect month (28+ days) | +300 XP  | —                                                                      |
 
 ---
 
@@ -604,17 +604,17 @@ These are automatic bonuses triggered by maintaining streaks.
 
 One-time bonuses earned the first time you hit a major milestone.
 
-| Milestone | XP Bonus |
-|---|---|
-| First portfolio artifact ever | +150 XP |
-| First public write-up | +100 XP |
-| First capstone completed | +300 XP |
-| 1 month of consistent study | +200 XP |
-| 100 hours logged | +400 XP |
-| 250 hours logged | +1,000 XP |
-| 500 hours logged | +2,000 XP |
-| 1 year of consistent study | +3,000 XP |
-| First external recognition (job, interview, speaker invite) | +500 XP |
+| Milestone                                                   | XP Bonus  |
+| ----------------------------------------------------------- | --------- |
+| First portfolio artifact ever                               | +150 XP   |
+| First public write-up                                       | +100 XP   |
+| First capstone completed                                    | +300 XP   |
+| 1 month of consistent study                                 | +200 XP   |
+| 100 hours logged                                            | +400 XP   |
+| 250 hours logged                                            | +1,000 XP |
+| 500 hours logged                                            | +2,000 XP |
+| 1 year of consistent study                                  | +3,000 XP |
+| First external recognition (job, interview, speaker invite) | +500 XP   |
 
 ---
 
@@ -622,35 +622,35 @@ One-time bonuses earned the first time you hit a major milestone.
 
 Boss challenges are large, complex activities that require significant effort. Attempt no more than one per month.
 
-| # | Activity | XP | Deliverable |
-|---|---|---|---|
-| I01 | Full security review of one system | 200 XP | Report: findings + risk ratings + fixes |
-| I02 | Build a detection rules pack (10+ rules) | 250 XP | Tested rules + false-positive notes |
-| I03 | Build an exploit PoC + mitigation guide | 250 XP | Safe lab only; include CVE reference |
-| I04 | Build an end-to-end cloud lab (IAM + logging) | 300 XP | Architecture diagram + setup guide |
-| I05 | Build an ML security evaluation pipeline | 350 XP | Code + documented test results |
-| I06 | Publish a comprehensive study guide | 400 XP | Public, structured, sourced |
-| I07 | Deliver a conference lightning talk | 400 XP | Slides + recording |
-| I08 | Complete a full red team engagement (lab) | 450 XP | Full report: recon → persistence → report |
-| I09 | Build a complete incident response simulation | 350 XP | Playbook + after-action report |
-| I10 | Create a certification study guide for others | 300 XP | Publicly shared, 2,000+ words |
+| #   | Activity                                      | XP     | Deliverable                               |
+| --- | --------------------------------------------- | ------ | ----------------------------------------- |
+| I01 | Full security review of one system            | 200 XP | Report: findings + risk ratings + fixes   |
+| I02 | Build a detection rules pack (10+ rules)      | 250 XP | Tested rules + false-positive notes       |
+| I03 | Build an exploit PoC + mitigation guide       | 250 XP | Safe lab only; include CVE reference      |
+| I04 | Build an end-to-end cloud lab (IAM + logging) | 300 XP | Architecture diagram + setup guide        |
+| I05 | Build an ML security evaluation pipeline      | 350 XP | Code + documented test results            |
+| I06 | Publish a comprehensive study guide           | 400 XP | Public, structured, sourced               |
+| I07 | Deliver a conference lightning talk           | 400 XP | Slides + recording                        |
+| I08 | Complete a full red team engagement (lab)     | 450 XP | Full report: recon → persistence → report |
+| I09 | Build a complete incident response simulation | 350 XP | Playbook + after-action report            |
+| I10 | Create a certification study guide for others | 300 XP | Publicly shared, 2,000+ words             |
 
 ---
 
 ## 4.3 Level Progression Table
 
-| Level | XP Range | Title | Unlocks |
-|---|---|---|---|
-| 1 | 0–200 XP | Starter | Basic XP tracking, streak system |
-| 2 | 201–500 XP | Explorer | Weekly challenges, community layer |
-| 3 | 501–1,000 XP | Builder | Monthly theme sprints, badge system |
-| 4 | 1,001–1,800 XP | Specialist | Boss challenges, accountability framework |
-| 5 | 1,801–3,000 XP | Professional | Quarterly capstones, mentorship opportunities |
-| 6 | 3,001–5,000 XP | Senior | Capstone fast-track, wildcard challenges |
-| 7 | 5,001–8,000 XP | Lead | Community teaching, speaker opportunities |
-| 8 | 8,001–12,000 XP | Expert | All systems unlocked, mentor status |
-| 9 | 12,001–18,000 XP | Master | Contribute to curriculum design |
-| 10 | 18,001+ XP | Legend | Recognized community leader |
+| Level | XP Range         | Title        | Unlocks                                       |
+| ----- | ---------------- | ------------ | --------------------------------------------- |
+| 1     | 0–200 XP         | Starter      | Basic XP tracking, streak system              |
+| 2     | 201–500 XP       | Explorer     | Weekly challenges, community layer            |
+| 3     | 501–1,000 XP     | Builder      | Monthly theme sprints, badge system           |
+| 4     | 1,001–1,800 XP   | Specialist   | Boss challenges, accountability framework     |
+| 5     | 1,801–3,000 XP   | Professional | Quarterly capstones, mentorship opportunities |
+| 6     | 3,001–5,000 XP   | Senior       | Capstone fast-track, wildcard challenges      |
+| 7     | 5,001–8,000 XP   | Lead         | Community teaching, speaker opportunities     |
+| 8     | 8,001–12,000 XP  | Expert       | All systems unlocked, mentor status           |
+| 9     | 12,001–18,000 XP | Master       | Contribute to curriculum design               |
+| 10    | 18,001+ XP       | Legend       | Recognized community leader                   |
 
 ---
 
@@ -660,72 +660,72 @@ Badges are visual markers of specific accomplishments. Unlike XP, which is conti
 
 ## 5.1 Foundational Badges (Tier 1)
 
-| Badge Name | Icon | Earning Criteria | XP Bonus |
-|---|---|---|---|
-| **First Blood** | 🩸 | Complete your very first lab | +50 XP |
-| **Write It Down** | ✍️ | Produce your first technical write-up | +50 XP |
-| **Signal Boost** | 📡 | Publish your first public learning post | +75 XP |
-| **Toolsmith** | 🔧 | Build and document your first tool | +75 XP |
-| **The Consistent** | 🔥 | Maintain a 7-day streak | +50 XP |
-| **Early Logger** | 📓 | Log 7 consecutive days in the tracker | +30 XP |
-| **First Steps** | 👟 | Earn your first 100 XP total | +20 XP |
-| **Deck Builder** | 🃏 | Create your first 25 flashcards | +30 XP |
+| Badge Name         | Icon | Earning Criteria                        | XP Bonus |
+| ------------------ | ---- | --------------------------------------- | -------- |
+| **First Blood**    | 🩸   | Complete your very first lab            | +50 XP   |
+| **Write It Down**  | ✍️   | Produce your first technical write-up   | +50 XP   |
+| **Signal Boost**   | 📡   | Publish your first public learning post | +75 XP   |
+| **Toolsmith**      | 🔧   | Build and document your first tool      | +75 XP   |
+| **The Consistent** | 🔥   | Maintain a 7-day streak                 | +50 XP   |
+| **Early Logger**   | 📓   | Log 7 consecutive days in the tracker   | +30 XP   |
+| **First Steps**    | 👟   | Earn your first 100 XP total            | +20 XP   |
+| **Deck Builder**   | 🃏   | Create your first 25 flashcards         | +30 XP   |
 
 ## 5.2 Intermediate Badges (Tier 2)
 
-| Badge Name | Icon | Earning Criteria | XP Bonus |
-|---|---|---|---|
-| **Threat Hunter** | 🎯 | Complete 5 threat hunting exercises | +100 XP |
-| **CTF Grinder** | ⚙️ | Solve 10 CTF challenges (any difficulty) | +150 XP |
-| **Paper Reader** | 📄 | Summarize 5 academic papers | +100 XP |
-| **Lab Runner** | 🧪 | Complete 20 labs total | +200 XP |
-| **Portfolio Builder** | 🗂️ | Create 3 portfolio artifacts | +150 XP |
-| **The Committed** | 📅 | Maintain a 14-day streak | +100 XP |
-| **Community Voice** | 💬 | Help 5 people in community forums | +100 XP |
-| **Detection Engineer** | 🚨 | Write 5 detection rules (Sigma or YARA) | +150 XP |
-| **Script Kiddie No More** | 💻 | Build 3 original tools with documentation | +150 XP |
-| **Packet Wizard** | 📶 | Complete 5 packet analysis exercises | +120 XP |
+| Badge Name                | Icon | Earning Criteria                          | XP Bonus |
+| ------------------------- | ---- | ----------------------------------------- | -------- |
+| **Threat Hunter**         | 🎯   | Complete 5 threat hunting exercises       | +100 XP  |
+| **CTF Grinder**           | ⚙️   | Solve 10 CTF challenges (any difficulty)  | +150 XP  |
+| **Paper Reader**          | 📄   | Summarize 5 academic papers               | +100 XP  |
+| **Lab Runner**            | 🧪   | Complete 20 labs total                    | +200 XP  |
+| **Portfolio Builder**     | 🗂️  | Create 3 portfolio artifacts              | +150 XP  |
+| **The Committed**         | 📅   | Maintain a 14-day streak                  | +100 XP  |
+| **Community Voice**       | 💬   | Help 5 people in community forums         | +100 XP  |
+| **Detection Engineer**    | 🚨   | Write 5 detection rules (Sigma or YARA)   | +150 XP  |
+| **Script Kiddie No More** | 💻   | Build 3 original tools with documentation | +150 XP  |
+| **Packet Wizard**         | 📶   | Complete 5 packet analysis exercises      | +120 XP  |
 
 ## 5.3 Advanced Badges (Tier 3)
 
-| Badge Name | Icon | Earning Criteria | XP Bonus |
-|---|---|---|---|
-| **Security Engineer** | 🛡️ | Complete 1 full system security review | +250 XP |
-| **Detection Architect** | 🏗️ | Ship 10+ tested detection rules | +250 XP |
-| **Exploit Analyst** | 💣 | Reproduce 5 CVEs in a lab with write-ups | +300 XP |
-| **Cloud Guardian** | ☁️ | Complete 3 cloud security labs with reports | +200 XP |
-| **ML Security Specialist** | 🤖 | Create 3 ML security artifacts | +250 XP |
-| **The Disciplined** | 🏋️ | Maintain a 30-day streak | +250 XP |
-| **Researcher** | 🔬 | Read and summarize 10 academic papers | +200 XP |
-| **Web Breaker** | 🕸️ | Complete 10 web security labs or challenges | +200 XP |
-| **Incident Commander** | 🚒 | Create a full IR playbook for 2 scenarios | +250 XP |
-| **Malware Analyst** | 🦠 | Complete 5 malware analysis labs | +300 XP |
+| Badge Name                 | Icon | Earning Criteria                            | XP Bonus |
+| -------------------------- | ---- | ------------------------------------------- | -------- |
+| **Security Engineer**      | 🛡️  | Complete 1 full system security review      | +250 XP  |
+| **Detection Architect**    | 🏗️  | Ship 10+ tested detection rules             | +250 XP  |
+| **Exploit Analyst**        | 💣   | Reproduce 5 CVEs in a lab with write-ups    | +300 XP  |
+| **Cloud Guardian**         | ☁️   | Complete 3 cloud security labs with reports | +200 XP  |
+| **ML Security Specialist** | 🤖   | Create 3 ML security artifacts              | +250 XP  |
+| **The Disciplined**        | 🏋️  | Maintain a 30-day streak                    | +250 XP  |
+| **Researcher**             | 🔬   | Read and summarize 10 academic papers       | +200 XP  |
+| **Web Breaker**            | 🕸️  | Complete 10 web security labs or challenges | +200 XP  |
+| **Incident Commander**     | 🚒   | Create a full IR playbook for 2 scenarios   | +250 XP  |
+| **Malware Analyst**        | 🦠   | Complete 5 malware analysis labs            | +300 XP  |
 
 ## 5.4 Mastery Badges (Tier 4)
 
-| Badge Name | Icon | Earning Criteria | XP Bonus |
-|---|---|---|---|
-| **Capstone Champion** | 🏆 | Complete all 4 quarterly capstones | +1,000 XP |
-| **Century Club** | 💯 | Log 100 study hours | +400 XP |
-| **Public Scholar** | 🌐 | Publish 10 public posts or write-ups | +400 XP |
-| **Community Builder** | 🤝 | Provide meaningful help to 10 people | +300 XP |
-| **The Legendary** | ⭐ | Maintain a 90-day streak | +700 XP |
-| **Year One** | 🎂 | Complete one full year of consistent study | +3,000 XP |
-| **Annual Reviewer** | 📊 | Publish a full year-in-review document | +500 XP |
-| **Keynote Ready** | 🎤 | Deliver a talk at any public event | +400 XP |
+| Badge Name            | Icon | Earning Criteria                           | XP Bonus  |
+| --------------------- | ---- | ------------------------------------------ | --------- |
+| **Capstone Champion** | 🏆   | Complete all 4 quarterly capstones         | +1,000 XP |
+| **Century Club**      | 💯   | Log 100 study hours                        | +400 XP   |
+| **Public Scholar**    | 🌐   | Publish 10 public posts or write-ups       | +400 XP   |
+| **Community Builder** | 🤝   | Provide meaningful help to 10 people       | +300 XP   |
+| **The Legendary**     | ⭐    | Maintain a 90-day streak                   | +700 XP   |
+| **Year One**          | 🎂   | Complete one full year of consistent study | +3,000 XP |
+| **Annual Reviewer**   | 📊   | Publish a full year-in-review document     | +500 XP   |
+| **Keynote Ready**     | 🎤   | Deliver a talk at any public event         | +400 XP   |
 
 ## 5.5 Secret Badges (Unlocked Without Trying)
 
 These badges are not announced in advance. They are awarded automatically when the system detects specific patterns.
 
-| Badge Name | Trigger |
-|---|---|
-| **Night Owl** | Log 10 study sessions after 10 PM |
-| **Dawn Patrol** | Log 10 study sessions before 7 AM |
-| **The Comeback** | Rebuild a streak to 14+ days after a break |
-| **Deep Dive** | Log a single session of 3+ hours with an artifact |
-| **Streak Saver** | Use a skip token to protect a streak |
-| **Boss Slayer** | Complete 3 boss challenges in one quarter |
+| Badge Name       | Trigger                                           |
+| ---------------- | ------------------------------------------------- |
+| **Night Owl**    | Log 10 study sessions after 10 PM                 |
+| **Dawn Patrol**  | Log 10 study sessions before 7 AM                 |
+| **The Comeback** | Rebuild a streak to 14+ days after a break        |
+| **Deep Dive**    | Log a single session of 3+ hours with an artifact |
+| **Streak Saver** | Use a skip token to protect a streak              |
+| **Boss Slayer**  | Complete 3 boss challenges in one quarter         |
 
 ---
 
@@ -794,18 +794,18 @@ At the end of each week, review your logs. Ask honestly: did each day's log repr
 
 ## 6.4 Streak Tier Rewards
 
-| Streak Length | Title | XP Bonus | Unlocked Benefit |
-|---|---|---|---|
-| 3 days | Starter | +20 XP | — |
-| 7 days | Consistent | +50 XP | Eligible for "Consistent" badge |
-| 14 days | Committed | +100 XP | 1 micro-win can be credited as lab for XP purposes |
-| 21 days | Dedicated | +150 XP | Wildcard challenge selection |
-| 30 days | Disciplined | +250 XP | 1 "skip token" earned |
-| 45 days | Relentless | +300 XP | — |
-| 60 days | Elite | +400 XP | Monthly theme wildcard unlocked |
-| 90 days | Legendary | +700 XP | Capstone fast-track option |
-| 180 days | Unstoppable | +1,500 XP | Special recognition, mentor status |
-| 365 days | Mythic | +5,000 XP | Year One badge + community recognition |
+| Streak Length | Title       | XP Bonus  | Unlocked Benefit                                   |
+| ------------- | ----------- | --------- | -------------------------------------------------- |
+| 3 days        | Starter     | +20 XP    | —                                                  |
+| 7 days        | Consistent  | +50 XP    | Eligible for "Consistent" badge                    |
+| 14 days       | Committed   | +100 XP   | 1 micro-win can be credited as lab for XP purposes |
+| 21 days       | Dedicated   | +150 XP   | Wildcard challenge selection                       |
+| 30 days       | Disciplined | +250 XP   | 1 "skip token" earned                              |
+| 45 days       | Relentless  | +300 XP   | —                                                  |
+| 60 days       | Elite       | +400 XP   | Monthly theme wildcard unlocked                    |
+| 90 days       | Legendary   | +700 XP   | Capstone fast-track option                         |
+| 180 days      | Unstoppable | +1,500 XP | Special recognition, mentor status                 |
+| 365 days      | Mythic      | +5,000 XP | Year One badge + community recognition             |
 
 ---
 
@@ -813,13 +813,13 @@ At the end of each week, review your logs. Ask honestly: did each day's log repr
 
 Running multiple streak types simultaneously creates layers of resilience — if one breaks, the others continue.
 
-| Streak Type | Definition | Minimum Daily Requirement |
-|---|---|---|
-| **Main Streak** | Any qualifying activity | MVS (15 min + 1 output) |
-| **Micro-Streak** | At least one micro-win | 1 micro-win logged |
-| **Lab Streak** | At least one lab step | 1 lab step or exercise |
-| **Creation Streak** | Producing something | Note, write-up, script, diagram |
-| **Community Streak** | External interaction | Post, comment, check-in |
+| Streak Type          | Definition              | Minimum Daily Requirement       |
+| -------------------- | ----------------------- | ------------------------------- |
+| **Main Streak**      | Any qualifying activity | MVS (15 min + 1 output)         |
+| **Micro-Streak**     | At least one micro-win  | 1 micro-win logged              |
+| **Lab Streak**       | At least one lab step   | 1 lab step or exercise          |
+| **Creation Streak**  | Producing something     | Note, write-up, script, diagram |
+| **Community Streak** | External interaction    | Post, comment, check-in         |
 
 You can maintain a main streak on days when the lab streak breaks. You can maintain a creation streak on days when the community streak breaks. This nested resilience is intentional.
 
@@ -894,13 +894,13 @@ A broken streak after 14 days is not a failed 14 days. You still earned all that
 
 These are automatic rules to prevent the streak system itself from causing burnout.
 
-| Signal | Automatic Response |
-|---|---|
-| Energy ≤ 2 for two consecutive days | Auto-switch to MVS only for the next 3 days |
-| Three intensive sessions in a row | Schedule a planned rest day within 48 hours |
-| XP > 150 per day for 5+ days | Reduce to 50% of normal pace for 3 days |
-| Missing 2 sleep cycles in one week | Mandatory rest day next day |
-| Experiencing study-related anxiety or dread | Activate recovery protocol (Section 18) |
+| Signal                                      | Automatic Response                          |
+| ------------------------------------------- | ------------------------------------------- |
+| Energy ≤ 2 for two consecutive days         | Auto-switch to MVS only for the next 3 days |
+| Three intensive sessions in a row           | Schedule a planned rest day within 48 hours |
+| XP > 150 per day for 5+ days                | Reduce to 50% of normal pace for 3 days     |
+| Missing 2 sleep cycles in one week          | Mandatory rest day next day                 |
+| Experiencing study-related anxiety or dread | Activate recovery protocol (Section 18)     |
 
 ---
 
@@ -926,12 +926,12 @@ The Pomodoro Technique was developed by Francesco Cirillo in the late 1980s. It 
 
 **Pomodoro for Study (Adapted):**
 
-| Pomodoro # | Recommended Activity |
-|---|---|
-| 1 | Review flashcards + summarize previous session |
-| 2 | New material (reading, video, lecture notes) |
-| 3 | Hands-on practice or lab work |
-| 4 | Write-up, documentation, or output creation |
+| Pomodoro # | Recommended Activity                           |
+| ---------- | ---------------------------------------------- |
+| 1          | Review flashcards + summarize previous session |
+| 2          | New material (reading, video, lecture notes)   |
+| 3          | Hands-on practice or lab work                  |
+| 4          | Write-up, documentation, or output creation    |
 
 **Best For:** New material, reading, flashcard review, anything requiring concentration but not flow state. Works poorly for deep lab work that requires sustained immersion.
 
@@ -983,15 +983,15 @@ Before the block starts, complete these steps:
 
 The hybrid system uses different focus methods for different activity types in the same day.
 
-| Activity Type | Recommended Method | Duration |
-|---|---|---|
-| Flashcard review | Pomodoro (25 min) | 1 Pomodoro |
-| Reading new material | Pomodoro (25 min × 2) | 2 Pomodoros |
-| Writing (notes, summaries) | Pomodoro (25 min × 2) | 2 Pomodoros |
-| Lab work | Deep Work (90 min) | 1 block |
-| Building a tool | Deep Work (90 min × 2) | 2 blocks |
-| Research (papers, deep analysis) | Deep Work (90 min) | 1 block |
-| CTF challenges | Deep Work (90 min) | 1–2 blocks |
+| Activity Type                    | Recommended Method     | Duration    |
+| -------------------------------- | ---------------------- | ----------- |
+| Flashcard review                 | Pomodoro (25 min)      | 1 Pomodoro  |
+| Reading new material             | Pomodoro (25 min × 2)  | 2 Pomodoros |
+| Writing (notes, summaries)       | Pomodoro (25 min × 2)  | 2 Pomodoros |
+| Lab work                         | Deep Work (90 min)     | 1 block     |
+| Building a tool                  | Deep Work (90 min × 2) | 2 blocks    |
+| Research (papers, deep analysis) | Deep Work (90 min)     | 1 block     |
+| CTF challenges                   | Deep Work (90 min)     | 1–2 blocks  |
 
 **A Sample Hybrid Day (4.5 hours total study):**
 ```
@@ -1633,13 +1633,13 @@ Build a functional web security testing toolkit that can automatically identify 
 
 **Evaluation Criteria:**
 
-| Criterion | Pass | Excellence |
-|---|---|---|
-| Scanner detects ≥5 vulnerability types | Yes | Yes + custom module |
-| Report is professional and structured | Yes | Yes + custom branding |
-| Demo environment works end-to-end | Yes | Yes + Docker |
-| README is followable by a stranger | Yes | Yes + video demo |
-| Code is organized and commented | Basic | Well-structured + tests |
+| Criterion                              | Pass  | Excellence              |
+| -------------------------------------- | ----- | ----------------------- |
+| Scanner detects ≥5 vulnerability types | Yes   | Yes + custom module     |
+| Report is professional and structured  | Yes   | Yes + custom branding   |
+| Demo environment works end-to-end      | Yes   | Yes + Docker            |
+| README is followable by a stranger     | Yes   | Yes + video demo        |
+| Code is organized and commented        | Basic | Well-structured + tests |
 
 ---
 
@@ -1780,13 +1780,13 @@ Burnout is not weakness or laziness. It is a physiological and psychological sta
 
 **The Burnout Arc (Early Warning Signs):**
 
-| Stage | Signs | Appropriate Response |
-|---|---|---|
-| Stage 0 (Normal) | Engaged, motivated, focused | Maintain system as-is |
-| Stage 1 (Strain) | Slightly less motivated, minor procrastination | Reduce daily XP target by 30% for 3 days |
-| Stage 2 (Fatigue) | Dread before sessions, difficulty concentrating | Switch to MVS only, add a rest day this week |
-| Stage 3 (Exhaustion) | Can't engage even with simple tasks, study feels pointless | Full recovery week (Section 18) |
-| Stage 4 (Crisis) | Significant anxiety, depression, complete disengagement | Stop studying. Seek support. Recovery is the only priority. |
+| Stage                | Signs                                                      | Appropriate Response                                        |
+| -------------------- | ---------------------------------------------------------- | ----------------------------------------------------------- |
+| Stage 0 (Normal)     | Engaged, motivated, focused                                | Maintain system as-is                                       |
+| Stage 1 (Strain)     | Slightly less motivated, minor procrastination             | Reduce daily XP target by 30% for 3 days                    |
+| Stage 2 (Fatigue)    | Dread before sessions, difficulty concentrating            | Switch to MVS only, add a rest day this week                |
+| Stage 3 (Exhaustion) | Can't engage even with simple tasks, study feels pointless | Full recovery week (Section 18)                             |
+| Stage 4 (Crisis)     | Significant anxiety, depression, complete disengagement    | Stop studying. Seek support. Recovery is the only priority. |
 
 **The core burnout prevention principle:** It is far easier to prevent Stage 2 from becoming Stage 3 than it is to recover from Stage 4 back to Stage 0. Catch it early.
 
@@ -1814,12 +1814,12 @@ Studying the same subject for extended periods without variation is one of the m
 
 **Rotation Guidelines:**
 
-| Duration on One Topic | Action |
-|---|---|
-| 1–2 weeks | Fine; maintain |
-| 3 weeks | Consider adding a parallel topic (20% of time) |
-| 4 weeks | Mandatory secondary topic this week |
-| 6+ weeks straight | Schedule a full topic switch for 1–2 weeks |
+| Duration on One Topic | Action                                         |
+| --------------------- | ---------------------------------------------- |
+| 1–2 weeks             | Fine; maintain                                 |
+| 3 weeks               | Consider adding a parallel topic (20% of time) |
+| 4 weeks               | Mandatory secondary topic this week            |
+| 6+ weeks straight     | Schedule a full topic switch for 1–2 weeks     |
 
 **The Parallel Topic Method:**
 Dedicate 80% of study time to the primary topic, 20% to a contrasting secondary topic. The secondary topic should be substantively different — e.g., if primary is cryptography, secondary might be network security or cloud operations. Contrast creates mental freshness.
@@ -1851,16 +1851,16 @@ Every 6–8 weeks, schedule a recovery week. This is not optional. It is schedul
 
 **Recovery Week Structure:**
 
-| Activity | Allowed During Recovery Week |
-|---|---|
-| New challenging material | ❌ No |
-| Lab work | ❌ No (unless you genuinely want to) |
-| Flashcard review (light) | ✅ Yes — 10 min max |
-| Re-reading old notes | ✅ Yes |
-| Organizing and cleaning up your tracker | ✅ Yes |
-| Reading a book tangentially related to your domain | ✅ Yes |
-| Rest, exercise, social activities | ✅ Encouraged |
-| Posting a reflection or progress update | ✅ Yes |
+| Activity                                           | Allowed During Recovery Week        |
+| -------------------------------------------------- | ----------------------------------- |
+| New challenging material                           | ❌ No                                |
+| Lab work                                           | ❌ No (unless you genuinely want to) |
+| Flashcard review (light)                           | ✅ Yes — 10 min max                  |
+| Re-reading old notes                               | ✅ Yes                               |
+| Organizing and cleaning up your tracker            | ✅ Yes                               |
+| Reading a book tangentially related to your domain | ✅ Yes                               |
+| Rest, exercise, social activities                  | ✅ Encouraged                        |
+| Posting a reflection or progress update            | ✅ Yes                               |
 
 **The Recovery Week XP Allowance:**
 Earn up to 20 XP/day during recovery week without pressure. This is enough to maintain your streak (barely), but not enough to sustain a rigorous pace. That is by design.
@@ -1871,13 +1871,13 @@ Earn up to 20 XP/day during recovery week without pressure. This is enough to ma
 
 Not all fatigue is the same. Identifying the type of stress you are experiencing helps you choose the right recovery strategy.
 
-| Stress Type | Signs | Best Recovery |
-|---|---|---|
-| **Mental Fatigue** | Difficulty concentrating, slow processing, brain fog | Sleep, light physical activity, no screens for 2–4 hours |
-| **Emotional Fatigue** | Motivation gone, study feels pointless, irritability | Social connection, physical activity, non-study creative outlet |
-| **Physical Fatigue** | Tired despite normal activity, poor sleep | Sleep prioritization, exercise regulation, dietary review |
-| **Novelty Fatigue** | Boredom with material even when rested | Topic rotation, change study method, find a new challenge type |
-| **Pressure Fatigue** | Anxiety about falling behind, perfectionism | Remove all external pressure triggers temporarily, focus on fun labs only |
+| Stress Type           | Signs                                                | Best Recovery                                                             |
+| --------------------- | ---------------------------------------------------- | ------------------------------------------------------------------------- |
+| **Mental Fatigue**    | Difficulty concentrating, slow processing, brain fog | Sleep, light physical activity, no screens for 2–4 hours                  |
+| **Emotional Fatigue** | Motivation gone, study feels pointless, irritability | Social connection, physical activity, non-study creative outlet           |
+| **Physical Fatigue**  | Tired despite normal activity, poor sleep            | Sleep prioritization, exercise regulation, dietary review                 |
+| **Novelty Fatigue**   | Boredom with material even when rested               | Topic rotation, change study method, find a new challenge type            |
+| **Pressure Fatigue**  | Anxiety about falling behind, perfectionism          | Remove all external pressure triggers temporarily, focus on fun labs only |
 
 ---
 
@@ -2314,13 +2314,13 @@ Before applying a fix, identify the type of plateau you are in.
 ### Fix Protocol A: The Format Switch
 Change how you are studying the same material for 1–2 weeks.
 
-| If You Were Doing | Switch To |
-|---|---|
-| Reading / videos | Labs and hands-on exercises |
-| Labs | Building something original |
-| Building | Writing and explaining what you built |
-| Writing | Teaching someone else or presenting |
-| Passive review | Active recall (flashcards, practice tests) |
+| If You Were Doing | Switch To                                  |
+| ----------------- | ------------------------------------------ |
+| Reading / videos  | Labs and hands-on exercises                |
+| Labs              | Building something original                |
+| Building          | Writing and explaining what you built      |
+| Writing           | Teaching someone else or presenting        |
+| Passive review    | Active recall (flashcards, practice tests) |
 
 ### Fix Protocol B: The Difficulty Calibration
 Plateaus often happen at the boundary between current competence and the next level. The fix is precision-targeted practice at that exact boundary.
@@ -2371,26 +2371,26 @@ If you identify a plateau, follow this schedule rather than making all changes a
 
 ## Sheet 1: Daily Activity Log
 
-| Column | Description | Example |
-|---|---|---|
-| Date | Calendar date | 2025-07-14 |
-| Day of Week | Mon/Tue/Wed etc. | Monday |
-| Week # | ISO week number | W28 |
-| Monthly Theme | Current month's theme | Cloud Security |
-| Activity | What you did | Completed IAM misconfig lab |
-| Category | A/B/C/D/E/F/G/H/I | B |
-| Activity Code | From XP list | B03 |
-| Time (min) | Minutes spent | 75 |
-| XP Earned | Base XP | 55 |
-| Streak Bonus | XP from streak | 0 |
-| Daily Total XP | Sum | 55 |
-| Cumulative XP | Running total | 1,402 |
-| Output Created | Description or link | Lab notes + write-up in Notion |
-| Energy (1–5) | Self-rated | 4 |
-| Focus (1–5) | Self-rated | 4 |
-| Streak Status | ✅ / 🔵 / ❌ | ✅ |
-| Streak Day # | Running count | 23 |
-| Notes | Anything notable | Stuck on trust policy syntax — researched and solved |
+| Column         | Description           | Example                                              |
+| -------------- | --------------------- | ---------------------------------------------------- |
+| Date           | Calendar date         | 2025-07-14                                           |
+| Day of Week    | Mon/Tue/Wed etc.      | Monday                                               |
+| Week #         | ISO week number       | W28                                                  |
+| Monthly Theme  | Current month's theme | Cloud Security                                       |
+| Activity       | What you did          | Completed IAM misconfig lab                          |
+| Category       | A/B/C/D/E/F/G/H/I     | B                                                    |
+| Activity Code  | From XP list          | B03                                                  |
+| Time (min)     | Minutes spent         | 75                                                   |
+| XP Earned      | Base XP               | 55                                                   |
+| Streak Bonus   | XP from streak        | 0                                                    |
+| Daily Total XP | Sum                   | 55                                                   |
+| Cumulative XP  | Running total         | 1,402                                                |
+| Output Created | Description or link   | Lab notes + write-up in Notion                       |
+| Energy (1–5)   | Self-rated            | 4                                                    |
+| Focus (1–5)    | Self-rated            | 4                                                    |
+| Streak Status  | ✅ / 🔵 / ❌            | ✅                                                    |
+| Streak Day #   | Running count         | 23                                                   |
+| Notes          | Anything notable      | Stuck on trust policy syntax — researched and solved |
 
 **Recommended Formula:** Cumulative XP = SUM of all Daily Total XP above current row (use running SUM formula)
 
@@ -2398,100 +2398,100 @@ If you identify a plateau, follow this schedule rather than making all changes a
 
 ## Sheet 2: Weekly Summary
 
-| Column | Description |
-|---|---|
-| Week # | W01–W52 |
-| Date Range | Mon – Sun dates |
-| Monthly Theme | Active theme |
-| Mon–Sun XP | 7 columns, one per day |
-| Total XP | SUM of week |
-| Hours Logged | Total minutes / 60 |
-| Labs Completed | Count from daily log |
-| Challenges Done | 0 or 1 (weekly challenge) |
-| Artifacts Created | Count of new artifacts |
-| Streak End-of-Week | Current streak day count |
-| Weekly Challenge | Done / In Progress / Skipped |
-| Energy Avg | Average of daily energy scores |
-| Focus Avg | Average of daily focus scores |
-| What Worked | Free text |
-| What Was Hard | Free text |
-| Change for Next Week | Free text |
-| Running Hours Total | Cumulative sum |
-| Running XP Total | Cumulative sum |
+| Column               | Description                    |
+| -------------------- | ------------------------------ |
+| Week #               | W01–W52                        |
+| Date Range           | Mon – Sun dates                |
+| Monthly Theme        | Active theme                   |
+| Mon–Sun XP           | 7 columns, one per day         |
+| Total XP             | SUM of week                    |
+| Hours Logged         | Total minutes / 60             |
+| Labs Completed       | Count from daily log           |
+| Challenges Done      | 0 or 1 (weekly challenge)      |
+| Artifacts Created    | Count of new artifacts         |
+| Streak End-of-Week   | Current streak day count       |
+| Weekly Challenge     | Done / In Progress / Skipped   |
+| Energy Avg           | Average of daily energy scores |
+| Focus Avg            | Average of daily focus scores  |
+| What Worked          | Free text                      |
+| What Was Hard        | Free text                      |
+| Change for Next Week | Free text                      |
+| Running Hours Total  | Cumulative sum                 |
+| Running XP Total     | Cumulative sum                 |
 
 ---
 
 ## Sheet 3: Monthly Summary
 
-| Column | Description |
-|---|---|
-| Month | January–December |
-| Theme | Monthly theme |
-| Total XP | Sum of all weekly XP |
-| Total Hours | Sum of all weekly hours |
-| Cumulative XP | Running total to date |
-| Cumulative Hours | Running total to date |
-| Current Level | Derived from cumulative XP |
-| Labs Completed | Monthly count |
-| Artifacts Created | Monthly count |
-| Badges Earned | Comma-separated list |
-| Theme Artifact | Description + link |
-| Theme Completion % | Self-assessed |
-| Streak: Days Active | Out of possible days |
-| Streak: Longest This Month | Max streak during month |
-| Burnout Risk | 1–5 at month end |
-| Best Output | Your favorite artifact of the month |
-| Key Learning | Most important insight |
-| What to Improve | One specific change for next month |
+| Column                     | Description                         |
+| -------------------------- | ----------------------------------- |
+| Month                      | January–December                    |
+| Theme                      | Monthly theme                       |
+| Total XP                   | Sum of all weekly XP                |
+| Total Hours                | Sum of all weekly hours             |
+| Cumulative XP              | Running total to date               |
+| Cumulative Hours           | Running total to date               |
+| Current Level              | Derived from cumulative XP          |
+| Labs Completed             | Monthly count                       |
+| Artifacts Created          | Monthly count                       |
+| Badges Earned              | Comma-separated list                |
+| Theme Artifact             | Description + link                  |
+| Theme Completion %         | Self-assessed                       |
+| Streak: Days Active        | Out of possible days                |
+| Streak: Longest This Month | Max streak during month             |
+| Burnout Risk               | 1–5 at month end                    |
+| Best Output                | Your favorite artifact of the month |
+| Key Learning               | Most important insight              |
+| What to Improve            | One specific change for next month  |
 
 ---
 
 ## Sheet 4: Badges & Achievements
 
-| Column | Description | Example |
-|---|---|---|
-| Badge Name | From badge list | Lab Runner |
-| Tier | 1–4 (Foundational/Intermediate/Advanced/Mastery) | 2 |
-| Earning Criteria | What was required | 20 labs completed |
-| Date Earned | Calendar date | 2025-06-22 |
-| XP Bonus Claimed | Bonus XP from badge | +200 XP |
-| Evidence Link | Link to artifact or log entry | Notion link |
-| Notes | Anything memorable about earning it | Finished last lab at midnight — worth it |
+| Column           | Description                                      | Example                                  |
+| ---------------- | ------------------------------------------------ | ---------------------------------------- |
+| Badge Name       | From badge list                                  | Lab Runner                               |
+| Tier             | 1–4 (Foundational/Intermediate/Advanced/Mastery) | 2                                        |
+| Earning Criteria | What was required                                | 20 labs completed                        |
+| Date Earned      | Calendar date                                    | 2025-06-22                               |
+| XP Bonus Claimed | Bonus XP from badge                              | +200 XP                                  |
+| Evidence Link    | Link to artifact or log entry                    | Notion link                              |
+| Notes            | Anything memorable about earning it              | Finished last lab at midnight — worth it |
 
 ---
 
 ## Sheet 5: Portfolio Tracker
 
-| Column | Description |
-|---|---|
-| Project Name | Short descriptive name |
-| Type | Lab write-up / Tool / Report / Case study / Guide |
-| Month Created | When it was produced |
-| Status | Draft / Complete / Published |
-| Skills Demonstrated | Comma-separated list |
-| Link | GitHub, blog, PDF, etc. |
-| Quarter | Q1–Q4 |
-| Capstone Piece | Yes / No |
-| External Feedback | Any comments received |
-| Notes | Revision needed? Context? |
+| Column              | Description                                       |
+| ------------------- | ------------------------------------------------- |
+| Project Name        | Short descriptive name                            |
+| Type                | Lab write-up / Tool / Report / Case study / Guide |
+| Month Created       | When it was produced                              |
+| Status              | Draft / Complete / Published                      |
+| Skills Demonstrated | Comma-separated list                              |
+| Link                | GitHub, blog, PDF, etc.                           |
+| Quarter             | Q1–Q4                                             |
+| Capstone Piece      | Yes / No                                          |
+| External Feedback   | Any comments received                             |
+| Notes               | Revision needed? Context?                         |
 
 ---
 
 ## Sheet 6: XP Milestones Tracker
 
-| Milestone | Target XP | Date Reached | Hours at Milestone |
-|---|---|---|---|
-| Level 1 Complete | 200 XP | — | — |
-| Level 2 Complete | 500 XP | — | — |
-| Level 3 Complete | 1,000 XP | — | — |
-| Level 4 Complete | 1,800 XP | — | — |
-| Level 5 Complete | 3,000 XP | — | — |
-| 100 Hours | — | — | 100 hr |
-| 250 Hours | — | — | 250 hr |
-| 500 Hours | — | — | 500 hr |
-| First Capstone | — | — | — |
-| All 4 Capstones | — | — | — |
-| 1 Year | — | — | — |
+| Milestone        | Target XP | Date Reached | Hours at Milestone |
+| ---------------- | --------- | ------------ | ------------------ |
+| Level 1 Complete | 200 XP    | —            | —                  |
+| Level 2 Complete | 500 XP    | —            | —                  |
+| Level 3 Complete | 1,000 XP  | —            | —                  |
+| Level 4 Complete | 1,800 XP  | —            | —                  |
+| Level 5 Complete | 3,000 XP  | —            | —                  |
+| 100 Hours        | —         | —            | 100 hr             |
+| 250 Hours        | —         | —            | 250 hr             |
+| 500 Hours        | —         | —            | 500 hr             |
+| First Capstone   | —         | —            | —                  |
+| All 4 Capstones  | —         | —            | —                  |
+| 1 Year           | —         | —            | —                  |
 
 ---
 
@@ -2685,14 +2685,14 @@ A recovery day should include all three, not just physical rest.
 
 Listen to these signals before they become emergencies:
 
-| Signal | What It Means | Response |
-|---|---|---|
-| Study sessions feel like a chore 3+ days in a row | Mental fatigue accumulating | Schedule a rest day this week |
-| Difficulty starting sessions that used to feel easy | Motivational depletion | Reduce session length for 3 days |
-| Making errors you would not normally make | Cognitive performance declining | Sleep prioritization for 3 nights |
-| Feeling irritable after study sessions | Cortisol/stress overload | Add physical exercise to the daily routine |
-| Dreading the next study session the night before | Advanced fatigue | Rest day tomorrow, review pacing |
-| Forgetting things you recently learned | Consolidation is failing | Extend rest, reduce pace for 1 week |
+| Signal                                              | What It Means                   | Response                                   |
+| --------------------------------------------------- | ------------------------------- | ------------------------------------------ |
+| Study sessions feel like a chore 3+ days in a row   | Mental fatigue accumulating     | Schedule a rest day this week              |
+| Difficulty starting sessions that used to feel easy | Motivational depletion          | Reduce session length for 3 days           |
+| Making errors you would not normally make           | Cognitive performance declining | Sleep prioritization for 3 nights          |
+| Feeling irritable after study sessions              | Cortisol/stress overload        | Add physical exercise to the daily routine |
+| Dreading the next study session the night before    | Advanced fatigue                | Rest day tomorrow, review pacing           |
+| Forgetting things you recently learned              | Consolidation is failing        | Extend rest, reduce pace for 1 week        |
 
 ---
 
@@ -2747,3 +2747,4 @@ Most people find that returning from a sabbatical, they are more motivated, more
 ---
 
 **Version 4.0 | Last Updated: 2025**
+

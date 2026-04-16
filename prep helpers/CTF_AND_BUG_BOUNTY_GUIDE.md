@@ -953,9 +953,9 @@ security-writeups/
 - **Platform Ranks:** [TryHackMe rank, HTB rank]
 
 ## Featured Write-ups
-1. [Interesting Challenge 1](link) - Brief description
-2. [Interesting Challenge 2](link) - Brief description
-3. [Interesting Challenge 3](link) - Brief description
+1. Interesting Challenge 1 - Brief description + add URL
+2. Interesting Challenge 2 - Brief description + add URL
+3. Interesting Challenge 3 - Brief description + add URL
 
 ## Skills Demonstrated
 - Web Application Security

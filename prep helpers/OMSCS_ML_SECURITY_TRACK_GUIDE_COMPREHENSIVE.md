@@ -4,7 +4,7 @@ This document contains massively expanded sections for the OMSCS ML Track + Secu
 
 ---
 
-## ðŸ“ APPLICATION DEEP DIVE - COMPREHENSIVE EXPANSION
+## 📝 APPLICATION DEEP DIVE - COMPREHENSIVE EXPANSION
 
 ### Part 1: What Georgia Tech Actually Evaluates (The Inside View)
 
@@ -13,82 +13,82 @@ Georgia Tech's OMSCS admissions uses a **holistic, multi-dimensional review proc
 **The Three-Pillar Framework (Detailed):**
 
 ```
-â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-â”‚                    OMSCS EVALUATION FRAMEWORK                               â”‚
-â”œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¤
-â”‚                                                                             â”‚
-â”‚  PILLAR 1: Academic Readiness (30â€“40% weight)                              â”‚
-â”‚                                                                             â”‚
-â”‚  What they evaluate:                                                        â”‚
-â”‚  â”œâ”€â”€ Undergraduate GPA (especially in CS/math courses)                     â”‚
-â”‚  â”œâ”€â”€ Relevant coursework breadth and depth                                 â”‚
-â”‚  â”œâ”€â”€ Grade trends (improving vs. declining)                                â”‚
-â”‚  â”œâ”€â”€ Rigor of institution (but not a make-or-break factor)                â”‚
-â”‚  â”œâ”€â”€ Recency of academic work                                              â”‚
-â”‚  â””â”€â”€ Evidence of self-study if gaps exist                                  â”‚
-â”‚                                                                             â”‚
-â”‚  Strong profiles show:                                                      â”‚
-â”‚  â€¢ 3.0+ GPA (3.3+ is competitive)                                          â”‚
-â”‚  â€¢ Solid grades (B+ or better) in core CS: DS&A, Systems, Math            â”‚
-â”‚  â€¢ Recent coursework if degree is 5+ years old                             â”‚
-â”‚  â€¢ MOOCs/certifications addressing any gaps                                â”‚
-â”‚                                                                             â”‚
-â”‚  How to strengthen if weak:                                                 â”‚
-â”‚  â€¢ Take recent CS courses (community college, online, etc.)                â”‚
-â”‚  â€¢ Complete rigorous MOOCs with certificates                               â”‚
-â”‚  â€¢ Address briefly in SOP (no excuses, just evidence of growth)           â”‚
-â”‚                                                                             â”‚
-â”œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¤
-â”‚                                                                             â”‚
-â”‚  PILLAR 2: Technical Maturity (40â€“50% weight)                              â”‚
-â”‚                                                                             â”‚
-â”‚  What they evaluate:                                                        â”‚
-â”‚  â”œâ”€â”€ Quality of work experience (depth > brand names)                      â”‚
-â”‚  â”œâ”€â”€ Project portfolio (complexity, impact, independence)                  â”‚
-â”‚  â”œâ”€â”€ Technical contributions (open source, publications, talks)            â”‚
-â”‚  â”œâ”€â”€ Problem-solving ability (as shown through examples)                   â”‚
-â”‚  â”œâ”€â”€ Self-direction and initiative                                         â”‚
-â”‚  â””â”€â”€ Evidence of learning and growth over time                             â”‚
-â”‚                                                                             â”‚
-â”‚  Strong profiles show:                                                      â”‚
-â”‚  â€¢ 2+ years professional software development                              â”‚
-â”‚  â€¢ Projects with measurable outcomes                                       â”‚
-â”‚  â€¢ Increasing technical responsibility                                      â”‚
-â”‚  â€¢ Evidence of independent learning                                         â”‚
-â”‚  â€¢ Technical depth in at least one area                                     â”‚
-â”‚                                                                             â”‚
-â”‚  Red flags:                                                                 â”‚
-â”‚  â€¢ Only tutorial-level projects                                             â”‚
-â”‚  â€¢ No evidence of completing complex work                                   â”‚
-â”‚  â€¢ Vague project descriptions without specifics                            â”‚
-â”‚  â€¢ No quantified outcomes                                                   â”‚
-â”‚                                                                             â”‚
-â”œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¤
-â”‚                                                                             â”‚
-â”‚  PILLAR 3: Motivation & Fit (20â€“30% weight)                                â”‚
-â”‚                                                                             â”‚
-â”‚  What they evaluate:                                                        â”‚
-â”‚  â”œâ”€â”€ Clarity of goals                                                       â”‚
-â”‚  â”œâ”€â”€ Understanding of OMSCS program                                         â”‚
-â”‚  â”œâ”€â”€ Thoughtfulness of specialization choice                               â”‚
-â”‚  â”œâ”€â”€ Realism about online learning demands                                 â”‚
-â”‚  â”œâ”€â”€ Long-term commitment indicators                                        â”‚
-â”‚  â””â”€â”€ Alignment with GT's strengths                                         â”‚
-â”‚                                                                             â”‚
-â”‚  Strong profiles show:                                                      â”‚
-â”‚  â€¢ Specific career goals tied to OMSCS coursework                          â”‚
-â”‚  â€¢ Knowledge of actual OMSCS courses                                        â”‚
-â”‚  â€¢ Realistic plan for balancing work + study                               â”‚
-â”‚  â€¢ Evidence of sustained effort over time                                   â”‚
-â”‚  â€¢ Clear connection between past work and future goals                     â”‚
-â”‚                                                                             â”‚
-â”‚  Red flags:                                                                 â”‚
-â”‚  â€¢ Generic goals ("learn more about CS")                                    â”‚
-â”‚  â€¢ No mention of specific OMSCS courses                                     â”‚
-â”‚  â€¢ Unrealistic expectations                                                 â”‚
-â”‚  â€¢ Goals that don't require a CS master's                                   â”‚
-â”‚                                                                             â”‚
-â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                    OMSCS EVALUATION FRAMEWORK                               │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                             │
+│  PILLAR 1: Academic Readiness (30–40% weight)                              │
+│                                                                             │
+│  What they evaluate:                                                        │
+│  ├── Undergraduate GPA (especially in CS/math courses)                     │
+│  ├── Relevant coursework breadth and depth                                 │
+│  ├── Grade trends (improving vs. declining)                                │
+│  ├── Rigor of institution (but not a make-or-break factor)                │
+│  ├── Recency of academic work                                              │
+│  └── Evidence of self-study if gaps exist                                  │
+│                                                                             │
+│  Strong profiles show:                                                      │
+│  • 3.0+ GPA (3.3+ is competitive)                                          │
+│  • Solid grades (B+ or better) in core CS: DS&A, Systems, Math            │
+│  • Recent coursework if degree is 5+ years old                             │
+│  • MOOCs/certifications addressing any gaps                                │
+│                                                                             │
+│  How to strengthen if weak:                                                 │
+│  • Take recent CS courses (community college, online, etc.)                │
+│  • Complete rigorous MOOCs with certificates                               │
+│  • Address briefly in SOP (no excuses, just evidence of growth)           │
+│                                                                             │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                             │
+│  PILLAR 2: Technical Maturity (40–50% weight)                              │
+│                                                                             │
+│  What they evaluate:                                                        │
+│  ├── Quality of work experience (depth > brand names)                      │
+│  ├── Project portfolio (complexity, impact, independence)                  │
+│  ├── Technical contributions (open source, publications, talks)            │
+│  ├── Problem-solving ability (as shown through examples)                   │
+│  ├── Self-direction and initiative                                         │
+│  └── Evidence of learning and growth over time                             │
+│                                                                             │
+│  Strong profiles show:                                                      │
+│  • 2+ years professional software development                              │
+│  • Projects with measurable outcomes                                       │
+│  • Increasing technical responsibility                                      │
+│  • Evidence of independent learning                                         │
+│  • Technical depth in at least one area                                     │
+│                                                                             │
+│  Red flags:                                                                 │
+│  • Only tutorial-level projects                                             │
+│  • No evidence of completing complex work                                   │
+│  • Vague project descriptions without specifics                            │
+│  • No quantified outcomes                                                   │
+│                                                                             │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                             │
+│  PILLAR 3: Motivation & Fit (20–30% weight)                                │
+│                                                                             │
+│  What they evaluate:                                                        │
+│  ├── Clarity of goals                                                       │
+│  ├── Understanding of OMSCS program                                         │
+│  ├── Thoughtfulness of specialization choice                               │
+│  ├── Realism about online learning demands                                 │
+│  ├── Long-term commitment indicators                                        │
+│  └── Alignment with GT's strengths                                         │
+│                                                                             │
+│  Strong profiles show:                                                      │
+│  • Specific career goals tied to OMSCS coursework                          │
+│  • Knowledge of actual OMSCS courses                                        │
+│  • Realistic plan for balancing work + study                               │
+│  • Evidence of sustained effort over time                                   │
+│  • Clear connection between past work and future goals                     │
+│                                                                             │
+│  Red flags:                                                                 │
+│  • Generic goals ("learn more about CS")                                    │
+│  • No mention of specific OMSCS courses                                     │
+│  • Unrealistic expectations                                                 │
+│  • Goals that don't require a CS master's                                   │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
 ```
 
 ### The "Can They Finish?" Test (Critical Understanding)
@@ -117,7 +117,7 @@ Georgia Tech's OMSCS admissions uses a **holistic, multi-dimensional review proc
 ### What Differentiates Strong from Weak Applications
 
 **Strong Application Pattern:**
-- Clear narrative arc from past â†’ present â†’ future
+- Clear narrative arc from past → present → future
 - Specific project examples with quantified outcomes
 - Technical depth in at least one area
 - Evidence-backed claims throughout
@@ -148,7 +148,7 @@ Your SOP is your **only direct voice** in the application. It needs to be except
 [Current technical context] + [Your unique direction] + [Why OMSCS specifically]
 
 **Strong Opening Example 1:**
-> "As a senior software engineer at Stripe building payment fraud detection systems, I architect machine learning models that process 50M transactions daily. However, recent adversarial attacks on our modelsâ€”where attackers systematically probed model boundaries to bypass fraud detectionâ€”revealed a critical gap in my knowledge: I understand ML algorithms but lack formal training in adversarial robustness and security engineering. I'm applying to Georgia Tech's OMSCS ML specialization to bridge this gap and prepare for a career in ML security research."
+> "As a senior software engineer at Stripe building payment fraud detection systems, I architect machine learning models that process 50M transactions daily. However, recent adversarial attacks on our models—where attackers systematically probed model boundaries to bypass fraud detection—revealed a critical gap in my knowledge: I understand ML algorithms but lack formal training in adversarial robustness and security engineering. I'm applying to Georgia Tech's OMSCS ML specialization to bridge this gap and prepare for a career in ML security research."
 
 **Why it works:**
 - Immediate credibility (senior engineer at known company)
@@ -158,7 +158,7 @@ Your SOP is your **only direct voice** in the application. It needs to be except
 - Specific program fit (ML + security)
 
 **Strong Opening Example 2:**
-> "Three years into my career as a security analyst, I've analyzed thousands of malware samplesâ€”but the emergence of ML-powered evasion techniques has shown me the limits of traditional signature-based detection. My recent project building an ML-based malware classifier (achieving 94% accuracy on novel samples) proved both the potential of ML in security and my need for deeper theoretical grounding. Georgia Tech's OMSCS offers the unique combination of rigorous ML education and security-focused electives I need to become an ML security specialist."
+> "Three years into my career as a security analyst, I've analyzed thousands of malware samples—but the emergence of ML-powered evasion techniques has shown me the limits of traditional signature-based detection. My recent project building an ML-based malware classifier (achieving 94% accuracy on novel samples) proved both the potential of ML in security and my need for deeper theoretical grounding. Georgia Tech's OMSCS offers the unique combination of rigorous ML education and security-focused electives I need to become an ML security specialist."
 
 **Why it works:**
 - Establishes domain expertise (security)
@@ -179,33 +179,33 @@ Your SOP is your **only direct voice** in the application. It needs to be except
 
 ---
 
-## ðŸ’° COST BREAKDOWN - ULTRA-DETAILED FINANCIAL PLANNING
+## 💰 COST BREAKDOWN - ULTRA-DETAILED FINANCIAL PLANNING
 
 ### Complete Financial Picture (2026-2029 Projection)
 
 **Base Costs Per Course:**
 ```
-â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-â”‚                    OMSCS COST CALCULATOR                                    â”‚
-â”œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¤
-â”‚                                                                             â”‚
-â”‚  Tuition (per credit hour):                     $180.00                     â”‚
-â”‚  Standard course (3 credits):                   $540.00                     â”‚
-â”‚                                                                             â”‚
-â”‚  Mandatory Fees (per semester):                                             â”‚
-â”‚  â”œâ”€â”€ Technology Fee:                            $107.00                     â”‚
-â”‚  â”œâ”€â”€ Student Activity Fee:                      $47.00                      â”‚
-â”‚  â”œâ”€â”€ Health Services Fee:                       $0 (waived online)          â”‚
-â”‚  â”œâ”€â”€ Athletic Fee:                              $0 (waived online)          â”‚
-â”‚  â””â”€â”€ Special Institution Fee:                   ~$150.00                    â”‚
-â”‚                                                                             â”‚
-â”‚  Total per semester (1 course):                 ~$844.00                    â”‚
-â”‚  Total per semester (2 courses):                ~$1,384.00                  â”‚
-â”‚                                                                             â”‚
-â”‚  IMPORTANT: Fees are per-semester, not per-course                           â”‚
-â”‚  Taking 2 courses = better value per course                                 â”‚
-â”‚                                                                             â”‚
-â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                    OMSCS COST CALCULATOR                                    │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                             │
+│  Tuition (per credit hour):                     $180.00                     │
+│  Standard course (3 credits):                   $540.00                     │
+│                                                                             │
+│  Mandatory Fees (per semester):                                             │
+│  ├── Technology Fee:                            $107.00                     │
+│  ├── Student Activity Fee:                      $47.00                      │
+│  ├── Health Services Fee:                       $0 (waived online)          │
+│  ├── Athletic Fee:                              $0 (waived online)          │
+│  └── Special Institution Fee:                   ~$150.00                    │
+│                                                                             │
+│  Total per semester (1 course):                 ~$844.00                    │
+│  Total per semester (2 courses):                ~$1,384.00                  │
+│                                                                             │
+│  IMPORTANT: Fees are per-semester, not per-course                           │
+│  Taking 2 courses = better value per course                                 │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
 ```
 
 ### 3-Year Program Cost Scenarios
@@ -213,22 +213,22 @@ Your SOP is your **only direct voice** in the application. It needs to be except
 **Scenario 1: Conservative (1 course/term)**
 ```
 Year 1:
-â”œâ”€â”€ Fall: 1 course ($844)
-â”œâ”€â”€ Spring: 1 course ($844)
-â””â”€â”€ Summer: 1 course ($844)
+├── Fall: 1 course ($844)
+├── Spring: 1 course ($844)
+└── Summer: 1 course ($844)
 Total Year 1: $2,532
 
 Year 2:
-â”œâ”€â”€ Fall: 1 course ($844)
-â”œâ”€â”€ Spring: 1 course ($844)
-â””â”€â”€ Summer: 1 course ($844)
+├── Fall: 1 course ($844)
+├── Spring: 1 course ($844)
+└── Summer: 1 course ($844)
 Total Year 2: $2,532
 
 Year 3:
-â”œâ”€â”€ Fall: 1 course ($844)
-â”œâ”€â”€ Spring: 1 course ($844)
-â”œâ”€â”€ Summer: 1 course ($844)
-â””â”€â”€ Fall: 1 course ($844)
+├── Fall: 1 course ($844)
+├── Spring: 1 course ($844)
+├── Summer: 1 course ($844)
+└── Fall: 1 course ($844)
 Total Year 3: $3,376
 
 Total 3-Year Cost: $8,440
@@ -237,19 +237,19 @@ Total 3-Year Cost: $8,440
 **Scenario 2: Accelerated (mixed load)**
 ```
 Year 1:
-â”œâ”€â”€ Fall: 1 course ($844)
-â”œâ”€â”€ Spring: 2 courses ($1,384)
-â””â”€â”€ Summer: 1 course ($844)
+├── Fall: 1 course ($844)
+├── Spring: 2 courses ($1,384)
+└── Summer: 1 course ($844)
 Total Year 1: $3,072
 
 Year 2:
-â”œâ”€â”€ Fall: 2 courses ($1,384)
-â”œâ”€â”€ Spring: 2 courses ($1,384)
-â””â”€â”€ Summer: 1 course ($844)
+├── Fall: 2 courses ($1,384)
+├── Spring: 2 courses ($1,384)
+└── Summer: 1 course ($844)
 Total Year 2: $3,612
 
 Year 3:
-â”œâ”€â”€ Fall: 1 course ($844)
+├── Fall: 1 course ($844)
 Total Year 3: $844
 
 Total 3-Year Cost: $7,528
@@ -291,9 +291,9 @@ Total 3-Year Cost: $7,528
 **Payment Timeline Per Semester:**
 ```
 Registration Opens (e.g., April for Fall):
-â”œâ”€â”€ Day 1-7: Time ticket registration window
-â”œâ”€â”€ Week 2-4: Add/drop period
-â””â”€â”€ Payment deadline: ~2 weeks after classes start
+├── Day 1-7: Time ticket registration window
+├── Week 2-4: Add/drop period
+└── Payment deadline: ~2 weeks after classes start
 
 You pay AFTER you register, BEFORE the payment deadline.
 
@@ -321,16 +321,16 @@ If paying from outside the US:
 **Example: Indian Rupee Calculation (as of 2026)**
 ```
 Course cost: $540
-Exchange rate: â‚¹83/USD
-Cost in INR: â‚¹44,820
+Exchange rate: ₹83/USD
+Cost in INR: ₹44,820
 
 Semester fees: $304
-Cost in INR: â‚¹25,232
+Cost in INR: ₹25,232
 
-Total per semester (1 course): â‚¹70,052
-Total program (10 courses): â‚¹7,00,520 - â‚¹7,50,000
+Total per semester (1 course): ₹70,052
+Total program (10 courses): ₹7,00,520 - ₹7,50,000
 
-Add 5% buffer for fluctuation: â‚¹7,35,000 - â‚¹7,90,000
+Add 5% buffer for fluctuation: ₹7,35,000 - ₹7,90,000
 ```
 
 ### Employer Reimbursement Programs
@@ -393,7 +393,7 @@ Total investment: $10,000
 Time investment: ~1,500 hours over 3 years
 
 Typical outcomes:
-- Role upgrade: SWE â†’ ML Engineer (15-25% salary bump)
+- Role upgrade: SWE → ML Engineer (15-25% salary bump)
 - Promotion acceleration: 1-2 years faster
 - Geographic mobility: access to international roles
 
@@ -701,9 +701,9 @@ Typical patterns:
 - Jump: +?20-35L (80-140%)
 
 **Europe (London, Berlin):**
-- Pre-OMSCS Developer: €60K
-- Post-OMSCS ML Engineer: €85-€110K
-- Jump: +€25-50K (40-83%)
+- Pre-OMSCS Developer: EUR 60K
+- Post-OMSCS ML Engineer: EUR 85-110K
+- Jump: +EUR 25-50K (40-83%)
 
 **Important Notes:**
 - Salary impact varies GREATLY by individual situation

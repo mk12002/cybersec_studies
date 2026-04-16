@@ -111,7 +111,7 @@
 | 5 | [cloudsec_study_material.md](../study%20material/cloudsec_study_material.md) | IAM, storage, AWS/Azure, incident response | ~1,326 |
 | 6 | [cybersecurity_foundations_plus.md](../study%20material/cybersecurity_foundations_plus.md) | Secure SDLC, identity, detection engineering | ~309 |
 | 7 | [ml_security_study_material.md](../study%20material/ml_security_study_material.md) | ML threats, LLM security, portfolio projects | ~382 |
-| 8 | [execution_plan_12_weeks_ml_app_cloud.md](execution_plan_12_weeks_ml_app_cloud.md) | Weekly schedule with labs and deliverables | ~293 |
+| 8 | [execution_plan_12_ml_app_cloud.md](execution_plan_12_ml_app_cloud.md) | Weekly schedule with labs and deliverables | ~293 |
 
 ---
 
@@ -144,10 +144,10 @@
 3. Start [HANDS_ON_EXERCISES.md](HANDS_ON_EXERCISES.md) Exercise 1-2
 
 ### Week 2+: Structured Learning
-1. Follow [execution_plan_12_weeks_ml_app_cloud.md](execution_plan_12_weeks_ml_app_cloud.md)
+1. Follow [execution_plan_12_ml_app_cloud.md](execution_plan_12_ml_app_cloud.md)
 2. Reference the core study materials as you go
-3. Review [FLASHCARDS_QUICK_REF.md](FLASHCARDS_QUICK_REF.md) daily (10 min)
-4. Use [TOOLS_CHEAT_SHEET.md](TOOLS_CHEAT_SHEET.md) when practicing
+3. Review [FLASHCARDS_QUICK_REF.md](../study%20material/FLASHCARDS_QUICK_REF.md) daily (10 min)
+4. Use [TOOLS_CHEAT_SHEET.md](../study%20material/TOOLS_CHEAT_SHEET.md) when practicing
 
 ### Every Lab/Finding
 Use the **Finding Template** from [BEGINNER_START_HERE.md](BEGINNER_START_HERE.md):

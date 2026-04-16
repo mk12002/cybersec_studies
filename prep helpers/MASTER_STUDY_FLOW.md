@@ -29,7 +29,7 @@ You have ~19,000+ lines of study material across 20 files. This guide tells you 
 │   ───────────────────────────────────────────────                          │
 │   📋 These tell you WHAT to do WHEN                                         │
 │   • syllabus.md — master topic list (reference)                            │
-│   • execution_plan_12_weeks_ml_app_cloud.md — weekly schedule (follow!)    │
+│   • execution_plan_12_ml_app_cloud.md — weekly schedule (follow!)           │
 │   • WEEKLY_STUDY_TEMPLATE.md — session planning                            │
 │                                                                             │
 │   TYPE 3: SUPPORT TOOLS (Reference While Doing)                            │
@@ -374,7 +374,7 @@ Week 12:
 
 **Documents for Weeks 11-12:**
 1. [PORTFOLIO_PROJECTS.md](PORTFOLIO_PROJECTS.md) — **Select 3 projects**
-2. [execution_plan_12_weeks_ml_app_cloud.md](execution_plan_12_weeks_ml_app_cloud.md) — **Week 11-12 specifics**
+2. [execution_plan_12_ml_app_cloud.md](execution_plan_12_ml_app_cloud.md) — **Week 11-12 specifics**
 
 ---
 
@@ -514,7 +514,7 @@ cryptography_study_material.md   appsec_study_material.md   cloudsec_study_mater
 |-------------------|-------------------|
 | Set up your environment | [BEGINNER_START_HERE.md](BEGINNER_START_HERE.md) |
 | Understand a security term | [BEGINNER_START_HERE.md](BEGINNER_START_HERE.md) glossary |
-| Know what to study this week | [execution_plan_12_weeks_ml_app_cloud.md](execution_plan_12_weeks_ml_app_cloud.md) |
+| Know what to study this week | [execution_plan_12_ml_app_cloud.md](execution_plan_12_ml_app_cloud.md) |
 | Find a command syntax | [TOOLS_CHEAT_SHEET.md](../study%20material/TOOLS_CHEAT_SHEET.md) |
 | Review a concept quickly | [FLASHCARDS_QUICK_REF.md](../study%20material/FLASHCARDS_QUICK_REF.md) |
 | Practice hands-on | [HANDS_ON_EXERCISES.md](HANDS_ON_EXERCISES.md) |

@@ -701,9 +701,9 @@ Typical patterns:
 - Jump: +?20-35L (80-140%)
 
 **Europe (London, Berlin):**
-- Pre-OMSCS Developer: �60K
-- Post-OMSCS ML Engineer: �85-�110K
-- Jump: +�25-50K (40-83%)
+- Pre-OMSCS Developer: EUR 60K
+- Post-OMSCS ML Engineer: EUR 85-110K
+- Jump: +EUR 25-50K (40-83%)
 
 **Important Notes:**
 - Salary impact varies GREATLY by individual situation

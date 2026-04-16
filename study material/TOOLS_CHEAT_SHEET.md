@@ -1434,9 +1434,9 @@ fi
 
 # Check for large files
 for file in $(git diff --cached --name-only); do
-    size=$(wc -c < "$ile" 2>/dev/null || echo 0)
+    size=$(wc -c < "$file" 2>/dev/null || echo 0)
     if [ "$size" -gt 1000000 ]; then
-        echo "ERROR: File $ile is larger than 1MB"
+        echo "ERROR: File $file is larger than 1MB"
         exit 1
     fi
 done

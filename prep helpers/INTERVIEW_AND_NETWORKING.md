@@ -131,6 +131,7 @@ You're targeting global roles in 2–3 years. This section provides everything y
 
 #### 🇺🇸 UNITED STATES
 
+```
 ┌─────────────────────────────────────────────────────────────────┐
 │ UNITED STATES OVERVIEW │
 ├─────────────────────────────────────────────────────────────────┤
@@ -167,11 +168,13 @@ You're targeting global roles in 2–3 years. This section provides everything y
 │ └── At-will employment: Can be let go anytime │
 │ │
 └─────────────────────────────────────────────────────────────────┘
+```
 
 
 **US Security Job Market Deep Dive:**
 
 Hot Security Domains in US (2026):
+```
 ├── Cloud Security Engineering (AWS/Azure/GCP)
 ├── ML/AI Security (YOUR SWEET SPOT!)
 ├── Application Security (DevSecOps)
@@ -181,8 +184,10 @@ Hot Security Domains in US (2026):
 ├── Identity & Access Management
 ├── Container/Kubernetes Security
 └── Zero Trust Architecture
+```
 
 Demand Levels:
+```
 ┌──────────────────────────┬────────────────┬──────────────────┐
 │ Specialization │ Demand Level │ Salary Premium │
 ├──────────────────────────┼────────────────┼──────────────────┤
@@ -194,11 +199,13 @@ Demand Levels:
 │ GRC/Compliance │ 🔥🔥🔥 │ Base market │
 │ SOC Analyst │ 🔥🔥 │ -10-15% │
 └──────────────────────────┴────────────────┴──────────────────┘
+```
 
 
 **Top US Companies Hiring International Security Talent:**
 
 FAANG/Big Tech (Sponsor H-1B Regularly):
+```
 ├── Google
 │ ├── Security Engineering, Trust & Safety
 │ ├── Locations: Mountain View, NYC, Seattle
@@ -234,8 +241,10 @@ FAANG/Big Tech (Sponsor H-1B Regularly):
 ├── Location: Los Gatos
 ├── Interview: Culture fit heavy
 └── H-1B: Limited sponsorship
+```
 
 Security-Focused Companies:
+```
 ├── CrowdStrike (Austin, Sunnyvale)
 ├── Palo Alto Networks (Santa Clara)
 ├── Zscaler (San Jose)
@@ -246,8 +255,10 @@ Security-Focused Companies:
 ├── Rapid7 (Boston)
 ├── Tenable (Columbia, MD)
 └── Fortinet (Sunnyvale)
+```
 
 AI Security Startups (Premium Pay + Equity):
+```
 ├── Robust Intelligence (San Francisco)
 ├── HiddenLayer (Austin)
 ├── Protect AI (Seattle)
@@ -255,8 +266,10 @@ AI Security Startups (Premium Pay + Equity):
 ├── Adversa AI (remote)
 ├── Lakera (Zurich, but US roles)
 └── Many emerging - follow AI security news!
+```
 
 Finance (High Pay, Stable):
+```
 ├── Goldman Sachs (NYC)
 ├── Morgan Stanley (NYC)
 ├── JPMorgan (NYC, various)
@@ -264,6 +277,7 @@ Finance (High Pay, Stable):
 ├── Two Sigma (NYC)
 ├── Jane Street (NYC)
 └── Bloomberg (NYC)
+```
 
 
 ---
@@ -271,6 +285,7 @@ Finance (High Pay, Stable):
 #### 🇬🇧 UNITED KINGDOM
 
 
+```
 ┌─────────────────────────────────────────────────────────────────┐
 │ UNITED KINGDOM OVERVIEW │
 ├─────────────────────────────────────────────────────────────────┤
@@ -307,11 +322,13 @@ Finance (High Pay, Stable):
 │ └── NHS healthcare (included) │
 │ │
 └─────────────────────────────────────────────────────────────────┘
+```
 
 
 **UK Security Job Market Deep Dive:**
 
 Hot Security Domains in UK (2026):
+```
 ├── GRC & Compliance (GDPR expertise premium)
 ├── Financial Services Security
 ├── Cloud Security (Azure particularly strong)
@@ -321,8 +338,10 @@ Hot Security Domains in UK (2026):
 ├── Privacy Engineering (GDPR driven)
 ├── Government/Defense Security
 └── Fintech Security
+```
 
 Demand Characteristics:
+```
 ┌──────────────────────────┬────────────────┬──────────────────┐
 │ Specialization │ Demand Level │ Notes │
 ├──────────────────────────┼────────────────┼──────────────────┤
@@ -334,19 +353,23 @@ Demand Characteristics:
 │ ML/AI Security │ 🔥🔥🔥 │ Emerging │
 │ SOC/Detection │ 🔥🔥🔥 │ Steady │
 └──────────────────────────┴────────────────┴──────────────────┘
+```
 
 
 
 **Top UK Companies Hiring Security Talent:**
 Big Tech UK Offices:
+```
 ├── Google UK (London - Kings Cross)
 ├── Microsoft UK (London, Reading)
 ├── Amazon UK (London, Edinburgh)
 ├── Meta UK (London)
 ├── Apple UK (London)
 └── Salesforce UK (London)
+```
 
 Financial Services (High Pay):
+```
 ├── Goldman Sachs (London)
 ├── Morgan Stanley (London)
 ├── JPMorgan (London, Bournemouth)
@@ -357,22 +380,27 @@ Financial Services (High Pay):
 ├── Monzo (London - fintech)
 ├── Wise (London - fintech)
 └── Starling Bank (London)
+```
 
 UK Security Companies:
+```
 ├── NCC Group (Manchester - excellent for consulting)
 ├── BAE Systems (various)
 ├── Darktrace (Cambridge)
 ├── Sophos (Abingdon)
 ├── F-Secure (various)
 └── Many boutique consultancies
+```
 
 UK Startups/Scale-ups:
+```
 ├── Snyk (London)
 ├── Tessian (London - email security)
 ├── Cado Security (London)
 ├── Onfido (London)
 ├── Checkout.com (London)
 └── Many fintech startups
+```
 
 
 ---
@@ -380,6 +408,7 @@ UK Startups/Scale-ups:
 #### 🇪🇺 EUROPEAN UNION (Germany, Netherlands, Ireland)
 
 
+```
 ┌─────────────────────────────────────────────────────────────────┐
 │ EUROPEAN UNION OVERVIEW │
 ├─────────────────────────────────────────────────────────────────┤
@@ -409,8 +438,10 @@ UK Startups/Scale-ups:
 │ └── Switzerland (not EU but high pay, Zurich) │
 │ │
 └─────────────────────────────────────────────────────────────────┘
+```
 
 **🇩🇪 GERMANY Deep Dive:**
+```
 ┌─────────────────────────────────────────────────────────────────┐
 │ GERMANY │
 ├─────────────────────────────────────────────────────────────────┤
@@ -437,9 +468,11 @@ UK Startups/Scale-ups:
 │ └── Engineering culture valued │
 │ │
 └─────────────────────────────────────────────────────────────────┘
+```
 
 
 **🇳🇱 NETHERLANDS Deep Dive:**
+```
 ┌─────────────────────────────────────────────────────────────────┐
 │ NETHERLANDS │
 ├─────────────────────────────────────────────────────────────────┤
@@ -470,9 +503,11 @@ UK Startups/Scale-ups:
 │ └── Must apply within 4 months of starting │
 │ │
 └─────────────────────────────────────────────────────────────────┘
+```
 
 
 **🇮🇪 IRELAND Deep Dive:**
+```
 ┌─────────────────────────────────────────────────────────────────┐
 │ IRELAND │
 ├─────────────────────────────────────────────────────────────────┤
@@ -505,12 +540,14 @@ UK Startups/Scale-ups:
 │ └── Cost of living increasing rapidly │
 │ │
 └─────────────────────────────────────────────────────────────────┘
+```
 
 
 ---
 
 #### 🇸🇬 SINGAPORE
 
+```
 ┌─────────────────────────────────────────────────────────────────┐
 │ SINGAPORE OVERVIEW │
 ├─────────────────────────────────────────────────────────────────┤
@@ -541,11 +578,13 @@ UK Startups/Scale-ups:
 │ └── Very international workforce │
 │ │
 └─────────────────────────────────────────────────────────────────┘
+```
 
 
 **Singapore Security Job Market:**
 
 Hot Security Domains in Singapore (2026):
+```
 ├── Cloud Security (AWS/Azure/GCP)
 ├── Application Security
 ├── Financial Services Security (major hub)
@@ -554,19 +593,23 @@ Hot Security Domains in Singapore (2026):
 ├── Threat Intelligence (APAC focus)
 ├── Security Architecture
 └── OT/ICS Security (manufacturing, maritime)
+```
 
 Key Industries:
+```
 ├── Banking & Finance (DBS, OCBC, UOB, global banks)
 ├── Technology (regional HQs)
 ├── Government & Defense
 ├── E-commerce (Shopee, Lazada)
 ├── Gaming (Razer, Garena)
 └── Telecommunications
+```
 
 
 **Top Singapore Companies:**
 
 Big Tech APAC Offices:
+```
 ├── Google APAC (large security team)
 ├── Microsoft APAC
 ├── Amazon/AWS APAC
@@ -574,8 +617,10 @@ Big Tech APAC Offices:
 ├── Apple APAC
 ├── ByteDance (TikTok APAC)
 └── LinkedIn APAC
+```
 
 Financial Services:
+```
 ├── DBS Bank (largest local bank)
 ├── OCBC Bank
 ├── UOB
@@ -585,31 +630,39 @@ Financial Services:
 ├── Goldman Sachs APAC
 ├── GIC (sovereign wealth fund)
 └── Temasek Holdings
+```
 
 Tech Companies:
+```
 ├── Grab (super-app, large security team)
 ├── Sea Limited/Shopee
 ├── Razer (gaming)
 ├── Carousell
 └── Many regional startups
+```
 
 Security Companies:
+```
 ├── Ensign InfoSecurity (local leader)
 ├── ST Engineering (defense)
 ├── Palo Alto Networks APAC
 ├── CrowdStrike APAC
 └── Regional security consultancies
+```
 
 Government:
+```
 ├── Cyber Security Agency (CSA)
 ├── GovTech
 └── Defense-related agencies
+```
 
 
 ---
 
 #### 🇦🇺 AUSTRALIA
 
+```
 ┌─────────────────────────────────────────────────────────────────┐
 │ AUSTRALIA OVERVIEW │
 ├─────────────────────────────────────────────────────────────────┤
@@ -647,11 +700,13 @@ Government:
 │ └── Superannuation: 11%+ employer contribution (retirement) │
 │ │
 └─────────────────────────────────────────────────────────────────┘
+```
 
 
 **Top Australia Companies:**
 
 Big Tech Australia:
+```
 ├── Google Australia (Sydney)
 ├── Microsoft Australia (Sydney)
 ├── Amazon/AWS Australia (Sydney)
@@ -659,39 +714,49 @@ Big Tech Australia:
 ├── Canva (Sydney HQ - Australian unicorn)
 ├── Salesforce Australia
 └── ServiceNow Australia
+```
 
 Banks (Big 4 - Strong Security Teams):
+```
 ├── Commonwealth Bank (CBA)
 ├── NAB (National Australia Bank)
 ├── Westpac
 ├── ANZ Bank
 └── Macquarie Group
+```
 
 Australian Tech Companies:
+```
 ├── Atlassian (collaboration tools, large security)
 ├── Canva (design platform)
 ├── Afterpay/Block
 ├── REA Group
 ├── Seek
 └── Many growing startups
+```
 
 Security Companies:
+```
 ├── CyberCX (largest Australian security firm)
 ├── Tesserent
 ├── Penten
 ├── Kasada
 └── Various consultancies
+```
 
 Government:
+```
 ├── Australian Signals Directorate (ASD)
 ├── Australian Cyber Security Centre (ACSC)
 ├── Defence Department
 └── Various federal agencies
+```
 
 ---
 
 #### 🇨🇦 CANADA
 
+```
 ┌─────────────────────────────────────────────────────────────────┐
 │ CANADA OVERVIEW │
 ├─────────────────────────────────────────────────────────────────┤
@@ -728,11 +793,13 @@ Government:
 │ └── Benefits: Health coverage is universal │
 │ │
 └─────────────────────────────────────────────────────────────────┘
+```
 
 
 **Top Canada Companies:**
 
 Big Tech Canada:
+```
 ├── Google Canada (Toronto, Montreal, Waterloo)
 ├── Microsoft Canada (Vancouver, Toronto)
 ├── Amazon Canada (Vancouver, Toronto)
@@ -741,41 +808,51 @@ Big Tech Canada:
 ├── Shopify (Ottawa HQ - Canadian company!)
 ├── Uber Canada
 └── Snap Canada
+```
 
 Canadian Tech Companies:
+```
 ├── Shopify (e-commerce, large security team)
 ├── Wealthsimple (fintech)
 ├── Hootsuite (Vancouver)
 ├── OpenText
 ├── BlackBerry (enterprise security)
 └── Many AI startups (especially Montreal)
+```
 
 Banks (Big 5):
+```
 ├── RBC (Royal Bank of Canada)
 ├── TD Bank
 ├── Scotiabank
 ├── BMO (Bank of Montreal)
 ├── CIBC
 └── Manulife
+```
 
 Security Companies:
+```
 ├── Arctic Wolf (large presence)
 ├── 1Password (Toronto - passwords)
 ├── Many consultancies
 └── Government security contractors
+```
 
 AI Hub (Montreal):
+```
 ├── Mila (AI research institute)
 ├── Google Brain Montreal
 ├── Facebook AI Montreal
 ├── Microsoft Research Montreal
 └── AI startups with security needs
+```
 
 
 ---
 
 #### 🇦🇪 UNITED ARAB EMIRATES (Dubai, Abu Dhabi)
 
+```
 ┌─────────────────────────────────────────────────────────────────┐
 │ UAE OVERVIEW │
 ├─────────────────────────────────────────────────────────────────┤
@@ -812,11 +889,13 @@ AI Hub (Montreal):
 │ └── Contracts: Fixed term (2-3 years) common │
 │ │
 └─────────────────────────────────────────────────────────────────┘
+```
 
 
 **UAE Security Job Market:**
 
 Growing Security Domains (2026):
+```
 ├── Cloud Security (digital transformation push)
 ├── Financial Services Security
 ├── Government/Critical Infrastructure
@@ -825,8 +904,10 @@ Growing Security Domains (2026):
 ├── GRC & Compliance
 ├── Application Security
 └── SOC/Managed Security
+```
 
 Key Industries:
+```
 ├── Banking & Finance (major regional hub)
 ├── Government & Defense
 ├── Oil & Gas
@@ -834,11 +915,13 @@ Key Industries:
 ├── Real Estate & Construction
 ├── E-commerce (Noon, Careem)
 └── Fintech (growing rapidly)
+```
 
 
 **Top UAE Companies:**
 
 Tech Companies:
+```
 ├── Amazon (AWS region, large presence)
 ├── Microsoft (Dubai, Abu Dhabi)
 ├── Google (Dubai)
@@ -847,40 +930,50 @@ Tech Companies:
 ├── Careem (Dubai - super-app)
 ├── Noon (Dubai - e-commerce)
 └── Many digital transformation projects
+```
 
 Financial Services:
+```
 ├── Emirates NBD
 ├── Abu Dhabi Commercial Bank
 ├── First Abu Dhabi Bank
 ├── DIFC companies (financial center)
 ├── Mashreq Bank
 └── International banks (regional HQs)
+```
 
 Government & Semi-Government:
+```
 ├── Dubai Electronic Security Center (DESC)
 ├── Abu Dhabi Digital Authority
 ├── Emirates Group (IT security)
 ├── ADNOC (oil & gas)
 ├── Mubadala
 └── Various government digital initiatives
+```
 
 Security Companies & Consultancies:
+```
 ├── DarkMatter (Abu Dhabi - controversial)
 ├── Help AG
 ├── Spire Solutions
 ├── Regional offices of global firms
 └── Big 4 consulting (Deloitte, EY, etc.)
+```
 
 Fintech:
+```
 ├── Network International
 ├── Sarwa
 ├── PayTabs
 └── Growing fintech ecosystem
+```
 
 
 **UAE Compensation Structure:**
 
 Typical UAE Package Components:
+```
 ┌────────────────────────┬─────────────────────────────────────┐
 │ Component │ Notes │
 ├────────────────────────┼─────────────────────────────────────┤
@@ -892,6 +985,7 @@ Typical UAE Package Components:
 │ Education Allowance │ Sometimes (if you have children) │
 │ End of Service Benefit │ ~21 days salary per year │
 └────────────────────────┴─────────────────────────────────────┘
+```
 
 Negotiation Tip: Negotiate the TOTAL package, not just base.
 Housing allowance can be significant in Dubai.
@@ -903,6 +997,7 @@ Housing allowance can be significant in Dubai.
 
 #### 🇺🇸 United States Visa Pathways
 
+```
 ┌─────────────────────────────────────────────────────────────────┐
 │ US VISA PATHWAYS │
 ├─────────────────────────────────────────────────────────────────┤
@@ -946,8 +1041,10 @@ Housing allowance can be significant in Dubai.
 │ └── Note: This backlog is why Canada route is attractive │
 │ │
 └─────────────────────────────────────────────────────────────────┘
+```
 
 🎯 RECOMMENDED PATH (L-1B Strategy):
+```
 ┌──────────────────────────────────────────────────────────────────┐
 │ Year 0-2: Join US company's India office (Google, Microsoft, │
 │ Amazon, etc.) │
@@ -961,12 +1058,14 @@ Housing allowance can be significant in Dubai.
 │ Alternative: Canada PR → Citizenship → TN to US │
 │ (Avoids Green Card backlog) │
 └──────────────────────────────────────────────────────────────────┘
+```
 
 
 ---
 
 #### 🇬🇧 United Kingdom Visa Pathways
 
+```
 ┌─────────────────────────────────────────────────────────────────┐
 │ UK VISA PATHWAYS │
 ├─────────────────────────────────────────────────────────────────┤
@@ -1009,20 +1108,24 @@ Housing allowance can be significant in Dubai.
 │ └── Total: 6 years to British citizenship │
 │ │
 └─────────────────────────────────────────────────────────────────┘
+```
 
 UK Security-Specific Notes:
+```
 ├── Security cleared roles: Some require UK citizenship or
 │ residency history (especially government)
 ├── Sponsor shortage list: Cyber Security Analyst IS on the
 │ shortage list (easier sponsorship, lower salary threshold)
 ├── Most companies willing to sponsor for security roles
 └── Tech Nation endorsement: Build portfolio for this option
+```
 
 
 ---
 
 #### 🇪🇺 European Union Visa Pathways
 
+```
 ┌─────────────────────────────────────────────────────────────────┐
 │ EU VISA PATHWAYS │
 ├─────────────────────────────────────────────────────────────────┤
@@ -1069,8 +1172,10 @@ UK Security-Specific Notes:
 │ └── Citizenship: 5 years (naturalization) │
 │ │
 └─────────────────────────────────────────────────────────────────┘
+```
 
 🎯 RECOMMENDED EU PATH (Netherlands):
+```
 ┌──────────────────────────────────────────────────────────────────┐
 │ Why Netherlands: │
 │ ├── English-friendly (no Dutch needed at work) │
@@ -1088,12 +1193,14 @@ UK Security-Specific Notes:
 │ Year 5+: Optional: Apply for Dutch citizenship │
 │ (can keep Indian passport!) │
 └──────────────────────────────────────────────────────────────────┘
+```
 
 
 ---
 
 #### 🇸🇬 Singapore Visa Pathways
 
+```
 ┌─────────────────────────────────────────────────────────────────┐
 │ SINGAPORE VISA PATHWAYS │
 ├─────────────────────────────────────────────────────────────────┤
@@ -1142,8 +1249,10 @@ UK Security-Specific Notes:
 │ └── No citizenship path for most (SG citizenship rare) │
 │ │
 └─────────────────────────────────────────────────────────────────┘
+```
 
 Singapore Security-Specific Notes:
+```
 ├── Security professionals typically qualify for EP easily
 ├── Tech and finance sectors actively sponsor EPs
 ├── Indian nationals are common (large community)
@@ -1152,12 +1261,14 @@ Singapore Security-Specific Notes:
 │ ├── Specialized skills (ML Security!)
 │ └── Shortage occupations
 └── PR is harder now but still achievable (3-5 years)
+```
 
 
 ---
 
 #### 🇦🇺 Australia Visa Pathways
 
+```
 ┌─────────────────────────────────────────────────────────────────┐
 │ AUSTRALIA VISA PATHWAYS │
 ├─────────────────────────────────────────────────────────────────┤
@@ -1218,8 +1329,10 @@ Singapore Security-Specific Notes:
 │ └── Must give up Indian citizenship (no dual) │
 │ │
 └─────────────────────────────────────────────────────────────────┘
+```
 
 🎯 AUSTRALIA POINTS CALCULATOR (Example for Security Professional):
+```
 ┌──────────────────────────────────────────────────────────────────┐
 │ Your Profile (Hypothetical): │
 │ │
@@ -1239,8 +1352,10 @@ Singapore Security-Specific Notes:
 │ ├── Build experience (each additional year helps) │
 │ └── Apply before age 33 (points decrease after) │
 └──────────────────────────────────────────────────────────────────┘
+```
 
 ICT Security Specialist (ANZSCO 262112):
+```
 ├── On Medium and Long-term Strategic Skills List (MLTSSL)
 ├── Eligible for 189, 190, 491, 482 (medium-term)
 ├── Skills assessment by ACS (Australian Computer Society)
@@ -1248,12 +1363,14 @@ ICT Security Specialist (ANZSCO 262112):
 │ ├── ICT major degree + 2 years relevant experience OR
 │ └── Non-ICT degree + 4 years relevant experience
 └── Assessment time: 8-12 weeks
+```
 
 
 ---
 
 #### 🇨🇦 Canada Visa Pathways
 
+```
 ┌─────────────────────────────────────────────────────────────────┐
 │ CANADA VISA PATHWAYS │
 ├─────────────────────────────────────────────────────────────────┤
@@ -1324,8 +1441,10 @@ ICT Security Specialist (ANZSCO 262112):
 │ └── Canadian passport → TN visa to US! │
 │ │
 └─────────────────────────────────────────────────────────────────┘
+```
 
 🎯 CANADA CRS CALCULATOR (Example):
+```
 ┌──────────────────────────────────────────────────────────────────┐
 │ Your Profile (Hypothetical, Single): │
 │ │
@@ -1361,19 +1480,23 @@ ICT Security Specialist (ANZSCO 262112):
 │ 1. Target BC PNP Tech Pilot (+600 points) │
 │ 2. Get ITA (Invitation to Apply) quickly │
 └──────────────────────────────────────────────────────────────────┘
+```
 
 Security Analyst NOC Code:
+```
 ├── NOC 2022: 21220 - Cybersecurity specialists
 ├── On Global Talent Occupations List
 ├── TEER Category 1 (eligible for Express Entry)
 ├── In demand across provinces
 └── BC PNP Tech: Priority occupation
+```
 
 
 ---
 
 #### 🇦🇪 UAE Visa Pathways
 
+```
 ┌─────────────────────────────────────────────────────────────────┐
 │ UAE VISA PATHWAYS │
 ├─────────────────────────────────────────────────────────────────┤
@@ -1433,8 +1556,10 @@ Security Analyst NOC Code:
 │ └── Very few long-term residents become permanent │
 │ │
 └─────────────────────────────────────────────────────────────────┘
+```
 
 UAE for Indian Security Professionals:
+```
 ├── Advantages:
 │ ├── Zero income tax (significant savings!)
 │ ├── Large Indian community (easy transition)
@@ -1456,6 +1581,7 @@ UAE for Indian Security Professionals:
 ├── Build experience with regional companies
 ├── Consider as stepping stone to other markets
 └── Golden Visa provides stability if you qualify
+```
 
 
 
@@ -1463,6 +1589,7 @@ UAE for Indian Security Professionals:
 
 ### SECTION 3: DETAILED SALARY RANGES BY REGION
 
+```
 ┌─────────────────────────────────────────────────────────────────────────┐
 │ GLOBAL SECURITY SALARY COMPARISON (2026) │
 │ Entry → Mid → Senior → Staff │
@@ -1655,9 +1782,11 @@ UAE for Indian Security Professionals:
 │ UAE AED 500K = $136K = ~$200K US pre-tax equivalent! │
 │ │
 └─────────────────────────────────────────────────────────────────────────┘
+```
 
 **Salary Comparison Summary (Senior Security Engineer, 5-8 years):**
 
+```
 ┌──────────────────────────────────────────────────────────────────────────┐
 │ SENIOR SECURITY ENGINEER - GLOBAL COMPARISON │
 │ (Gross → Approximate Net Take-Home) │
@@ -1680,11 +1809,13 @@ UAE for Indian Security Professionals:
 │ 🏆 HIGHEST TOTAL COMP: US (SF) including equity > UAE > Singapore │
 │ 🏆 BEST VALUE (COL adjusted): US (Austin/Denver), Netherlands, Singapore │
 └──────────────────────────────────────────────────────────────────────────┘
+```
 
 
 ---
 
 ### SECTION 4: INTERVIEW PROCESS DIFFERENCES BY REGION
+```
 ┌─────────────────────────────────────────────────────────────────────────────┐
 │                    GLOBAL INTERVIEW PROCESS COMPARISON                       │
 ├─────────────────────────────────────────────────────────────────────────────┤
@@ -1693,10 +1824,12 @@ UAE for Indian Security Professionals:
 │  Same skills, different presentation = different outcomes.                  │
 │                                                                              │
 └─────────────────────────────────────────────────────────────────────────────┘
+```
 
 **United States - Interview Deep Dive**
 
 US INTERVIEW STRUCTURE (Most Rigorous)
+```
 ┌─────────────────────────────────────────────────────────────┐
 │                                                              │
 │  Total Timeline: 4-8 weeks (can be faster for urgent hires) │
@@ -1781,8 +1914,10 @@ US INTERVIEW STRUCTURE (Most Rigorous)
 │  └── Background check after acceptance                     │
 │                                                              │
 └─────────────────────────────────────────────────────────────┘
+```
 
 US-SPECIFIC TIPS:
+```
 ├── Be direct and confident (not arrogant)
 ├── Quantify everything (metrics, impact numbers)
 ├── Show initiative and ownership mindset
@@ -1792,6 +1927,7 @@ US-SPECIFIC TIPS:
 ├── Follow up with thank-you emails within 24 hours
 ├── Salary negotiation is EXPECTED - always counter
 └── Be prepared to discuss visa sponsorship timeline
+```
 
 COMMON US INTERVIEW QUESTIONS:
 1. "Walk me through a security incident you handled"
@@ -1806,6 +1942,7 @@ COMMON US INTERVIEW QUESTIONS:
 **United Kingdom - Interview Deep Dive**
 
 UK INTERVIEW STRUCTURE (More Conversational)
+```
 ┌─────────────────────────────────────────────────────────────┐
 │                                                              │
 │  Total Timeline: 3-6 weeks                                  │
@@ -1857,8 +1994,10 @@ UK INTERVIEW STRUCTURE (More Conversational)
 │  └── Offer discussion may begin here                       │
 │                                                              │
 └─────────────────────────────────────────────────────────────┘
+```
 
 UK-SPECIFIC COMPETENCY FRAMEWORK:
+```
 ┌──────────────────────┬──────────────────────────────────────┐
 │ Competency           │ What They're Looking For             │
 ├──────────────────────┼──────────────────────────────────────┤
@@ -1870,8 +2009,10 @@ UK-SPECIFIC COMPETENCY FRAMEWORK:
 │ Adaptability         │ Handles change, learns quickly       │
 │ Leadership           │ Influences without authority         │
 └──────────────────────┴──────────────────────────────────────┘
+```
 
 UK INTERVIEW TIPS:
+```
 ├── Be humble but confident (not boastful)
 ├── Use "we" more than "I" when discussing team work
 ├── Show awareness of UK regulatory landscape
@@ -1881,6 +2022,7 @@ UK INTERVIEW TIPS:
 ├── Understand their client base (finance = FCA, health = NHS)
 ├── Be prepared to discuss salary in GBP (research UK ranges)
 └── Ask about notice period buy-out if currently employed
+```
 
 COMMON UK INTERVIEW QUESTIONS:
 1. "Give an example of when you influenced a decision"
@@ -1895,6 +2037,7 @@ COMMON UK INTERVIEW QUESTIONS:
 **European Union - Interview Deep Dive**
 
 EU INTERVIEW STRUCTURE (Country Variations)
+```
 ┌─────────────────────────────────────────────────────────────┐
 │                                                              │
 │  Timeline: 4-8 weeks (can be longer in Germany/France)     │
@@ -1944,8 +2087,10 @@ EU INTERVIEW STRUCTURE (Country Variations)
 │  └── Remote work policies often more flexible              │
 │                                                              │
 └─────────────────────────────────────────────────────────────┘
+```
 
 EU-SPECIFIC INTERVIEW TIPS:
+```
 ├── Research country-specific work culture
 ├── Understand local holiday and benefits norms
 ├── Be aware of language requirements (even if job is English)
@@ -1955,6 +2100,7 @@ EU-SPECIFIC INTERVIEW TIPS:
 ├── Be prepared for video interviews (common for international)
 ├── Show interest in local culture/language learning
 └── Understand tax implications (some countries have high taxes but good benefits)
+```
 
 GDPR-FOCUSED QUESTIONS (Common in EU):
 1. "How would you implement privacy-by-design in a new product?"
@@ -1967,6 +2113,7 @@ GDPR-FOCUSED QUESTIONS (Common in EU):
 **Singapore - Interview Deep Dive**
 
 SINGAPORE INTERVIEW STRUCTURE (Fast-Paced)
+```
 ┌─────────────────────────────────────────────────────────────┐
 │                                                              │
 │  Timeline: 2-4 weeks (fastest in Asia)                     │
@@ -2008,8 +2155,10 @@ SINGAPORE INTERVIEW STRUCTURE (Fast-Paced)
 │  └── Work permit/EP approval discussed early               │
 │                                                              │
 └─────────────────────────────────────────────────────────────┘
+```
 
 SINGAPORE INTERVIEW TIPS:
+```
 ├── Be punctual (lateness is heavily penalized)
 ├── Dress formally (conservative business attire)
 ├── Show regional awareness (APAC markets)
@@ -2019,6 +2168,7 @@ SINGAPORE INTERVIEW TIPS:
 ├── Be direct about salary expectations
 ├── Show willingness to work across time zones
 └── Highlight any experience with regional teams
+```
 
 SINGAPORE-SPECIFIC QUESTIONS:
 1. "How would you handle security across APAC region?"
@@ -2031,6 +2181,7 @@ SINGAPORE-SPECIFIC QUESTIONS:
 **Australia - Interview Deep Dive**
 
 AUSTRALIA INTERVIEW STRUCTURE (Balanced)
+```
 ┌─────────────────────────────────────────────────────────────┐
 │                                                              │
 │  Timeline: 3-5 weeks                                        │
@@ -2077,8 +2228,10 @@ AUSTRALIA INTERVIEW STRUCTURE (Balanced)
 │  └── Superannuation (retirement) part of package           │
 │                                                              │
 └─────────────────────────────────────────────────────────────┘
+```
 
 AUSTRALIA INTERVIEW TIPS:
+```
 ├── Be authentic and personable (Australians value genuineness)
 ├── Don't oversell yourself (tall poppy syndrome)
 ├── Show technical competence without arrogance
@@ -2088,6 +2241,7 @@ AUSTRALIA INTERVIEW TIPS:
 ├── Show interest in local market and opportunities
 ├── Be prepared to discuss work-life balance expectations
 └── Know the difference between Sydney and Melbourne markets
+```
 
 AUSTRALIAN-SPECIFIC QUESTIONS:
 1. "How familiar are you with ASD Essential Eight?"
@@ -2100,6 +2254,7 @@ AUSTRALIAN-SPECIFIC QUESTIONS:
 **Canada - Interview Deep Dive**
 
 CANADA INTERVIEW STRUCTURE (US-Similar, More Polite)
+```
 ┌─────────────────────────────────────────────────────────────┐
 │                                                              │
 │  Timeline: 3-6 weeks                                        │
@@ -2154,8 +2309,10 @@ CANADA INTERVIEW STRUCTURE (US-Similar, More Polite)
 │  └── Strong startup ecosystem (Toronto, Vancouver)         │
 │                                                              │
 └─────────────────────────────────────────────────────────────┘
+```
 
 CANADIAN INTERVIEW TIPS:
+```
 ├── Be polite and collaborative in communication
 ├── Show genuine interest in Canada (not just as US backup)
 ├── Research Canadian privacy laws (PIPEDA, provincial)
@@ -2165,6 +2322,7 @@ CANADIAN INTERVIEW TIPS:
 ├── Research Canadian companies specifically
 ├── Understand provincial differences in job market
 └── Be authentic about relocation intentions
+```
 
 CANADIAN-SPECIFIC QUESTIONS:
 1. "What's your understanding of PIPEDA and provincial privacy laws?"
@@ -2177,6 +2335,7 @@ CANADIAN-SPECIFIC QUESTIONS:
 **UAE - Interview Deep Dive**
 
 UAE INTERVIEW STRUCTURE (Relationship-Focused)
+```
 ┌─────────────────────────────────────────────────────────────┐
 │                                                              │
 │  Timeline: 2-6 weeks (varies significantly)                 │
@@ -2226,8 +2385,10 @@ UAE INTERVIEW STRUCTURE (Relationship-Focused)
 │  └── Long notice periods common (2-3 months)               │
 │                                                              │
 └─────────────────────────────────────────────────────────────┘
+```
 
 UAE INTERVIEW TIPS:
+```
 ├── Dress very formally (conservative business attire)
 ├── Be patient with process (can be slower)
 ├── Build relationship, not just transactional
@@ -2238,6 +2399,7 @@ UAE INTERVIEW TIPS:
 ├── Be prepared for questions about family/personal stability
 ├── Demonstrate long-term commitment intentions
 └── Understand the full compensation package before comparing
+```
 
 UAE-SPECIFIC QUESTIONS:
 1. "What attracts you to working in the UAE?"
@@ -2248,6 +2410,7 @@ UAE-SPECIFIC QUESTIONS:
 6. "How do you maintain security standards in a diverse team?"
 
 UAE PACKAGE NEGOTIATION:
+```
 ┌─────────────────────────────────────────────────────────────┐
 │  Beyond Base Salary, Negotiate:                             │
 │  ├── Housing allowance (AED 8,000-25,000/month)            │
@@ -2260,8 +2423,10 @@ UAE PACKAGE NEGOTIATION:
 │  ├── Car allowance or company car                          │
 │  └── Professional development budget                        │
 └─────────────────────────────────────────────────────────────┘
+```
 
 ### SECTION 5: COMPANIES HIRING INTERNATIONALLY
+```
 ┌─────────────────────────────────────────────────────────────────────────────┐
 │                    COMPANIES THAT SPONSOR INTERNATIONAL TALENT              │
 ├─────────────────────────────────────────────────────────────────────────────┤
@@ -2270,8 +2435,10 @@ UAE PACKAGE NEGOTIATION:
 │  a TRACK RECORD of hiring international security talent.                    │
 │                                                                              │
 └─────────────────────────────────────────────────────────────────────────────┘
+```
 **Big Tech (Global Presence, Strong Sponsorship)**
 GOOGLE
+```
 ┌─────────────────────────────────────────────────────────────┐
 │  Hiring Locations: US, UK, Ireland, Germany, Singapore,     │
 │                    Australia, Canada, India, Japan          │
@@ -2300,8 +2467,10 @@ GOOGLE
 │  └── Team matching happens after passing interviews        │
 │                                                              │
 └─────────────────────────────────────────────────────────────┘
+```
 
 MICROSOFT
+```
 ┌─────────────────────────────────────────────────────────────┐
 │  Hiring Locations: US (Redmond), UK, Ireland, Germany,      │
 │                    Israel, Singapore, Australia, India      │
@@ -2329,8 +2498,10 @@ MICROSOFT
 │  └── Israel office = strong security research              │
 │                                                              │
 └─────────────────────────────────────────────────────────────┘
+```
 
 AMAZON/AWS
+```
 ┌─────────────────────────────────────────────────────────────┐
 │  Hiring Locations: US (Seattle, NYC, DC), UK, Ireland,      │
 │                    Germany, Singapore, Australia, India     │
@@ -2364,8 +2535,10 @@ AMAZON/AWS
 │  └── Deliver Results                                        │
 │                                                              │
 └─────────────────────────────────────────────────────────────┘
+```
 
 META (Facebook)
+```
 ┌─────────────────────────────────────────────────────────────┐
 │  Hiring Locations: US (Menlo Park, NYC), UK, Ireland,       │
 │                    Singapore, Canada                        │
@@ -2392,8 +2565,10 @@ META (Facebook)
 │  └── Scale is emphasized (billions of users)               │
 │                                                              │
 └─────────────────────────────────────────────────────────────┘
+```
 
 APPLE
+```
 ┌─────────────────────────────────────────────────────────────┐
 │  Hiring Locations: US (Cupertino), UK, Ireland, Singapore,  │
 │                    China, India                             │
@@ -2420,10 +2595,12 @@ APPLE
 │  └── Fewer positions, very competitive                     │
 │                                                              │
 └─────────────────────────────────────────────────────────────┘
+```
 
 
 **Security-Focused Companies (Best for Pure Security Growth)**
 CROWDSTRIKE
+```
 ┌─────────────────────────────────────────────────────────────┐
 │  Hiring Locations: US (Multiple), UK, Germany, Australia,   │
 │                    Israel, India (Pune), Remote             │
@@ -2447,8 +2624,10 @@ CROWDSTRIKE
 │  └── Great for building security expertise                 │
 │                                                              │
 └─────────────────────────────────────────────────────────────┘
+```
 
 PALO ALTO NETWORKS
+```
 ┌─────────────────────────────────────────────────────────────┐
 │  Hiring Locations: US, UK, Netherlands, Israel, Singapore,  │
 │                    Australia, India (Bangalore)             │
@@ -2466,8 +2645,10 @@ PALO ALTO NETWORKS
 │  Apply: paloaltonetworks.com/careers                        │
 │                                                              │
 └─────────────────────────────────────────────────────────────┘
+```
 
 WIZ (Fast-Growing Cloud Security)
+```
 ┌─────────────────────────────────────────────────────────────┐
 │  Hiring Locations: US (NYC), Israel (Tel Aviv), UK, APAC    │
 │                                                              │
@@ -2489,8 +2670,10 @@ WIZ (Fast-Growing Cloud Security)
 │  └── Founded by former Microsoft security leaders          │
 │                                                              │
 └─────────────────────────────────────────────────────────────┘
+```
 
 SNYK (Developer Security)
+```
 ┌─────────────────────────────────────────────────────────────┐
 │  Hiring Locations: UK (London), US (Boston), Israel,        │
 │                    Canada, Remote Global                    │
@@ -2513,8 +2696,10 @@ SNYK (Developer Security)
 │  └── Growing rapidly                                        │
 │                                                              │
 └─────────────────────────────────────────────────────────────┘
+```
 
 MANDIANT (Now Part of Google Cloud)
+```
 ┌─────────────────────────────────────────────────────────────┐
 │  Hiring Locations: US, UK, Germany, Australia, Singapore,   │
 │                    Japan                                    │
@@ -2538,9 +2723,11 @@ MANDIANT (Now Part of Google Cloud)
 │  └── Industry-leading reports and research                 │
 │                                                              │
 └─────────────────────────────────────────────────────────────┘
+```
 
 **Consulting Firms (Global Mobility, Varied Experience)**
 BIG 4 CONSULTING - SECURITY PRACTICES
+```
 ┌─────────────────────────────────────────────────────────────┐
 │                                                              │
 │  DELOITTE CYBER                                             │
@@ -2584,8 +2771,10 @@ BIG 4 CONSULTING - SECURITY PRACTICES
 │  └── Pay lower than big tech at senior levels              │
 │                                                              │
 └─────────────────────────────────────────────────────────────┘
+```
 
 BOUTIQUE SECURITY CONSULTING
+```
 ┌─────────────────────────────────────────────────────────────┐
 │                                                              │
 │  NCC GROUP                                                  │
@@ -2616,9 +2805,11 @@ BOUTIQUE SECURITY CONSULTING
 │  └── Apply: withsecure.com/careers                          │
 │                                                              │
 └─────────────────────────────────────────────────────────────┘
+```
 
 **Financial Services (High Pay, Strong Security Investment)**
 INVESTMENT BANKS & FINANCE
+```
 ┌─────────────────────────────────────────────────────────────┐
 │                                                              │
 │  GOLDMAN SACHS                                              │
@@ -2668,9 +2859,11 @@ INVESTMENT BANKS & FINANCE
 │  └── Long hours during busy periods                        │
 │                                                              │
 └─────────────────────────────────────────────────────────────┘
+```
 
 **AI/ML Security Companies (Your Sweet Spot!)**
 EMERGING ML SECURITY COMPANIES
+```
 ┌─────────────────────────────────────────────────────────────┐
 │                                                              │
 │  ROBUST INTELLIGENCE                                        │
@@ -2720,8 +2913,10 @@ EMERGING ML SECURITY COMPANIES
 │  └── Compensation may be lower base + higher equity        │
 │                                                              │
 └─────────────────────────────────────────────────────────────┘
+```
 
 BIG TECH ML SECURITY TEAMS
+```
 ┌─────────────────────────────────────────────────────────────┐
 │                                                              │
 │  OPENAI                                                     │
@@ -2757,8 +2952,10 @@ BIG TECH ML SECURITY TEAMS
 │  └── Apply: metacareers.com                                 │
 │                                                              │
 └─────────────────────────────────────────────────────────────┘
+```
 
 ### SECTION 6: REMOTE-FIRST GLOBAL COMPANIES
+```
 ┌─────────────────────────────────────────────────────────────────────────────┐
 │                    REMOTE-FIRST COMPANIES HIRING GLOBALLY                    │
 ├─────────────────────────────────────────────────────────────────────────────┤
@@ -2768,8 +2965,10 @@ BIG TECH ML SECURITY TEAMS
 │  living. Note: Tax and legal implications vary - research carefully.        │
 │                                                                              │
 └─────────────────────────────────────────────────────────────────────────────┘
+```
 **Fully Remote Security Companies**
 TIER 1: ESTABLISHED REMOTE-FIRST
+```
 ┌─────────────────────────────────────────────────────────────┐
 │                                                              │
 │  GITLAB                                                     │
@@ -2822,8 +3021,10 @@ TIER 1: ESTABLISHED REMOTE-FIRST
 │  └── Apply: 1password.com/jobs                              │
 │                                                              │
 └─────────────────────────────────────────────────────────────┘
+```
 
 TIER 2: REMOTE-FRIENDLY (Not Fully Remote, But Hire Globally)
+```
 ┌─────────────────────────────────────────────────────────────┐
 │                                                              │
 │  ELASTIC                                                    │
@@ -2861,8 +3062,10 @@ TIER 2: REMOTE-FRIENDLY (Not Fully Remote, But Hire Globally)
 │  └── Apply: okta.com/company/careers                        │
 │                                                              │
 └─────────────────────────────────────────────────────────────┘
+```
 
 SECURITY-SPECIFIC REMOTE COMPANIES
+```
 ┌─────────────────────────────────────────────────────────────┐
 │                                                              │
 │  BUGCROWD                                                   │
@@ -2896,10 +3099,12 @@ SECURITY-SPECIFIC REMOTE COMPANIES
 │  └── Apply: rapid7.com/careers                              │
 │                                                              │
 └─────────────────────────────────────────────────────────────┘
+```
 
 **Remote Work: Practical Considerations**
 
 WORKING REMOTELY FOR GLOBAL COMPANIES FROM INDIA
+```
 ┌─────────────────────────────────────────────────────────────┐
 │                                                              │
 │  COMPENSATION MODELS:                                       │
@@ -2931,8 +3136,10 @@ WORKING REMOTELY FOR GLOBAL COMPANIES FROM INDIA
 │  └── Result: Still 2-3x local market rate!                 │
 │                                                              │
 └─────────────────────────────────────────────────────────────┘
+```
 
 TIMEZONE AND WORK SCHEDULE
+```
 ┌─────────────────────────────────────────────────────────────┐
 │                                                              │
 │  India → US West Coast: 12.5-13.5 hours difference         │
@@ -2965,8 +3172,10 @@ TIMEZONE AND WORK SCHEDULE
 │  └── Fewer meetings, more documentation                    │
 │                                                              │
 └─────────────────────────────────────────────────────────────┘
+```
 
 LEGAL AND TAX CONSIDERATIONS (NOT LEGAL ADVICE)
+```
 ┌─────────────────────────────────────────────────────────────┐
 │                                                              │
 │  How Companies Hire Internationally:                        │
@@ -3003,9 +3212,11 @@ LEGAL AND TAX CONSIDERATIONS (NOT LEGAL ADVICE)
 │  └── Velocity Global                                        │
 │                                                              │
 └─────────────────────────────────────────────────────────────┘
+```
 
 ### SECTION 7: TIMELINE FOR INTERNATIONAL MOVE
 
+```
 ┌─────────────────────────────────────────────────────────────────────────────┐
 │                    REALISTIC TIMELINE: INDIA → INTERNATIONAL                │
 ├─────────────────────────────────────────────────────────────────────────────┤
@@ -3014,10 +3225,12 @@ LEGAL AND TAX CONSIDERATIONS (NOT LEGAL ADVICE)
 │  This timeline helps you plan the journey strategically.                   │
 │                                                                              │
 └─────────────────────────────────────────────────────────────────────────────┘
+```
 
 **Year 1: Foundation Building (NOW - 12 Months)**
 
 YEAR 1: BUILD LOCAL STRENGTH & GLOBAL READINESS
+```
 ┌─────────────────────────────────────────────────────────────┐
 │                                                              │
 │  PRIMARY GOAL: Land strong India role + build portfolio    │
@@ -3062,10 +3275,12 @@ YEAR 1: BUILD LOCAL STRENGTH & GLOBAL READINESS
 │  □ Research completed on target countries                 │
 │                                                              │
 └─────────────────────────────────────────────────────────────┘
+```
 
 **Year 2: Growth & Positioning (12-24 Months)**
 
 YEAR 2: GROW EXPERTISE + INTERNATIONAL POSITIONING
+```
 ┌─────────────────────────────────────────────────────────────┐
 │                                                              │
 │  PRIMARY GOAL: Become standout candidate for global roles  │
@@ -3108,10 +3323,12 @@ YEAR 2: GROW EXPERTISE + INTERNATIONAL POSITIONING
 │  □ Interview-ready for global roles                       │
 │                                                              │
 └─────────────────────────────────────────────────────────────┘
+```
 
 **Year 3: Execution & Transition (24-36 Months)**
 
 YEAR 3: EXECUTE INTERNATIONAL MOVE
+```
 ┌─────────────────────────────────────────────────────────────┐
 │                                                              │
 │  PRIMARY GOAL: Secure and execute international role       │
@@ -3153,10 +3370,12 @@ YEAR 3: EXECUTE INTERNATIONAL MOVE
 │  □ Successfully onboarded internationally                 │
 │                                                              │
 └─────────────────────────────────────────────────────────────┘
+```
 
 **Faster Path: Remote Global Work**
 
 ACCELERATED PATH: REMOTE GLOBAL ROLE
+```
 ┌─────────────────────────────────────────────────────────────┐
 │                                                              │
 │  Skip visa complexity initially - work remotely for global │
@@ -3195,9 +3414,11 @@ ACCELERATED PATH: REMOTE GLOBAL ROLE
 │  └── Some roles require physical presence                  │
 │                                                              │
 └─────────────────────────────────────────────────────────────┘
+```
 
 ### SECTION 8: JOB BOARDS BY REGION
 
+```
 ┌─────────────────────────────────────────────────────────────────────────────┐
 │                    COMPREHENSIVE JOB BOARDS BY REGION                        │
 ├─────────────────────────────────────────────────────────────────────────────┤
@@ -3205,10 +3426,12 @@ ACCELERATED PATH: REMOTE GLOBAL ROLE
 │  Organized by region with security-specific and general tech boards.       │
 │                                                                              │
 └─────────────────────────────────────────────────────────────────────────────┘
+```
 
 **United States**
 
 US JOB BOARDS
+```
 ┌─────────────────────────────────────────────────────────────┐
 │                                                              │
 │  SECURITY-SPECIFIC:                                         │
@@ -3262,10 +3485,12 @@ US JOB BOARDS
 │  └── [target company]/careers                              │
 │                                                              │
 └─────────────────────────────────────────────────────────────┘
+```
 
 **United Kingdom**
 
 UK JOB BOARDS
+```
 ┌─────────────────────────────────────────────────────────────┐
 │                                                              │
 │  SECURITY-SPECIFIC:                                         │
@@ -3307,10 +3532,12 @@ UK JOB BOARDS
 │  └── UKTechJobs (filtered for visa sponsorship)           │
 │                                                              │
 └─────────────────────────────────────────────────────────────┘
+```
 
 **European Union**
 
 EU JOB BOARDS (BY COUNTRY)
+```
 ┌─────────────────────────────────────────────────────────────┐
 │                                                              │
 │  PAN-EUROPEAN:                                              │
@@ -3365,11 +3592,13 @@ EU JOB BOARDS (BY COUNTRY)
 │  ├── Relocate.me (specializes in relocation)               │
 │  ├── Jobbatic
 └─────────────────────────────────────────────────────────────┘
+```
 
 
 ---
 
 ### SECTION 9: COUNTRY-SPECIFIC PREPARATION GUIDES
+```
 ┌─────────────────────────────────────────────────────────────────────────────┐
 │                    DETAILED COUNTRY PREPARATION GUIDES                       │
 ├─────────────────────────────────────────────────────────────────────────────┤
@@ -3378,10 +3607,12 @@ EU JOB BOARDS (BY COUNTRY)
 │  Specific requirements, cultural preparation, and practical steps.          │
 │                                                                              │
 └─────────────────────────────────────────────────────────────────────────────┘
+```
 
 **United States - Complete Preparation Guide**
 
 US PREPARATION CHECKLIST
+```
 ┌─────────────────────────────────────────────────────────────┐
 │                                                              │
 │  DOCUMENTATION:                                              │
@@ -3460,8 +3691,10 @@ US PREPARATION CHECKLIST
 │  □ Research company's H-1B history (MyVisaJobs)          │
 │                                                              │
 └─────────────────────────────────────────────────────────────┘
+```
 
 US INTERVIEW PREPARATION TIMELINE
+```
 ┌─────────────────────────────────────────────────────────────┐
 │                                                              │
 │  8 WEEKS BEFORE APPLYING:                                   │
@@ -3483,9 +3716,11 @@ US INTERVIEW PREPARATION TIMELINE
 │  ├── Within 24h: Thank you emails to interviewers        │
 │                                                              │
 └─────────────────────────────────────────────────────────────┘
+```
 **United Kingdom - Complete Preparation Guide**
 
 UK PREPARATION CHECKLIST
+```
 ┌─────────────────────────────────────────────────────────────┐
 │                                                              │
 │  DOCUMENTATION:                                              │
@@ -3563,8 +3798,10 @@ UK PREPARATION CHECKLIST
 │  │   └── IHS: £1,035 × years                             │
 │                                                              │
 └─────────────────────────────────────────────────────────────┘
+```
 
 UK-SPECIFIC COMPETENCY QUESTIONS (Prepare These!)
+```
 ┌─────────────────────────────────────────────────────────────┐
 │                                                              │
 │  1. "Describe a time you had to influence a decision       │
@@ -3595,10 +3832,12 @@ UK-SPECIFIC COMPETENCY QUESTIONS (Prepare These!)
 │  + LEARNING (What did you learn/do differently now?)       │
 │                                                              │
 └─────────────────────────────────────────────────────────────┘
+```
 
 **Germany - Complete Preparation Guide**
 
 GERMANY PREPARATION CHECKLIST
+```
 ┌─────────────────────────────────────────────────────────────┐
 │                                                              │
 │  DOCUMENTATION:                                              │
@@ -3675,10 +3914,12 @@ GERMANY PREPARATION CHECKLIST
 │  └── Stuttgart: Automotive industry                       │
 │                                                              │
 └─────────────────────────────────────────────────────────────┘
+```
 
 **Singapore - Complete Preparation Guide**
 
 SINGAPORE PREPARATION CHECKLIST
+```
 ┌─────────────────────────────────────────────────────────────┐
 │                                                              │
 │  DOCUMENTATION:                                              │
@@ -3762,10 +4003,12 @@ SINGAPORE PREPARATION CHECKLIST
 │  □ Card issued after arrival (~4 weeks)                  │
 │                                                              │
 └─────────────────────────────────────────────────────────────┘
+```
 
 **Canada - Complete Preparation Guide**
 
 CANADA PREPARATION CHECKLIST
+```
 ┌─────────────────────────────────────────────────────────────┐
 │                                                              │
 │  EXPRESS ENTRY PREPARATION:                                 │
@@ -3859,10 +4102,12 @@ CANADA PREPARATION CHECKLIST
 │  □ Total: 12-18 months typical                          │
 │                                                              │
 └─────────────────────────────────────────────────────────────┘
+```
 
 **Australia - Complete Preparation Guide**
 
 AUSTRALIA PREPARATION CHECKLIST
+```
 ┌─────────────────────────────────────────────────────────────┐
 │                                                              │
 │  SKILLS ASSESSMENT:                                         │
@@ -3966,10 +4211,12 @@ AUSTRALIA PREPARATION CHECKLIST
 │  □ Total: 18-36 months possible                         │
 │                                                              │
 └─────────────────────────────────────────────────────────────┘
+```
 
 **UAE - Complete Preparation Guide**
 
 UAE PREPARATION CHECKLIST
+```
 ┌─────────────────────────────────────────────────────────────┐
 │                                                              │
 │  DOCUMENTATION:                                              │
@@ -4069,9 +4316,11 @@ UAE PREPARATION CHECKLIST
 │  │   └── Ask for references from current employees      │
 │                                                              │
 └─────────────────────────────────────────────────────────────┘
+```
 
 ### SECTION 10: NETWORKING STRATEGIES BY REGION
 
+```
 ┌─────────────────────────────────────────────────────────────────────────────┐
 │                    REGIONAL NETWORKING STRATEGIES                            │
 ├─────────────────────────────────────────────────────────────────────────────┤
@@ -4079,8 +4328,10 @@ UAE PREPARATION CHECKLIST
 │  Networking approaches that work in each region.                            │
 │                                                                              │
 └─────────────────────────────────────────────────────────────────────────────┘
+```
 
 UNITED STATES
+```
 ┌─────────────────────────────────────────────────────────────┐
 │                                                              │
 │  ONLINE NETWORKING:                                         │
@@ -4109,8 +4360,10 @@ UNITED STATES
 │  └── Referrals are HUGE - build relationships first      │
 │                                                              │
 └─────────────────────────────────────────────────────────────┘
+```
 
 UNITED KINGDOM
+```
 ┌─────────────────────────────────────────────────────────────┐
 │                                                              │
 │  ONLINE NETWORKING:                                         │
@@ -4135,8 +4388,10 @@ UNITED KINGDOM
 │  └── "Let's grab a coffee" works (even virtual)          │
 │                                                              │
 └─────────────────────────────────────────────────────────────┘
+```
 
 SINGAPORE/APAC
+```
 ┌─────────────────────────────────────────────────────────────┐
 │                                                              │
 │  ONLINE NETWORKING:                                         │
@@ -4167,8 +4422,10 @@ SINGAPORE/APAC
 │  └── WhatsApp/Telegram common for follow-up              │
 │                                                              │
 └─────────────────────────────────────────────────────────────┘
+```
 
 GERMANY/EU
+```
 ┌─────────────────────────────────────────────────────────────┐
 │                                                              │
 │  ONLINE NETWORKING:                                         │
@@ -4192,8 +4449,10 @@ GERMANY/EU
 │  └── More formal initially                               │
 │                                                              │
 └─────────────────────────────────────────────────────────────┘
+```
 
 UAE/MIDDLE EAST
+```
 ┌─────────────────────────────────────────────────────────────┐
 │                                                              │
 │  ONLINE NETWORKING:                                         │
@@ -4218,9 +4477,11 @@ UAE/MIDDLE EAST
 │  └── Respect cultural norms                              │
 │                                                              │
 └─────────────────────────────────────────────────────────────┘
+```
 
 ### SECTION 11: COST OF LIVING COMPARISON
 
+```
 ┌─────────────────────────────────────────────────────────────────────────────┐
 │                    COST OF LIVING COMPARISON (2026)                          │
 ├─────────────────────────────────────────────────────────────────────────────┤
@@ -4229,7 +4490,9 @@ UAE/MIDDLE EAST
 │  Converted to USD for comparison. Actual costs vary by lifestyle.           │
 │                                                                              │
 └─────────────────────────────────────────────────────────────────────────────┘
+```
 
+```
 ┌─────────────────┬────────────┬────────────┬────────────┬────────────┐
 │ City            │ Rent (1BR) │ Food       │ Transport  │ Total Est. │
 ├─────────────────┼────────────┼────────────┼────────────┼────────────┤
@@ -4260,8 +4523,10 @@ UAE/MIDDLE EAST
 │ Bangalore       │ $400       │ $250       │ $50        │ $900+      │
 │ (for reference) │            │            │            │            │
 └─────────────────┴────────────┴────────────┴────────────┴────────────┘
+```
 
 PURCHASING POWER COMPARISON
+```
 ┌─────────────────────────────────────────────────────────────┐
 │                                                              │
 │  What $150,000 USD salary feels like in each city:          │
@@ -4283,13 +4548,17 @@ PURCHASING POWER COMPARISON
 │  6. Remote for US company from India (best of all!)        │
 │                                                              │
 └─────────────────────────────────────────────────────────────┘
+```
 
 ### SECTION 12: QUICK REFERENCE CARDS
 
+```
 ┌─────────────────────────────────────────────────────────────────────────────┐
 │                    QUICK REFERENCE: VISA SUMMARY                             │
 └─────────────────────────────────────────────────────────────────────────────┘
+```
 
+```
 ┌──────────────┬─────────────────┬────────────┬────────────┬───────────────┐
 │ Country      │ Main Visa       │ Processing │ Cost       │ PR Timeline   │
 ├──────────────┼─────────────────┼────────────┼────────────┼───────────────┤
@@ -4302,12 +4571,16 @@ PURCHASING POWER COMPARISON
 │ Singapore    │ Employment Pass │ 3-8 wks    │ S$255      │ 2-3 years     │
 │ UAE          │ Employment Visa │ 2-4 wks    │ ~$500      │ Never (GC)    │
 └──────────────┴─────────────────┴────────────┴────────────┴───────────────┘
+```
 
+```
 ┌─────────────────────────────────────────────────────────────────────────────┐
 │                    QUICK REFERENCE: SALARY EXPECTATIONS                      │
 └─────────────────────────────────────────────────────────────────────────────┘
+```
 
 Mid-Level Security Engineer (3-5 years) - Gross Annual:
+```
 ┌──────────────────────┬───────────────────┬───────────────────┐
 │ Location             │ Salary Range      │ After Tax (Est.)  │
 ├──────────────────────┼───────────────────┼───────────────────┤
@@ -4326,13 +4599,17 @@ Mid-Level Security Engineer (3-5 years) - Gross Annual:
 │ Bangalore (India)    │ ₹25L - ₹45L       │ ₹17L - ₹30L       │
 │ Bangalore (Remote US)│ ₹60L - ₹90L       │ ₹40L - ₹60L       │
 └──────────────────────┴───────────────────┴───────────────────┘
+```
 
+```
 ┌─────────────────────────────────────────────────────────────────────────────┐
 │                    QUICK REFERENCE: DECISION MATRIX                          │
 └─────────────────────────────────────────────────────────────────────────────┘
+```
 
 Rank your priorities (1-5) and see which country matches:
 
+```
 ┌─────────────────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┐
 │ Factor          │ USA │ UK  │ DE  │ SG  │ CA  │ AU  │ UAE │
 ├─────────────────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┤
@@ -4348,8 +4625,10 @@ Rank your priorities (1-5) and see which country matches:
 │ Weather         │ ★★★★ │★★   │★★★  │★★★  │★★   │★★★★★│★★★★ │
 │ Indian diaspora │ ★★★★★│★★★★★│★★★  │★★★★★│★★★★★│★★★★ │★★★★★│
 └─────────────────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┘
+```
 
 RECOMMENDED PATH BY PROFILE:
+```
 ┌─────────────────────────────────────────────────────────────┐
 │                                                              │
 │  "I want maximum earnings":                                 │
@@ -4374,12 +4653,15 @@ RECOMMENDED PATH BY PROFILE:
 │  → Remote US job from India, or UAE                        │
 │                                                              │
 └─────────────────────────────────────────────────────────────┘
+```
 
 ### SECTION 13: FREQUENTLY ASKED QUESTIONS
 
+```
 ┌─────────────────────────────────────────────────────────────────────────────┐
 │                    GLOBAL MOVE: FREQUENTLY ASKED QUESTIONS                   │
 └─────────────────────────────────────────────────────────────────────────────┘
+```
 
 Q: How much experience do I need before applying abroad?
 A: Minimum 2-3 years for most sponsored roles. Some countries
@@ -6353,3 +6635,4 @@ Remote Option:
 **The Indian security community is incredibly welcoming. null Bangalore will become your professional family. Show up, contribute, learn, and doors will open!** 🇮🇳🚀
 
 **Pro tip: Your ML + Security combination is RARE in India. Most security folks don't have ML background. Most ML folks don't understand security. You're the bridge. USE IT!** 💪
+

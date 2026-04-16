@@ -4016,9 +4016,9 @@ One paragraph explaining the project.
 \`\`\`
 
 ## 📖 Documentation
-- [Threat Model](docs/THREAT_MODEL.md)
-- [Security Controls](docs/SECURITY.md)
-- [API Docs](docs/API.md)
+- `docs/THREAT_MODEL.md` (add in your project repo)
+- `docs/SECURITY.md` (add in your project repo)
+- `docs/API.md` (add in your project repo)
 
 ## 🧪 Testing
 \`\`\`bash

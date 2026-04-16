@@ -456,7 +456,7 @@ After completing this guide:
 
 1. **Read** → [syllabus.md](syllabus.md) for the full roadmap
 2. **Study** → [cybersecurity_fundamentals_study_material.md](../study%20material/cybersecurity_fundamentals_study_material.md)
-3. **Execute** → [execution_plan_12_weeks_ml_app_cloud.md](execution_plan_12_weeks_ml_app_cloud.md)
+3. **Execute** → [execution_plan_12_ml_app_cloud.md](execution_plan_12_ml_app_cloud.md)
 4. **Track** → Use the finding template for every lab
 
 **You've got this! Security is a marathon, not a sprint.** 🎯

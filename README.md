@@ -75,7 +75,7 @@ study/
 │   ├── OMSCS_ML_SECURITY_TRACK_GUIDE_COMPREHENSIVE.md  Alternate expanded version
 │   ├── README_OMSCS_FILES.md          How to use OMSCS files
 │   ├── syllabus.md                    Master topic list (17 modules)
-│   ├── execution_plan_12_weeks_ml_app_cloud.md   Weekly schedule
+│   ├── execution_plan_12_ml_app_cloud.md         Weekly schedule
 │   ├── WEEKLY_STUDY_TEMPLATE.md       Session planning templates
 │   ├── HANDS_ON_EXERCISES.md          11 step-by-step labs
 │   ├── PORTFOLIO_PROJECTS.md          22+ project ideas with guides
@@ -155,7 +155,7 @@ study/
 | **[BEGINNER_START_HERE.md](prep%20helpers/BEGINNER_START_HERE.md)** | ~350 | Environment setup, glossary | Day 1, setup reference |
 | **[STUDY_ENGAGEMENT_SYSTEM.md](prep%20helpers/STUDY_ENGAGEMENT_SYSTEM.md)** | ~2,750 | Complete motivation system with XP, badges, 52 weekly challenges, burnout prevention | When you feel stuck or need structure |
 | **[syllabus.md](prep%20helpers/syllabus.md)** | ~1,200 | All topics in detail | Reference for coverage |
-| **[execution_plan_12_weeks_ml_app_cloud.md](prep%20helpers/execution_plan_12_weeks_ml_app_cloud.md)** | ~300 | Detailed weekly schedule | Follow alongside MASTER_FLOW |
+| **[execution_plan_12_ml_app_cloud.md](prep%20helpers/execution_plan_12_ml_app_cloud.md)** | ~300 | Detailed weekly schedule | Follow alongside MASTER_FLOW |
 
 ### 🎓 OMSCS Planning (5 Files)
 
