@@ -177,6 +177,16 @@ textarea {
   padding: 0.55rem 0.62rem;
 }
 
+select {
+  background: #0f1b2a;
+  color: var(--text);
+}
+
+select option {
+  background: #0f1b2a;
+  color: var(--text);
+}
+
 select[multiple] {
   min-height: 210px;
 }

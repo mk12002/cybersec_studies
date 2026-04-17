@@ -245,6 +245,15 @@ textarea {
   font-family: inherit;
 }
 
+select {
+  background: rgba(13, 19, 33, 0.95);
+}
+
+select option {
+  background: #0d1321;
+  color: #ffffff;
+}
+
 input:focus,
 select:focus,
 textarea:focus {
@@ -286,6 +295,9 @@ textarea:focus {
 }
 
 .btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   border: 1px solid rgba(255, 255, 255, 0.18);
   background: rgba(255, 255, 255, 0.03);
   color: #ffffff;
@@ -293,6 +305,7 @@ textarea:focus {
   border-radius: 10px;
   cursor: pointer;
   font-weight: 600;
+  text-decoration: none;
 }
 
 .btn:hover {

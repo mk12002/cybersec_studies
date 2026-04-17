@@ -133,8 +133,8 @@ function initDashboard(data) {
   populateRoleSelect(roleFilter, data.roleProfiles);
 
   const params = new URLSearchParams(window.location.search);
-  countryFilter.value = params.get("country") || "india";
-  roleFilter.value = params.get("role") || data.roleProfiles[0]?.id || "";
+  ensureSelectValue(countryFilter, params.get("country"), "india");
+  ensureSelectValue(roleFilter, params.get("role"), data.roleProfiles[0]?.id || "");
 
   const render = () => {
     const countryId = countryFilter.value;
@@ -142,14 +142,23 @@ function initDashboard(data) {
     const level = levelFilter.value;
     const budget = budgetFilter.value === "all" ? Infinity : Number(budgetFilter.value);
 
-    const country = data.countryById[countryId];
-    const role = data.roleById[roleId];
+    const country = data.countryById[countryId] || data.countries[0];
+    const role = data.roleById[roleId] || data.roleProfiles[0];
+
+    if (!country || !role) return;
+
+    if (countryFilter.value !== country.id) {
+      countryFilter.value = country.id;
+    }
+    if (roleFilter.value !== role.id) {
+      roleFilter.value = role.id;
+    }
 
     const ranked = data.certifications
       .filter((cert) => cert.costUSD <= budget)
       .filter((cert) => isLevelMatch(cert.level, level))
       .map((cert) => {
-        const countryScore = getCountryScore(data, cert.id, countryId);
+        const countryScore = getCountryScore(data, cert.id, country.id);
         const relevance = getRoleRelevance(cert, role);
         const composite = scoreCertification(cert, countryScore, relevance);
         return { cert, countryScore, relevance, composite };
@@ -171,7 +180,7 @@ function initDashboard(data) {
     const quickPoints = buildQuickRecommendations({ country, role, level, budget, top, ranked });
     quickEl.innerHTML = quickPoints.map((line) => `<li>${escapeHtml(line)}</li>`).join("");
 
-    const nextParams = new URLSearchParams({ country: countryId, role: roleId });
+    const nextParams = new URLSearchParams({ country: country.id, role: role.id });
     history.replaceState(null, "", `index.html?${nextParams.toString()}`);
   };
 
@@ -194,11 +203,15 @@ function initCountryPage(data) {
   populateCountrySelect(countrySelect, data.countries);
 
   const params = new URLSearchParams(window.location.search);
-  countrySelect.value = params.get("country") || "india";
+  ensureSelectValue(countrySelect, params.get("country"), "india");
 
   const render = () => {
-    const country = data.countryById[countrySelect.value];
+    const country = data.countryById[countrySelect.value] || data.countries[0];
     if (!country) return;
+
+    if (countrySelect.value !== country.id) {
+      countrySelect.value = country.id;
+    }
 
     summaryEl.innerHTML = `
       <div class="country-summary-box">
@@ -266,8 +279,8 @@ function initComparePage(data) {
     .map((cert) => `<option value="${cert.id}">${escapeHtml(cert.name)} ($${cert.costUSD})</option>`)
     .join("");
 
-  countryEl.value = "india";
-  roleEl.value = data.roleProfiles[0]?.id || "";
+  ensureSelectValue(countryEl, "india", data.countries[0]?.id || "");
+  ensureSelectValue(roleEl, data.roleProfiles[0]?.id || "", data.roleProfiles[0]?.id || "");
 
   ["aws-security", "az-500", "cissp"].forEach((id) => {
     const option = certsEl.querySelector(`option[value=\"${id}\"]`);
@@ -276,8 +289,17 @@ function initComparePage(data) {
 
   const render = () => {
     const selectedIds = Array.from(certsEl.selectedOptions).map((opt) => opt.value);
-    const countryId = countryEl.value;
-    const role = data.roleById[roleEl.value];
+    const country = data.countryById[countryEl.value] || data.countries[0];
+    const role = data.roleById[roleEl.value] || data.roleProfiles[0];
+
+    if (!country || !role) return;
+
+    if (countryEl.value !== country.id) {
+      countryEl.value = country.id;
+    }
+    if (roleEl.value !== role.id) {
+      roleEl.value = role.id;
+    }
 
     if (selectedIds.length < 2 || selectedIds.length > 4) {
       tableBody.innerHTML = '<tr><td colspan="8" class="empty">Select 2 to 4 certifications to compare.</td></tr>';
@@ -289,7 +311,7 @@ function initComparePage(data) {
       .map((id) => data.certById[id])
       .filter(Boolean)
       .map((cert) => {
-        const countryScore = getCountryScore(data, cert.id, countryId);
+        const countryScore = getCountryScore(data, cert.id, country.id);
         const relevance = getRoleRelevance(cert, role);
         const composite = scoreCertification(cert, countryScore, relevance);
         return { cert, countryScore, relevance, composite };
@@ -320,7 +342,7 @@ function initComparePage(data) {
     const longTerm = [...compared].sort((a, b) => b.cert.globalRecognition - a.cert.globalRecognition)[0];
 
     const insights = [
-      `Best immediate fit for ${role.label} in ${data.countryById[countryId].name}: ${top.cert.name}.`,
+      `Best immediate fit for ${role.label} in ${country.name}: ${top.cert.name}.`,
       `Fastest to execute: ${lowEffort.cert.name} (${lowEffort.cert.effortHoursMin}-${lowEffort.cert.effortHoursMax} hours).`,
       `Best long-term global mobility signal: ${longTerm.cert.name}.`,
       "Use one practical cert + one strategic cert combo to balance interview conversion and long-term positioning.",
@@ -355,13 +377,22 @@ function initWeeklyBriefPage(data) {
     .map((t) => `<option value="${t.id}">${escapeHtml(t.label)}</option>`)
     .join("");
 
-  countryEl.value = "india";
-  roleEl.value = "ml-security-engineer";
+  ensureSelectValue(countryEl, "india", data.countries[0]?.id || "");
+  ensureSelectValue(roleEl, "ml-security-engineer", data.roleProfiles[0]?.id || "");
 
   const render = () => {
-    const country = data.countryById[countryEl.value];
-    const role = data.roleById[roleEl.value];
+    const country = data.countryById[countryEl.value] || data.countries[0];
+    const role = data.roleById[roleEl.value] || data.roleProfiles[0];
     const template = data.weeklyTemplates.find((t) => t.id === templateEl.value) || data.weeklyTemplates[0];
+    if (!country || !role || !template) return;
+
+    if (countryEl.value !== country.id) {
+      countryEl.value = country.id;
+    }
+    if (roleEl.value !== role.id) {
+      roleEl.value = role.id;
+    }
+
     const level = levelEl.value;
     const weeklyHours = Math.max(4, Number(hoursEl.value) || 12);
     const weeklyMinutes = weeklyHours * 60;
@@ -443,6 +474,24 @@ function populateRoleSelect(el, roles) {
     .join("");
 }
 
+function ensureSelectValue(selectEl, preferredValue, fallbackValue) {
+  if (!selectEl) return "";
+
+  const values = Array.from(selectEl.options).map((opt) => opt.value);
+  let next = preferredValue;
+
+  if (!next || !values.includes(next)) {
+    next = fallbackValue;
+  }
+
+  if (!next || !values.includes(next)) {
+    next = values[0] || "";
+  }
+
+  selectEl.value = next;
+  return next;
+}
+
 function renderCertCard(item) {
   const cert = item.cert;
   const tracks = cert.tracks.slice(0, 3).map((track) => `<span class="tag">${escapeHtml(DOMAIN_LABELS[track] || track)}</span>`).join("");
@@ -509,6 +558,7 @@ function renderDemandBars(domainDemand) {
 
 function buildQuickRecommendations({ country, role, level, budget, top, ranked }) {
   const recs = [];
+  const roleLabel = role?.label || "selected role";
 
   if (top) {
     recs.push(`Start with ${top.cert.name} as your highest fit for current market-role lens.`);
@@ -530,7 +580,7 @@ function buildQuickRecommendations({ country, role, level, budget, top, ranked }
   }
 
   recs.push(country.marketNotes[0] || "Build project evidence for every certification cycle.");
-  recs.push(`Role focus for ${role.label}: prioritize ${normalizeDomains(role.focusDomains).map((d) => DOMAIN_LABELS[d] || d).join(", ")}.`);
+  recs.push(`Role focus for ${roleLabel}: prioritize ${normalizeDomains(role?.focusDomains || []).map((d) => DOMAIN_LABELS[d] || d).join(", ")}.`);
 
   return recs.slice(0, 6);
 }
