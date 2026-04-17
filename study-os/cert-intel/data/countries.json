@@ -1,0 +1,370 @@
+{
+  "meta": {
+    "version": "2.0.0",
+    "lastUpdated": "2026-04-16",
+    "methodology": "Country prioritization uses demand depth, compensation potential, mobility pathways, and certification-market fit.",
+    "note": "Salary ranges are indicative annual gross ranges and vary by city, sector, and level."
+  },
+  "countries": [
+    {
+      "id": "india",
+      "name": "India",
+      "region": "APAC",
+      "currency": "INR",
+      "hiringSignal": "High-volume ATS-driven market with strong cloud and product-security growth.",
+      "visaWorkContext": "Primary launch market; ideal for portfolio building and cloud-security depth before global transition.",
+      "salaryBands": {"entry": "INR 6L-14L", "mid": "INR 15L-35L", "senior": "INR 35L-80L+"},
+      "language": "English",
+      "taxProfile": "Progressive income tax",
+      "domainDemand": {"appsec": 4, "cloudsec": 5, "soc": 4, "governance": 3, "offensive": 4, "mlsec": 4},
+      "topSectors": ["Product tech", "IT services", "Fintech", "E-commerce", "Cloud operations"],
+      "marketNotes": [
+        "Cloud security and DevSecOps remain the strongest growth clusters.",
+        "Cert names help with recruiter filters, but projects decide product interviews.",
+        "Bangalore, Hyderabad, and Pune are major security hiring centers."
+      ],
+      "topEmployers": ["Microsoft", "Amazon", "Google", "Flipkart", "Razorpay", "Swiggy", "TCS", "Infosys"],
+      "recommendedPaths": {
+        "beginner": ["security-plus", "aws-saa"],
+        "intermediate": ["aws-security", "az-500", "bscp"],
+        "advanced": ["cissp", "cks", "oscp"]
+      }
+    },
+    {
+      "id": "us",
+      "name": "United States",
+      "region": "North America",
+      "currency": "USD",
+      "hiringSignal": "Deepest security job market globally with highest absolute compensation and specialization depth.",
+      "visaWorkContext": "H1B/L1/EB pathways are competitive; sponsorship and experience quality are critical.",
+      "salaryBands": {"entry": "USD 95K-140K", "mid": "USD 140K-220K", "senior": "USD 220K-400K+"},
+      "language": "English",
+      "taxProfile": "Federal + state taxation",
+      "domainDemand": {"appsec": 5, "cloudsec": 5, "soc": 4, "governance": 4, "offensive": 5, "mlsec": 5},
+      "topSectors": ["Big Tech", "Cybersecurity vendors", "Defense", "Healthcare", "Financial services"],
+      "marketNotes": [
+        "Skills and system-design rigor dominate top-tier hiring outcomes.",
+        "DoD and public-sector tracks may require specific baseline certs.",
+        "Remote and hybrid security roles remain substantial in mature organizations."
+      ],
+      "topEmployers": ["Google", "Microsoft", "Amazon", "Cloudflare", "CrowdStrike", "Palo Alto Networks"],
+      "recommendedPaths": {
+        "beginner": ["security-plus", "aws-saa"],
+        "intermediate": ["aws-security", "gcp-security", "oscp"],
+        "advanced": ["cissp", "ccsp", "oswe"]
+      }
+    },
+    {
+      "id": "canada",
+      "name": "Canada",
+      "region": "North America",
+      "currency": "CAD",
+      "hiringSignal": "Stable demand across cloud, SOC, and regulated sectors with strong immigration pathways.",
+      "visaWorkContext": "Express Entry and provincial nomination pathways can support long-term migration.",
+      "salaryBands": {"entry": "CAD 75K-110K", "mid": "CAD 110K-155K", "senior": "CAD 155K-260K"},
+      "language": "English/French",
+      "taxProfile": "Federal + provincial taxation",
+      "domainDemand": {"appsec": 4, "cloudsec": 5, "soc": 4, "governance": 4, "offensive": 4, "mlsec": 3},
+      "topSectors": ["Banking", "Telecom", "Government", "SaaS", "Consulting"],
+      "marketNotes": [
+        "Cloud security and governance roles are prominent in Toronto and Vancouver.",
+        "Public-sector and defense-adjacent work can have clearance constraints.",
+        "Balanced market for both technical and governance-focused profiles."
+      ],
+      "topEmployers": ["Shopify", "RBC", "Scotiabank", "Telus", "Deloitte Canada"],
+      "recommendedPaths": {
+        "beginner": ["security-plus", "aws-saa"],
+        "intermediate": ["az-500", "cysa-plus", "bscp"],
+        "advanced": ["cissp", "ccsp", "gcih"]
+      }
+    },
+    {
+      "id": "uk",
+      "name": "United Kingdom",
+      "region": "Europe",
+      "currency": "GBP",
+      "hiringSignal": "Strong finance, consulting, and regulated-sector market with high governance emphasis.",
+      "visaWorkContext": "Skilled Worker Visa model is structured and sponsor-led with salary thresholds.",
+      "salaryBands": {"entry": "GBP 35K-55K", "mid": "GBP 55K-90K", "senior": "GBP 90K-170K"},
+      "language": "English",
+      "taxProfile": "Progressive income tax",
+      "domainDemand": {"appsec": 4, "cloudsec": 5, "soc": 4, "governance": 5, "offensive": 4, "mlsec": 3},
+      "topSectors": ["Banking", "Fintech", "Defense", "Consulting", "Cloud services"],
+      "marketNotes": [
+        "Azure and governance certs are highly valued in enterprise pathways.",
+        "CREST-family credentials matter for certain pentest contracting streams.",
+        "London has premium compensation; regional hubs offer better cost-to-income balance."
+      ],
+      "topEmployers": ["HSBC", "Barclays", "NatWest", "NCC Group", "Google UK", "Meta UK"],
+      "recommendedPaths": {
+        "beginner": ["az-500", "security-plus"],
+        "intermediate": ["cipp-e", "iso-27001-li", "bscp"],
+        "advanced": ["cissp", "cism", "crest-crt"]
+      }
+    },
+    {
+      "id": "ireland",
+      "name": "Ireland",
+      "region": "Europe",
+      "currency": "EUR",
+      "hiringSignal": "High-value EU tech hub with strong multinational security teams.",
+      "visaWorkContext": "Critical Skills Employment Permit provides a clear high-skill route.",
+      "salaryBands": {"entry": "EUR 45K-70K", "mid": "EUR 70K-105K", "senior": "EUR 105K-180K"},
+      "language": "English",
+      "taxProfile": "Progressive income tax",
+      "domainDemand": {"appsec": 4, "cloudsec": 5, "soc": 4, "governance": 4, "offensive": 3, "mlsec": 3},
+      "topSectors": ["Cloud hyperscalers", "Pharma", "Fintech", "Data centers"],
+      "marketNotes": [
+        "Strong concentration of multinational security engineering roles.",
+        "Cloud and governance profiles are both highly employable.",
+        "Privacy/GDPR understanding improves role fit in EU-wide orgs."
+      ],
+      "topEmployers": ["Google", "Microsoft", "Meta", "Stripe", "Accenture Ireland"],
+      "recommendedPaths": {
+        "beginner": ["aws-saa", "az-500"],
+        "intermediate": ["aws-security", "cipp-e", "ccsk"],
+        "advanced": ["cissp", "ccsp", "cism"]
+      }
+    },
+    {
+      "id": "germany",
+      "name": "Germany",
+      "region": "Europe",
+      "currency": "EUR",
+      "hiringSignal": "Large enterprise market with strong compliance and industrial security demand.",
+      "visaWorkContext": "EU Blue Card route is common for skilled professionals.",
+      "salaryBands": {"entry": "EUR 50K-75K", "mid": "EUR 75K-110K", "senior": "EUR 110K-190K"},
+      "language": "German/English",
+      "taxProfile": "Higher progressive taxes with strong social benefits",
+      "domainDemand": {"appsec": 4, "cloudsec": 4, "soc": 3, "governance": 5, "offensive": 3, "mlsec": 3},
+      "topSectors": ["Automotive", "Manufacturing", "Enterprise IT", "Banking", "Consulting"],
+      "marketNotes": [
+        "ISO/GRC and privacy capabilities strongly influence enterprise hiring.",
+        "Cloud security is growing as modernization accelerates.",
+        "Language requirements vary by company and city."
+      ],
+      "topEmployers": ["SAP", "Siemens", "BMW Group", "Deutsche Bank", "Allianz"],
+      "recommendedPaths": {
+        "beginner": ["az-500", "security-plus"],
+        "intermediate": ["iso-27001-li", "ccsp", "sc-100"],
+        "advanced": ["cissp", "cism", "crisc"]
+      }
+    },
+    {
+      "id": "netherlands",
+      "name": "Netherlands",
+      "region": "Europe",
+      "currency": "EUR",
+      "hiringSignal": "Strong English-friendly market with advanced cloud and fintech security demand.",
+      "visaWorkContext": "Highly Skilled Migrant route is well-established for international talent.",
+      "salaryBands": {"entry": "EUR 45K-70K", "mid": "EUR 70K-105K", "senior": "EUR 105K-180K"},
+      "language": "Dutch/English",
+      "taxProfile": "Progressive tax; expatriate incentives may apply",
+      "domainDemand": {"appsec": 4, "cloudsec": 5, "soc": 3, "governance": 4, "offensive": 3, "mlsec": 4},
+      "topSectors": ["Fintech", "SaaS", "E-commerce", "Logistics", "Enterprise cloud"],
+      "marketNotes": [
+        "Cloud security and product AppSec are strong hiring streams.",
+        "High English accessibility relative to many EU markets.",
+        "Privacy and governance skills still matter for enterprise roles."
+      ],
+      "topEmployers": ["Booking.com", "Adyen", "ASML", "ING", "Rabobank"],
+      "recommendedPaths": {
+        "beginner": ["aws-saa", "az-500"],
+        "intermediate": ["aws-security", "bscp", "cipp-e"],
+        "advanced": ["cissp", "ccsp", "oscp"]
+      }
+    },
+    {
+      "id": "switzerland",
+      "name": "Switzerland",
+      "region": "Europe",
+      "currency": "CHF",
+      "hiringSignal": "Premium compensation market with finance and enterprise security emphasis.",
+      "visaWorkContext": "Work permit pathways exist but market is highly selective and role-dependent.",
+      "salaryBands": {"entry": "CHF 85K-120K", "mid": "CHF 120K-170K", "senior": "CHF 170K-280K"},
+      "language": "German/French/Italian/English",
+      "taxProfile": "Canton-specific taxation",
+      "domainDemand": {"appsec": 4, "cloudsec": 4, "soc": 3, "governance": 5, "offensive": 3, "mlsec": 3},
+      "topSectors": ["Banking", "Insurance", "Pharma", "Industrial technology"],
+      "marketNotes": [
+        "Governance and risk credentials often carry strong decision-maker trust.",
+        "Cloud-security architecture roles are high-value.",
+        "Language and local-market familiarity can be gating factors."
+      ],
+      "topEmployers": ["UBS", "Credit Suisse", "Novartis", "Roche", "Swisscom"],
+      "recommendedPaths": {
+        "beginner": ["security-plus", "aws-saa"],
+        "intermediate": ["ccsp", "iso-27001-la", "az-500"],
+        "advanced": ["cissp", "cism", "crisc"]
+      }
+    },
+    {
+      "id": "singapore",
+      "name": "Singapore",
+      "region": "APAC",
+      "currency": "SGD",
+      "hiringSignal": "APAC cyber hub with strong demand in finance, cloud, and government-linked sectors.",
+      "visaWorkContext": "Employment Pass pathways support skilled technical migration.",
+      "salaryBands": {"entry": "SGD 60K-90K", "mid": "SGD 90K-150K", "senior": "SGD 150K-320K"},
+      "language": "English",
+      "taxProfile": "Generally lower personal tax compared with many western markets",
+      "domainDemand": {"appsec": 4, "cloudsec": 5, "soc": 4, "governance": 4, "offensive": 4, "mlsec": 4},
+      "topSectors": ["Banking", "Fintech", "Government", "Cloud infrastructure", "Telecom"],
+      "marketNotes": [
+        "Cloud and governance cert stacks perform strongly in finance tracks.",
+        "Offensive roles are active, especially in consulting and specialist teams.",
+        "Regional HQ concentration creates strong cross-border career mobility."
+      ],
+      "topEmployers": ["DBS", "UOB", "OCBC", "Grab", "GovTech", "Google APAC"],
+      "recommendedPaths": {
+        "beginner": ["aws-saa", "security-plus"],
+        "intermediate": ["aws-security", "cks", "ccsp"],
+        "advanced": ["cissp", "cism", "oscp"]
+      }
+    },
+    {
+      "id": "uae",
+      "name": "United Arab Emirates",
+      "region": "Middle East",
+      "currency": "AED",
+      "hiringSignal": "Fast-growing enterprise and government market with high certification signaling value.",
+      "visaWorkContext": "Employer-sponsored visa pathways are common and practical for skilled workers.",
+      "salaryBands": {"entry": "AED 180K-290K", "mid": "AED 290K-500K", "senior": "AED 500K-1.2M"},
+      "language": "English/Arabic",
+      "taxProfile": "No personal income tax in most cases",
+      "domainDemand": {"appsec": 3, "cloudsec": 4, "soc": 4, "governance": 5, "offensive": 3, "mlsec": 2},
+      "topSectors": ["Banking", "Government", "Telecom", "Energy", "Aviation"],
+      "marketNotes": [
+        "Governance and compliance credentials carry significant weight.",
+        "Cloud and SOC hiring has accelerated with digital transformation programs.",
+        "Tax-free compensation can materially improve savings outcomes."
+      ],
+      "topEmployers": ["Emirates NBD", "FAB", "Etisalat", "ADNOC", "DEWA", "Careem"],
+      "recommendedPaths": {
+        "beginner": ["security-plus", "ceh"],
+        "intermediate": ["az-500", "iso-27001-li", "sc-200"],
+        "advanced": ["cissp", "cism", "ccsp"]
+      }
+    },
+    {
+      "id": "saudi",
+      "name": "Saudi Arabia",
+      "region": "Middle East",
+      "currency": "SAR",
+      "hiringSignal": "Large transformation-driven market with growing demand for security governance and operations.",
+      "visaWorkContext": "Employer-sponsored work visa model with strong demand in strategic sectors.",
+      "salaryBands": {"entry": "SAR 150K-250K", "mid": "SAR 250K-450K", "senior": "SAR 450K-900K"},
+      "language": "Arabic/English",
+      "taxProfile": "No personal income tax in most cases",
+      "domainDemand": {"appsec": 3, "cloudsec": 4, "soc": 4, "governance": 5, "offensive": 3, "mlsec": 2},
+      "topSectors": ["Energy", "Government", "Banking", "Mega-project infrastructure", "Telecom"],
+      "marketNotes": [
+        "Governance, risk, and compliance pathways are highly valued.",
+        "Cloud and SOC modernization initiatives are expanding demand.",
+        "Security credentials can materially improve recruiter confidence."
+      ],
+      "topEmployers": ["Aramco", "STC", "SNB", "Al Rajhi Bank", "NEOM"],
+      "recommendedPaths": {
+        "beginner": ["security-plus", "ceh"],
+        "intermediate": ["az-500", "iso-27001-la", "aws-security"],
+        "advanced": ["cissp", "cism", "crisc"]
+      }
+    },
+    {
+      "id": "australia",
+      "name": "Australia",
+      "region": "Oceania",
+      "currency": "AUD",
+      "hiringSignal": "Mature market with robust demand across cloud, SOC, and regulated sectors.",
+      "visaWorkContext": "Skilled migration pathways are structured and often favorable for experienced professionals.",
+      "salaryBands": {"entry": "AUD 85K-125K", "mid": "AUD 125K-190K", "senior": "AUD 190K-300K"},
+      "language": "English",
+      "taxProfile": "Progressive tax",
+      "domainDemand": {"appsec": 4, "cloudsec": 5, "soc": 4, "governance": 4, "offensive": 4, "mlsec": 3},
+      "topSectors": ["Banking", "Government", "Critical infrastructure", "SaaS", "Consulting"],
+      "marketNotes": [
+        "Cloud and platform security combinations are highly employable.",
+        "Governance and risk credentials support senior progression.",
+        "Security-cleared roles can require citizenship/permanent residency."
+      ],
+      "topEmployers": ["Atlassian", "Canva", "Commonwealth Bank", "ANZ", "Telstra"],
+      "recommendedPaths": {
+        "beginner": ["security-plus", "aws-saa"],
+        "intermediate": ["aws-security", "az-500", "cks"],
+        "advanced": ["cissp", "ccsp", "oscp"]
+      }
+    },
+    {
+      "id": "newzealand",
+      "name": "New Zealand",
+      "region": "Oceania",
+      "currency": "NZD",
+      "hiringSignal": "Smaller but quality market with strong demand in public sector and enterprise cloud.",
+      "visaWorkContext": "Skilled migrant and employer-assisted routes are common for cybersecurity talent.",
+      "salaryBands": {"entry": "NZD 80K-115K", "mid": "NZD 115K-160K", "senior": "NZD 160K-240K"},
+      "language": "English",
+      "taxProfile": "Progressive tax",
+      "domainDemand": {"appsec": 3, "cloudsec": 4, "soc": 4, "governance": 4, "offensive": 3, "mlsec": 2},
+      "topSectors": ["Government", "Telecom", "Banking", "Managed security services"],
+      "marketNotes": [
+        "Cloud modernization and zero-trust programs support steady demand.",
+        "Market size is smaller but quality of roles can be high.",
+        "Certifications assist with recruiter trust in a compact hiring ecosystem."
+      ],
+      "topEmployers": ["Spark", "ANZ NZ", "ASB", "Datacom", "Government agencies"],
+      "recommendedPaths": {
+        "beginner": ["security-plus", "aws-saa"],
+        "intermediate": ["az-500", "sc-200", "ccsk"],
+        "advanced": ["cissp", "ccsp", "crest-crt"]
+      }
+    },
+    {
+      "id": "israel",
+      "name": "Israel",
+      "region": "Middle East",
+      "currency": "ILS",
+      "hiringSignal": "High-intensity security and deep-tech ecosystem with strong offensive and product-security demand.",
+      "visaWorkContext": "Selective market; pathways vary and can be role-specific.",
+      "salaryBands": {"entry": "ILS 220K-320K", "mid": "ILS 320K-480K", "senior": "ILS 480K-800K"},
+      "language": "Hebrew/English",
+      "taxProfile": "Progressive tax",
+      "domainDemand": {"appsec": 5, "cloudsec": 4, "soc": 4, "governance": 3, "offensive": 5, "mlsec": 5},
+      "topSectors": ["Cyber product companies", "Defense-tech", "Cloud-native startups", "AI security"],
+      "marketNotes": [
+        "Practical technical depth often outweighs broad cert stacking.",
+        "Offensive and advanced AppSec skill signals are highly valued.",
+        "ML and AI security opportunities are strong in deep-tech segments."
+      ],
+      "topEmployers": ["Check Point", "Wiz", "Palo Alto Networks", "SentinelOne", "CyberArk"],
+      "recommendedPaths": {
+        "beginner": ["security-plus", "aws-saa"],
+        "intermediate": ["bscp", "aws-security", "gcp-security"],
+        "advanced": ["oscp", "oswe", "cissp"]
+      }
+    },
+    {
+      "id": "japan",
+      "name": "Japan",
+      "region": "APAC",
+      "currency": "JPY",
+      "hiringSignal": "Growing enterprise and critical infrastructure demand with strong quality/security expectations.",
+      "visaWorkContext": "Engineering and specialist visa routes are available; language can be role-dependent.",
+      "salaryBands": {"entry": "JPY 7M-10M", "mid": "JPY 10M-16M", "senior": "JPY 16M-30M"},
+      "language": "Japanese/English",
+      "taxProfile": "Progressive tax",
+      "domainDemand": {"appsec": 4, "cloudsec": 4, "soc": 4, "governance": 4, "offensive": 3, "mlsec": 4},
+      "topSectors": ["Manufacturing", "Telecom", "Finance", "Automotive", "Cloud services"],
+      "marketNotes": [
+        "Cloud, SOC, and governance roles are all active in enterprise modernization.",
+        "Language and local business culture fit can affect hiring conversion.",
+        "Security architecture and operational rigor are highly valued."
+      ],
+      "topEmployers": ["NTT", "Rakuten", "Sony", "Toyota", "Mitsubishi UFJ"],
+      "recommendedPaths": {
+        "beginner": ["aws-saa", "security-plus"],
+        "intermediate": ["aws-security", "az-500", "sc-200"],
+        "advanced": ["cissp", "ccsp", "cism"]
+      }
+    }
+  ]
+}

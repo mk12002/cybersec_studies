@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cybersecurity Study OS</title>
+  <meta name="description" content="Planner, tracker, recommendations, and analytics for cybersecurity study workflows." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="scanline"></div>
+  <div class="ambient ambient-a"></div>
+  <div class="ambient ambient-b"></div>
+
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-badge">CS-OS</span>
+      <div>
+        <h1>Cybersecurity Study OS</h1>
+        <p>Planner + Tracker + Recommendations + Analytics</p>
+      </div>
+    </div>
+    <div class="top-actions">
+      <button id="exportDataBtn" class="btn btn-ghost">Export Data</button>
+      <label class="btn btn-ghost file-label">
+        Import Data
+        <input id="importDataInput" type="file" accept="application/json" />
+      </label>
+      <button id="resetDataBtn" class="btn btn-danger">Reset</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="kpi-grid" id="kpiGrid">
+      <article class="kpi-card">
+        <h2>Total Study Hours</h2>
+        <strong id="kpiHours">0</strong>
+      </article>
+      <article class="kpi-card">
+        <h2>Total XP</h2>
+        <strong id="kpiTotalXp">0</strong>
+      </article>
+      <article class="kpi-card">
+        <h2>Current Streak</h2>
+        <strong id="kpiStreak">0 days</strong>
+      </article>
+      <article class="kpi-card">
+        <h2>Weekly Goal Progress</h2>
+        <strong id="kpiWeeklyProgress">0%</strong>
+      </article>
+      <article class="kpi-card">
+        <h2>Plan Completion</h2>
+        <strong id="kpiPlanCompletion">0%</strong>
+      </article>
+      <article class="kpi-card">
+        <h2>Planner Alignment</h2>
+        <strong id="kpiAlignment">0%</strong>
+      </article>
+    </section>
+
+    <section class="grid two-col">
+      <article class="panel">
+        <div class="panel-head">
+          <h3>Study Profile and Planner</h3>
+          <span class="mono">12-week auto planner</span>
+        </div>
+
+        <form id="profileForm" class="form-grid">
+          <label>
+            Name
+            <input name="name" type="text" placeholder="Your name" />
+          </label>
+          <label>
+            Target Role
+            <input name="targetRole" type="text" placeholder="Cloud Security Engineer" required />
+          </label>
+          <label>
+            Level
+            <select name="level" required>
+              <option value="beginner">Beginner</option>
+              <option value="intermediate" selected>Intermediate</option>
+              <option value="advanced">Advanced</option>
+            </select>
+          </label>
+          <label>
+            Hours per Week
+            <input name="hoursPerWeek" type="number" min="2" max="60" value="12" required />
+          </label>
+          <label>
+            Target Date
+            <input name="targetDate" type="date" />
+          </label>
+          <label>
+            Priority Track
+            <select name="priorityTrack" required>
+              <option value="appsec">Application Security</option>
+              <option value="cloudsec">Cloud Security</option>
+              <option value="soc">SOC and Detection</option>
+              <option value="mlsec" selected>ML and AI Security</option>
+              <option value="offensive">Offensive Security</option>
+            </select>
+          </label>
+          <fieldset class="checkbox-fieldset">
+            <legend>Focus Domains</legend>
+            <label><input type="checkbox" name="domains" value="fundamentals" checked /> Fundamentals</label>
+            <label><input type="checkbox" name="domains" value="appsec" checked /> AppSec</label>
+            <label><input type="checkbox" name="domains" value="cloudsec" checked /> CloudSec</label>
+            <label><input type="checkbox" name="domains" value="soc" checked /> SOC</label>
+            <label><input type="checkbox" name="domains" value="mlsec" checked /> ML Security</label>
+            <label><input type="checkbox" name="domains" value="offensive" /> Offensive</label>
+          </fieldset>
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Generate or Update Plan</button>
+          </div>
+        </form>
+
+        <div id="planTimeline" class="timeline"></div>
+      </article>
+
+      <article class="panel">
+        <div class="panel-head">
+          <h3>Daily Tracker</h3>
+          <span class="mono">local storage</span>
+        </div>
+
+        <form id="sessionForm" class="form-grid">
+          <label>
+            Date
+            <input name="date" type="date" required />
+          </label>
+          <label>
+            Minutes
+            <input name="minutes" type="number" min="5" value="45" required />
+          </label>
+          <label>
+            Domain
+            <select name="domain" required>
+              <option value="fundamentals">Fundamentals</option>
+              <option value="appsec">AppSec</option>
+              <option value="cloudsec">CloudSec</option>
+              <option value="soc">SOC</option>
+              <option value="mlsec">ML Security</option>
+              <option value="offensive">Offensive</option>
+            </select>
+          </label>
+          <label>
+            Activity Type
+            <select name="activityType" required>
+              <option value="reading">Reading</option>
+              <option value="lab" selected>Lab</option>
+              <option value="build">Build</option>
+              <option value="writeup">Writeup</option>
+              <option value="review">Review</option>
+            </select>
+          </label>
+          <label>
+            Difficulty
+            <select name="difficulty" required>
+              <option value="low">Low</option>
+              <option value="medium" selected>Medium</option>
+              <option value="high">High</option>
+            </select>
+          </label>
+          <label class="full">
+            Notes
+            <textarea name="note" rows="3" placeholder="What did you complete today?"></textarea>
+          </label>
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Log Session</button>
+          </div>
+        </form>
+
+        <section class="tracker-stats" id="trackerStats">
+          <article>
+            <h4>7d Minutes</h4>
+            <strong id="tracker7dMinutes">0</strong>
+          </article>
+          <article>
+            <h4>7d XP</h4>
+            <strong id="tracker7dXp">0</strong>
+          </article>
+          <article>
+            <h4>Avg Session</h4>
+            <strong id="trackerAvgSession">0m</strong>
+          </article>
+          <article>
+            <h4>Deep Work Ratio</h4>
+            <strong id="trackerDeepRatio">0%</strong>
+          </article>
+        </section>
+
+        <section class="tracker-tools" id="trackerTools">
+          <label>
+            Domain Filter
+            <select id="filterDomain">
+              <option value="all">All Domains</option>
+              <option value="fundamentals">Fundamentals</option>
+              <option value="appsec">AppSec</option>
+              <option value="cloudsec">CloudSec</option>
+              <option value="soc">SOC</option>
+              <option value="mlsec">ML Security</option>
+              <option value="offensive">Offensive</option>
+            </select>
+          </label>
+          <label>
+            Activity Filter
+            <select id="filterActivity">
+              <option value="all">All Activities</option>
+              <option value="reading">Reading</option>
+              <option value="lab">Lab</option>
+              <option value="build">Build</option>
+              <option value="writeup">Writeup</option>
+              <option value="review">Review</option>
+            </select>
+          </label>
+          <label>
+            Window
+            <select id="filterWindow">
+              <option value="all">All Time</option>
+              <option value="30">Last 30 Days</option>
+              <option value="14">Last 14 Days</option>
+              <option value="7" selected>Last 7 Days</option>
+            </select>
+          </label>
+          <label>
+            Sort
+            <select id="filterSort">
+              <option value="newest" selected>Newest First</option>
+              <option value="xp">Highest XP</option>
+              <option value="minutes">Longest Sessions</option>
+            </select>
+          </label>
+        </section>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Domain</th>
+                <th>Type</th>
+                <th>Difficulty</th>
+                <th>Min</th>
+                <th>XP</th>
+                <th>Notes</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="sessionTableBody"></tbody>
+          </table>
+        </div>
+      </article>
+    </section>
+
+    <section class="grid two-col">
+      <article class="panel">
+        <div class="panel-head">
+          <h3>Smart Recommendations</h3>
+          <span class="mono">adaptive next-step engine</span>
+        </div>
+        <div id="recommendationsList" class="recommendation-grid"></div>
+        <div class="execution-queue">
+          <h4>Recommended 7-Day Execution Queue</h4>
+          <ol id="executionQueue"></ol>
+        </div>
+      </article>
+
+      <article class="panel">
+        <div class="panel-head">
+          <h3>Analytics</h3>
+          <span class="mono">trend and distribution</span>
+        </div>
+        <div class="analytics-grid">
+          <div class="chart-card">
+            <h4>Weekly Minutes (last 8 weeks)</h4>
+            <canvas id="weeklyMinutesChart" width="560" height="220"></canvas>
+          </div>
+          <div class="chart-card">
+            <h4>Domain Distribution</h4>
+            <div id="domainDonut" class="donut"></div>
+            <ul id="domainLegend" class="legend"></ul>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section class="grid two-col">
+      <article class="panel module-panel">
+        <h3>Module: Certification Intelligence Dashboard</h3>
+        <p>Live now: global certification strategy dashboard, country deep-dive, and data-driven recommendations.</p>
+        <a class="btn btn-ghost" href="cert-intel/index.html">Open Dashboard</a>
+      </article>
+      <article class="panel module-panel">
+        <h3>Module: Cert Compare and Weekly Brief</h3>
+        <p>Compare certifications side-by-side and generate weekly study briefs by country and role goal.</p>
+        <a class="btn btn-ghost" href="cert-intel/compare.html">Open Compare Tool</a>
+      </article>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>Cybersecurity Study OS - Companion product for portfolio integration.</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

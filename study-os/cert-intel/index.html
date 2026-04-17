@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Certification Intelligence Dashboard</title>
+  <meta name="description" content="Interactive dashboard for global cybersecurity certification strategy." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body data-page="dashboard">
+  <header class="ci-topbar">
+    <div>
+      <p class="kicker">Portfolio Module</p>
+      <h1>Global Certification Intelligence</h1>
+      <p class="sub">Country-aware recommendations, compare workflows, and weekly execution guidance.</p>
+    </div>
+    <nav class="ci-nav">
+      <a class="active" href="index.html">Dashboard</a>
+      <a href="country.html">Country Deep-Dive</a>
+      <a href="compare.html">Compare</a>
+      <a href="weekly-brief.html">Weekly Brief</a>
+      <a href="../index.html">Study OS</a>
+    </nav>
+  </header>
+
+  <main class="ci-container">
+    <section class="panel controls-panel">
+      <h2>Filter Strategy Lens</h2>
+      <div class="filters-grid">
+        <label>
+          Target Country
+          <select id="countryFilter"></select>
+        </label>
+        <label>
+          Role Goal
+          <select id="roleFilter"></select>
+        </label>
+        <label>
+          Career Stage
+          <select id="levelFilter">
+            <option value="any">Any Stage</option>
+            <option value="beginner">Beginner</option>
+            <option value="intermediate">Intermediate</option>
+            <option value="advanced">Advanced</option>
+          </select>
+        </label>
+        <label>
+          Budget (USD)
+          <select id="budgetFilter">
+            <option value="all">Any Budget</option>
+            <option value="200">Up to $200</option>
+            <option value="500">Up to $500</option>
+            <option value="1000">Up to $1000</option>
+            <option value="2000">Up to $2000</option>
+          </select>
+        </label>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="section-head">
+        <h2>Best Certification Path by Goal</h2>
+        <p class="mono" id="pathContext">Loading context...</p>
+      </div>
+      <div id="bestPathCards" class="path-grid"></div>
+    </section>
+
+    <section class="grid-2">
+      <article class="panel">
+        <div class="section-head">
+          <h2>Top Matching Certifications</h2>
+          <p class="mono" id="resultCount">0 results</p>
+        </div>
+        <div id="dashboardCards" class="card-grid"></div>
+      </article>
+
+      <article class="panel">
+        <h2>Market Trend Snapshot</h2>
+        <div id="trendSnapshot" class="trend-list"></div>
+        <h3>Quick Recommendations</h3>
+        <ul id="quickRecommendations" class="plain-list"></ul>
+      </article>
+    </section>
+  </main>
+
+  <script src="app.js" defer></script>
+</body>
+</html>

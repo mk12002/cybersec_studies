@@ -1,0 +1,68 @@
+{
+  "meta": {
+    "version": "2.0.0",
+    "scale": "1-5",
+    "description": "Relative market utility score by country for each certification.",
+    "countriesCovered": [
+      "india",
+      "us",
+      "canada",
+      "uk",
+      "ireland",
+      "germany",
+      "netherlands",
+      "switzerland",
+      "singapore",
+      "uae",
+      "saudi",
+      "australia",
+      "newzealand",
+      "israel",
+      "japan"
+    ]
+  },
+  "scores": [
+    {"certId": "security-plus", "countryScores": {"india": 4, "us": 4, "canada": 4, "uk": 3, "ireland": 3, "germany": 3, "netherlands": 3, "switzerland": 3, "singapore": 3, "uae": 4, "saudi": 4, "australia": 3, "newzealand": 3, "israel": 2, "japan": 3}, "rationale": "Strong baseline and screening signal, strongest in ATS and DoD-adjacent contexts."},
+    {"certId": "sscp", "countryScores": {"india": 3, "us": 4, "canada": 4, "uk": 3, "ireland": 3, "germany": 3, "netherlands": 3, "switzerland": 3, "singapore": 3, "uae": 3, "saudi": 3, "australia": 3, "newzealand": 3, "israel": 2, "japan": 3}, "rationale": "Operational baseline cert with moderate international recognition."},
+    {"certId": "gsec", "countryScores": {"india": 3, "us": 4, "canada": 4, "uk": 4, "ireland": 3, "germany": 3, "netherlands": 3, "switzerland": 3, "singapore": 4, "uae": 2, "saudi": 2, "australia": 4, "newzealand": 3, "israel": 3, "japan": 3}, "rationale": "Premium technical foundation with strongest value in mature western markets."},
+    {"certId": "cysa-plus", "countryScores": {"india": 3, "us": 4, "canada": 4, "uk": 3, "ireland": 3, "germany": 2, "netherlands": 2, "switzerland": 2, "singapore": 3, "uae": 2, "saudi": 2, "australia": 3, "newzealand": 3, "israel": 2, "japan": 3}, "rationale": "Good detection/SOC cert with regionally variable signaling power."},
+    {"certId": "casp-plus", "countryScores": {"india": 3, "us": 4, "canada": 3, "uk": 2, "ireland": 2, "germany": 2, "netherlands": 2, "switzerland": 2, "singapore": 2, "uae": 2, "saudi": 2, "australia": 2, "newzealand": 2, "israel": 2, "japan": 2}, "rationale": "Most relevant in US public-sector and contractor pathways."},
+    {"certId": "sc-200", "countryScores": {"india": 4, "us": 3, "canada": 3, "uk": 4, "ireland": 4, "germany": 4, "netherlands": 4, "switzerland": 3, "singapore": 4, "uae": 4, "saudi": 4, "australia": 4, "newzealand": 3, "israel": 2, "japan": 3}, "rationale": "High value in Microsoft-centric SOC and detection stacks."},
+    {"certId": "gcih", "countryScores": {"india": 3, "us": 5, "canada": 4, "uk": 4, "ireland": 4, "germany": 3, "netherlands": 3, "switzerland": 3, "singapore": 4, "uae": 3, "saudi": 3, "australia": 4, "newzealand": 3, "israel": 3, "japan": 3}, "rationale": "Strong incident response credential, especially in mature SOC markets."},
+    {"certId": "gcia", "countryScores": {"india": 3, "us": 5, "canada": 4, "uk": 4, "ireland": 3, "germany": 3, "netherlands": 3, "switzerland": 3, "singapore": 4, "uae": 2, "saudi": 2, "australia": 4, "newzealand": 3, "israel": 4, "japan": 3}, "rationale": "High-value network detection specialization where deep SOC capabilities are rewarded."},
+    {"certId": "gcfa", "countryScores": {"india": 3, "us": 5, "canada": 4, "uk": 4, "ireland": 3, "germany": 3, "netherlands": 3, "switzerland": 3, "singapore": 4, "uae": 2, "saudi": 2, "australia": 4, "newzealand": 3, "israel": 3, "japan": 3}, "rationale": "Premium DFIR credential with strongest value in mature incident-heavy environments."},
+
+    {"certId": "cissp", "countryScores": {"india": 4, "us": 5, "canada": 5, "uk": 5, "ireland": 5, "germany": 5, "netherlands": 5, "switzerland": 5, "singapore": 5, "uae": 5, "saudi": 5, "australia": 5, "newzealand": 5, "israel": 4, "japan": 4}, "rationale": "Universal senior-level security credential across governance and architecture pathways."},
+    {"certId": "cism", "countryScores": {"india": 4, "us": 4, "canada": 4, "uk": 5, "ireland": 5, "germany": 5, "netherlands": 5, "switzerland": 5, "singapore": 4, "uae": 5, "saudi": 5, "australia": 4, "newzealand": 4, "israel": 3, "japan": 4}, "rationale": "Management and governance benchmark in enterprise and regulated markets."},
+    {"certId": "cisa", "countryScores": {"india": 3, "us": 4, "canada": 4, "uk": 5, "ireland": 5, "germany": 5, "netherlands": 5, "switzerland": 5, "singapore": 4, "uae": 4, "saudi": 4, "australia": 4, "newzealand": 4, "israel": 3, "japan": 4}, "rationale": "Audit and controls cert with high value in compliance and assurance tracks."},
+    {"certId": "crisc", "countryScores": {"india": 3, "us": 4, "canada": 4, "uk": 5, "ireland": 4, "germany": 5, "netherlands": 4, "switzerland": 5, "singapore": 4, "uae": 5, "saudi": 5, "australia": 4, "newzealand": 4, "israel": 3, "japan": 4}, "rationale": "Risk-heavy credential with strong relevance in finance and governance-heavy regions."},
+    {"certId": "ccsp", "countryScores": {"india": 3, "us": 4, "canada": 4, "uk": 4, "ireland": 4, "germany": 4, "netherlands": 4, "switzerland": 4, "singapore": 4, "uae": 4, "saudi": 4, "australia": 4, "newzealand": 4, "israel": 3, "japan": 4}, "rationale": "Strong cloud-governance credential with broad global utility."},
+    {"certId": "ccsk", "countryScores": {"india": 3, "us": 3, "canada": 3, "uk": 3, "ireland": 3, "germany": 3, "netherlands": 3, "switzerland": 3, "singapore": 3, "uae": 3, "saudi": 3, "australia": 3, "newzealand": 3, "israel": 2, "japan": 3}, "rationale": "Good cloud-security knowledge baseline with moderate signaling power."},
+    {"certId": "cipp-e", "countryScores": {"india": 2, "us": 3, "canada": 3, "uk": 5, "ireland": 5, "germany": 5, "netherlands": 5, "switzerland": 4, "singapore": 4, "uae": 3, "saudi": 3, "australia": 3, "newzealand": 3, "israel": 2, "japan": 3}, "rationale": "Top privacy cert in GDPR-influenced regions."},
+    {"certId": "cipm", "countryScores": {"india": 2, "us": 3, "canada": 3, "uk": 4, "ireland": 4, "germany": 4, "netherlands": 4, "switzerland": 4, "singapore": 4, "uae": 3, "saudi": 3, "australia": 3, "newzealand": 3, "israel": 2, "japan": 3}, "rationale": "Privacy program management credential useful in enterprise governance tracks."},
+    {"certId": "cipt", "countryScores": {"india": 2, "us": 4, "canada": 4, "uk": 4, "ireland": 4, "germany": 4, "netherlands": 4, "switzerland": 4, "singapore": 4, "uae": 2, "saudi": 2, "australia": 3, "newzealand": 3, "israel": 3, "japan": 4}, "rationale": "Engineering/privacy bridge cert with strongest value in product and data-heavy markets."},
+    {"certId": "iso-27001-la", "countryScores": {"india": 3, "us": 3, "canada": 3, "uk": 5, "ireland": 5, "germany": 5, "netherlands": 5, "switzerland": 5, "singapore": 4, "uae": 5, "saudi": 5, "australia": 4, "newzealand": 4, "israel": 2, "japan": 4}, "rationale": "Audit-focused ISO credential favored in compliance-heavy markets."},
+    {"certId": "iso-27001-li", "countryScores": {"india": 3, "us": 3, "canada": 3, "uk": 5, "ireland": 5, "germany": 5, "netherlands": 5, "switzerland": 5, "singapore": 4, "uae": 5, "saudi": 5, "australia": 4, "newzealand": 4, "israel": 2, "japan": 4}, "rationale": "Implementation-focused ISO credential with broad enterprise governance utility."},
+
+    {"certId": "aws-saa", "countryScores": {"india": 4, "us": 4, "canada": 4, "uk": 4, "ireland": 4, "germany": 3, "netherlands": 4, "switzerland": 3, "singapore": 4, "uae": 3, "saudi": 3, "australia": 4, "newzealand": 4, "israel": 4, "japan": 4}, "rationale": "Strong multi-market cloud foundation signal."},
+    {"certId": "aws-security", "countryScores": {"india": 5, "us": 5, "canada": 5, "uk": 4, "ireland": 4, "germany": 4, "netherlands": 4, "switzerland": 4, "singapore": 5, "uae": 4, "saudi": 4, "australia": 5, "newzealand": 4, "israel": 5, "japan": 4}, "rationale": "Top cloud-security cert by global demand and role alignment."},
+    {"certId": "aws-sap", "countryScores": {"india": 4, "us": 5, "canada": 4, "uk": 4, "ireland": 4, "germany": 3, "netherlands": 4, "switzerland": 3, "singapore": 4, "uae": 3, "saudi": 3, "australia": 4, "newzealand": 4, "israel": 4, "japan": 4}, "rationale": "High architecture depth signal in AWS-dominant teams."},
+    {"certId": "az-500", "countryScores": {"india": 5, "us": 4, "canada": 4, "uk": 5, "ireland": 5, "germany": 5, "netherlands": 5, "switzerland": 4, "singapore": 4, "uae": 5, "saudi": 5, "australia": 4, "newzealand": 4, "israel": 3, "japan": 4}, "rationale": "Very strong in Microsoft-heavy enterprise ecosystems."},
+    {"certId": "sc-100", "countryScores": {"india": 4, "us": 3, "canada": 3, "uk": 4, "ireland": 4, "germany": 4, "netherlands": 4, "switzerland": 3, "singapore": 4, "uae": 4, "saudi": 4, "australia": 4, "newzealand": 3, "israel": 2, "japan": 3}, "rationale": "Cybersecurity architect signal in Microsoft security stacks."},
+    {"certId": "gcp-security", "countryScores": {"india": 3, "us": 4, "canada": 4, "uk": 3, "ireland": 3, "germany": 3, "netherlands": 4, "switzerland": 3, "singapore": 4, "uae": 2, "saudi": 2, "australia": 4, "newzealand": 3, "israel": 4, "japan": 4}, "rationale": "Strong where GCP share and data-platform maturity are high."},
+
+    {"certId": "cka", "countryScores": {"india": 4, "us": 4, "canada": 4, "uk": 4, "ireland": 4, "germany": 4, "netherlands": 4, "switzerland": 4, "singapore": 4, "uae": 3, "saudi": 3, "australia": 4, "newzealand": 4, "israel": 4, "japan": 4}, "rationale": "Widely useful baseline for cloud-native platform security tracks."},
+    {"certId": "cks", "countryScores": {"india": 4, "us": 5, "canada": 5, "uk": 4, "ireland": 4, "germany": 4, "netherlands": 4, "switzerland": 4, "singapore": 5, "uae": 3, "saudi": 3, "australia": 4, "newzealand": 4, "israel": 5, "japan": 4}, "rationale": "Excellent DevSecOps differentiator in Kubernetes-heavy teams."},
+
+    {"certId": "bscp", "countryScores": {"india": 4, "us": 4, "canada": 4, "uk": 4, "ireland": 4, "germany": 4, "netherlands": 4, "switzerland": 4, "singapore": 4, "uae": 3, "saudi": 3, "australia": 4, "newzealand": 4, "israel": 4, "japan": 3}, "rationale": "Low-cost practical AppSec signal with broad interview relevance."},
+    {"certId": "ceh", "countryScores": {"india": 4, "us": 2, "canada": 2, "uk": 2, "ireland": 2, "germany": 2, "netherlands": 2, "switzerland": 2, "singapore": 3, "uae": 4, "saudi": 4, "australia": 2, "newzealand": 2, "israel": 2, "japan": 2}, "rationale": "Regionally strong signaling in India and Gulf; weaker differentiation in western product markets."},
+    {"certId": "ejpt", "countryScores": {"india": 3, "us": 3, "canada": 3, "uk": 3, "ireland": 3, "germany": 2, "netherlands": 2, "switzerland": 2, "singapore": 3, "uae": 2, "saudi": 2, "australia": 3, "newzealand": 3, "israel": 3, "japan": 2}, "rationale": "Good beginner practical offensive certification with moderate market signaling."},
+    {"certId": "ewpt", "countryScores": {"india": 4, "us": 4, "canada": 3, "uk": 4, "ireland": 4, "germany": 3, "netherlands": 3, "switzerland": 3, "singapore": 4, "uae": 2, "saudi": 2, "australia": 3, "newzealand": 3, "israel": 4, "japan": 3}, "rationale": "Practical web-testing cert with better AppSec relevance than generic offensive baselines."},
+    {"certId": "pnpt", "countryScores": {"india": 4, "us": 4, "canada": 4, "uk": 3, "ireland": 3, "germany": 2, "netherlands": 2, "switzerland": 2, "singapore": 3, "uae": 2, "saudi": 2, "australia": 3, "newzealand": 3, "israel": 3, "japan": 2}, "rationale": "Practical pentest and reporting-focused credential with growing recognition."},
+    {"certId": "oscp", "countryScores": {"india": 4, "us": 5, "canada": 5, "uk": 5, "ireland": 5, "germany": 5, "netherlands": 5, "switzerland": 4, "singapore": 5, "uae": 4, "saudi": 4, "australia": 5, "newzealand": 5, "israel": 5, "japan": 4}, "rationale": "Global offensive benchmark with consistently high technical credibility."},
+    {"certId": "oswe", "countryScores": {"india": 3, "us": 5, "canada": 5, "uk": 5, "ireland": 5, "germany": 4, "netherlands": 4, "switzerland": 4, "singapore": 4, "uae": 3, "saudi": 3, "australia": 4, "newzealand": 4, "israel": 5, "japan": 4}, "rationale": "Elite AppSec exploit and code-review signal for advanced teams."},
+    {"certId": "osep", "countryScores": {"india": 3, "us": 5, "canada": 5, "uk": 5, "ireland": 4, "germany": 4, "netherlands": 4, "switzerland": 4, "singapore": 4, "uae": 3, "saudi": 3, "australia": 4, "newzealand": 4, "israel": 5, "japan": 4}, "rationale": "Advanced red-team signal with highest utility in mature adversary simulation markets."},
+    {"certId": "crest-crt", "countryScores": {"india": 2, "us": 2, "canada": 2, "uk": 5, "ireland": 5, "germany": 2, "netherlands": 2, "switzerland": 2, "singapore": 4, "uae": 2, "saudi": 2, "australia": 4, "newzealand": 4, "israel": 2, "japan": 2}, "rationale": "Regional specialist cert with strongest value in UK/Commonwealth-aligned pentest ecosystems."},
+    {"certId": "crest-cct", "countryScores": {"india": 2, "us": 2, "canada": 2, "uk": 5, "ireland": 5, "germany": 2, "netherlands": 2, "switzerland": 2, "singapore": 4, "uae": 2, "saudi": 2, "australia": 4, "newzealand": 4, "israel": 2, "japan": 2}, "rationale": "Senior CREST signal for high-trust pentesting environments."}
+  ]
+}

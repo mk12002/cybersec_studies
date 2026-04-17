@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Country Certification Deep-Dive</title>
+  <meta name="description" content="Country-level cybersecurity certification market deep dive." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body data-page="country">
+  <header class="ci-topbar">
+    <div>
+      <p class="kicker">Portfolio Module</p>
+      <h1>Country Deep-Dive</h1>
+      <p class="sub">Understand hiring signal, visa context, and certification value by market.</p>
+    </div>
+    <nav class="ci-nav">
+      <a href="index.html">Dashboard</a>
+      <a class="active" href="country.html">Country Deep-Dive</a>
+      <a href="compare.html">Compare</a>
+      <a href="weekly-brief.html">Weekly Brief</a>
+      <a href="../index.html">Study OS</a>
+    </nav>
+  </header>
+
+  <main class="ci-container">
+    <section class="panel controls-panel">
+      <h2>Select Market</h2>
+      <div class="filters-grid single">
+        <label>
+          Country / Region
+          <select id="countrySelectDeep"></select>
+        </label>
+      </div>
+    </section>
+
+    <section class="grid-2">
+      <article class="panel" id="countrySummary"></article>
+      <article class="panel">
+        <h2>Demand by Domain</h2>
+        <div id="countryDemand" class="demand-bars"></div>
+      </article>
+    </section>
+
+    <section class="grid-2">
+      <article class="panel">
+        <h2>Recommended Path (Beginner to Advanced)</h2>
+        <div id="countryPathCards" class="path-grid"></div>
+      </article>
+      <article class="panel">
+        <h2>Market Notes and Employers</h2>
+        <ul id="countryNotes" class="plain-list"></ul>
+        <div id="countryEmployers" class="tag-list"></div>
+      </article>
+    </section>
+
+    <section class="panel">
+      <h2>Certification Value Heatmap</h2>
+      <p class="mono">Top certification value scores for selected country (scale 1-5).</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Certification</th>
+              <th>Track</th>
+              <th>Value Score</th>
+              <th>Base ROI</th>
+              <th>Cost (USD)</th>
+            </tr>
+          </thead>
+          <tbody id="countryHeatmapBody"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script src="app.js" defer></script>
+</body>
+</html>

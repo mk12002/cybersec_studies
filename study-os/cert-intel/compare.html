@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Certification Compare Tool</title>
+  <meta name="description" content="Compare cybersecurity certifications side by side with market context." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body data-page="compare">
+  <header class="ci-topbar">
+    <div>
+      <p class="kicker">Portfolio Module</p>
+      <h1>Certification Compare Tool</h1>
+      <p class="sub">Compare up to 4 certifications across cost, effort, renewal, relevance, and ROI.</p>
+    </div>
+    <nav class="ci-nav">
+      <a href="index.html">Dashboard</a>
+      <a href="country.html">Country Deep-Dive</a>
+      <a class="active" href="compare.html">Compare</a>
+      <a href="weekly-brief.html">Weekly Brief</a>
+      <a href="../index.html">Study OS</a>
+    </nav>
+  </header>
+
+  <main class="ci-container">
+    <section class="panel controls-panel">
+      <h2>Comparison Inputs</h2>
+      <div class="filters-grid compare-grid">
+        <label>
+          Country Context
+          <select id="compareCountry"></select>
+        </label>
+        <label>
+          Role Context
+          <select id="compareRole"></select>
+        </label>
+        <label class="full">
+          Certifications (2 to 4)
+          <select id="compareCerts" multiple size="10"></select>
+        </label>
+      </div>
+      <div class="actions-row">
+        <button id="runCompareBtn" class="btn-primary" type="button">Run Comparison</button>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Comparison Matrix</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Certification</th>
+              <th>Cost</th>
+              <th>Effort</th>
+              <th>Prerequisites</th>
+              <th>Renewal</th>
+              <th>Role Relevance</th>
+              <th>Country Value</th>
+              <th>Composite ROI</th>
+            </tr>
+          </thead>
+          <tbody id="compareBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Decision Notes</h2>
+      <ul id="compareInsights" class="plain-list"></ul>
+    </section>
+  </main>
+
+  <script src="app.js" defer></script>
+</body>
+</html>

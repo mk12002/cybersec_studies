@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Weekly Study Brief Generator</title>
+  <meta name="description" content="Generate a country-aware weekly cybersecurity study brief." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body data-page="weekly-brief">
+  <header class="ci-topbar">
+    <div>
+      <p class="kicker">Portfolio Module</p>
+      <h1>Weekly Study Brief</h1>
+      <p class="sub">Generate a tactical 7-day execution plan based on target country and role.</p>
+    </div>
+    <nav class="ci-nav">
+      <a href="index.html">Dashboard</a>
+      <a href="country.html">Country Deep-Dive</a>
+      <a href="compare.html">Compare</a>
+      <a class="active" href="weekly-brief.html">Weekly Brief</a>
+      <a href="../index.html">Study OS</a>
+    </nav>
+  </header>
+
+  <main class="ci-container">
+    <section class="panel controls-panel">
+      <h2>Brief Inputs</h2>
+      <div class="filters-grid">
+        <label>
+          Target Country
+          <select id="briefCountry"></select>
+        </label>
+        <label>
+          Role Goal
+          <select id="briefRole"></select>
+        </label>
+        <label>
+          Career Stage
+          <select id="briefLevel">
+            <option value="beginner">Beginner</option>
+            <option value="intermediate" selected>Intermediate</option>
+            <option value="advanced">Advanced</option>
+          </select>
+        </label>
+        <label>
+          Weekly Hours
+          <input id="briefHours" type="number" min="4" max="60" value="12" />
+        </label>
+        <label>
+          Week Style
+          <select id="briefTemplate"></select>
+        </label>
+      </div>
+      <div class="actions-row">
+        <button id="generateBriefBtn" class="btn-primary" type="button">Generate Weekly Brief</button>
+      </div>
+    </section>
+
+    <section class="grid-2">
+      <article class="panel">
+        <h2>Strategic Summary</h2>
+        <div id="briefSummary"></div>
+        <h3>Priority Certifications This Cycle</h3>
+        <ol id="briefCertPriorities"></ol>
+      </article>
+      <article class="panel">
+        <h2>Resource Stack</h2>
+        <ul id="briefResources" class="plain-list"></ul>
+        <h3>Study OS Handoff</h3>
+        <p class="mono">Copy these activities into your tracker on the main Study OS page.</p>
+        <a class="cta-link" href="../index.html">Open Study OS Tracker</a>
+      </article>
+    </section>
+
+    <section class="panel">
+      <h2>7-Day Execution Plan</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Day</th>
+              <th>Focus</th>
+              <th>Minutes</th>
+              <th>Deliverable</th>
+            </tr>
+          </thead>
+          <tbody id="briefPlanBody"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script src="app.js" defer></script>
+</body>
+</html>
