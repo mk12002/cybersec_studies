@@ -11,12 +11,12 @@
 
 ### Part 1: Foundation
 1. [Understanding Your Salary Structure](#1-understanding-your-salary-structure)
-2. [Budgeting — The 50/30/20 Rule](#2-budgeting--the-503020-rule)
-3. [Emergency Fund](#3-emergency-fund)
-4. [Bank Accounts — Which Ones & Why](#4-bank-accounts--which-ones--why)
-5. [Credit & Debit Cards](#5-credit--debit-cards)
+2. [Budgeting — The 50/30/20 Rule (And Beyond)](#2-budgeting--the-503020-rule-and-beyond)
+3. [Emergency Fund — Your Financial Armor](#3-emergency-fund--your-financial-armor)
+4. [Bank Accounts — Your Financial Infrastructure](#4-bank-accounts--your-financial-infrastructure)
+5. [Credit & Debit Cards — Complete Mastery Guide](#5-credit--debit-cards--complete-mastery-guide)
 6. [Insurance — Non-Negotiables](#6-insurance--non-negotiables)
-7. [Tax Planning & Saving](#7-tax-planning--tax-saving)
+7. [Tax Planning & Tax Saving](#7-tax-planning--tax-saving)
 8. [Government Schemes](#8-government-schemes)
 
 ### Part 2: Investment Deep-Dives
@@ -37,9 +37,9 @@
 21. [Financial Milestones by Age](#21-financial-milestones-by-age)
 22. [Salary Growth & Investment Scaling Plan](#22-salary-growth--investment-scaling-plan)
 23. [Common Mistakes to Avoid](#23-common-mistakes-to-avoid)
-24. [Tools & Apps](#24-tools--apps)
-25. [Glossary](#25-glossary)
-26. [Master Investment Checklist](#26-master-investment-checklist)
+24. [Tools, Apps & Resources — Complete Digital Finance Toolkit](#24-tools-apps--resources--complete-digital-finance-toolkit)
+25. [Glossary — Complete Financial Terms Dictionary](#25-glossary--complete-financial-terms-dictionary)
+26. [Action Plan & Golden Rules — Your Complete Execution Blueprint](#26-action-plan--golden-rules--your-complete-execution-blueprint)
 
 ---
 

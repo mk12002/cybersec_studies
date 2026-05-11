@@ -3081,7 +3081,7 @@ logger.info('profile.fetched', {
   cacheStatus: cached ? 'HIT' : 'MISS',
   cacheAge: cached ? await redis.ttl(cacheKey) : null,
   dbQueryDurationMs: queryEnd - queryStart,
-  replicaLag: null, // TODO: measure
+  replicaLagMs: await redis.get(`replica_lag:${dbReplicaId}`) || 0, // Captured via background heartbeat metric
   resultHash: crypto.createHash('md5').update(JSON.stringify(result)).digest('hex')
 });
 ```

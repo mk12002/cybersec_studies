@@ -595,7 +595,7 @@ Top Companies:
 | **BSI IT-Grundschutz** | Germany        | German government and critical infrastructure | €2,000+           |
 | **PASSI**              | France         | French government security assessment         | Via accreditation |
 | **ISO 27001 LA**       | All EU         | Compliance and audit roles                    | €1,500-3,000      |
-| **EUCS**               | All EU         | EU Cloud Security Scheme (emerging)           | TBD               |
+| **EUCS**               | All EU         | EU Cloud Security Certification Scheme        | ~€2,500+ (Est)    |
 
 **Best Certification Stack for EU:**
 

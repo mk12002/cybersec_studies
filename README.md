@@ -84,16 +84,38 @@ study/
 │   ├── CTF_AND_BUG_BOUNTY_GUIDE.md    Practice platforms guide
 │   └── TEMPLATES_PACK.md              Resume, LinkedIn, outreach templates
 │
-└── study material/                    ← Core learning content
-    ├── cybersecurity_fundamentals_study_material.md   OS, networking, protocols
-    ├── appsec_study_material.md                       Web security, OWASP Top 10
-    ├── cloudsec_study_material.md                     AWS/Azure/GCP, K8s, containers
-    ├── ml_security_study_material.md                  LLM security, ML threats
-    ├── cryptography_study_material.md                 Crypto fundamentals, PKI
-    ├── cybersecurity_foundations_plus.md              SDLC, identity, detection
-    ├── FLASHCARDS_QUICK_REF.md                        Daily review cards
-    ├── TOOLS_CHEAT_SHEET.md                           Command reference (50+ tools)
-    └── RESOURCE_LIBRARY.md                            200+ curated external links
+├── study material/                    ← Core learning content
+│   ├── cybersecurity_fundamentals_study_material.md   OS, networking, protocols
+│   ├── appsec_study_material.md                       Web security, OWASP Top 10
+│   ├── cloudsec_study_material.md                     AWS/Azure/GCP, K8s, containers
+│   ├── ml_security_study_material.md                  LLM security, ML threats
+│   ├── cryptography_study_material.md                 Crypto fundamentals, PKI
+│   ├── cybersecurity_foundations_plus.md              SDLC, identity, detection
+│   ├── FLASHCARDS_QUICK_REF.md                        Daily review cards
+│   ├── TOOLS_CHEAT_SHEET.md                           Command reference (50+ tools)
+│   ├── RESOURCE_LIBRARY.md                            200+ curated external links
+│   │
+│   └── system breakdowns/              ← Real-world architecture deep-dives
+│       ├── README.md                   ★ Complete system design study guide
+│       ├── Google OAuth Login System.md
+│       ├── JWT Authentication System.md
+│       ├── Session-Based Authentication System.md
+│       ├── Password Reset Flow.md
+│       ├── OTP Authentication (SMS & Email).md
+│       ├── Payment Gateway Processing System.md
+│       ├── Card Transaction Processing System.md
+│       ├── UPI Transaction Flow (India).md
+│       └── REST API Request Lifecycle.md
+│
+└── [Additional future systems]
+    ├── API Gateway + Microservices Architecture
+    ├── Distributed Rate Limiting System
+    ├── Secure File Upload System
+    ├── Video Call System (WebRTC-based)
+    ├── Real-Time Chat System
+    ├── AWS IAM Authentication & Authorization Flow
+    ├── Web Application Firewall (WAF)
+    └── [More coming...]
 ```
 
 ---
@@ -178,6 +200,21 @@ study/
 | **[cryptography_study_material.md](study%20material/cryptography_study_material.md)** | ~1,200 | Symmetric/asymmetric, hashing, PKI, TLS, post-quantum |
 | **[cybersecurity_foundations_plus.md](study%20material/cybersecurity_foundations_plus.md)** | ~400 | Secure SDLC, identity, detection engineering |
 
+### 🏗️ System Design & Architecture
+
+| Document | Lines | Purpose | When to Use |
+|----------|-------|---------|-------------|
+| **[system breakdowns/README.md](study%20material/system%20breakdowns/README.md)** | ~500 | Complete guide to 9+ real-world systems | **CRITICAL for interviews**: Learn FIRST before designing |  
+| **[Google OAuth Login System.md](study%20material/system%20breakdowns/Google%20OAuth%20Login%20System.md)** | ~250 | OAuth 2.0 authorization flow, security considerations | Interview: "Design OAuth for our app" |
+| **[JWT Authentication System.md](study%20material/system%20breakdowns/JWT%20Authentication%20System.md)** | ~250 | Stateless auth, token management, vulnerabilities | Interview: "Design authentication system" |
+| **[Session-Based Authentication System.md](study%20material/system%20breakdowns/Session-Based%20Authentication%20System.md)** | ~250 | Traditional session management, CSRF/XSS prevention | Understanding legacy systems |
+| **[Password Reset Flow.md](study%20material/system%20breakdowns/Password%20Reset%20Flow.md)** | ~200 | Secure password reset, token generation, timing attacks | Understanding security vulnerabilities |
+| **[OTP Authentication (SMS & Email).md](study%20material/system%20breakdowns/OTP%20Authentication%20(SMS%20%26%20Email).md)** | ~250 | 2FA/MFA implementation, rate limiting, SIM swapping | Interview: "Design 2FA system" |
+| **[Payment Gateway Processing System.md](study%20material/system%20breakdowns/Payment%20Gateway%20Processing%20System.md)** | ~350 | PCI DSS, fraud prevention, reconciliation | **HIGH-VALUE for fintech interviews** |
+| **[Card Transaction Processing System.md](study%20material/system%20breakdowns/Card%20Transaction%20Processing%20System.md)** | ~300 | End-to-end payment flow, security architecture | **HIGH-VALUE for payment companies** |
+| **[UPI Transaction Flow (India).md](study%20material/system%20breakdowns/UPI%20Transaction%20Flow%20(India).md)** | ~280 | NPCI infrastructure, India-specific payments | Critical for Indian fintech roles |
+| **[REST API Request Lifecycle.md](study%20material/system%20breakdowns/REST%20API%20Request%20Lifecycle.md)** | ~250 | HTTP flow, rate limiting, authentication | Foundation for all API-based systems |
+
 ### 🛠️ Reference & Practice
 
 | Document | Lines | Purpose |
@@ -222,6 +259,7 @@ study/
 
 | If you're thinking... | Go to... |
 |-----------------------|----------|
+| "I'm preparing for system design interviews" | [system breakdowns/README.md](study%20material/system%20breakdowns/README.md) ← **CRITICAL** |
 | "I'm just starting" | [BEGINNER_START_HERE.md](prep%20helpers/BEGINNER_START_HERE.md) → [MASTER_STUDY_FLOW.md](prep%20helpers/MASTER_STUDY_FLOW.md) |
 | "I don't know what order to study" | [MASTER_STUDY_FLOW.md](prep%20helpers/MASTER_STUDY_FLOW.md) |
 | "I'm learning [topic]" | Corresponding study material file |
@@ -232,6 +270,8 @@ study/
 | "I want external resources" | [RESOURCE_LIBRARY.md](study%20material/RESOURCE_LIBRARY.md) |
 | "I want motivation and study structure" | [STUDY_ENGAGEMENT_SYSTEM.md](prep%20helpers/STUDY_ENGAGEMENT_SYSTEM.md) |
 | "I want to plan OMSCS" | [OMSCS_ML_SECURITY_TRACK_GUIDE.md](prep%20helpers/OMSCS_ML_SECURITY_TRACK_GUIDE.md) |
+| "I want to understand payment systems" | [Payment Gateway Processing System.md](study%20material/system%20breakdowns/Payment%20Gateway%20Processing%20System.md) + [Card Transaction Processing System.md](study%20material/system%20breakdowns/Card%20Transaction%20Processing%20System.md) + [UPI Transaction Flow.md](study%20material/system%20breakdowns/UPI%20Transaction%20Flow%20(India).md) |
+| "I want to understand authentication architectures" | [system breakdowns/README.md](study%20material/system%20breakdowns/README.md) → Read all 5 auth systems |
 
 ---
 
@@ -338,8 +378,15 @@ Use the [WEEKLY_STUDY_TEMPLATE.md](prep%20helpers/WEEKLY_STUDY_TEMPLATE.md) to p
 | Category | Files | Lines | Topics |
 |----------|-------|-------|--------|
 | Study Material | 9 | ~13,000 | Core security concepts |
+| System Breakdowns | 10 | ~2,700 | Real-world architecture analysis |
 | Prep Helpers | 18 | ~31,000 | Planning, exercises, career, OMSCS |
-| **Total** | **27** | **~50,000** | Complete security education |
+| **Total** | **37** | **~46,700+** | Complete security education + architecture |
+
+### System Breakdowns Coverage
+- ✅ Authentication Systems (5 files: OAuth, JWT, Sessions, Passwords, OTP)
+- ✅ Financial Systems (3 files: Payment Gateway, Card Processing, UPI)
+- ✅ API Systems (1 file: REST API Request Lifecycle)
+- 🔜 File Systems, Real-Time Systems, Cloud Systems, Security Systems (coming soon)
 
 ### Coverage by Domain
 - ✅ Operating Systems (Linux, Windows)
@@ -349,6 +396,7 @@ Use the [WEEKLY_STUDY_TEMPLATE.md](prep%20helpers/WEEKLY_STUDY_TEMPLATE.md) to p
 - ✅ ML/AI Security (LLMs, prompt injection)
 - ✅ Cryptography (applied, not theoretical)
 - ✅ Detection Engineering (SIEM, Sigma)
+- ✅ **System Design & Architecture** (authentication, payment, APIs)
 - ✅ Career Prep (India + global)
 
 ---
