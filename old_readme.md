@@ -65,61 +65,57 @@ study/
 ├── README.md                          ← You are here
 │
 ├── prep helpers/                      ← Planning, execution, career tools
-│   ├── BEGINNER_START_HERE.md
-│   ├── BLOG_CREATION_PLAYBOOK.md
-│   ├── CERTIFICATIONS_ROADMAP_INDIA.md
-│   ├── CTF_AND_BUG_BOUNTY_GUIDE.md
-│   ├── Complete_Financial_Guide_IT_Professional.md
-│   ├── Cybersecurity_ML_Career_Financial_Guide.md
-│   ├── Events And Meetups.md
-│   ├── Events_And_Meetups_Extended.md
-│   ├── HANDS_ON_EXERCISES.md
-│   ├── INTERVIEW_AND_NETWORKING.md
-│   ├── MASTER_STUDY_FLOW.md
-│   ├── Misc_Career_Finance_Templates.md
-│   ├── OMSCS_EXPANDED_SECTIONS.md
-│   ├── OMSCS_ML_SECURITY_TRACK_GUIDE.md
-│   ├── OMSCS_ML_SECURITY_TRACK_GUIDE_COMPLETE.md
-│   ├── OMSCS_ML_SECURITY_TRACK_GUIDE_COMPREHENSIVE.md
-│   ├── PORTFOLIO_PROJECTS.md
-│   ├── README_OMSCS_FILES.md
-│   ├── STUDY_ENGAGEMENT_SYSTEM.md
-│   ├── STUDY_INDEX.md
-│   ├── TEMPLATES_PACK.md
-│   ├── WEEKLY_STUDY_TEMPLATE.md
-│   ├── execution_plan_12_ml_app_cloud.md
-│   ├── final_presentation.md
-│   ├── syllabus.md
+│   ├── MASTER_STUDY_FLOW.md          ★ START HERE - Complete 16-week roadmap
+│   ├── STUDY_INDEX.md                 Index of all documents
+│   ├── BEGINNER_START_HERE.md         First-day setup and orientation
+│   ├── STUDY_ENGAGEMENT_SYSTEM.md      Motivation & consistency system
+│   ├── OMSCS_ML_SECURITY_TRACK_GUIDE.md   OMSCS ML track + security (main guide)
+│   ├── OMSCS_EXPANDED_SECTIONS.md         Ultra-detailed OMSCS expansions
+│   ├── OMSCS_ML_SECURITY_TRACK_GUIDE_COMPLETE.md  Full integrated version
+│   ├── OMSCS_ML_SECURITY_TRACK_GUIDE_COMPREHENSIVE.md  Alternate expanded version
+│   ├── README_OMSCS_FILES.md          How to use OMSCS files
+│   ├── syllabus.md                    Master topic list (17 modules)
+│   ├── execution_plan_12_ml_app_cloud.md         Weekly schedule
+│   ├── WEEKLY_STUDY_TEMPLATE.md       Session planning templates
+│   ├── HANDS_ON_EXERCISES.md          11 step-by-step labs
+│   ├── PORTFOLIO_PROJECTS.md          22+ project ideas with guides
+│   ├── INTERVIEW_AND_NETWORKING.md    Interview prep, networking tips
+│   ├── CERTIFICATIONS_ROADMAP_INDIA.md  Cert planning for India
+│   ├── CTF_AND_BUG_BOUNTY_GUIDE.md    Practice platforms guide
+│   └── TEMPLATES_PACK.md              Resume, LinkedIn, outreach templates
 │
 ├── study material/                    ← Core learning content
-│   ├── FLASHCARDS_QUICK_REF.md
-│   ├── RESOURCE_LIBRARY.md
-│   ├── TOOLS_CHEAT_SHEET.md
-│   ├── appsec_study_material.md
-│   ├── cloudsec_study_material.md
-│   ├── cryptography_study_material.md
-│   ├── cybersecurity_foundations_plus.md
-│   ├── cybersecurity_fundamentals_study_material.md
-│   ├── ml_security_study_material.md
+│   ├── cybersecurity_fundamentals_study_material.md   OS, networking, protocols
+│   ├── appsec_study_material.md                       Web security, OWASP Top 10
+│   ├── cloudsec_study_material.md                     AWS/Azure/GCP, K8s, containers
+│   ├── ml_security_study_material.md                  LLM security, ML threats
+│   ├── cryptography_study_material.md                 Crypto fundamentals, PKI
+│   ├── cybersecurity_foundations_plus.md              SDLC, identity, detection
+│   ├── FLASHCARDS_QUICK_REF.md                        Daily review cards
+│   ├── TOOLS_CHEAT_SHEET.md                           Command reference (50+ tools)
+│   ├── RESOURCE_LIBRARY.md                            200+ curated external links
 │   │
 │   └── system breakdowns/              ← Real-world architecture deep-dives
 │       ├── README.md                   ★ Complete system design study guide
-│       ├── ADVERSARIAL MACHINE LEARNING/
-│       ├── API Systems/
-│       ├── Authentication Systems/
-│       ├── Delivery & Scalability/
-│       ├── Detection, Monitoring & Ops/
-│       ├── Enterprise Security Architecture/
-│       ├── Financial Systems/
-│       ├── GENERATIVE AI & LLM SECURITY/
-│       ├── HARDWARE & EDGE AI SECURITY/
-│       ├── Infrastructure & Cloud/
-│       ├── ML FOR THREAT DETECTION/
-│       ├── MLOps & ARCHITECTURE SECURITY/
-│       ├── NEXT-GEN AI GOVERNANCE/
-│       ├── Network & Protocol Security/
-│       ├── PRIVACY & IDENTITY SYSTEMS/
-│       ├── Realtime & Messaging/
+│       ├── Google OAuth Login System.md
+│       ├── JWT Authentication System.md
+│       ├── Session-Based Authentication System.md
+│       ├── Password Reset Flow.md
+│       ├── OTP Authentication (SMS & Email).md
+│       ├── Payment Gateway Processing System.md
+│       ├── Card Transaction Processing System.md
+│       ├── UPI Transaction Flow (India).md
+│       └── REST API Request Lifecycle.md
+│
+└── [Additional future systems]
+    ├── API Gateway + Microservices Architecture
+    ├── Distributed Rate Limiting System
+    ├── Secure File Upload System
+    ├── Video Call System (WebRTC-based)
+    ├── Real-Time Chat System
+    ├── AWS IAM Authentication & Authorization Flow
+    ├── Web Application Firewall (WAF)
+    └── [More coming...]
 ```
 
 ---
