@@ -3000,7 +3000,7 @@ Note: This is automated AI review. All BLOCKING findings require human security 
 
 ---
 
-## References
+## 24. References
 
 The following sources were consulted and cited throughout this report. All URLs accessed June 2026.
 
