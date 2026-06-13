@@ -34,6 +34,7 @@
 21. [Recommendations](#21-recommendations)
 22. [Final Proposed Product Vision](#22-final-proposed-product-vision)
 23. [Appendices](#23-appendices)
+24. [References](#24-references)
 
 ---
 
