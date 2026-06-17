@@ -1090,7 +1090,7 @@ ZONE: Highly trusted (Secrets / Data plane)
 - 403 response rate monitoring per user
 - SIEM alert on attempts to access N different room IDs from same user in short window
 
-**Why this works:** Developers often add authentication (is the user logged in?) but forget authorization (does this specific user have permission for this specific resource?). This is one of the most common web application vulnerabilities (OWASP A01:2021).
+**Why this works:** Developers often add authentication (is the user logged in?) but forget authorization (does this specific user have permission for this specific resource?). This is one of the most common web application vulnerabilities (OWASP A01:2025 — Broken Access Control).
 
 **Mitigation:** Every resource endpoint checks both authentication AND resource-level authorization. Centralize authorization logic (don't scatter permission checks across handlers). Use UUIDs (not sequential integers) for room IDs — not a security control, but raises the bar for enumeration. Log all 403s with user + resource context.
 

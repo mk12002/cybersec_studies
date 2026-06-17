@@ -676,16 +676,18 @@ Do NOT log
 Mapping to your study (priority order for AppSec roles):
 | Rank | Category | Your Focus Area |
 |------|----------|----------------|
-| A01 | Broken Access Control | IDOR, missing authZ, privilege escalation |
-| A02 | Cryptographic Failures | Weak hashing, cleartext secrets, bad TLS |
-| A03 | Injection | SQLi, NoSQLi, command injection, template injection |
-| A04 | Insecure Design | Missing threat model, unsafe architecture |
-| A05 | Security Misconfiguration | Default creds, verbose errors, open cloud storage |
-| A06 | Vulnerable Components | Outdated deps, no SCA, no SBOM |
-| A07 | Auth Failures | Weak passwords, broken session, credential stuffing |
-| A08 | Software/Data Integrity | Insecure deserialization, unsigned updates |
-| A09 | Logging Failures | No logs, no alerts, no forensic capability |
-| A10 | SSRF | Server fetches attacker URL, cloud metadata theft |
+| A01:2025 | Broken Access Control | IDOR, missing authZ, privilege escalation, SSRF (folded into A01 in 2025) |
+| A02:2025 | Security Misconfiguration | Default creds, verbose errors, open cloud storage |
+| A03:2025 | Software Supply Chain Failures | Vulnerable/outdated deps, no SCA/SBOM, compromised build or pipeline |
+| A04:2025 | Cryptographic Failures | Weak hashing, cleartext secrets, bad TLS |
+| A05:2025 | Injection | SQLi, NoSQLi, command injection, template injection, XSS |
+| A06:2025 | Insecure Design | Missing threat model, unsafe architecture |
+| A07:2025 | Authentication Failures | Weak passwords, broken session, credential stuffing |
+| A08:2025 | Software/Data Integrity Failures | Insecure deserialization, unsigned updates, CI/CD tampering |
+| A09:2025 | Security Logging & Alerting Failures | No logs, no alerts, no forensic capability |
+| A10:2025 | Mishandling of Exceptional Conditions | Improper error/exception handling, fail-open logic, info leakage |
+
+Key changes from 2021: **Software Supply Chain Failures** (A03) is new and absorbs "Vulnerable and Outdated Components"; **Mishandling of Exceptional Conditions** (A10) is new; **SSRF** is no longer its own entry (merged into Broken Access Control); Security Misconfiguration rose to #2.
 
 ### 6.2 OWASP ASVS (Application Security Verification Standard)
 [https://owasp.org/www-project-application-security-verification-standard/](https://owasp.org/www-project-application-security-verification-standard/)
@@ -1755,8 +1757,9 @@ Object obj = ois.readObject();  // DANGER!
 
 // This has led to many CVEs:
 // - Apache Commons Collections gadget chains
-// - Log4Shell (CVE-2021-44228) partially related
-// - Many application server vulnerabilities
+// - WebLogic/JBoss/other application server deserialization RCEs
+// (Note: Log4Shell, CVE-2021-44228, is a related "untrusted input -> code
+//  execution" lesson but is JNDI lookup injection, NOT Java deserialization)
 ```
 
 **PHP (unserialize):**

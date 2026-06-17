@@ -468,49 +468,53 @@ Log:    data access with size, destination, time
 
 ## ML Security Quick Reference
 
-### OWASP LLM Top 10 (Summary)
+### OWASP LLM Top 10 (2025 — Summary)
 ```
-LLM01: Prompt Injection
+LLM01:2025 Prompt Injection
   - Direct: Malicious instructions in user input
-  - Indirect: Hidden instructions in retrieved data
-  - Fix: Input validation, prompt engineering, guardrails
+  - Indirect: Hidden instructions in retrieved/external data
+  - Fix: Input/trust separation, guardrails, output constraints
 
-LLM02: Insecure Output Handling  
-  - LLM output trusted and executed
-  - Fix: Treat output as untrusted, encode/validate
+LLM02:2025 Sensitive Information Disclosure
+  - Model leaks training data, PII, secrets, or system context
+  - Fix: Data sanitization, output filtering, minimization
 
-LLM03: Training Data Poisoning
-  - Malicious data corrupts model behavior
-  - Fix: Data validation, provenance tracking
+LLM03:2025 Supply Chain
+  - Compromised models, datasets, adapters/LoRAs, plugins
+  - Fix: Verify sources/signing, model+data provenance, ML SBOM
 
-LLM04: Model Denial of Service
-  - Resource exhaustion via complex inputs
-  - Fix: Rate limiting, input size limits, timeouts
+LLM04:2025 Data and Model Poisoning
+  - Malicious data corrupts pre-training/fine-tuning/embeddings
+  - Fix: Data validation, provenance, anomaly checks, robust eval
 
-LLM05: Supply Chain Vulnerabilities
-  - Compromised models, datasets, plugins
-  - Fix: Verify sources, SBOM for ML
+LLM05:2025 Improper Output Handling
+  - LLM output trusted/executed downstream (XSS, SQLi, RCE)
+  - Fix: Treat output as untrusted; encode/validate at the sink
 
-LLM06: Sensitive Information Disclosure
-  - Model leaks training data or PII
-  - Fix: Data sanitization, output filtering
+LLM06:2025 Excessive Agency
+  - Too much autonomy/permission/tool access granted to the model
+  - Fix: Least privilege, human-in-the-loop, scoped tools
 
-LLM07: Insecure Plugin Design
-  - Plugins executed without validation
-  - Fix: Plugin sandboxing, permission models
+LLM07:2025 System Prompt Leakage
+  - System prompt (and embedded secrets/logic) exposed
+  - Fix: Keep secrets/authz out of prompts; don't rely on prompt secrecy
 
-LLM08: Excessive Agency
-  - Model given too much autonomy
-  - Fix: Human-in-the-loop, least privilege
+LLM08:2025 Vector and Embedding Weaknesses
+  - RAG risks: embedding inversion, poisoned/cross-tenant retrieval
+  - Fix: Access control on vector stores, tenant isolation, validation
 
-LLM09: Overreliance
-  - Blind trust in model outputs
-  - Fix: User awareness, verification steps
+LLM09:2025 Misinformation
+  - Hallucinated/incorrect output trusted (overreliance)
+  - Fix: Grounding/RAG, verification steps, user awareness
 
-LLM10: Model Theft
-  - Extraction via repeated queries
-  - Fix: Rate limiting, output perturbation
+LLM10:2025 Unbounded Consumption
+  - Resource/cost exhaustion, model DoS, model extraction via queries
+  - Fix: Rate/quotas, input size limits, timeouts, abuse monitoring
 ```
+(2023→2025 changes: Insecure Output Handling→Improper Output Handling;
+Training Data Poisoning→Data and Model Poisoning; Model DoS + Model Theft
+folded into Unbounded Consumption; new: System Prompt Leakage, Vector/Embedding
+Weaknesses, Misinformation; Insecure Plugin Design merged into Excessive Agency.)
 
 ### Prompt Injection Patterns
 ```

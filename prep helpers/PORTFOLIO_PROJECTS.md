@@ -1110,7 +1110,7 @@ class LLMSecurityScanner:
                     vulnerable=vulnerable,
                     confidence=0.7 if vulnerable else 0.2,
                     evidence=response[:200] if vulnerable else "",
-                    owasp_mapping="LLM07: Insecure Plugin Design"
+                    owasp_mapping="LLM07: System Prompt Leakage"
                 ))
                 
             except Exception as e:

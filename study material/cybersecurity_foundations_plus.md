@@ -178,11 +178,13 @@ eact). When CI builds the app, it pulls the malicious package. Mitigated by depe
 *   **Unsafe Runner Environments:** Executing untrusted code (like PRs from external forks) on self-hosted runners that possess persistent IAM roles. Code runs inside the trusted boundary before it is approved.
 
 ### SLSA Framework (Supply-chain Levels for Software Artifacts)
-A Google-backed framework for ensuring software integrity from source to deployment:
-- **Level 1:** Unambiguous provenance (What was built? How?).
-- **Level 2:** Hosted build service and signed provenance.
-- **Level 3:** Ephemeral, isolated build environments preventing cross-build contamination.
-- **Level 4:** Hermetic builds and two-person review for all source code modifications.
+A Google-backed framework for ensuring software integrity from source to deployment. SLSA **v1.0 (2023)** reorganized the old "SLSA 1–4" into *tracks*; the **Build track** now runs L0–L3 (there is no Level 4 in v1.0):
+- **Build L0:** No guarantees (baseline — no SLSA controls).
+- **Build L1:** Provenance exists — build is documented and provenance is distributed (prevents mistakes; still trivial to forge).
+- **Build L2:** Hosted build platform that generates and **signs** provenance (authenticity you can verify).
+- **Build L3:** Hardened build platform with strong tamper protection — isolated/ephemeral builds and protected signing secrets.
+
+*(The earlier v0.1 "Level 4: hermetic builds + two-person review" was dropped in v1.0; hermeticity/source-integrity requirements are slated for future tracks.)*
 
 ---
 

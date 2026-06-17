@@ -5236,7 +5236,7 @@ query = f"SELECT * FROM users WHERE id = {user_id}"
 ```python
 cursor.execute("SELECT * FROM users WHERE id = ?", (user_id,))
 ```
-**OWASP:** A03:2021 - Injection
+**OWASP:** A05:2025 - Injection
 
 ### 2. Missing Authorization (CRITICAL)
 **Location:** `app/routes.py:67`
@@ -5256,7 +5256,7 @@ def get_user(id):
         abort(403)
     return user
 ```
-**OWASP:** A01:2021 - Broken Access Control
+**OWASP:** A01:2025 - Broken Access Control
 
 [Continue for all findings...]
 
