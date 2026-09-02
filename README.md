@@ -156,6 +156,8 @@ The `study material/` directory holds domain-specific deep dives.
 - 🧠 [ml_security_study_material.md](file:///D:/Code_stuff/cybersec_studies/study%20material/ml_security_study_material.md) - LLM Top 10, Data Poisoning, Extraction.
 - 🔑 [cryptography_study_material.md](file:///D:/Code_stuff/cybersec_studies/study%20material/cryptography_study_material.md) - Applied Crypto, TLS, PKI, Hashing.
 - 🛡️ [cybersecurity_foundations_plus.md](file:///D:/Code_stuff/cybersec_studies/study%20material/cybersecurity_foundations_plus.md) - SDLC, Detection, Identity.
+- 🔀 [git_github_study_material.md](file:///D:/Code_stuff/cybersec_studies/study%20material/git_github_study_material.md) - Git internals, GitHub platform security, secrets in history, supply chain.
+- 🖼️ [git_github_field_manual.html](file:///D:/Code_stuff/cybersec_studies/study%20material/git_github_field_manual.html) - The same material as an **illustrated** guide with 14 diagrams. Open in a browser.
 - 🃏 [FLASHCARDS_QUICK_REF.md](file:///D:/Code_stuff/cybersec_studies/study%20material/FLASHCARDS_QUICK_REF.md) - High-yield concepts for interviews.
 - 🛠️ [TOOLS_CHEAT_SHEET.md](file:///D:/Code_stuff/cybersec_studies/study%20material/TOOLS_CHEAT_SHEET.md) - 50+ infosec tools & commands.
 - 🔗 [RESOURCE_LIBRARY.md](file:///D:/Code_stuff/cybersec_studies/study%20material/RESOURCE_LIBRARY.md) - External links and reading.
