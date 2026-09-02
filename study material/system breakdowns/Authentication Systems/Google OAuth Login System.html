@@ -1,0 +1,1290 @@
+<title>Sign in with Google</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=IBM+Plex+Mono:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..600&display=swap">
+<style>
+/* ============================================================
+   SYSTEM BREAKDOWNS — shared series design system
+   Ground: cool instrument grey. Accent: per-category signal hue,
+   set by the small override block that follows this one.
+   Semantic red/amber/green are constant across the whole series
+   so "threat", "pitfall" and "defence" read identically everywhere.
+   ============================================================ */
+
+:root{
+  --ground:#EAEDF0;
+  --surface:#F8FAFB;
+  --surface-2:#DFE4E9;
+  --sunk:#E2E6EA;
+  --ink:#101418;
+  --ink-2:#3A444E;
+  --ink-3:#68727C;
+  --rule:#C2C9D1;
+  --rule-2:#D5DBE1;
+
+  /* --accent is the only value overridden per category; the two derived
+     tints follow it automatically in both themes via color-mix. */
+  --accent:#2A5A8C;
+  --accent-soft:color-mix(in srgb, var(--accent) 13%, var(--surface));
+  --accent-edge:color-mix(in srgb, var(--accent) 45%, var(--surface));
+
+  --danger:#9C2A2B;  --danger-soft:#F4DFDF;  --danger-edge:#D9A6A6;
+  --warn:#775707;    --warn-soft:#F3EAD1;    --warn-edge:#D9C68C;
+  --safe:#286B43;    --safe-soft:#DBEBE1;    --safe-edge:#A5C9B4;
+
+  --display:"Archivo","Helvetica Neue",Arial,sans-serif;
+  --body:"Source Serif 4",Georgia,"Times New Roman",serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+
+  --shell:1340px;
+  --col:70ch;
+  color-scheme:light;
+}
+
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#0D1116;
+    --surface:#151B21;
+    --surface-2:#1D252D;
+    --sunk:#111820;
+    --ink:#E6EBEF;
+    --ink-2:#B0BAC3;
+    --ink-3:#848F99;
+    --rule:#2A333C;
+    --rule-2:#1F272F;
+    --accent:#7FB3E0;
+    --danger:#F0817A; --danger-soft:#3A1B19; --danger-edge:#6E3230;
+    --warn:#E2BA51;   --warn-soft:#332A10;   --warn-edge:#65531D;
+    --safe:#63CB88;   --safe-soft:#123020;   --safe-edge:#265539;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#0D1116;
+  --surface:#151B21;
+  --surface-2:#1D252D;
+  --sunk:#111820;
+  --ink:#E6EBEF;
+  --ink-2:#B0BAC3;
+  --ink-3:#848F99;
+  --rule:#2A333C;
+  --rule-2:#1F272F;
+  --accent:#7FB3E0;
+  --danger:#F0817A; --danger-soft:#3A1B19; --danger-edge:#6E3230;
+  --warn:#E2BA51;   --warn-soft:#332A10;   --warn-edge:#65531D;
+  --safe:#63CB88;   --safe-soft:#123020;   --safe-edge:#265539;
+  color-scheme:dark;
+}
+
+*,*::before,*::after{box-sizing:border-box;}
+
+body{
+  background:var(--ground);
+  color:var(--ink);
+  font-family:var(--body);
+  font-size:17px;
+  line-height:1.62;
+  font-optical-sizing:auto;
+  -webkit-font-smoothing:antialiased;
+}
+
+h1,h2,h3,h4,h5{
+  font-family:var(--display);
+  font-variation-settings:"wdth" 112;
+  text-wrap:balance;margin:0;line-height:1.1;
+}
+h1{font-size:clamp(2.2rem,5.4vw,3.9rem);font-weight:800;letter-spacing:-.02em;}
+h2{font-size:clamp(1.65rem,3.3vw,2.25rem);font-weight:700;letter-spacing:-.015em;}
+h3{font-size:1.28rem;font-weight:650;letter-spacing:-.005em;line-height:1.22;}
+h4{font-size:1.02rem;font-weight:650;font-variation-settings:"wdth" 100;}
+h5{font-size:.85rem;font-weight:700;font-variation-settings:"wdth" 100;
+   text-transform:uppercase;letter-spacing:.1em;}
+
+p{margin:0;}
+strong{font-weight:700;color:var(--ink);}
+em{font-style:italic;}
+a{color:var(--accent);text-decoration-thickness:1px;text-underline-offset:3px;}
+a:hover{text-decoration-thickness:2px;}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px;}
+
+.eyebrow{font-family:var(--mono);font-size:.7rem;font-weight:600;
+  text-transform:uppercase;letter-spacing:.16em;color:var(--ink-3);}
+
+.shell{max-width:var(--shell);margin:0 auto;padding:0 clamp(1rem,3.5vw,2.75rem);}
+
+/* ---------- masthead ---------- */
+.masthead{border-bottom:1px solid var(--rule);
+  background:linear-gradient(180deg,transparent 0%,transparent 68%,var(--surface) 100%);
+  padding-top:clamp(1.75rem,4.5vw,3.25rem);}
+.mast-grid{display:grid;gap:clamp(1.5rem,4vw,3rem);align-items:end;
+  grid-template-columns:minmax(0,1.02fr) minmax(0,.98fr);
+  padding-bottom:clamp(1.5rem,4vw,2.5rem);}
+@media (max-width:980px){.mast-grid{grid-template-columns:1fr;align-items:start;}}
+.mast-kicker{display:flex;flex-wrap:wrap;gap:.5rem 1.1rem;align-items:center;margin-bottom:1rem;}
+.mast-rule{height:1px;flex:1;min-width:2rem;background:var(--rule);}
+.cat{font-family:var(--mono);font-size:.7rem;font-weight:600;text-transform:uppercase;
+  letter-spacing:.14em;color:var(--accent);}
+.mast-sub{font-size:1.1rem;color:var(--ink-2);margin-top:1.05rem;max-width:54ch;line-height:1.55;}
+.mast-meta{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:1.35rem;}
+.chip{font-family:var(--mono);font-size:.67rem;font-weight:500;letter-spacing:.04em;
+  padding:.28rem .55rem;border:1px solid var(--rule);color:var(--ink-2);
+  background:var(--surface);border-radius:2px;}
+.chip--acc{color:var(--accent);border-color:var(--accent-edge);background:var(--accent-soft);}
+.chip--hot{color:var(--danger);border-color:var(--danger-edge);background:var(--danger-soft);}
+
+/* ---------- frame + rail ---------- */
+.frame{display:grid;grid-template-columns:248px minmax(0,1fr);gap:clamp(2rem,4vw,3.5rem);
+  align-items:start;padding-top:2.25rem;padding-bottom:4rem;}
+@media (max-width:1040px){.frame{grid-template-columns:1fr;gap:1.5rem;}}
+.rail{position:sticky;top:1.25rem;max-height:calc(100vh - 2.5rem);overflow-y:auto;
+  font-family:var(--display);font-variation-settings:"wdth" 100;padding-right:.5rem;}
+@media (max-width:1040px){
+  .rail{position:static;max-height:none;border:1px solid var(--rule);
+    background:var(--surface);padding:1rem 1.15rem;border-radius:3px;}}
+.rail h5{color:var(--ink-3);margin-bottom:.8rem;font-family:var(--mono);
+  font-weight:600;letter-spacing:.14em;font-size:.67rem;}
+.rail ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;}
+.rail li{position:relative;padding-left:1.3rem;}
+.rail li::before{content:"";position:absolute;left:3px;top:.72em;width:7px;height:7px;
+  border-radius:1px;border:1.5px solid var(--rule);background:var(--ground);z-index:1;}
+@media (max-width:1040px){.rail li::before{background:var(--surface);}}
+.rail li:not(:last-child)::after{content:"";position:absolute;left:6px;top:1.3em;
+  bottom:-.35em;width:1px;background:var(--rule);}
+.rail a{display:block;padding:.25rem 0;font-size:.84rem;line-height:1.3;
+  color:var(--ink-2);text-decoration:none;font-weight:500;}
+.rail a:hover{color:var(--accent);}
+.rail li:hover::before{border-color:var(--accent);background:var(--accent);}
+
+/* ---------- document ---------- */
+.doc{min-width:0;display:flex;flex-direction:column;}
+.doc > section{max-width:100%;}
+.doc p,.doc > section > ul,.doc > section > ol,.doc .lede{max-width:var(--col);}
+.lede{font-size:1.08rem;color:var(--ink-2);line-height:1.55;}
+.part{padding-top:3rem;margin-top:3rem;border-top:1px solid var(--rule);}
+.part:first-child{border-top:0;margin-top:0;padding-top:0;}
+.part-head{margin-bottom:1.4rem;}
+.part-num{font-family:var(--mono);font-size:.71rem;font-weight:600;letter-spacing:.16em;
+  color:var(--accent);text-transform:uppercase;display:block;margin-bottom:.5rem;}
+.doc h2{margin-bottom:.65rem;}
+.doc h3{margin:2.3rem 0 .7rem;color:var(--ink);}
+.doc h4{margin:1.65rem 0 .5rem;color:var(--ink);}
+.doc p + p{margin-top:.85rem;}
+.doc p + h3,.doc ul + h3,.doc ol + h3,.doc pre + h3,.doc .tbl + h3,
+.doc figure + h3,.doc .panel + h3,.doc .defs + h3,.doc .check + h3,
+.doc .duo + h3,.doc .strip + h3,.doc .flow + h3{margin-top:2.5rem;}
+.doc ul,.doc ol{margin:.85rem 0 0;padding-left:1.35rem;display:flex;flex-direction:column;gap:.4rem;}
+.doc li{padding-left:.15rem;}
+.doc li::marker{color:var(--ink-3);}
+.doc ul ul,.doc ol ol,.doc ul ol,.doc ol ul{margin-top:.4rem;}
+
+/* ---------- code ---------- */
+code{font-family:var(--mono);font-size:.855em;font-weight:500;
+  background:var(--sunk);border:1px solid var(--rule-2);
+  padding:.08em .34em;border-radius:2px;color:var(--ink);word-break:break-word;}
+pre{margin:1.1rem 0 0;background:var(--surface);border:1px solid var(--rule);
+  border-left:3px solid var(--accent);padding:.9rem 1.05rem;overflow-x:auto;
+  border-radius:2px;max-width:100%;}
+pre code{background:none;border:0;padding:0;font-size:.795rem;line-height:1.62;
+  display:block;white-space:pre;color:var(--ink-2);}
+pre code b{font-weight:600;color:var(--ink);}
+pre code i{font-style:normal;color:var(--ink-3);}
+pre code u{text-decoration:none;color:var(--danger);font-weight:600;}
+pre code s{text-decoration:none;color:var(--safe);font-weight:600;}
+pre code em{font-style:normal;color:var(--accent);font-weight:600;}
+
+/* ---------- figures ---------- */
+figure{margin:1.8rem 0 0;padding:1.1rem 1.1rem .85rem;background:var(--surface);
+  border:1px solid var(--rule);border-radius:3px;}
+figure svg{display:block;width:100%;height:auto;max-width:100%;color:var(--ink-2);}
+.fig-scroll{overflow-x:auto;}
+.fig-scroll > svg{min-width:560px;}
+figcaption{margin-top:.85rem;padding-top:.7rem;border-top:1px solid var(--rule-2);
+  font-size:.835rem;line-height:1.5;color:var(--ink-3);max-width:80ch;}
+figcaption b{color:var(--ink-2);font-weight:650;}
+
+/* ---------- panels ---------- */
+.panel{margin:1.5rem 0 0;padding:.95rem 1.1rem;border-radius:3px;
+  border:1px solid var(--rule);background:var(--surface);max-width:100%;}
+.panel > :first-child{margin-top:0;}
+.panel p,.panel ul,.panel ol{max-width:none;}
+.panel-label{font-family:var(--mono);font-size:.66rem;font-weight:600;
+  letter-spacing:.14em;text-transform:uppercase;display:block;margin-bottom:.45rem;}
+.panel--threat{background:var(--danger-soft);border-color:var(--danger-edge);}
+.panel--threat .panel-label{color:var(--danger);}
+.panel--pitfall{background:var(--warn-soft);border-color:var(--warn-edge);}
+.panel--pitfall .panel-label{color:var(--warn);}
+.panel--defense{background:var(--safe-soft);border-color:var(--safe-edge);}
+.panel--defense .panel-label{color:var(--safe);}
+.panel--note{background:var(--accent-soft);border-color:var(--accent-edge);}
+.panel--note .panel-label{color:var(--accent);}
+.panel pre{background:var(--surface);border-color:var(--rule-2);border-left-width:2px;}
+.panel code{background:var(--surface);}
+
+/* ---------- tables ---------- */
+.tbl{margin:1.4rem 0 0;overflow-x:auto;border:1px solid var(--rule);
+  border-radius:3px;background:var(--surface);}
+table{border-collapse:collapse;width:100%;font-size:.86rem;line-height:1.45;}
+th,td{text-align:left;padding:.58rem .78rem;border-bottom:1px solid var(--rule-2);vertical-align:top;}
+thead th{font-family:var(--mono);font-size:.66rem;font-weight:600;text-transform:uppercase;
+  letter-spacing:.1em;color:var(--ink-3);background:var(--surface-2);
+  border-bottom:1px solid var(--rule);white-space:nowrap;}
+tbody tr:last-child td{border-bottom:0;}
+td code{font-size:.79rem;}
+td code.nw{white-space:nowrap;}
+.num{font-variant-numeric:tabular-nums;text-align:right;}
+.tag{font-family:var(--mono);font-size:.67rem;font-weight:600;letter-spacing:.03em;
+  padding:.15rem .4rem;border-radius:2px;white-space:nowrap;display:inline-block;}
+.tag--bad{background:var(--danger-soft);color:var(--danger);border:1px solid var(--danger-edge);}
+.tag--mid{background:var(--warn-soft);color:var(--warn);border:1px solid var(--warn-edge);}
+.tag--ok{background:var(--safe-soft);color:var(--safe);border:1px solid var(--safe-edge);}
+.tag--acc{background:var(--accent-soft);color:var(--accent);border:1px solid var(--accent-edge);}
+.tag--neu{background:var(--surface-2);color:var(--ink-3);border:1px solid var(--rule);}
+
+/* ---------- definition grid ---------- */
+.defs{margin:1.3rem 0 0;display:grid;gap:0;border:1px solid var(--rule);
+  border-radius:3px;overflow:hidden;background:var(--surface);}
+.defs > div{display:grid;grid-template-columns:minmax(9rem,15rem) minmax(0,1fr);
+  gap:0 1.05rem;padding:.58rem .82rem;border-bottom:1px solid var(--rule-2);}
+.defs > div:last-child{border-bottom:0;}
+.defs .dt{font-family:var(--mono);font-size:.775rem;font-weight:600;
+  color:var(--accent);word-break:break-word;padding-top:.1rem;}
+.defs .dd{margin:0;font-size:.89rem;line-height:1.5;color:var(--ink-2);}
+.defs .dd code{font-size:.79rem;}
+@media (max-width:620px){.defs > div{grid-template-columns:1fr;gap:.25rem;}}
+
+/* ---------- lifecycle flow (T = 0ms style) ---------- */
+.flow{margin:1.4rem 0 0;border:1px solid var(--rule);border-radius:3px;
+  background:var(--surface);overflow:hidden;}
+.flow > li{list-style:none;display:grid;grid-template-columns:minmax(5.5rem,7rem) minmax(0,1fr);
+  gap:0 1rem;padding:.7rem .9rem;border-bottom:1px solid var(--rule-2);
+  font-size:.9rem;line-height:1.5;position:relative;}
+.flow{padding:0;margin-left:0;}
+.flow > li:last-child{border-bottom:0;}
+.flow .t{font-family:var(--mono);font-size:.72rem;font-weight:600;color:var(--accent);
+  letter-spacing:.02em;padding-top:.15rem;font-variant-numeric:tabular-nums;}
+.flow .s b{display:block;font-weight:650;color:var(--ink);margin-bottom:.1rem;}
+.flow .s{color:var(--ink-2);}
+.flow > li.hot{background:var(--danger-soft);}
+.flow > li.hot .t{color:var(--danger);}
+@media (max-width:560px){.flow > li{grid-template-columns:1fr;gap:.2rem;}}
+
+/* ---------- checklists ---------- */
+.check{margin:1.3rem 0 0;padding:0;list-style:none;display:grid;gap:0;
+  border:1px solid var(--rule);border-radius:3px;background:var(--surface);max-width:none;}
+.check li{display:grid;grid-template-columns:auto minmax(0,1fr);gap:.72rem;
+  padding:.6rem .88rem;border-bottom:1px solid var(--rule-2);font-size:.91rem;line-height:1.5;}
+.check li:last-child{border-bottom:0;}
+.check li::before{content:"";width:13px;height:13px;margin-top:.32rem;border-radius:2px;
+  border:1.5px solid var(--rule);background:var(--ground);}
+.check li b{display:block;font-weight:650;color:var(--ink);}
+.check li code{font-size:.78rem;}
+
+/* ---------- misc layout ---------- */
+.duo{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,18rem),1fr));
+  gap:1rem;margin:1.4rem 0 0;}
+.duo > .panel{margin:0;}
+.strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,10.5rem),1fr));
+  border:1px solid var(--rule);border-radius:3px;overflow:hidden;margin:1.5rem 0 0;
+  background:var(--surface);}
+.strip > div{padding:.8rem .95rem;border-right:1px solid var(--rule-2);}
+.strip > div:last-child{border-right:0;}
+.strip .n{font-family:var(--display);font-variation-settings:"wdth" 108;
+  font-size:1.45rem;font-weight:750;line-height:1;color:var(--ink);font-variant-numeric:tabular-nums;}
+.strip .l{font-family:var(--mono);font-size:.66rem;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink-3);margin-top:.38rem;display:block;line-height:1.35;}
+.gloss{columns:2;column-gap:2.5rem;margin:1.4rem 0 0;max-width:none;}
+@media (max-width:760px){.gloss{columns:1;}}
+.gloss > div{break-inside:avoid;margin-bottom:.85rem;font-size:.88rem;line-height:1.5;}
+.gloss .g{font-family:var(--mono);font-size:.79rem;font-weight:600;color:var(--accent);}
+.colophon{border-top:1px solid var(--rule);padding:1.9rem 0 3.5rem;font-size:.83rem;
+  color:var(--ink-3);max-width:72ch;}
+.colophon p + p{margin-top:.65rem;}
+
+/* ---------- diagram primitives ---------- */
+svg .st{stroke:currentColor;fill:none;stroke-width:1.4;}
+svg .st-thin{stroke:currentColor;fill:none;stroke-width:1;}
+svg .st-fat{stroke:currentColor;fill:none;stroke-width:2.2;}
+svg .st-dash{stroke:currentColor;fill:none;stroke-width:1.4;stroke-dasharray:5 3.5;}
+svg .st-dot{stroke:currentColor;fill:none;stroke-width:1.2;stroke-dasharray:1.5 3;}
+svg .rule{stroke:var(--rule);fill:none;stroke-width:1;}
+svg .box{fill:var(--surface);stroke:currentColor;stroke-width:1.3;}
+svg .box-sunk{fill:var(--sunk);stroke:var(--rule);stroke-width:1.1;}
+svg .box-g{fill:var(--ground);stroke:currentColor;stroke-width:1.3;}
+svg .pan-dan{fill:var(--danger-soft);stroke:var(--danger-edge);stroke-width:1.2;}
+svg .pan-saf{fill:var(--safe-soft);stroke:var(--safe-edge);stroke-width:1.2;}
+svg .pan-wrn{fill:var(--warn-soft);stroke:var(--warn-edge);stroke-width:1.2;}
+svg .pan-acc{fill:var(--accent-soft);stroke:var(--accent-edge);stroke-width:1.2;}
+svg text{font-family:var(--mono);font-size:11px;fill:currentColor;}
+svg .t-h{font-family:var(--display);font-variation-settings:"wdth" 100;
+  font-size:12px;font-weight:650;fill:var(--ink);}
+svg .t-lab{font-size:10px;fill:var(--ink-3);letter-spacing:.03em;}
+svg .t-cap{font-size:9px;fill:var(--ink-3);letter-spacing:.08em;text-transform:uppercase;}
+svg .t-sm{font-size:9px;fill:var(--ink-3);}
+svg .t-hash{font-size:10px;fill:var(--ink-2);}
+svg .c-acc{color:var(--accent);}
+svg .c-dan{color:var(--danger);}
+svg .c-saf{color:var(--safe);}
+svg .c-wrn{color:var(--warn);}
+svg .c-ink{color:var(--ink);}
+svg .c-mute{color:var(--ink-3);}
+svg .f-acc{fill:var(--accent);}
+svg .f-dan{fill:var(--danger);}
+svg .f-saf{fill:var(--safe);}
+svg .f-wrn{fill:var(--warn);}
+svg .f-ink{fill:var(--ink);}
+svg .f-ink2{fill:var(--ink-2);}
+svg .f-ink3{fill:var(--ink-3);}
+svg .f-cur{fill:currentColor;}
+svg .f-surf{fill:var(--surface);}
+svg .f-none{fill:none;}
+
+@media (prefers-reduced-motion: reduce){
+  *{animation-duration:.01ms !important;transition-duration:.01ms !important;
+    scroll-behavior:auto !important;}
+}
+html{scroll-behavior:smooth;scroll-padding-top:1.5rem;}
+</style>
+<style>:root{--accent:#3B4CA8;}@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--accent:#8FA0F5;}}:root[data-theme="dark"]{--accent:#8FA0F5;}</style>
+<header class="masthead">
+  <div class="shell">
+    <div class="mast-grid">
+      <div>
+        <div class="mast-kicker">
+          <span class="cat">Authentication Systems</span>
+          <span class="mast-rule"></span>
+          <span class="eyebrow">13 Sections</span>
+        </div>
+        <h1>Sign in with Google</h1>
+        <p class="mast-sub">The OAuth 2.0 authorization code flow with PKCE, traced from the button
+          click to the session cookie, with every parameter that exists because someone once
+          exploited its absence.</p>
+        <div class="mast-meta">
+          <span class="chip chip--acc">authorization code</span>
+          <span class="chip">PKCE</span>
+          <span class="chip">OIDC id_token</span>
+          <span class="chip">JWKS rotation</span>
+          <span class="chip">refresh tokens</span>
+          <span class="chip chip--hot">state / CSRF</span>
+          <span class="chip chip--hot">alg confusion</span>
+          <span class="chip chip--hot">session fixation</span>
+        </div>
+      </div>
+
+      <figure style="margin:0;">
+        <div class="fig-scroll">
+        <svg viewBox="0 0 580 320" role="img" aria-label="The OAuth authorization code flow across three parties. The browser is redirected to Google with a client id, redirect URI, state and PKCE challenge. Google authenticates the user and redirects back with a short-lived single-use code. The relying party backend validates state, then exchanges the code server-to-server using its client secret and PKCE verifier, receives three tokens, validates the ID token and issues its own session cookie.">
+          <defs>
+            <marker id="h-ar" markerWidth="7" markerHeight="7" refX="6.4" refY="3" orient="auto">
+              <path d="M0,0 L6.4,3 L0,6 z" class="f-ink2"/>
+            </marker>
+            <marker id="h-ara" markerWidth="7" markerHeight="7" refX="6.4" refY="3" orient="auto">
+              <path d="M0,0 L6.4,3 L0,6 z" class="f-acc"/>
+            </marker>
+            <marker id="h-ars" markerWidth="7" markerHeight="7" refX="6.4" refY="3" orient="auto">
+              <path d="M0,0 L6.4,3 L0,6 z" class="f-saf"/>
+            </marker>
+          </defs>
+          <text class="t-cap" x="0" y="12">three parties, and the browser never sees a client secret</text>
+          <line class="rule" x1="0" y1="20" x2="580" y2="20"/>
+
+          <text class="t-lab" x="30"  y="38" style="font-weight:600">browser</text>
+          <text class="t-lab" x="250" y="38" style="font-weight:600">RP backend</text>
+          <text class="t-lab" x="470" y="38" style="font-weight:600">Google</text>
+          <line class="rule" x1="60"  y1="46" x2="60"  y2="296"/>
+          <line class="rule" x1="290" y1="46" x2="290" y2="296"/>
+          <line class="rule" x1="510" y1="46" x2="510" y2="296"/>
+
+          <path class="st" d="M60,66 L504,66" marker-end="url(#h-ar)"/>
+          <text class="t-lab" x="70" y="60" style="font-size:9px">GET /o/oauth2/v2/auth — client_id, redirect_uri,</text>
+          <text class="t-lab" x="70" y="80" style="font-size:9px">scope, <b>state</b>, <b>code_challenge=S256(verifier)</b>, nonce</text>
+
+          <rect class="pan-acc" x="380" y="92" width="200" height="34" rx="2"/>
+          <text class="t-lab" x="388" y="108" style="font-size:9px;fill:var(--accent)">Google validates client_id and</text>
+          <text class="t-lab" x="388" y="120" style="font-size:9px;fill:var(--accent)">redirect_uri by EXACT match</text>
+
+          <path class="st" d="M504,144 L66,144" marker-end="url(#h-ar)"/>
+          <text class="t-lab" x="70" y="138" style="font-size:9px">302 → /auth/callback?code=…&amp;state=… <i>code: 60 s, single use</i></text>
+
+          <path class="st" d="M60,168 L284,168" marker-end="url(#h-ar)"/>
+          <text class="t-lab" x="70" y="162" style="font-size:9px">GET /auth/callback</text>
+
+          <rect class="pan-saf" x="130" y="180" width="200" height="26" rx="2"/>
+          <text class="t-lab" x="138" y="197" style="font-size:9px;fill:var(--safe)">validate state — constant time</text>
+
+          <path class="st c-acc" d="M290,222 L504,222" marker-end="url(#h-ara)"/>
+          <text class="t-lab" x="298" y="216" style="font-size:9px;fill:var(--accent)">POST /token — code, <b>client_secret</b>, <b>code_verifier</b></text>
+          <text class="t-lab" x="298" y="236" style="font-size:9px">server to server · the browser is not involved</text>
+
+          <path class="st c-acc" d="M504,258 L296,258" marker-end="url(#h-ara)"/>
+          <text class="t-lab" x="300" y="252" style="font-size:9px;fill:var(--accent)">id_token · access_token · refresh_token</text>
+
+          <path class="st c-saf" d="M284,284 L66,284" marker-end="url(#h-ars)"/>
+          <text class="t-lab" x="70" y="278" style="font-size:9px;fill:var(--safe)">Set-Cookie: session=… HttpOnly; Secure; SameSite=Lax</text>
+
+          <line class="rule" x1="0" y1="302" x2="580" y2="302"/>
+          <text class="t-lab" x="0" y="316">~3–5 s wall clock, of which almost all is the user reading Google's consent screen.</text>
+        </svg>
+        </div>
+        <figcaption>The code goes through the browser; the tokens never do. That split is the entire
+          design. The code is <b>short-lived, single-use, and bound to four things</b> — client, redirect
+          URI, user, and PKCE challenge — so intercepting it in transit buys an attacker nothing they
+          can use.</figcaption>
+      </figure>
+    </div>
+  </div>
+</header>
+
+<div class="shell">
+<div class="frame">
+
+<nav class="rail" aria-label="Contents">
+  <h5>Contents</h5>
+  <ol>
+    <li><a href="#s01">01 &nbsp;The flow, narrated</a></li>
+    <li><a href="#s02">02 &nbsp;The three tokens</a></li>
+    <li><a href="#s03">03 &nbsp;The authorization request</a></li>
+    <li><a href="#s04">04 &nbsp;Token exchange</a></li>
+    <li><a href="#s05">05 &nbsp;Validating the ID token</a></li>
+    <li><a href="#s06">06 &nbsp;Sessions and storage</a></li>
+    <li><a href="#s07">07 &nbsp;Trust boundaries</a></li>
+    <li><a href="#s08">08 &nbsp;State, CSRF, fixation</a></li>
+    <li><a href="#s09">09 &nbsp;PKCE and code interception</a></li>
+    <li><a href="#s10">10 &nbsp;Token theft and forgery</a></li>
+    <li><a href="#s11">11 &nbsp;Failure modes</a></li>
+    <li><a href="#s12">12 &nbsp;Observability</a></li>
+    <li><a href="#s13">13 &nbsp;Scaling and drills</a></li>
+  </ol>
+</nav>
+
+<main class="doc">
+
+<!-- ============================================ 01 -->
+<section class="part" id="s01">
+  <div class="part-head">
+    <span class="part-num">01 — Narrative</span>
+    <h2>The flow, narrated</h2>
+  </div>
+  <p class="lede">The relying party has registered with Google, holds a client ID and secret, and has
+    pre-registered its exact redirect URI. Everything below follows from that registration.</p>
+
+  <ul class="flow">
+    <li><span class="t">T+0</span><span class="s"><b>The button</b>
+      Nothing has gone over the wire. The frontend builds an authorization URL client-side and
+      navigates to it. Before it does, the backend generates and stores two secrets: a
+      <code>state</code> value of at least 128 random bits, and a PKCE <code>code_verifier</code> of 256 bits. Only the
+      SHA-256 of the verifier travels to Google.</span></li>
+    <li><span class="t">T+50–300 ms</span><span class="s"><b>Google validates the request</b>
+      Client ID exists. <b>Redirect URI matches a registered value by exact string comparison</b>, not a
+      prefix. Scopes are valid. Response type is permitted. If a Google session cookie is present the
+      login form is skipped.</span></li>
+    <li><span class="t">T+1–30 s</span><span class="s"><b>The user authenticates and consents</b>
+      Credentials are entered on Google's origin. The relying party never sees them, which is the
+      point. Password hashing, 2FA, risk scoring and device trust all happen opaquely inside Google.</span></li>
+    <li><span class="t">T+3 s</span><span class="s"><b>The authorization code</b>
+      Google mints an opaque random code with a <b>60-second TTL, single use</b>, bound to the client ID,
+      the redirect URI, the user identity, the approved scopes and the PKCE challenge. It arrives at
+      the callback in a query string, which is safe precisely because of those bindings.</span></li>
+    <li><span class="t">T+3.1 s</span><span class="s"><b>The callback</b>
+      Validate <code>state</code> against the session <em>before</em> doing anything expensive. Then extract the code.
+      State validation is pure local logic and costs nothing, which matters when the endpoint is
+      being flooded.</span></li>
+    <li><span class="t">T+3.1–3.3 s</span><span class="s"><b>Token exchange, server to server</b>
+      A POST from the backend to Google's token endpoint carrying the code, the client secret and the
+      PKCE verifier. Google checks all five: code unused and unexpired, client matches, redirect URI
+      matches exactly, secret authenticates, and SHA-256 of the verifier equals the stored challenge.</span></li>
+    <li><span class="t">T+3.4 s</span><span class="s"><b>Session established</b>
+      Verify the ID token signature and claims. Look the user up by <code>sub</code>, never by email. Create a
+      fresh session, set the cookie, redirect. The user experienced one button and a familiar screen.</span></li>
+  </ul>
+
+  <div class="panel panel--note">
+    <span class="panel-label">Why not just return the token to the browser?</span>
+    <p>That was the implicit flow and it is deprecated. A token delivered in a URL fragment appears in
+      browser history, in the <code>Referer</code> header, and in every server access log along the path, and it
+      is <em>long-lived</em>. An authorization code in the same place is <strong>60 seconds old, usable once, and
+      worthless without a secret the browser never holds</strong>. The code is a claim ticket, not the goods.</p>
+  </div>
+</section>
+
+<!-- ============================================ 02 -->
+<section class="part" id="s02">
+  <div class="part-head">
+    <span class="part-num">02 — Model</span>
+    <h2>The three tokens</h2>
+  </div>
+  <p class="lede">Google returns three things at once and they are routinely confused. They answer
+    three different questions and have three different lifetimes.</p>
+
+  <figure>
+    <div class="fig-scroll">
+    <svg viewBox="0 0 700 280" role="img" aria-label="The three tokens compared. The ID token is a signed JWT that proves who the user is and is consumed by the relying party. The access token is opaque to the relying party and authorises calls to Google APIs for one hour. The refresh token is long-lived and mints new access tokens without user interaction, making it the most dangerous of the three to store.">
+      <text class="t-cap" x="0" y="12">one response, three purposes, three risk profiles</text>
+      <line class="rule" x1="0" y1="20" x2="700" y2="20"/>
+
+      <rect class="pan-acc" x="0" y="32" width="226" height="140" rx="3"/>
+      <text class="t-lab" x="12" y="52" style="fill:var(--accent);font-weight:600">id_token</text>
+      <text class="t-lab" x="12" y="70" style="font-size:9px">a signed JWT — RS256</text>
+      <text class="t-lab" x="12" y="90">answers: <b>who is this user?</b></text>
+      <text class="t-lab" x="12" y="108" style="font-size:9px">consumed by YOU, not by Google</text>
+      <text class="t-lab" x="12" y="126" style="font-size:9px">claims: sub · email · aud · iss</text>
+      <text class="t-lab" x="12" y="140" style="font-size:9px">        iat · exp · nonce</text>
+      <text class="t-lab" x="12" y="162" style="font-size:9px">lifetime: ~1 hour, but you only</text>
+      <text class="t-lab" x="12" y="174" style="font-size:9px">need it once, at login</text>
+
+      <rect class="box" x="238" y="32" width="226" height="140" rx="3"/>
+      <text class="t-lab" x="250" y="52" style="font-weight:600">access_token</text>
+      <text class="t-lab" x="250" y="70" style="font-size:9px">opaque string — do not parse it</text>
+      <text class="t-lab" x="250" y="90">answers: <b>what may the RP do</b></text>
+      <text class="t-lab" x="250" y="104" style="font-size:9px">at Google, on the user's behalf?</text>
+      <text class="t-lab" x="250" y="126" style="font-size:9px">only Google understands it</text>
+      <text class="t-lab" x="250" y="148" style="font-size:9px">lifetime: 3600 s</text>
+      <text class="t-lab" x="250" y="164" style="font-size:9px">store only if you call Google APIs</text>
+
+      <rect class="pan-dan" x="476" y="32" width="224" height="140" rx="3"/>
+      <text class="t-lab" x="488" y="52" style="fill:var(--danger);font-weight:600">refresh_token</text>
+      <text class="t-lab" x="488" y="70" style="font-size:9px">opaque, long-lived</text>
+      <text class="t-lab" x="488" y="90">mints new access tokens</text>
+      <text class="t-lab" x="488" y="104" style="font-size:9px">with no user interaction</text>
+      <text class="t-lab" x="488" y="126" style="font-size:9px;fill:var(--danger)">lifetime: until revoked, or</text>
+      <text class="t-lab" x="488" y="138" style="font-size:9px;fill:var(--danger)">~6 months of inactivity</text>
+      <text class="t-lab" x="488" y="160" style="font-size:9px;fill:var(--danger)">survives an RP password change</text>
+
+      <line class="rule" x1="0" y1="188" x2="700" y2="188"/>
+      <text class="t-cap" x="0" y="206">the three questions OAuth deliberately keeps separate</text>
+      <rect class="box-sunk" x="0" y="216" width="226" height="52" rx="3"/>
+      <text class="t-lab" x="12" y="234" style="font-size:9px"><b>authentication</b> — Google performs it</text>
+      <text class="t-lab" x="12" y="250" style="font-size:9px">proven to you by the id_token</text>
+      <rect class="box-sunk" x="238" y="216" width="226" height="52" rx="3"/>
+      <text class="t-lab" x="250" y="234" style="font-size:9px"><b>authorization</b> — scoped API access</text>
+      <text class="t-lab" x="250" y="250" style="font-size:9px">carried by the access_token</text>
+      <rect class="box-sunk" x="476" y="216" width="224" height="52" rx="3"/>
+      <text class="t-lab" x="488" y="234" style="font-size:9px"><b>session</b> — entirely yours</text>
+      <text class="t-lab" x="488" y="250" style="font-size:9px">independent of all three tokens</text>
+    </svg>
+    </div>
+    <figcaption>The third box is the one teams get wrong. <b>Your session is not Google's session.</b>
+      Logging a user out of your app does not log them out of Google, and Google's tokens expiring
+      does not end your session. Deciding deliberately how those two lifetimes relate is a design
+      decision, not a default.</figcaption>
+  </figure>
+
+  <div class="panel panel--threat">
+    <span class="panel-label">The refresh token is the crown jewel</span>
+    <p>It outlives password changes at your app, it works from anywhere, and it grants continuing
+      access to the user's Google data. Store it <strong>AES-256-GCM encrypted with a key in KMS</strong>, keep a
+      SHA-256 of the plaintext as the lookup index, and make sure the database credentials do not
+      also grant KMS access. That IAM separation is the control: a full database dump then yields
+      ciphertext and nothing else.</p>
+  </div>
+</section>
+
+<!-- ============================================ 03 -->
+<section class="part" id="s03">
+  <div class="part-head">
+    <span class="part-num">03 — Protocol</span>
+    <h2>The authorization request</h2>
+  </div>
+
+<pre><code>https://accounts.google.com/o/oauth2/v2/auth
+  ?response_type=code
+  &amp;client_id=&lt;RP_CLIENT_ID&gt;
+  &amp;redirect_uri=https://app.example.com/auth/callback
+  &amp;scope=openid%20email%20profile
+  &amp;<b>state=&lt;128-bit CSPRNG&gt;</b>                 <i># CSRF defence — YOU generate and validate this</i>
+  &amp;<b>code_challenge=&lt;base64url(SHA256(verifier))&gt;</b>
+  &amp;code_challenge_method=S256                <i># "plain" is deprecated and rejected</i>
+  &amp;<b>nonce=&lt;random&gt;</b>                          <i># replay defence for the id_token</i>
+  &amp;access_type=offline &amp;prompt=consent       <i># only if you actually need a refresh token</i></code></pre>
+
+  <div class="defs">
+    <div><span class="dt">state</span><span class="dd">Opaque to Google, which simply echoes it. Generated by you, stored server-side in the session, compared on callback with a <strong>constant-time</strong> comparison. Without it the callback is an unauthenticated endpoint that accepts any code.</span></div>
+    <div><span class="dt">code_challenge</span><span class="dd">The SHA-256 of a per-flow secret. Proves the party exchanging the code is the same party that started the flow. Mandatory for public clients, strongly recommended for everyone.</span></div>
+    <div><span class="dt">nonce</span><span class="dd">Echoed into the <code>id_token</code>. Validating it prevents an old, still-valid ID token from being replayed into a fresh flow.</span></div>
+    <div><span class="dt">redirect_uri</span><span class="dd">Compared by Google using <strong>exact string matching</strong>. RFC 6749 requires this. Prefix or wildcard matching is a known mis-implementation that turns any open redirect into code theft.</span></div>
+    <div><span class="dt">access_type=offline</span><span class="dd">The only reason a refresh token is issued. If you do not call Google APIs on the user's behalf, omit it and you never hold the most dangerous token.</span></div>
+  </div>
+
+  <div class="panel panel--pitfall">
+    <span class="panel-label">Where the verifier is stored matters</span>
+    <p>The <code>code_verifier</code> belongs in the <strong>server-side session</strong>. Putting it in <code>sessionStorage</code> puts
+      it within reach of any XSS on your origin, which defeats the mechanism it was added to provide.
+      For a pure SPA with no backend the tradeoff is unavoidable, which is one of several reasons a
+      backend-for-frontend pattern is preferred for OAuth.</p>
+  </div>
+</section>
+
+<!-- ============================================ 04 -->
+<section class="part" id="s04">
+  <div class="part-head">
+    <span class="part-num">04 — Protocol</span>
+    <h2>Token exchange</h2>
+  </div>
+
+<pre><code>POST /token HTTP/2
+Host: oauth2.googleapis.com
+Content-Type: application/x-www-form-urlencoded      <i># NOT json</i>
+
+grant_type=authorization_code
+&amp;code=4%2F0AfJohXn…
+&amp;redirect_uri=https%3A%2F%2Fapp.example.com%2Fauth%2Fcallback
+&amp;client_id=…
+&amp;<u>client_secret=GOCSPX-…</u>                              <i># never leaves the backend</i>
+&amp;code_verifier=dBjftJeZ4CVP…
+
+<i># Google's five checks, all of which must pass:</i>
+1. code exists, unused, unexpired
+2. client_id matches the client the code was bound to
+3. <b>redirect_uri matches EXACTLY</b> — a trailing slash difference fails
+4. client_secret authenticates the client
+5. SHA256(code_verifier) == stored code_challenge</code></pre>
+
+  <div class="panel panel--note">
+    <span class="panel-label">Why the redirect URI is sent again when no redirect happens</span>
+    <p>It is a verification parameter, not a functional one. Because the code is bound to the URI it
+      was delivered to, and that URI must be presented again at exchange, <strong>possession of the code is
+      tied to having received it at the legitimate path</strong>. An attacker who intercepted a code destined
+      for a different URI cannot exchange it by claiming any URI they like. Mismatch returns
+      <code>redirect_uri_mismatch</code>.</p>
+  </div>
+
+<pre><code>HTTP/2 200
+<b>Cache-Control: no-store</b>        <i># so no intermediary caches your tokens</i>
+Pragma: no-cache
+
+{ "access_token": "ya29.a0AfH6SMB…",
+  "expires_in": 3600,
+  "refresh_token": "1//0gLm…",
+  "scope": "openid email …",
+  "token_type": "Bearer",
+  "id_token": "eyJhbGciOiJSUzI1NiIsImtpZCI6…" }</code></pre>
+</section>
+
+<!-- ============================================ 05 -->
+<section class="part" id="s05">
+  <div class="part-head">
+    <span class="part-num">05 — Protocol</span>
+    <h2>Validating the ID token</h2>
+  </div>
+
+  <figure>
+    <div class="fig-scroll">
+    <svg viewBox="0 0 700 320" role="img" aria-label="ID token validation as a sequence of checks. Decode the header to read the key id, look it up in the cached JWKS and refresh once on a miss, verify the RS256 signature with the algorithm passed explicitly, then check issuer, audience, expiry and nonce, and finally look the user up by the subject claim rather than by email.">
+      <defs>
+        <marker id="i-ar" markerWidth="7" markerHeight="7" refX="6.4" refY="3" orient="auto">
+          <path d="M0,0 L6.4,3 L0,6 z" class="f-ink2"/>
+        </marker>
+      </defs>
+      <text class="t-cap" x="0" y="12">what must be true before you create a session</text>
+      <line class="rule" x1="0" y1="20" x2="700" y2="20"/>
+
+      <rect class="box" x="0" y="32" width="700" height="38" rx="3"/>
+      <text class="t-lab" x="12" y="50" style="font-weight:600">1 · read kid</text>
+      <text class="t-lab" x="130" y="50">decode the header. Do not trust anything in it yet.</text>
+      <text class="t-lab" x="130" y="63" style="font-size:9px">{"alg":"RS256","kid":"6f9777d…","typ":"JWT"}</text>
+      <line class="st" x1="350" y1="72" x2="350" y2="80" marker-end="url(#i-ar)"/>
+
+      <rect class="box" x="0" y="84" width="700" height="42" rx="3"/>
+      <text class="t-lab" x="12" y="102" style="font-weight:600">2 · resolve the key</text>
+      <text class="t-lab" x="170" y="102">kid in the cached JWKS? use it. Miss? <b>refresh once, then retry once.</b></text>
+      <text class="t-lab" x="170" y="118" style="font-size:9px">signature failure is NOT a reason to refresh — that path is a forgery-driven DoS</text>
+      <line class="st" x1="350" y1="128" x2="350" y2="136" marker-end="url(#i-ar)"/>
+
+      <rect class="pan-dan" x="0" y="140" width="700" height="46" rx="3" style="stroke-width:2"/>
+      <text class="t-lab" x="12" y="158" style="font-weight:600;fill:var(--danger)">3 · verify with an EXPLICIT algorithm allowlist</text>
+      <text class="t-lab" x="330" y="158" style="fill:var(--danger)">algorithms: ['RS256']</text>
+      <text class="t-lab" x="12" y="176" style="font-size:9px">alg:none skips verification · alg:HS256 lets the attacker sign with Google's PUBLIC key as the HMAC secret</text>
+      <line class="st" x1="350" y1="188" x2="350" y2="196" marker-end="url(#i-ar)"/>
+
+      <rect class="pan-acc" x="0" y="200" width="700" height="56" rx="3"/>
+      <text class="t-lab" x="12" y="218" style="font-weight:600;fill:var(--accent)">4 · claims</text>
+      <text class="t-lab" x="130" y="218">iss = https://accounts.google.com   ·   <b>aud = your client_id</b>   ·   exp &gt; now</text>
+      <text class="t-lab" x="130" y="234">nonce matches the one you sent   ·   clock skew allowance ≤ 60 s</text>
+      <text class="t-lab" x="130" y="250" style="font-size:9px">aud is the confused-deputy defence: a valid Google token issued for ANOTHER app must not work here</text>
+      <line class="st" x1="350" y1="258" x2="350" y2="266" marker-end="url(#i-ar)"/>
+
+      <rect class="pan-saf" x="0" y="270" width="700" height="46" rx="3"/>
+      <text class="t-lab" x="12" y="288" style="font-weight:600;fill:var(--safe)">5 · look up by sub</text>
+      <text class="t-lab" x="170" y="288">sub is permanent and stable. <b>email is not.</b></text>
+      <text class="t-lab" x="170" y="306" style="font-size:9px">looking up by email means a recycled address logs the wrong person into the right account</text>
+    </svg>
+    </div>
+    <figcaption>Step 5 is the one that looks like a modelling detail and is actually a security
+      control. If a user changes their Gmail address and someone else later registers the old one,
+      an email-keyed lookup hands the second person the first person's account. <b>Key on <code>sub</code>,
+      update the email as an attribute, and log the change.</b></figcaption>
+  </figure>
+
+  <div class="panel panel--note">
+    <span class="panel-label">Local validation versus the tokeninfo endpoint</span>
+    <div class="tbl" style="margin-top:.6rem">
+      <table>
+        <thead><tr><th></th><th>Local (JWKS)</th><th><code>tokeninfo</code></th></tr></thead>
+        <tbody>
+          <tr><td>Latency</td><td>Zero after cache warm</td><td>A network round trip per login</td></tr>
+          <tr><td>Availability</td><td>Independent of Google being up</td><td>Google is a hard dependency</td></tr>
+          <tr><td>Rate limits</td><td>None</td><td>Yes</td></tr>
+          <tr><td>Key rotation</td><td>You handle it</td><td>Handled for you</td></tr>
+          <tr><td>Verdict</td><td><span class="tag tag--ok">production</span></td><td><span class="tag tag--mid">scripts and one-off tools</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="margin-top:.7rem"><strong>If JWKS is unavailable, fail closed.</strong> Failing open on a key-fetch
+      error converts a Google outage into an authentication bypass. Cache aggressively and refresh
+      proactively so this situation is rare.</p>
+  </div>
+</section>
+
+<!-- ============================================ 06 -->
+<section class="part" id="s06">
+  <div class="part-head">
+    <span class="part-num">06 — Backend</span>
+    <h2>Sessions and storage</h2>
+  </div>
+
+<pre><code>Key:   session:&lt;256-bit CSPRNG, base64url&gt;
+Value: { user_id, google_sub, email, created_at, last_seen,
+         ip, user_agent_hash, access_token: &lt;encrypted&gt;, access_token_exp }
+TTL:   86400  <i># sliding</i></code></pre>
+
+<pre><code>CREATE TABLE users (
+  id             UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  <b>google_sub     VARCHAR(255) UNIQUE NOT NULL</b>,   <i># the canonical foreign key</i>
+  email          VARCHAR(255) NOT NULL,             <i># an attribute, not an identity</i>
+  email_verified BOOLEAN NOT NULL DEFAULT false,
+  created_at     TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  last_login_at  TIMESTAMPTZ,
+  is_active      BOOLEAN NOT NULL DEFAULT true
+);
+
+<i># JIT provisioning must be idempotent — two simultaneous first logins are normal</i>
+INSERT INTO users (google_sub, email) VALUES ($1, $2)
+  <s>ON CONFLICT (google_sub) DO UPDATE SET email = EXCLUDED.email</s>
+  RETURNING id;</code></pre>
+
+<pre><code>CREATE TABLE oauth_refresh_tokens (
+  user_id         UUID REFERENCES users(id),
+  <b>token_encrypted BYTEA NOT NULL</b>,        <i># AES-256-GCM, key in KMS</i>
+  <b>token_hash      VARCHAR(64) NOT NULL</b>,  <i># SHA-256 of plaintext, for lookup only</i>
+  scope           TEXT NOT NULL,
+  issued_at       TIMESTAMPTZ NOT NULL,
+  revoked_at      TIMESTAMPTZ,
+  UNIQUE(token_hash)
+);</code></pre>
+
+  <div class="panel panel--defense">
+    <span class="panel-label">What runs asynchronously, and why it must</span>
+    <p>The callback is on the user's critical path, so only authentication belongs there. Audit
+      events, first-login emails, enterprise group provisioning and analytics all go to a queue.
+      A user should never wait on an SMTP handshake to finish logging in, and an email service outage
+      should never break authentication.</p>
+  </div>
+
+  <div class="panel panel--threat">
+    <span class="panel-label">Never cache the callback</span>
+    <p>If a CDN caches a response from <code>/auth/callback</code> it will serve one user's <code>Set-Cookie</code> to the
+      next visitor, logging them in as somebody else. This is a total multi-tenant session bleed from
+      a single caching rule.</p>
+    <p><strong>Four independent controls, because one will be misconfigured:</strong> send
+      <code>Cache-Control: no-store, no-cache, private</code> on every auth response; configure the CDN to pass
+      through <code>/auth/*</code> unconditionally; configure it never to cache any response carrying
+      <code>Set-Cookie</code>; and test it by logging in, then hitting the same path from a clean browser.</p>
+  </div>
+</section>
+
+<!-- ============================================ 07 -->
+<section class="part" id="s07">
+  <div class="part-head">
+    <span class="part-num">07 — Posture</span>
+    <h2>Trust boundaries</h2>
+  </div>
+
+  <figure>
+    <div class="fig-scroll">
+    <svg viewBox="0 0 700 300" role="img" aria-label="Three trust boundaries in the OAuth flow. The first is between the user and Google, entirely controlled by Google, where credentials and two-factor authentication are handled. The second is between the relying party backend and Google's token endpoint, authenticated by the client secret and PKCE and never involving the browser. The third is between the browser and the relying party, governed by the relying party's own session cookie.">
+      <defs>
+        <marker id="tb2-ar" markerWidth="7" markerHeight="7" refX="6.4" refY="3" orient="auto">
+          <path d="M0,0 L6.4,3 L0,6 z" class="f-ink2"/>
+        </marker>
+      </defs>
+      <text class="t-cap" x="0" y="12">who trusts whom, and on what evidence</text>
+      <line class="rule" x1="0" y1="20" x2="700" y2="20"/>
+
+      <rect class="pan-acc" x="0" y="30" width="700" height="66" rx="3"/>
+      <text class="t-lab" x="12" y="48" style="fill:var(--accent);font-weight:600">BOUNDARY 1 · user ↔ Google</text>
+      <text class="t-lab" x="12" y="66">Google owns this entirely. Password, 2FA, risk scoring, device trust — all opaque to you.</text>
+      <text class="t-lab" x="12" y="84" style="font-size:9px">You are trusting Google's assertion in the id_token. You cannot verify how it was made, only that Google made it.</text>
+      <line class="st" x1="350" y1="98" x2="350" y2="110" marker-end="url(#tb2-ar)"/>
+      <text class="t-lab" x="360" y="108" style="font-size:9px">authorization code, via the browser URL</text>
+
+      <rect class="pan-acc" x="0" y="114" width="700" height="66" rx="3"/>
+      <text class="t-lab" x="12" y="132" style="fill:var(--accent);font-weight:600">BOUNDARY 2 · RP backend ↔ Google token endpoint</text>
+      <text class="t-lab" x="12" y="150">Authenticated by client_secret and proven per-flow by PKCE. The browser is not on this path.</text>
+      <text class="t-lab" x="12" y="168" style="font-size:9px">Assumption: Google's certificate is genuine and TLS is not intercepted. Some RPs pin or enforce CT here.</text>
+      <line class="st" x1="350" y1="182" x2="350" y2="194" marker-end="url(#tb2-ar)"/>
+      <text class="t-lab" x="360" y="192" style="font-size:9px">id_token · access_token · refresh_token</text>
+
+      <rect class="pan-saf" x="0" y="198" width="700" height="66" rx="3"/>
+      <text class="t-lab" x="12" y="216" style="fill:var(--safe);font-weight:600">BOUNDARY 3 · browser ↔ RP</text>
+      <text class="t-lab" x="12" y="234">Your own session mechanism. HttpOnly, Secure, SameSite=Lax. Validated on every request.</text>
+      <text class="t-lab" x="12" y="252" style="font-size:9px">This boundary is the ONLY one you fully control, and it is where every attack in section 8 lands.</text>
+
+      <line class="rule" x1="0" y1="276" x2="700" y2="276"/>
+      <text class="t-lab" x="0" y="294">Everything the browser sends you is attacker-controlled, including the code and the state. Google's signature is the only thing that is not.</text>
+    </svg>
+    </div>
+    <figcaption>Boundary 2 is the one that makes the design work: because the client secret and the
+      tokens live only on that path, <b>compromising the browser does not compromise the tokens</b>. The
+      corollary is that anything which moves token handling into the browser, such as storing an
+      access token in <code>localStorage</code>, quietly deletes boundary 2.</figcaption>
+  </figure>
+</section>
+
+<!-- ============================================ 08 -->
+<section class="part" id="s08">
+  <div class="part-head">
+    <span class="part-num">08 — Offence</span>
+    <h2>State, CSRF and session fixation</h2>
+  </div>
+
+  <h3>CSRF on the callback — login as the attacker</h3>
+  <figure>
+    <div class="fig-scroll">
+    <svg viewBox="0 0 700 260" role="img" aria-label="A login CSRF attack. The attacker starts an OAuth flow for their own Google account and captures the resulting authorization code without completing it. They then lure the victim to a page that navigates the victim's browser to the relying party's callback with the attacker's code. Without state validation the relying party binds the victim's browser session to the attacker's Google account, so anything the victim subsequently saves goes into an account the attacker controls.">
+      <defs>
+        <marker id="c-ard" markerWidth="7" markerHeight="7" refX="6.4" refY="3" orient="auto">
+          <path d="M0,0 L6.4,3 L0,6 z" class="f-dan"/>
+        </marker>
+        <marker id="c-ars" markerWidth="7" markerHeight="7" refX="6.4" refY="3" orient="auto">
+          <path d="M0,0 L6.4,3 L0,6 z" class="f-saf"/>
+        </marker>
+      </defs>
+      <text class="t-cap" x="0" y="12">the attack that logs the victim into the ATTACKER's account</text>
+      <line class="rule" x1="0" y1="20" x2="700" y2="20"/>
+
+      <rect class="pan-dan" x="0" y="32" width="160" height="52" rx="3"/>
+      <text class="t-lab" x="10" y="50" style="fill:var(--danger);font-weight:600">1 · attacker starts</text>
+      <text class="t-lab" x="10" y="66" style="font-size:9px">their own OAuth flow, captures</text>
+      <text class="t-lab" x="10" y="78" style="font-size:9px">the code, does not complete it</text>
+      <path class="st c-dan" d="M164,58 L192,58" marker-end="url(#c-ard)"/>
+
+      <rect class="pan-dan" x="196" y="32" width="180" height="52" rx="3"/>
+      <text class="t-lab" x="206" y="50" style="fill:var(--danger);font-weight:600">2 · lures the victim</text>
+      <text class="t-lab" x="206" y="66" style="font-size:9px">a page that auto-navigates to</text>
+      <text class="t-lab" x="206" y="78" style="font-size:9px">/auth/callback?code=ATTACKER&amp;state=x</text>
+      <path class="st c-dan" d="M380,58 L408,58" marker-end="url(#c-ard)"/>
+
+      <rect class="pan-dan" x="412" y="32" width="288" height="52" rx="3"/>
+      <text class="t-lab" x="422" y="50" style="fill:var(--danger);font-weight:600">3 · RP does not check state</text>
+      <text class="t-lab" x="422" y="66" style="font-size:9px">exchanges the code, creates a session bound to</text>
+      <text class="t-lab" x="422" y="78" style="font-size:9px">the ATTACKER's Google identity, in the victim's browser</text>
+
+      <rect class="pan-dan" x="0" y="98" width="700" height="34" rx="3"/>
+      <text class="t-lab" x="12" y="119" style="fill:var(--danger)">4 · the victim now uses the app while logged into an account the attacker also controls. Everything they save is the attacker's to read.</text>
+
+      <line class="rule" x1="0" y1="150" x2="700" y2="150"/>
+      <rect class="pan-saf" x="0" y="160" width="700" height="66" rx="3"/>
+      <text class="t-lab" x="12" y="180" style="fill:var(--safe);font-weight:600">THE FIX — and it is one comparison</text>
+      <text class="t-lab" x="12" y="198" style="font-size:9px">The victim's browser holds a session containing state = VICTIM_TOKEN. The URL carries state = x.</text>
+      <text class="t-lab" x="12" y="214" style="font-size:9px">Compare them with hmac.compare_digest BEFORE the token exchange. Mismatch → abort, log, alert.</text>
+      <path class="st c-saf" d="M350,152 L350,160" marker-end="url(#c-ars)"/>
+
+      <text class="t-lab" x="0" y="248" style="font-size:9px">Validating state first is also a denial-of-service control: it is pure local logic, so a flood of forged callbacks costs you no outbound calls to Google.</text>
+    </svg>
+    </div>
+    <figcaption>This is not code theft, it is <b>account grafting</b>, and it is easy to miss in review
+      because nothing is stolen and no error appears. The tell in production is an account-merge
+      anomaly: a brand-new user who suddenly has activity history, or a session whose IP changes
+      abruptly at the moment of login.</figcaption>
+  </figure>
+
+  <h3>Session fixation</h3>
+<pre><code>1. attacker plants a known cookie in the victim's browser
+   (subdomain cookie injection, XSS on any subdomain, or shared device)
+       session_id = attacker_known_value
+
+2. victim completes the OAuth flow normally
+
+3. <u>the RP reuses the existing session to store state, and never rotates it</u>
+
+4. the RP binds the authenticated user to attacker_known_value
+   → the attacker's browser, holding the same cookie, is now the victim
+
+<s># THE FIX: generate a NEW session id on successful authentication,</s>
+<s># even though you needed a pre-auth session to hold `state`.</s></code></pre>
+
+  <div class="panel panel--pitfall">
+    <span class="panel-label">Why <code>SameSite=Strict</code> breaks this flow</span>
+    <p><code>Strict</code> means the cookie is never sent on a cross-site request, <em>including top-level
+      navigations</em>. Google's redirect to your callback is exactly that. With <code>Strict</code>, the session
+      cookie holding your <code>state</code> value is not sent, so you cannot validate <code>state</code> at all.</p>
+    <p><code>Lax</code> permits cookies on cross-site top-level navigations that use safe methods, which is a
+      redirect-driven GET. That is why <strong><code>SameSite=Lax</code> is the correct setting here</strong>, and why
+      choosing <code>Strict</code> "to be safer" produces a login page that mysteriously loops.</p>
+    <p>If you genuinely need <code>Strict</code>: make the callback stateless with respect to the cookie by
+      carrying an HMAC-signed, encrypted state value returned by Google rather than a session lookup.</p>
+  </div>
+</section>
+
+<!-- ============================================ 09 -->
+<section class="part" id="s09">
+  <div class="part-head">
+    <span class="part-num">09 — Defence</span>
+    <h2>PKCE and code interception</h2>
+  </div>
+  <p class="lede">The code travels in a URL, so it lands in browser history, in your own access logs,
+    and in a <code>Referer</code> header if the callback page links anywhere external. PKCE makes all of that
+    harmless.</p>
+
+  <figure>
+    <div class="fig-scroll">
+    <svg viewBox="0 0 700 290" role="img" aria-label="Code interception with and without PKCE. Without PKCE an attacker who reads the code from a server log and also holds a leaked client secret can exchange it for tokens. With PKCE the exchange additionally requires a per-flow verifier that exists only in the legitimate backend's session, so the attacker's exchange is rejected even holding both the code and the secret.">
+      <defs>
+        <marker id="p2-ard" markerWidth="7" markerHeight="7" refX="6.4" refY="3" orient="auto">
+          <path d="M0,0 L6.4,3 L0,6 z" class="f-dan"/>
+        </marker>
+        <marker id="p2-ars" markerWidth="7" markerHeight="7" refX="6.4" refY="3" orient="auto">
+          <path d="M0,0 L6.4,3 L0,6 z" class="f-saf"/>
+        </marker>
+      </defs>
+      <text class="t-cap" x="0"   y="12" style="fill:var(--danger)">without PKCE</text>
+      <text class="t-cap" x="368" y="12" style="fill:var(--safe)">with PKCE</text>
+      <line class="rule" x1="0" y1="20" x2="700" y2="20"/>
+      <line class="rule" x1="340" y1="20" x2="340" y2="260"/>
+
+      <rect class="box-sunk" x="0" y="34" width="320" height="46" rx="3"/>
+      <text class="t-lab" x="10" y="52" style="font-size:9px">the code appears in:</text>
+      <text class="t-lab" x="10" y="68" style="font-size:9px">address bar · history · nginx access log · Referer</text>
+
+      <rect class="pan-dan" x="0" y="90" width="320" height="46" rx="3"/>
+      <text class="t-lab" x="10" y="108" style="fill:var(--danger);font-weight:600">attacker reads the log</text>
+      <text class="t-lab" x="10" y="124" style="font-size:9px">has: code + client_id (public) + a leaked client_secret</text>
+
+      <path class="st c-dan" d="M160,140 L160,158" marker-end="url(#p2-ard)"/>
+      <rect class="pan-dan" x="0" y="162" width="320" height="46" rx="3"/>
+      <text class="t-lab" x="10" y="180" style="fill:var(--danger);font-weight:600">POST /token succeeds</text>
+      <text class="t-lab" x="10" y="196" style="font-size:9px">tokens issued to the attacker</text>
+
+      <rect class="box-sunk" x="0" y="218" width="320" height="34" rx="3"/>
+      <text class="t-lab" x="10" y="238" style="font-size:9px">only backstop: Google sees the code used twice and may</text>
+      <text class="t-lab" x="10" y="249" style="font-size:9px">revoke everything — AFTER the fact</text>
+
+      <rect class="box-sunk" x="368" y="34" width="332" height="46" rx="3"/>
+      <text class="t-lab" x="378" y="52" style="font-size:9px">verifier = 256-bit random, <b>server-side session only</b></text>
+      <text class="t-lab" x="378" y="68" style="font-size:9px">challenge = base64url(SHA256(verifier)) → sent to Google</text>
+
+      <rect class="pan-dan" x="368" y="90" width="332" height="46" rx="3"/>
+      <text class="t-lab" x="378" y="108" style="fill:var(--danger);font-weight:600">attacker reads the same log</text>
+      <text class="t-lab" x="378" y="124" style="font-size:9px">has: code + client_id + client_secret. <b>Does NOT have the verifier.</b></text>
+
+      <path class="st c-saf" d="M534,140 L534,158" marker-end="url(#p2-ars)"/>
+      <rect class="pan-saf" x="368" y="162" width="332" height="46" rx="3"/>
+      <text class="t-lab" x="378" y="180" style="fill:var(--safe);font-weight:600">POST /token REJECTED</text>
+      <text class="t-lab" x="378" y="196" style="font-size:9px">SHA256(their guess) ≠ the stored challenge</text>
+
+      <rect class="pan-saf" x="368" y="218" width="332" height="34" rx="3"/>
+      <text class="t-lab" x="378" y="238" style="font-size:9px;fill:var(--safe)">the code is bound to the FLOW, not just to the client</text>
+
+      <line class="rule" x1="0" y1="270" x2="700" y2="270"/>
+      <text class="t-lab" x="0" y="286">client_secret proves "this is Example App Inc." · PKCE proves "this is the same browser session that started the flow". Different claims.</text>
+    </svg>
+    </div>
+    <figcaption>That last line is the reason PKCE is worth doing even for confidential clients with a
+      secret. The secret authenticates the <b>application</b>; the verifier authenticates the <b>flow</b>.
+      Only the second one survives a leaked secret, and for public clients such as mobile apps and
+      SPAs, where no secret exists, PKCE is the only proof there is.</figcaption>
+  </figure>
+
+  <div class="panel panel--defense">
+    <span class="panel-label">Keep codes out of your logs anyway</span>
+    <p>Strip query parameters from access-log URLs on auth paths, or log only the path. A code in a
+      log is a 60-second window; a code in a log that gets shipped to a third-party log aggregator
+      with a longer retention is a much wider one. The same applies to the <code>Referer</code> header, which
+      will contain <code>accounts.google.com</code> and may carry parameters from Google's own page.</p>
+  </div>
+</section>
+
+<!-- ============================================ 10 -->
+<section class="part" id="s10">
+  <div class="part-head">
+    <span class="part-num">10 — Offence</span>
+    <h2>Token theft and forgery</h2>
+  </div>
+
+  <h3>Algorithm confusion on the ID token</h3>
+<pre><code><i># variant A — the historical one</i>
+header  {"alg":"<u>none</u>","typ":"JWT"}
+payload {"iss":"https://accounts.google.com","aud":"&lt;RP_CLIENT_ID&gt;",
+         "sub":"victim_sub","email":"victim@gmail.com","exp":&lt;future&gt;}
+token   header.payload.<i>(empty signature)</i>
+
+<i># variant B — the live one</i>
+Google signs with RS256. The PUBLIC key is published at the JWKS endpoint.
+Attacker sets alg=HS256 and computes an HMAC using <b>the public key bytes as the secret</b>.
+A library that takes the algorithm from the header will verify it successfully.
+
+<s>jwt.verify(token, key, { algorithms: ['RS256'] });</s>   <i># the whole fix</i></code></pre>
+  <p>Neither variant produces any traffic to Google, so detection has to happen at your service. Log
+    the <code>alg</code> of every inbound token and alert on anything that is not RS256. The expected rate of
+    that alert is exactly zero, which makes it one of the highest-signal detections available.</p>
+
+  <h3>Open redirect leading to code and token leakage</h3>
+<pre><code><i># requires TWO mistakes, which is why it survives review</i>
+1. redirect_uri matched by PREFIX instead of exact string
+2. a post-login "next" parameter that is not validated
+
+redirect_uri = https://app.example.com/auth/callback<u>?next=https://attacker.com</u>
+→ code delivered to the real callback
+→ RP exchanges it legitimately
+→ RP then redirects the user to `next`
+→ anything in the fragment or URL at that point leaves your origin</code></pre>
+
+  <h3>Refresh token compromise</h3>
+  <figure>
+    <div class="fig-scroll">
+    <svg viewBox="0 0 700 250" role="img" aria-label="The refresh token theft chain and where it breaks. An attacker who dumps the database obtains encrypted tokens, but the encryption key lives in KMS under a separate IAM policy that database credentials do not grant, so the chain stops there. If tokens were stored in plaintext, and the client secret is also reachable, the attacker gains persistent access to victims' Google accounts that survives a password change at the relying party.">
+      <defs>
+        <marker id="rt-ard" markerWidth="7" markerHeight="7" refX="6.4" refY="3" orient="auto">
+          <path d="M0,0 L6.4,3 L0,6 z" class="f-dan"/>
+        </marker>
+      </defs>
+      <text class="t-cap" x="0" y="12">the chain, and the single link that breaks it</text>
+      <line class="rule" x1="0" y1="20" x2="700" y2="20"/>
+
+      <rect class="pan-dan" x="0" y="34" width="150" height="44" rx="3"/>
+      <text class="t-lab" x="10" y="52" style="fill:var(--danger);font-weight:600">DB compromised</text>
+      <text class="t-lab" x="10" y="68" style="font-size:9px">SQLi elsewhere, or stolen creds</text>
+      <path class="st c-dan" d="M154,56 L182,56" marker-end="url(#rt-ard)"/>
+
+      <rect class="pan-dan" x="186" y="34" width="170" height="44" rx="3"/>
+      <text class="t-lab" x="196" y="52" style="fill:var(--danger);font-weight:600">dump the token table</text>
+      <text class="t-lab" x="196" y="68" style="font-size:9px">rows are AES-256-GCM ciphertext</text>
+      <path class="st c-dan" d="M360,56 L388,56" marker-end="url(#rt-ard)"/>
+
+      <rect class="pan-saf" x="392" y="26" width="308" height="60" rx="3" style="stroke-width:2"/>
+      <text class="t-lab" x="402" y="46" style="fill:var(--safe);font-weight:600">THE CHAIN STOPS HERE — if you did it right</text>
+      <text class="t-lab" x="402" y="64" style="font-size:9px">the key is in KMS. DB credentials do not grant KMS access.</text>
+      <text class="t-lab" x="402" y="78" style="font-size:9px">IAM separation is the control, not the encryption itself.</text>
+
+      <line class="rule" x1="0" y1="102" x2="700" y2="102"/>
+      <text class="t-cap" x="0" y="120" style="fill:var(--danger)">if the tokens were stored in plaintext</text>
+
+      <rect class="pan-dan" x="0" y="130" width="700" height="52" rx="3"/>
+      <text class="t-lab" x="12" y="150" style="fill:var(--danger)">attacker + refresh_token + client_secret → POST /token grant_type=refresh_token → new access tokens, indefinitely</text>
+      <text class="t-lab" x="12" y="170" style="font-size:9px">Google's default refresh token lifetime: until revoked, or roughly six months of inactivity.</text>
+
+      <rect class="pan-wrn" x="0" y="192" width="700" height="52" rx="3"/>
+      <text class="t-lab" x="12" y="212" style="fill:var(--warn);font-weight:600">WHY THIS IS WORSE THAN A PASSWORD BREACH</text>
+      <text class="t-lab" x="12" y="230" style="font-size:9px">Changing the password at YOUR app does nothing. Only revoking at Google, or the user removing your app in their</text>
+      <text class="t-lab" x="12" y="242" style="font-size:9px">Google security settings, actually ends the access.</text>
+    </svg>
+    </div>
+    <figcaption>Note where the defence actually lives. Encryption alone is not it — an attacker who
+      reaches both the database and the key gets both. <b>The control is that reaching one does not
+      grant the other</b>, which is an IAM design decision made long before the incident.</figcaption>
+  </figure>
+
+  <div class="panel panel--defense">
+    <span class="panel-label">Responding to a suspected refresh token compromise</span>
+    <ol>
+      <li>Revoke every stored refresh token for affected users at <code>oauth2.googleapis.com/revoke</code>.</li>
+      <li>Invalidate all active sessions for those users in Redis.</li>
+      <li>Delete the stored tokens rather than marking them revoked, so a second dump yields nothing.</li>
+      <li>Force re-authentication on the next request.</li>
+      <li>If the scope is a full database dump, <strong>rotate the client secret</strong> and require everyone to
+        re-authenticate.</li>
+      <li>Notify affected users with specific guidance, including how to review third-party access in
+        their Google account.</li>
+      <li>Determine the ingress: database breach, memory dump, or log leak. The answer changes what
+        else is compromised.</li>
+    </ol>
+  </div>
+
+  <div class="panel panel--pitfall">
+    <span class="panel-label">Frontend supply chain</span>
+    <p>A compromised npm package in your build cannot read an <code>HttpOnly</code> session cookie, which is
+      exactly why you use one. It <em>can</em> read the authorization code out of the URL before your code
+      runs, intercept <code>fetch</code>, inject a phishing form, and read anything in <code>localStorage</code>.</p>
+    <p>Controls: subresource integrity on CDN-loaded scripts, a CSP that constrains where data can be
+      sent, a lock file with pinned versions, and never putting tokens in <code>localStorage</code>.</p>
+  </div>
+</section>
+
+<!-- ============================================ 11 -->
+<section class="part" id="s11">
+  <div class="part-head">
+    <span class="part-num">11 — Failure modes</span>
+    <h2>Failure modes</h2>
+  </div>
+
+  <div class="duo">
+    <div class="panel panel--threat">
+      <span class="panel-label">JWKS cache stampede</span>
+      <p>Google rotates keys every few weeks. If every instance caches JWKS in-process with the same
+        TTL, they all expire together and all fetch at once. Google rate-limits the fetch, and <strong>ID
+        token validation fails everywhere simultaneously</strong>.</p>
+      <p><strong>Fix:</strong> jitter the cache TTL; use a shared Redis cache with single-flight refresh; negative
+        caching so a refresh cannot repeat within five minutes.</p>
+    </div>
+    <div class="panel panel--threat">
+      <span class="panel-label">Callback flood</span>
+      <p>An attacker posts garbage codes to <code>/auth/callback</code>. If you exchange before validating state,
+        every forged request costs you an outbound call to Google — an amplifier you built.</p>
+      <p><strong>Fix:</strong> validate <code>state</code> first, since it is free, and rate-limit the callback by IP at
+        roughly ten requests per minute.</p>
+    </div>
+  </div>
+
+  <div class="panel panel--pitfall">
+    <span class="panel-label">The 500 between exchange and session write</span>
+    <p>Where the failure happened determines the recovery. <strong>Before the exchange:</strong> the code is still
+      valid at Google and the user can simply retry. <strong>After the exchange, before the session write:</strong>
+      the code is consumed, tokens exist at Google that you did not store, and retrying the exchange
+      with the same code returns <code>invalid_grant</code>. Your handler must detect that error and restart the
+      flow rather than surfacing it, or the user sees a login that fails forever on refresh.</p>
+  </div>
+
+  <div class="tbl">
+    <table>
+      <thead><tr><th>Misconfiguration</th><th>Impact</th><th>Fix</th></tr></thead>
+      <tbody>
+        <tr><td>Redirect URI with a wildcard or prefix</td><td>Open redirect becomes code hijacking</td><td>Exact match, specific paths</td></tr>
+        <tr><td><code>state</code> not validated</td><td>Login CSRF, account grafting</td><td>CSPRNG, compare constant-time before exchange</td></tr>
+        <tr><td>No PKCE</td><td>Code interception is exploitable</td><td>S256, verifier in the server session</td></tr>
+        <tr><td><code>alg</code> unconstrained</td><td>ID token forgery, full impersonation</td><td>Pin to RS256 explicitly</td></tr>
+        <tr><td>Session ID not rotated after login</td><td>Session fixation</td><td>Regenerate on successful auth</td></tr>
+        <tr><td>Refresh tokens in plaintext</td><td>Long-term Google account compromise</td><td>AES-256-GCM with a KMS key</td></tr>
+        <tr><td>Client secret in an image env var</td><td>Anyone who can pull the image has it</td><td>Secrets manager, injected at runtime</td></tr>
+        <tr><td>Full redirect URL in access logs</td><td>Codes harvested from logs</td><td>Strip query params on auth paths</td></tr>
+        <tr><td>Access tokens in <code>localStorage</code></td><td>Any XSS becomes token theft</td><td>HttpOnly cookie or memory only</td></tr>
+        <tr><td>No <code>nonce</code></td><td>ID token replay</td><td>Generate, send, and validate it</td></tr>
+        <tr><td>JWKS not cached</td><td>Latency plus a self-inflicted rate limit</td><td>Cache with jittered TTL</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ============================================ 12 -->
+<section class="part" id="s12">
+  <div class="part-head">
+    <span class="part-num">12 — Operations</span>
+    <h2>Observability</h2>
+  </div>
+
+<pre><code>{ "event_type": "oauth_callback",
+  "request_id": "req-…",
+  "session_id": "<b>sess-hash-…</b>",        <i># a hash, never the raw id</i>
+  "user_id": "db-user-uuid", "google_sub": "11016948…",
+  "outcome": "failure",
+  "failure_reason": "invalid_state",    <i># the field that makes alerting possible</i>
+  "duration_ms": 312, "token_exchange_duration_ms": 298 }</code></pre>
+
+  <div class="panel panel--pitfall">
+    <span class="panel-label">Never log</span>
+    <p>Raw session IDs. Authorization codes. Access tokens, refresh tokens, the client secret. Full
+      redirect URLs, since they carry the code. JWT payloads, since they carry PII. Every one of these
+      turns your log store into a credential store with weaker access control than the systems the
+      credentials belong to.</p>
+  </div>
+
+  <div class="tbl">
+    <table>
+      <thead><tr><th>Signal</th><th>Alert</th><th>Why</th></tr></thead>
+      <tbody>
+        <tr><td><code>invalid_state</code> &gt; 5/min</td><td><span class="tag tag--bad">page</span></td><td>CSRF attempt in progress</td></tr>
+        <tr><td><code>invalid_grant</code> spike</td><td><span class="tag tag--bad">page</span></td><td>Code theft or replay</td></tr>
+        <tr><td>JWT with <code>alg</code> ≠ RS256</td><td><span class="tag tag--bad">page</span></td><td>Forgery attempt. Baseline is zero.</td></tr>
+        <tr><td>One user logging in &gt; 10 times/min</td><td><span class="tag tag--mid">notify</span></td><td>Session farming or credential stuffing</td></tr>
+        <tr><td>Token exchange p99 &gt; 2 s</td><td><span class="tag tag--mid">notify</span></td><td>Google-side degradation</td></tr>
+        <tr><td>Redis out of memory</td><td><span class="tag tag--bad">page</span></td><td>Session writes failing silently</td></tr>
+        <tr><td><code>expired_code</code>, occasional</td><td><span class="tag tag--neu">no</span></td><td>The user took too long. Normal.</td></tr>
+        <tr><td><code>expired_code</code>, spike</td><td><span class="tag tag--mid">notify</span></td><td>Automated probing</td></tr>
+        <tr><td>New <code>sub</code> not in the database</td><td><span class="tag tag--neu">no</span></td><td>That is a new user signing up</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+<pre><code>oauth_login_flow                    [600 ms]
+├── state_validation                [0.1 ms]   <i># free, and first</i>
+├── google_token_exchange           [295 ms]   <i># the dominant cost</i>
+├── jwks_fetch                      [0 ms]     <i># cache hit</i>
+├── jwt_validation                  [2 ms]
+├── db_user_lookup                  [8 ms]
+└── redis_session_write             [1 ms]</code></pre>
+</section>
+
+<!-- ============================================ 13 -->
+<section class="part" id="s13">
+  <div class="part-head">
+    <span class="part-num">13 — Scaling</span>
+    <h2>Scaling and drills</h2>
+  </div>
+
+  <div class="defs">
+    <div><span class="dt">Google's token endpoint</span><span class="dd">Rate-limited per client ID and impossible to parallelise within one login. A marketing email that lands at 09:00 produces a thundering herd. Exponential backoff with jitter, and separate client IDs per product line so each gets its own quota.</span></div>
+    <div><span class="dt">Redis sessions</span><span class="dd">Every authenticated request is a Redis read. Vertical first, since it is simpler; Redis Cluster when a single node's RAM or operations ceiling is reached; Sentinel for HA without sharding.</span></div>
+    <div><span class="dt">JWKS cache</span><span class="dd">Centralise it in Redis with single-flight refresh so 100 instances produce one fetch, not 100.</span></div>
+    <div><span class="dt">User lookup</span><span class="dd">An indexed read on <code>google_sub</code>, so replicas handle it easily. New-user inserts go to the primary. Route the first read after signup to the primary to avoid read-your-writes surprises.</span></div>
+    <div><span class="dt">Auth service</span><span class="dd">Stateless, so it scales horizontally without limit. Autoscale on latency as well as CPU, because a slow token exchange is not CPU-bound and CPU-only scaling will miss it.</span></div>
+  </div>
+
+  <div class="panel panel--note">
+    <span class="panel-label">Consistency, where it actually bites</span>
+    <p>Session <em>creation</em> is forgiving: the first request after login hits the same node by consistent
+      hashing, and replication lag is measured in microseconds. Session <em>deletion</em> is not. A logout
+      that has not replicated leaves a window where the deleted session still validates on another
+      node. If that window matters to you, use synchronous replication for session deletes and accept
+      the latency, or maintain a short-lived revocation set that is checked alongside the session.</p>
+  </div>
+
+  <h3>Tradeoffs worth stating explicitly</h3>
+  <div class="tbl">
+    <table>
+      <thead><tr><th>Control</th><th>Buys you</th><th>Costs you</th></tr></thead>
+      <tbody>
+        <tr><td><code>SameSite=Strict</code></td><td>No cross-site cookie sending at all</td><td><b>Breaks the OAuth callback.</b> Use <code>Lax</code>.</td></tr>
+        <tr><td>PKCE</td><td>Code interception becomes useless</td><td>One SHA-256 and a session write. Negligible.</td></tr>
+        <tr><td>Short session TTL</td><td>Smaller hijacking window</td><td>More re-authentication. Use a sliding TTL.</td></tr>
+        <tr><td>Refresh token rotation</td><td>Theft becomes detectable</td><td>A crash mid-rotation can strand a client. Add a grace period.</td></tr>
+        <tr><td>IP binding on sessions</td><td>Session hijacking across networks fails</td><td>Breaks mobile users on flaky connections. Soft-bind and alert instead.</td></tr>
+        <tr><td>Certificate pinning to Google</td><td>Defeats TLS interception</td><td>Pin rotation becomes an operational risk of its own.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Drills</h3>
+  <ol>
+    <li><strong>Break state.</strong> Comment out the <code>state</code> check in a staging build and execute the login CSRF
+      from section 8 against yourself. Then restore it and confirm the rejection.</li>
+    <li><strong>Forge an ID token.</strong> Take a real one, switch <code>alg</code> to <code>none</code>, strip the signature, and
+      present it. Then try the HS256 variant using the public key from the JWKS endpoint as the HMAC
+      secret. Both must fail.</li>
+    <li><strong>Test fixation.</strong> Set a session cookie manually, log in, and check whether the cookie value
+      changed. If it did not, you have the bug.</li>
+    <li><strong>Replay a code.</strong> Exchange one twice and observe <code>invalid_grant</code>. Confirm your handler
+      restarts the flow rather than showing an error page.</li>
+    <li><strong>Simulate key rotation.</strong> Point at a JWKS with an unknown <code>kid</code> and verify you refresh once
+      and retry once, rather than refreshing on every request.</li>
+    <li><strong>Prove the CDN passthrough.</strong> Log in, then request the callback path from a clean browser
+      and confirm you are not handed somebody else's session.</li>
+    <li><strong>Grep your logs</strong> for <code>code=</code>, <code>Bearer</code>, <code>refresh_token</code> and raw session identifiers. Anything
+      you find is a finding.</li>
+    <li><strong>Audit the redirect URI registration</strong> in Google Cloud Console for wildcards or prefixes,
+      and audit every post-login <code>next</code> parameter for validation.</li>
+  </ol>
+</section>
+
+</main>
+</div>
+
+<footer class="colophon">
+  <p><strong>How to use this.</strong> Sections 1 to 5 are the protocol and every parameter's reason for
+    existing. Section 6 and 7 are your side of the boundary. Sections 8 to 10 are the attacks, which
+    almost all land on the parts you implemented rather than on the parts Google did. Sections 11 to
+    13 are operations.</p>
+  <p><strong>The one idea to keep.</strong> OAuth's design puts the code in the browser and the tokens on a
+    channel the browser cannot reach. Nearly every serious failure in this document is a case of
+    something crossing back the other way: a token in <code>localStorage</code>, a verifier in
+    <code>sessionStorage</code>, a code in a log, a secret in an image. <b>Keep the two channels separate and
+    most of the attack surface simply is not there.</b></p>
+</footer>
+</div>

@@ -1,0 +1,1107 @@
+<title>Passkeys and WebAuthn</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=IBM+Plex+Mono:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..600&display=swap">
+<style>
+/* ============================================================
+   SYSTEM BREAKDOWNS — shared series design system
+   Ground: cool instrument grey. Accent: per-category signal hue,
+   set by the small override block that follows this one.
+   Semantic red/amber/green are constant across the whole series
+   so "threat", "pitfall" and "defence" read identically everywhere.
+   ============================================================ */
+
+:root{
+  --ground:#EAEDF0;
+  --surface:#F8FAFB;
+  --surface-2:#DFE4E9;
+  --sunk:#E2E6EA;
+  --ink:#101418;
+  --ink-2:#3A444E;
+  --ink-3:#68727C;
+  --rule:#C2C9D1;
+  --rule-2:#D5DBE1;
+
+  /* --accent is the only value overridden per category; the two derived
+     tints follow it automatically in both themes via color-mix. */
+  --accent:#2A5A8C;
+  --accent-soft:color-mix(in srgb, var(--accent) 13%, var(--surface));
+  --accent-edge:color-mix(in srgb, var(--accent) 45%, var(--surface));
+
+  --danger:#9C2A2B;  --danger-soft:#F4DFDF;  --danger-edge:#D9A6A6;
+  --warn:#775707;    --warn-soft:#F3EAD1;    --warn-edge:#D9C68C;
+  --safe:#286B43;    --safe-soft:#DBEBE1;    --safe-edge:#A5C9B4;
+
+  --display:"Archivo","Helvetica Neue",Arial,sans-serif;
+  --body:"Source Serif 4",Georgia,"Times New Roman",serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+
+  --shell:1340px;
+  --col:70ch;
+  color-scheme:light;
+}
+
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#0D1116;
+    --surface:#151B21;
+    --surface-2:#1D252D;
+    --sunk:#111820;
+    --ink:#E6EBEF;
+    --ink-2:#B0BAC3;
+    --ink-3:#848F99;
+    --rule:#2A333C;
+    --rule-2:#1F272F;
+    --accent:#7FB3E0;
+    --danger:#F0817A; --danger-soft:#3A1B19; --danger-edge:#6E3230;
+    --warn:#E2BA51;   --warn-soft:#332A10;   --warn-edge:#65531D;
+    --safe:#63CB88;   --safe-soft:#123020;   --safe-edge:#265539;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#0D1116;
+  --surface:#151B21;
+  --surface-2:#1D252D;
+  --sunk:#111820;
+  --ink:#E6EBEF;
+  --ink-2:#B0BAC3;
+  --ink-3:#848F99;
+  --rule:#2A333C;
+  --rule-2:#1F272F;
+  --accent:#7FB3E0;
+  --danger:#F0817A; --danger-soft:#3A1B19; --danger-edge:#6E3230;
+  --warn:#E2BA51;   --warn-soft:#332A10;   --warn-edge:#65531D;
+  --safe:#63CB88;   --safe-soft:#123020;   --safe-edge:#265539;
+  color-scheme:dark;
+}
+
+*,*::before,*::after{box-sizing:border-box;}
+
+body{
+  background:var(--ground);
+  color:var(--ink);
+  font-family:var(--body);
+  font-size:17px;
+  line-height:1.62;
+  font-optical-sizing:auto;
+  -webkit-font-smoothing:antialiased;
+}
+
+h1,h2,h3,h4,h5{
+  font-family:var(--display);
+  font-variation-settings:"wdth" 112;
+  text-wrap:balance;margin:0;line-height:1.1;
+}
+h1{font-size:clamp(2.2rem,5.4vw,3.9rem);font-weight:800;letter-spacing:-.02em;}
+h2{font-size:clamp(1.65rem,3.3vw,2.25rem);font-weight:700;letter-spacing:-.015em;}
+h3{font-size:1.28rem;font-weight:650;letter-spacing:-.005em;line-height:1.22;}
+h4{font-size:1.02rem;font-weight:650;font-variation-settings:"wdth" 100;}
+h5{font-size:.85rem;font-weight:700;font-variation-settings:"wdth" 100;
+   text-transform:uppercase;letter-spacing:.1em;}
+
+p{margin:0;}
+strong{font-weight:700;color:var(--ink);}
+em{font-style:italic;}
+a{color:var(--accent);text-decoration-thickness:1px;text-underline-offset:3px;}
+a:hover{text-decoration-thickness:2px;}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px;}
+
+.eyebrow{font-family:var(--mono);font-size:.7rem;font-weight:600;
+  text-transform:uppercase;letter-spacing:.16em;color:var(--ink-3);}
+
+.shell{max-width:var(--shell);margin:0 auto;padding:0 clamp(1rem,3.5vw,2.75rem);}
+
+/* ---------- masthead ---------- */
+.masthead{border-bottom:1px solid var(--rule);
+  background:linear-gradient(180deg,transparent 0%,transparent 68%,var(--surface) 100%);
+  padding-top:clamp(1.75rem,4.5vw,3.25rem);}
+.mast-grid{display:grid;gap:clamp(1.5rem,4vw,3rem);align-items:end;
+  grid-template-columns:minmax(0,1.02fr) minmax(0,.98fr);
+  padding-bottom:clamp(1.5rem,4vw,2.5rem);}
+@media (max-width:980px){.mast-grid{grid-template-columns:1fr;align-items:start;}}
+.mast-kicker{display:flex;flex-wrap:wrap;gap:.5rem 1.1rem;align-items:center;margin-bottom:1rem;}
+.mast-rule{height:1px;flex:1;min-width:2rem;background:var(--rule);}
+.cat{font-family:var(--mono);font-size:.7rem;font-weight:600;text-transform:uppercase;
+  letter-spacing:.14em;color:var(--accent);}
+.mast-sub{font-size:1.1rem;color:var(--ink-2);margin-top:1.05rem;max-width:54ch;line-height:1.55;}
+.mast-meta{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:1.35rem;}
+.chip{font-family:var(--mono);font-size:.67rem;font-weight:500;letter-spacing:.04em;
+  padding:.28rem .55rem;border:1px solid var(--rule);color:var(--ink-2);
+  background:var(--surface);border-radius:2px;}
+.chip--acc{color:var(--accent);border-color:var(--accent-edge);background:var(--accent-soft);}
+.chip--hot{color:var(--danger);border-color:var(--danger-edge);background:var(--danger-soft);}
+
+/* ---------- frame + rail ---------- */
+.frame{display:grid;grid-template-columns:248px minmax(0,1fr);gap:clamp(2rem,4vw,3.5rem);
+  align-items:start;padding-top:2.25rem;padding-bottom:4rem;}
+@media (max-width:1040px){.frame{grid-template-columns:1fr;gap:1.5rem;}}
+.rail{position:sticky;top:1.25rem;max-height:calc(100vh - 2.5rem);overflow-y:auto;
+  font-family:var(--display);font-variation-settings:"wdth" 100;padding-right:.5rem;}
+@media (max-width:1040px){
+  .rail{position:static;max-height:none;border:1px solid var(--rule);
+    background:var(--surface);padding:1rem 1.15rem;border-radius:3px;}}
+.rail h5{color:var(--ink-3);margin-bottom:.8rem;font-family:var(--mono);
+  font-weight:600;letter-spacing:.14em;font-size:.67rem;}
+.rail ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;}
+.rail li{position:relative;padding-left:1.3rem;}
+.rail li::before{content:"";position:absolute;left:3px;top:.72em;width:7px;height:7px;
+  border-radius:1px;border:1.5px solid var(--rule);background:var(--ground);z-index:1;}
+@media (max-width:1040px){.rail li::before{background:var(--surface);}}
+.rail li:not(:last-child)::after{content:"";position:absolute;left:6px;top:1.3em;
+  bottom:-.35em;width:1px;background:var(--rule);}
+.rail a{display:block;padding:.25rem 0;font-size:.84rem;line-height:1.3;
+  color:var(--ink-2);text-decoration:none;font-weight:500;}
+.rail a:hover{color:var(--accent);}
+.rail li:hover::before{border-color:var(--accent);background:var(--accent);}
+
+/* ---------- document ---------- */
+.doc{min-width:0;display:flex;flex-direction:column;}
+.doc > section{max-width:100%;}
+.doc p,.doc > section > ul,.doc > section > ol,.doc .lede{max-width:var(--col);}
+.lede{font-size:1.08rem;color:var(--ink-2);line-height:1.55;}
+.part{padding-top:3rem;margin-top:3rem;border-top:1px solid var(--rule);}
+.part:first-child{border-top:0;margin-top:0;padding-top:0;}
+.part-head{margin-bottom:1.4rem;}
+.part-num{font-family:var(--mono);font-size:.71rem;font-weight:600;letter-spacing:.16em;
+  color:var(--accent);text-transform:uppercase;display:block;margin-bottom:.5rem;}
+.doc h2{margin-bottom:.65rem;}
+.doc h3{margin:2.3rem 0 .7rem;color:var(--ink);}
+.doc h4{margin:1.65rem 0 .5rem;color:var(--ink);}
+.doc p + p{margin-top:.85rem;}
+.doc p + h3,.doc ul + h3,.doc ol + h3,.doc pre + h3,.doc .tbl + h3,
+.doc figure + h3,.doc .panel + h3,.doc .defs + h3,.doc .check + h3,
+.doc .duo + h3,.doc .strip + h3,.doc .flow + h3{margin-top:2.5rem;}
+.doc ul,.doc ol{margin:.85rem 0 0;padding-left:1.35rem;display:flex;flex-direction:column;gap:.4rem;}
+.doc li{padding-left:.15rem;}
+.doc li::marker{color:var(--ink-3);}
+.doc ul ul,.doc ol ol,.doc ul ol,.doc ol ul{margin-top:.4rem;}
+
+/* ---------- code ---------- */
+code{font-family:var(--mono);font-size:.855em;font-weight:500;
+  background:var(--sunk);border:1px solid var(--rule-2);
+  padding:.08em .34em;border-radius:2px;color:var(--ink);word-break:break-word;}
+pre{margin:1.1rem 0 0;background:var(--surface);border:1px solid var(--rule);
+  border-left:3px solid var(--accent);padding:.9rem 1.05rem;overflow-x:auto;
+  border-radius:2px;max-width:100%;}
+pre code{background:none;border:0;padding:0;font-size:.795rem;line-height:1.62;
+  display:block;white-space:pre;color:var(--ink-2);}
+pre code b{font-weight:600;color:var(--ink);}
+pre code i{font-style:normal;color:var(--ink-3);}
+pre code u{text-decoration:none;color:var(--danger);font-weight:600;}
+pre code s{text-decoration:none;color:var(--safe);font-weight:600;}
+pre code em{font-style:normal;color:var(--accent);font-weight:600;}
+
+/* ---------- figures ---------- */
+figure{margin:1.8rem 0 0;padding:1.1rem 1.1rem .85rem;background:var(--surface);
+  border:1px solid var(--rule);border-radius:3px;}
+figure svg{display:block;width:100%;height:auto;max-width:100%;color:var(--ink-2);}
+.fig-scroll{overflow-x:auto;}
+.fig-scroll > svg{min-width:560px;}
+figcaption{margin-top:.85rem;padding-top:.7rem;border-top:1px solid var(--rule-2);
+  font-size:.835rem;line-height:1.5;color:var(--ink-3);max-width:80ch;}
+figcaption b{color:var(--ink-2);font-weight:650;}
+
+/* ---------- panels ---------- */
+.panel{margin:1.5rem 0 0;padding:.95rem 1.1rem;border-radius:3px;
+  border:1px solid var(--rule);background:var(--surface);max-width:100%;}
+.panel > :first-child{margin-top:0;}
+.panel p,.panel ul,.panel ol{max-width:none;}
+.panel-label{font-family:var(--mono);font-size:.66rem;font-weight:600;
+  letter-spacing:.14em;text-transform:uppercase;display:block;margin-bottom:.45rem;}
+.panel--threat{background:var(--danger-soft);border-color:var(--danger-edge);}
+.panel--threat .panel-label{color:var(--danger);}
+.panel--pitfall{background:var(--warn-soft);border-color:var(--warn-edge);}
+.panel--pitfall .panel-label{color:var(--warn);}
+.panel--defense{background:var(--safe-soft);border-color:var(--safe-edge);}
+.panel--defense .panel-label{color:var(--safe);}
+.panel--note{background:var(--accent-soft);border-color:var(--accent-edge);}
+.panel--note .panel-label{color:var(--accent);}
+.panel pre{background:var(--surface);border-color:var(--rule-2);border-left-width:2px;}
+.panel code{background:var(--surface);}
+
+/* ---------- tables ---------- */
+.tbl{margin:1.4rem 0 0;overflow-x:auto;border:1px solid var(--rule);
+  border-radius:3px;background:var(--surface);}
+table{border-collapse:collapse;width:100%;font-size:.86rem;line-height:1.45;}
+th,td{text-align:left;padding:.58rem .78rem;border-bottom:1px solid var(--rule-2);vertical-align:top;}
+thead th{font-family:var(--mono);font-size:.66rem;font-weight:600;text-transform:uppercase;
+  letter-spacing:.1em;color:var(--ink-3);background:var(--surface-2);
+  border-bottom:1px solid var(--rule);white-space:nowrap;}
+tbody tr:last-child td{border-bottom:0;}
+td code{font-size:.79rem;}
+td code.nw{white-space:nowrap;}
+.num{font-variant-numeric:tabular-nums;text-align:right;}
+.tag{font-family:var(--mono);font-size:.67rem;font-weight:600;letter-spacing:.03em;
+  padding:.15rem .4rem;border-radius:2px;white-space:nowrap;display:inline-block;}
+.tag--bad{background:var(--danger-soft);color:var(--danger);border:1px solid var(--danger-edge);}
+.tag--mid{background:var(--warn-soft);color:var(--warn);border:1px solid var(--warn-edge);}
+.tag--ok{background:var(--safe-soft);color:var(--safe);border:1px solid var(--safe-edge);}
+.tag--acc{background:var(--accent-soft);color:var(--accent);border:1px solid var(--accent-edge);}
+.tag--neu{background:var(--surface-2);color:var(--ink-3);border:1px solid var(--rule);}
+
+/* ---------- definition grid ---------- */
+.defs{margin:1.3rem 0 0;display:grid;gap:0;border:1px solid var(--rule);
+  border-radius:3px;overflow:hidden;background:var(--surface);}
+.defs > div{display:grid;grid-template-columns:minmax(9rem,15rem) minmax(0,1fr);
+  gap:0 1.05rem;padding:.58rem .82rem;border-bottom:1px solid var(--rule-2);}
+.defs > div:last-child{border-bottom:0;}
+.defs .dt{font-family:var(--mono);font-size:.775rem;font-weight:600;
+  color:var(--accent);word-break:break-word;padding-top:.1rem;}
+.defs .dd{margin:0;font-size:.89rem;line-height:1.5;color:var(--ink-2);}
+.defs .dd code{font-size:.79rem;}
+@media (max-width:620px){.defs > div{grid-template-columns:1fr;gap:.25rem;}}
+
+/* ---------- lifecycle flow (T = 0ms style) ---------- */
+.flow{margin:1.4rem 0 0;border:1px solid var(--rule);border-radius:3px;
+  background:var(--surface);overflow:hidden;}
+.flow > li{list-style:none;display:grid;grid-template-columns:minmax(5.5rem,7rem) minmax(0,1fr);
+  gap:0 1rem;padding:.7rem .9rem;border-bottom:1px solid var(--rule-2);
+  font-size:.9rem;line-height:1.5;position:relative;}
+.flow{padding:0;margin-left:0;}
+.flow > li:last-child{border-bottom:0;}
+.flow .t{font-family:var(--mono);font-size:.72rem;font-weight:600;color:var(--accent);
+  letter-spacing:.02em;padding-top:.15rem;font-variant-numeric:tabular-nums;}
+.flow .s b{display:block;font-weight:650;color:var(--ink);margin-bottom:.1rem;}
+.flow .s{color:var(--ink-2);}
+.flow > li.hot{background:var(--danger-soft);}
+.flow > li.hot .t{color:var(--danger);}
+@media (max-width:560px){.flow > li{grid-template-columns:1fr;gap:.2rem;}}
+
+/* ---------- checklists ---------- */
+.check{margin:1.3rem 0 0;padding:0;list-style:none;display:grid;gap:0;
+  border:1px solid var(--rule);border-radius:3px;background:var(--surface);max-width:none;}
+.check li{display:grid;grid-template-columns:auto minmax(0,1fr);gap:.72rem;
+  padding:.6rem .88rem;border-bottom:1px solid var(--rule-2);font-size:.91rem;line-height:1.5;}
+.check li:last-child{border-bottom:0;}
+.check li::before{content:"";width:13px;height:13px;margin-top:.32rem;border-radius:2px;
+  border:1.5px solid var(--rule);background:var(--ground);}
+.check li b{display:block;font-weight:650;color:var(--ink);}
+.check li code{font-size:.78rem;}
+
+/* ---------- misc layout ---------- */
+.duo{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,18rem),1fr));
+  gap:1rem;margin:1.4rem 0 0;}
+.duo > .panel{margin:0;}
+.strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,10.5rem),1fr));
+  border:1px solid var(--rule);border-radius:3px;overflow:hidden;margin:1.5rem 0 0;
+  background:var(--surface);}
+.strip > div{padding:.8rem .95rem;border-right:1px solid var(--rule-2);}
+.strip > div:last-child{border-right:0;}
+.strip .n{font-family:var(--display);font-variation-settings:"wdth" 108;
+  font-size:1.45rem;font-weight:750;line-height:1;color:var(--ink);font-variant-numeric:tabular-nums;}
+.strip .l{font-family:var(--mono);font-size:.66rem;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink-3);margin-top:.38rem;display:block;line-height:1.35;}
+.gloss{columns:2;column-gap:2.5rem;margin:1.4rem 0 0;max-width:none;}
+@media (max-width:760px){.gloss{columns:1;}}
+.gloss > div{break-inside:avoid;margin-bottom:.85rem;font-size:.88rem;line-height:1.5;}
+.gloss .g{font-family:var(--mono);font-size:.79rem;font-weight:600;color:var(--accent);}
+.colophon{border-top:1px solid var(--rule);padding:1.9rem 0 3.5rem;font-size:.83rem;
+  color:var(--ink-3);max-width:72ch;}
+.colophon p + p{margin-top:.65rem;}
+
+/* ---------- diagram primitives ---------- */
+svg .st{stroke:currentColor;fill:none;stroke-width:1.4;}
+svg .st-thin{stroke:currentColor;fill:none;stroke-width:1;}
+svg .st-fat{stroke:currentColor;fill:none;stroke-width:2.2;}
+svg .st-dash{stroke:currentColor;fill:none;stroke-width:1.4;stroke-dasharray:5 3.5;}
+svg .st-dot{stroke:currentColor;fill:none;stroke-width:1.2;stroke-dasharray:1.5 3;}
+svg .rule{stroke:var(--rule);fill:none;stroke-width:1;}
+svg .box{fill:var(--surface);stroke:currentColor;stroke-width:1.3;}
+svg .box-sunk{fill:var(--sunk);stroke:var(--rule);stroke-width:1.1;}
+svg .box-g{fill:var(--ground);stroke:currentColor;stroke-width:1.3;}
+svg .pan-dan{fill:var(--danger-soft);stroke:var(--danger-edge);stroke-width:1.2;}
+svg .pan-saf{fill:var(--safe-soft);stroke:var(--safe-edge);stroke-width:1.2;}
+svg .pan-wrn{fill:var(--warn-soft);stroke:var(--warn-edge);stroke-width:1.2;}
+svg .pan-acc{fill:var(--accent-soft);stroke:var(--accent-edge);stroke-width:1.2;}
+svg text{font-family:var(--mono);font-size:11px;fill:currentColor;}
+svg .t-h{font-family:var(--display);font-variation-settings:"wdth" 100;
+  font-size:12px;font-weight:650;fill:var(--ink);}
+svg .t-lab{font-size:10px;fill:var(--ink-3);letter-spacing:.03em;}
+svg .t-cap{font-size:9px;fill:var(--ink-3);letter-spacing:.08em;text-transform:uppercase;}
+svg .t-sm{font-size:9px;fill:var(--ink-3);}
+svg .t-hash{font-size:10px;fill:var(--ink-2);}
+svg .c-acc{color:var(--accent);}
+svg .c-dan{color:var(--danger);}
+svg .c-saf{color:var(--safe);}
+svg .c-wrn{color:var(--warn);}
+svg .c-ink{color:var(--ink);}
+svg .c-mute{color:var(--ink-3);}
+svg .f-acc{fill:var(--accent);}
+svg .f-dan{fill:var(--danger);}
+svg .f-saf{fill:var(--safe);}
+svg .f-wrn{fill:var(--warn);}
+svg .f-ink{fill:var(--ink);}
+svg .f-ink2{fill:var(--ink-2);}
+svg .f-ink3{fill:var(--ink-3);}
+svg .f-cur{fill:currentColor;}
+svg .f-surf{fill:var(--surface);}
+svg .f-none{fill:none;}
+
+@media (prefers-reduced-motion: reduce){
+  *{animation-duration:.01ms !important;transition-duration:.01ms !important;
+    scroll-behavior:auto !important;}
+}
+html{scroll-behavior:smooth;scroll-padding-top:1.5rem;}
+</style>
+<style>:root{--accent:#3B4CA8;}@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--accent:#8FA0F5;}}:root[data-theme="dark"]{--accent:#8FA0F5;}</style>
+<header class="masthead">
+  <div class="shell">
+    <div class="mast-grid">
+      <div>
+        <div class="mast-kicker">
+          <span class="cat">Authentication Systems</span>
+          <span class="mast-rule"></span>
+          <span class="eyebrow">12 Sections</span>
+        </div>
+        <h1>Passkeys and WebAuthn</h1>
+        <p class="mast-sub">The only widely deployed authentication method that phishing cannot
+          defeat, because the browser signs the origin and the attacker cannot change it. Also every
+          place the deployment around it still breaks.</p>
+        <div class="mast-meta">
+          <span class="chip chip--acc">origin binding</span>
+          <span class="chip">ECDSA P-256</span>
+          <span class="chip">CTAP2</span>
+          <span class="chip">attestation</span>
+          <span class="chip">signCount</span>
+          <span class="chip chip--hot">pass-the-cookie</span>
+          <span class="chip chip--hot">downgrade</span>
+          <span class="chip chip--hot">recovery flows</span>
+        </div>
+      </div>
+
+      <figure style="margin:0;">
+        <div class="fig-scroll">
+        <svg viewBox="0 0 580 320" role="img" aria-label="Registration and authentication side by side. On registration the authenticator generates a key pair, keeps the private key in hardware, and returns the public key, a credential id and a signature over the challenge and the page origin. On authentication the server issues a fresh challenge and the authenticator signs it together with the origin using the stored private key. The server never holds a secret at any point.">
+          <defs>
+            <marker id="h-ar" markerWidth="7" markerHeight="7" refX="6.4" refY="3" orient="auto">
+              <path d="M0,0 L6.4,3 L0,6 z" class="f-ink2"/>
+            </marker>
+            <marker id="h-ars" markerWidth="7" markerHeight="7" refX="6.4" refY="3" orient="auto">
+              <path d="M0,0 L6.4,3 L0,6 z" class="f-saf"/>
+            </marker>
+          </defs>
+          <text class="t-cap" x="0" y="12">two ceremonies, one property</text>
+          <line class="rule" x1="0" y1="20" x2="580" y2="20"/>
+
+          <text class="t-cap" x="0" y="40" style="fill:var(--accent)">REGISTER — navigator.credentials.create()</text>
+          <rect class="box c-acc" x="0" y="50" width="580" height="106" rx="3"/>
+          <text class="t-lab" x="12" y="70" style="font-size:9px">server → challenge (32 random bytes) · rp.id "bank.example.com" · user handle · alg ES256</text>
+          <text class="t-lab" x="12" y="90" style="font-size:9px"><b>the OS checks rp.id against the real page origin</b> — in the operating system, not in JavaScript</text>
+          <text class="t-lab" x="12" y="110" style="font-size:9px">Face ID unlocks the Secure Enclave · a P-256 key pair is generated · <b>the private key never leaves</b></text>
+          <text class="t-lab" x="12" y="130" style="font-size:9px">← credentialId · public key (COSE) · signCount 0 · attestation certificate chain</text>
+          <text class="t-lab" x="12" y="148" style="font-size:9px;fill:var(--safe)">the server stores a PUBLIC key. There is no secret on the server to steal.</text>
+
+          <text class="t-cap" x="0" y="180" style="fill:var(--accent)">AUTHENTICATE — navigator.credentials.get()</text>
+          <rect class="box c-acc" x="0" y="190" width="580" height="90" rx="3"/>
+          <text class="t-lab" x="12" y="210" style="font-size:9px">server → a NEW challenge, one-time, five-minute window</text>
+          <text class="t-lab" x="12" y="230" style="font-size:9px">clientDataJSON = {type:"webauthn.get", challenge, <b>origin: "https://bank.example.com"</b>}</text>
+          <text class="t-lab" x="12" y="250" style="font-size:9px">signature = ECDSA_P256(privKey, SHA256( authenticatorData ‖ SHA256(clientDataJSON) ))</text>
+          <text class="t-lab" x="12" y="270" style="font-size:9px;fill:var(--safe)">the origin is inside the signed bytes — this is the whole security argument</text>
+
+          <line class="rule" x1="0" y1="294" x2="580" y2="294"/>
+          <text class="t-lab" x="0" y="312">Nothing reusable ever crosses the wire: no password, no code, no bearer secret. Only a signature over a challenge that dies immediately.</text>
+        </svg>
+        </div>
+        <figcaption>The <b>origin field is written by the browser</b>, not by page JavaScript, and it is
+          covered by the signature. An attacker who controls the page cannot change it, and an
+          attacker who changes it breaks the signature. Everything else in this document is
+          consequences of that one fact, or of the parts of your system that sit outside it.</figcaption>
+      </figure>
+    </div>
+  </div>
+</header>
+
+<div class="shell">
+<div class="frame">
+
+<nav class="rail" aria-label="Contents">
+  <h5>Contents</h5>
+  <ol>
+    <li><a href="#s01">01 &nbsp;Terminology, precisely</a></li>
+    <li><a href="#s02">02 &nbsp;Registration</a></li>
+    <li><a href="#s03">03 &nbsp;The hardware</a></li>
+    <li><a href="#s04">04 &nbsp;Authentication</a></li>
+    <li><a href="#s05">05 &nbsp;Server validation</a></li>
+    <li><a href="#s06">06 &nbsp;Why phishing fails</a></li>
+    <li><a href="#s07">07 &nbsp;Synced versus device-bound</a></li>
+    <li><a href="#s08">08 &nbsp;Attestation</a></li>
+    <li><a href="#s09">09 &nbsp;What still breaks</a></li>
+    <li><a href="#s10">10 &nbsp;Attack surface</a></li>
+    <li><a href="#s11">11 &nbsp;The recovery paradox</a></li>
+    <li><a href="#s12">12 &nbsp;Deployment and drills</a></li>
+  </ol>
+</nav>
+
+<main class="doc">
+
+<!-- ============================================ 01 -->
+<section class="part" id="s01">
+  <div class="part-head">
+    <span class="part-num">01 — Vocabulary</span>
+    <h2>Terminology, precisely</h2>
+  </div>
+  <p class="lede">These terms are conflated constantly, including in vendor documentation, and the
+    conflation hides real security differences.</p>
+
+  <div class="defs">
+    <div><span class="dt">FIDO2</span><span class="dd">The umbrella: WebAuthn (W3C) plus CTAP2 (FIDO Alliance). Not a protocol you implement directly.</span></div>
+    <div><span class="dt">WebAuthn</span><span class="dd">The browser JavaScript API and the server-side protocol. This is what you write code against.</span></div>
+    <div><span class="dt">CTAP2</span><span class="dd">How the browser talks to the authenticator over USB HID, NFC or Bluetooth. Relevant when the authenticator is a separate device.</span></div>
+    <div><span class="dt">Passkey</span><span class="dd">A FIDO2 credential that <b>syncs across devices</b>. Passkeys are WebAuthn credentials; the word is a UX label for the synced variety. <span class="tag tag--mid">this distinction has security consequences — see section 7</span></span></div>
+    <div><span class="dt">Authenticator</span><span class="dd">Whatever holds the private key. <em>Platform</em>: phone biometrics, Windows Hello. <em>Roaming</em>: YubiKey, Titan.</span></div>
+    <div><span class="dt">Relying Party (RP)</span><span class="dd">Your server. It stores public keys and validates assertions.</span></div>
+    <div><span class="dt">RPID</span><span class="dd">A domain name that scopes the credential. The origin check is performed against this, and it is why phishing fails.</span></div>
+    <div><span class="dt">AAGUID</span><span class="dd">16 bytes identifying the authenticator <b>model</b>, not the individual unit. Looked up in the FIDO Metadata Service.</span></div>
+  </div>
+</section>
+
+<!-- ============================================ 02 -->
+<section class="part" id="s02">
+  <div class="part-head">
+    <span class="part-num">02 — Ceremony</span>
+    <h2>Registration</h2>
+  </div>
+
+<pre><code>const credential = await navigator.credentials.create({ publicKey: {
+  challenge: &lt;32 random bytes from YOUR server&gt;,
+  rp:   { name: "Example Bank", id: <b>"bank.example.com"</b> },     <i># the RPID scopes everything</i>
+  user: { id: &lt;opaque handle, NOT the username&gt;,
+          name: "alice@example.com", displayName: "Alice Smith" },
+  pubKeyCredParams: [ { type:"public-key", alg: <b>-7</b> },          <i># ES256 — P-256 + SHA-256</i>
+                      { type:"public-key", alg: -257 } ],       <i># RS256 fallback</i>
+  authenticatorSelection: {
+    authenticatorAttachment: "platform",   <i># or "cross-platform" for a hardware key</i>
+    <b>userVerification: "required"</b>,        <i># biometric or PIN, not just a touch</i>
+    residentKey: "required"                <i># discoverable — enables username-less login</i>
+  },
+  attestation: "direct",                   <i># ask for the hardware's certificate chain</i>
+  timeout: 60000,
+  <b>excludeCredentials: [ …already registered… ]</b>   <i># prevents silent duplicate enrolment</i>
+}});</code></pre>
+
+  <div class="defs">
+    <div><span class="dt">user.id must be opaque</span><span class="dd">It becomes a permanent identifier visible in the authenticator's UI on some platforms. Use a random handle, never the email address, or you have published PII into the user's device list.</span></div>
+    <div><span class="dt">userVerification: required</span><span class="dd">Forces the UV flag. Without it a credential can be asserted with mere <em>presence</em> — a touch — which is one factor, not two.</span></div>
+    <div><span class="dt">residentKey: required</span><span class="dd">Stores the credential on the authenticator so the user can sign in without typing a username. This is what makes it feel like a passkey.</span></div>
+    <div><span class="dt">excludeCredentials</span><span class="dd">Omitting it lets the same authenticator register twice, which produces confusing duplicates and hides an attacker's enrolment among the user's own.</span></div>
+  </div>
+
+<pre><code><i># what the authenticator builds and signs</i>
+authenticatorData =
+  rpIdHash    [32]   SHA-256("bank.example.com")
+  flags        [1]   UP=1 present · UV=1 verified · AT=1 attested data follows
+  signCount    [4]
+  aaguid      [16]   which MODEL of authenticator
+  credIdLen    [2]
+  credentialId [n]   random, 16–64 bytes
+  publicKey  [CBOR]  the COSE-encoded P-256 public key
+
+clientDataJSON = {"type":"webauthn.create","challenge":"…",
+                  <b>"origin":"https://bank.example.com"</b>,"crossOrigin":false}
+
+signature = ECDSA_P256_Sign(privKey, SHA256( authenticatorData ‖ SHA256(clientDataJSON) ))</code></pre>
+
+  <div class="panel panel--defense">
+    <span class="panel-label">What the server stores, and what it does not</span>
+    <p><strong>Stores:</strong> credential id, the public key, signCount, the RPID, the user handle, and
+      optionally the attestation result.</p>
+    <p><strong>Does not store:</strong> a private key, a password hash, a shared secret, or any biometric data.
+      A full database dump of a passkey-only service yields <strong>nothing an attacker can authenticate
+      with</strong>. That is a categorical difference from every credential system that preceded it.</p>
+  </div>
+</section>
+
+<!-- ============================================ 03 -->
+<section class="part" id="s03">
+  <div class="part-head">
+    <span class="part-num">03 — Hardware</span>
+    <h2>The hardware</h2>
+  </div>
+
+  <figure>
+    <div class="fig-scroll">
+    <svg viewBox="0 0 700 300" role="img" aria-label="Platform authenticator architecture. The application processor runs the WebAuthn platform API, validates the origin against the relying party id and shows the system prompt. The secure enclave is a separate processor holding the biometric template, generating the key pair, and performing signing. The private key is wrapped by a hardware unique key and is never accessible to application code, the operating system kernel, or physical probing.">
+      <defs>
+        <marker id="e3-ar" markerWidth="7" markerHeight="7" refX="6.4" refY="3" orient="auto">
+          <path d="M0,0 L6.4,3 L0,6 z" class="f-ink2"/>
+        </marker>
+      </defs>
+      <text class="t-cap" x="0" y="12">where the private key lives, and who cannot reach it</text>
+      <line class="rule" x1="0" y1="20" x2="700" y2="20"/>
+
+      <rect class="box-sunk" x="0" y="32" width="700" height="90" rx="3"/>
+      <text class="t-lab" x="12" y="52" style="font-weight:600">APPLICATION PROCESSOR — the normal, attackable world</text>
+      <text class="t-lab" x="12" y="72" style="font-size:9px">the browser passes the real page origin to the platform API</text>
+      <text class="t-lab" x="12" y="90" style="font-size:9px"><b>the OS validates rp.id against that origin</b> — not JavaScript, not the page, not anything the attacker controls</text>
+      <text class="t-lab" x="12" y="108" style="font-size:9px">the system UI ("Sign in to bank.example.com?") is drawn by the OS, so a page cannot spoof it</text>
+
+      <line class="st" x1="350" y1="124" x2="350" y2="136" marker-end="url(#e3-ar)"/>
+      <text class="t-lab" x="360" y="134" style="font-size:9px">one narrow, audited call</text>
+
+      <rect class="pan-saf" x="0" y="140" width="700" height="120" rx="3" style="stroke-width:2"/>
+      <text class="t-lab" x="12" y="160" style="font-weight:600;fill:var(--safe)">SECURE ENCLAVE — separate processor, separate memory, its own bus</text>
+      <text class="t-lab" x="12" y="180" style="font-size:9px"><b>biometric match</b> happens here. The template never leaves. The result is one bit: match or not.</text>
+      <text class="t-lab" x="12" y="198" style="font-size:9px"><b>key generation</b>: P-256 pair. The private key is wrapped with the device's UID key before it touches disk.</text>
+      <text class="t-lab" x="12" y="216" style="font-size:9px"><b>signing</b>: the key is unwrapped inside the enclave, signs, and is discarded. Plaintext never exists outside.</text>
+      <text class="t-lab" x="12" y="238" style="font-size:9px;fill:var(--safe)">NOT accessible to: application code · the OS kernel · physical probing of the main bus</text>
+      <text class="t-lab" x="12" y="254" style="font-size:9px">the ephemeral nonce k comes from a hardware TRNG — the failure that broke the PS3 is not reachable here</text>
+
+      <line class="rule" x1="0" y1="276" x2="700" y2="276"/>
+      <text class="t-lab" x="0" y="294">A roaming key (YubiKey) is the same model in a separate physical package, reached over CTAP2 instead of a system call.</text>
+    </svg>
+    </div>
+    <figcaption>Two details are worth holding onto. The <b>origin check happens in the OS</b>, below
+      anything a compromised page can influence. And the <b>ECDSA nonce comes from hardware</b>, which
+      matters because reusing that nonce across two signatures algebraically reveals the private key
+      — the exact mistake that broke the PlayStation 3.</figcaption>
+  </figure>
+
+<pre><code><i># the signing operation, for completeness</i>
+private key   d ∈ [1, n−1]                <i># a 256-bit scalar</i>
+public key    Q = d × G                    <i># a point on P-256</i>
+
+sign(m):  k ← TRNG,  R = k×G,  r = R.x mod n,  s = k⁻¹(m + r·d) mod n
+          signature = (r, s)               <i># 64 bytes</i>
+
+<u># if k EVER repeats for the same d, both signatures together reveal d.</u>
+<i># this is why the nonce source matters more than the curve does.</i></code></pre>
+</section>
+
+<!-- ============================================ 04 -->
+<section class="part" id="s04">
+  <div class="part-head">
+    <span class="part-num">04 — Ceremony</span>
+    <h2>Authentication</h2>
+  </div>
+
+  <figure>
+    <div class="fig-scroll">
+    <svg viewBox="0 0 700 260" role="img" aria-label="The challenge lifecycle. The server generates thirty-two random bytes, stores them with a user, an expiry and an unused flag, and sends them to the browser. The authenticator signs over the challenge and the origin. The server looks the challenge up, rejects it if already used or expired, atomically marks it used, and only then verifies the signature. Replay is impossible because the challenge is unpredictable, single-use, expiring and covered by the signature.">
+      <defs>
+        <marker id="c4-ar" markerWidth="7" markerHeight="7" refX="6.4" refY="3" orient="auto">
+          <path d="M0,0 L6.4,3 L0,6 z" class="f-ink2"/>
+        </marker>
+      </defs>
+      <text class="t-cap" x="0" y="12">the challenge, and the four properties that make replay impossible</text>
+      <line class="rule" x1="0" y1="20" x2="700" y2="20"/>
+
+      <rect class="box c-acc" x="0" y="32" width="216" height="80" rx="3"/>
+      <text class="t-lab" x="12" y="52" style="font-weight:600">T=0 · issue</text>
+      <text class="t-lab" x="12" y="70" style="font-size:9px">32 bytes from getRandomValues</text>
+      <text class="t-lab" x="12" y="84" style="font-size:9px">stored: {bytes, userId, expiresAt,</text>
+      <text class="t-lab" x="12" y="98" style="font-size:9px">         <b>used: false</b>}</text>
+      <line class="st" x1="220" y1="72" x2="240" y2="72" marker-end="url(#c4-ar)"/>
+
+      <rect class="box" x="244" y="32" width="216" height="80" rx="3"/>
+      <text class="t-lab" x="256" y="52" style="font-weight:600">T=1s · sign</text>
+      <text class="t-lab" x="256" y="70" style="font-size:9px">the challenge goes INTO clientDataJSON</text>
+      <text class="t-lab" x="256" y="84" style="font-size:9px">and clientDataJSON goes into the</text>
+      <text class="t-lab" x="256" y="98" style="font-size:9px">signed bytes — now it is bound</text>
+      <line class="st" x1="464" y1="72" x2="484" y2="72" marker-end="url(#c4-ar)"/>
+
+      <rect class="pan-saf" x="488" y="32" width="212" height="80" rx="3"/>
+      <text class="t-lab" x="500" y="52" style="font-weight:600;fill:var(--safe)">T=2s · consume</text>
+      <text class="t-lab" x="500" y="70" style="font-size:9px">used? → reject</text>
+      <text class="t-lab" x="500" y="84" style="font-size:9px">expired? → reject</text>
+      <text class="t-lab" x="500" y="98" style="font-size:9px"><b>mark used ATOMICALLY</b>, then verify</text>
+
+      <line class="rule" x1="0" y1="134" x2="700" y2="134"/>
+      <rect class="pan-acc" x="0" y="146" width="170" height="52" rx="3"/>
+      <text class="t-lab" x="10" y="166" style="font-size:9px;fill:var(--accent);font-weight:600">unpredictable</text>
+      <text class="t-lab" x="10" y="184" style="font-size:9px">2²⁵⁶ values — cannot be guessed</text>
+
+      <rect class="pan-acc" x="178" y="146" width="170" height="52" rx="3"/>
+      <text class="t-lab" x="188" y="166" style="font-size:9px;fill:var(--accent);font-weight:600">single-use</text>
+      <text class="t-lab" x="188" y="184" style="font-size:9px">marked used on first valid assertion</text>
+
+      <rect class="pan-acc" x="356" y="146" width="170" height="52" rx="3"/>
+      <text class="t-lab" x="366" y="166" style="font-size:9px;fill:var(--accent);font-weight:600">expiring</text>
+      <text class="t-lab" x="366" y="184" style="font-size:9px">a five-minute window, not forever</text>
+
+      <rect class="pan-acc" x="534" y="146" width="166" height="52" rx="3"/>
+      <text class="t-lab" x="544" y="166" style="font-size:9px;fill:var(--accent);font-weight:600">signed</text>
+      <text class="t-lab" x="544" y="184" style="font-size:9px">cannot be stripped or swapped</text>
+
+      <rect class="pan-dan" x="0" y="212" width="700" height="42" rx="3"/>
+      <text class="t-lab" x="12" y="232" style="fill:var(--danger);font-weight:600">THE ONE BUG THAT UNDOES ALL FOUR</text>
+      <text class="t-lab" x="12" y="248" style="font-size:9px">Marking the challenge used AFTER verification instead of before lets two concurrent submissions of one assertion both succeed. Mark it first.</text>
+    </svg>
+    </div>
+    <figcaption>Note that the <code>allowCredentials</code> list can be empty. With discoverable credentials the
+      authenticator itself shows the user which accounts it holds for this RPID, which is what
+      produces the <b>username-less login</b> experience and removes username enumeration as a concern
+      entirely.</figcaption>
+  </figure>
+</section>
+
+<!-- ============================================ 05 -->
+<section class="part" id="s05">
+  <div class="part-head">
+    <span class="part-num">05 — Server</span>
+    <h2>Server validation</h2>
+  </div>
+
+  <figure>
+    <div class="fig-scroll">
+    <svg viewBox="0 0 700 340" role="img" aria-label="Five validation stages. Structural checks on field presence and length, then clientDataJSON checks on type, origin and challenge, then authenticatorData checks on the relying party id hash, the user present and user verified flags and the signature counter, then the ECDSA signature verification itself, and finally session issuance recording which credential was used and at what assurance level.">
+      <defs>
+        <marker id="v4-ar" markerWidth="7" markerHeight="7" refX="6.4" refY="3" orient="auto">
+          <path d="M0,0 L6.4,3 L0,6 z" class="f-ink2"/>
+        </marker>
+      </defs>
+      <text class="t-cap" x="0" y="12">every check, in order</text>
+      <line class="rule" x1="0" y1="20" x2="700" y2="20"/>
+
+      <rect class="box" x="0" y="30" width="700" height="34" rx="3"/>
+      <text class="t-lab" x="12" y="50" style="font-weight:600">1 · structural</text>
+      <text class="t-lab" x="140" y="50" style="font-size:9px">fields present · clientDataJSON is valid UTF-8 JSON · authenticatorData ≥ 37 bytes</text>
+      <line class="st" x1="350" y1="66" x2="350" y2="74" marker-end="url(#v4-ar)"/>
+
+      <rect class="pan-acc" x="0" y="78" width="700" height="66" rx="3"/>
+      <text class="t-lab" x="12" y="98" style="font-weight:600;fill:var(--accent)">2 · clientDataJSON</text>
+      <text class="t-lab" x="160" y="98"><b>type == "webauthn.get"</b> · <b>origin ∈ allowlist, exact match</b> · challenge matches and is consumed</text>
+      <text class="t-lab" x="160" y="116" style="font-size:9px">the type check stops a registration assertion being replayed as an authentication one</text>
+      <text class="t-lab" x="160" y="132" style="font-size:9px">crossOrigin == true is worth flagging: a legitimate flow is almost never in a cross-origin frame</text>
+      <line class="st" x1="350" y1="146" x2="350" y2="154" marker-end="url(#v4-ar)"/>
+
+      <rect class="pan-acc" x="0" y="158" width="700" height="76" rx="3"/>
+      <text class="t-lab" x="12" y="178" style="font-weight:600;fill:var(--accent)">3 · authenticatorData</text>
+      <text class="t-lab" x="180" y="178">rpIdHash == SHA-256(your RPID) · <b>UP flag = 1</b> · <b>UV flag = 1 if you required it</b></text>
+      <text class="t-lab" x="180" y="196" style="font-size:9px">signCount &gt; stored signCount — clone and replay detection</text>
+      <text class="t-lab" x="180" y="214" style="font-size:9px;fill:var(--warn)">exception: many synced passkeys always report 0. Treat 0/0 as "no signal", not as a failure. See section 7.</text>
+      <line class="st" x1="350" y1="236" x2="350" y2="244" marker-end="url(#v4-ar)"/>
+
+      <rect class="pan-saf" x="0" y="248" width="700" height="50" rx="3"/>
+      <text class="t-lab" x="12" y="268" style="font-weight:600;fill:var(--safe)">4 · signature</text>
+      <text class="t-lab" x="140" y="268">ECDSA_P256_Verify(storedPubKey, authenticatorData ‖ SHA256(clientDataJSON), sig)</text>
+      <text class="t-lab" x="140" y="288" style="font-size:9px">on failure: log credentialId, origin, IP · return a generic 401 · <b>never reveal WHICH check failed</b></text>
+
+      <rect class="box" x="0" y="306" width="700" height="34" rx="3"/>
+      <text class="t-lab" x="12" y="326" style="font-weight:600">5 · session</text>
+      <text class="t-lab" x="140" y="326" style="font-size:9px">record which credentialId was used and <b>auth_level: "passkey-uv"</b> — you will need both for step-up decisions</text>
+    </svg>
+    </div>
+    <figcaption>Recording the <b>credential and the assurance level in the session</b> is what makes
+      everything in sections 9 and 12 possible: revoking sessions when a specific passkey is deleted,
+      demanding step-up for high-risk operations, and detecting downgrade to a weaker method on an
+      account that has passkeys registered.</figcaption>
+  </figure>
+
+  <div class="panel panel--pitfall">
+    <span class="panel-label">WebAuthn has no revocation list</span>
+    <p>There is no equivalent of a certificate revocation list. You <em>cannot</em> tell an authenticator to
+      stop using a key. If a hardware key is stolen, the private key on it remains cryptographically
+      valid forever.</p>
+    <p><strong>The only revocation is server-side:</strong> delete the credential record, and subsequent assertions
+      fail with an unknown credential id. Which means deleting a passkey must also <strong>revoke every
+      session that was established with it</strong>, or the attacker keeps the access they already have.</p>
+  </div>
+</section>
+
+<!-- ============================================ 06 -->
+<section class="part" id="s06">
+  <div class="part-head">
+    <span class="part-num">06 — The property</span>
+    <h2>Why phishing fails</h2>
+  </div>
+  <p class="lede">Adversary-in-the-middle proxies — Evilginx2, Modlishka, Muraena — defeat passwords
+    plus TOTP completely and at scale. Against WebAuthn they fail for a reason that is not a policy
+    choice or a heuristic.</p>
+
+  <figure>
+    <div class="fig-scroll">
+    <svg viewBox="0 0 700 340" role="img" aria-label="The same adversary-in-the-middle proxy attacking two systems. Against password and TOTP the proxy relays the password, relays the one-time code, and captures the resulting session cookie, succeeding entirely. Against WebAuthn the proxy relays the challenge, but the browser writes the phishing origin into the signed client data, so the real server sees a signature bound to the wrong origin and rejects it.">
+      <defs>
+        <marker id="p4-ard" markerWidth="7" markerHeight="7" refX="6.4" refY="3" orient="auto">
+          <path d="M0,0 L6.4,3 L0,6 z" class="f-dan"/>
+        </marker>
+        <marker id="p4-ars" markerWidth="7" markerHeight="7" refX="6.4" refY="3" orient="auto">
+          <path d="M0,0 L6.4,3 L0,6 z" class="f-saf"/>
+        </marker>
+      </defs>
+      <text class="t-cap" x="0" y="12">one proxy at micros0ft-login.phishing.com, two outcomes</text>
+      <line class="rule" x1="0" y1="20" x2="700" y2="20"/>
+
+      <rect class="pan-dan" x="0" y="30" width="700" height="16" rx="2"/>
+      <text class="t-lab" x="8" y="42" style="fill:var(--danger);font-weight:600">A · password + TOTP — the proxy wins</text>
+
+      <rect class="box" x="0" y="56" width="212" height="34" rx="2"/>
+      <text class="t-lab" x="10" y="76" style="font-size:9px">password → relayed, accepted</text>
+      <path class="st c-dan" d="M216,73 L238,73" marker-end="url(#p4-ard)"/>
+      <rect class="box" x="242" y="56" width="212" height="34" rx="2"/>
+      <text class="t-lab" x="252" y="76" style="font-size:9px">TOTP → relayed inside 30 s</text>
+      <path class="st c-dan" d="M458,73 L480,73" marker-end="url(#p4-ard)"/>
+      <rect class="pan-dan" x="484" y="56" width="216" height="34" rx="2"/>
+      <text class="t-lab" x="494" y="76" style="font-size:9px;fill:var(--danger)">session cookie captured → full access</text>
+
+      <text class="t-lab" x="0" y="108" style="font-size:9px">nothing in the exchange is bound to WHERE the user is. Every value the user types is relayable.</text>
+
+      <line class="rule" x1="0" y1="122" x2="700" y2="122"/>
+      <rect class="pan-saf" x="0" y="132" width="700" height="16" rx="2"/>
+      <text class="t-lab" x="8" y="144" style="fill:var(--safe);font-weight:600">B · WebAuthn — the proxy cannot win</text>
+
+      <rect class="box" x="0" y="158" width="700" height="34" rx="3"/>
+      <text class="t-lab" x="12" y="178" style="font-size:9px">1 · the real server's challenge is relayed through the proxy and reaches the real browser. So far, fine.</text>
+
+      <rect class="pan-dan" x="0" y="200" width="700" height="52" rx="3" style="stroke-width:2"/>
+      <text class="t-lab" x="12" y="220" style="font-size:9px">2 · the browser builds clientDataJSON and fills in the origin <b>itself</b>:</text>
+      <text class="t-lab" x="12" y="240" style="fill:var(--danger)">   "origin": "https://micros0ft-login.phishing.com"   ← the page the user is actually on</text>
+
+      <rect class="box" x="0" y="260" width="700" height="30" rx="3"/>
+      <text class="t-lab" x="12" y="280" style="font-size:9px">3 · the authenticator signs over that. The signature now covers the phishing origin.</text>
+
+      <rect class="pan-saf" x="0" y="298" width="700" height="40" rx="3"/>
+      <text class="t-lab" x="12" y="318" style="fill:var(--safe);font-weight:600">4 · the real server checks origin == "https://microsoft.com" → MISMATCH → 401</text>
+      <text class="t-lab" x="12" y="332" style="font-size:9px">to fix this the attacker would have to forge an ECDSA P-256 signature over modified data, i.e. solve the elliptic curve discrete log problem</text>
+    </svg>
+    </div>
+    <figcaption>The attacker cannot rewrite the origin, because JavaScript on the page does not write
+      it — the browser does, and the authenticator signs it. There is <b>no configuration, no user
+      mistake, and no social engineering</b> that produces a signature over the real origin while the
+      user is on the fake site. This is the only widely deployed MFA with that property.</figcaption>
+  </figure>
+
+  <div class="panel panel--note">
+    <span class="panel-label">Why this matters for step-up and privileged access</span>
+    <p>Because re-authentication is a two-second biometric rather than a code to read and type, you
+      can demand it far more often. That turns WebAuthn into a practical basis for
+      <strong>just-in-time privileged access</strong>: a stale eight-hour session is fine for reading, and any
+      irreversible operation triggers a fresh assertion.</p>
+    <p>Contrast with a TOTP step-up, which an AiTM proxy relays as easily as the initial login. A
+      privileged access system gated on TOTP is gated on something phishable; gated on WebAuthn it is
+      not.</p>
+  </div>
+</section>
+
+<!-- ============================================ 07 -->
+<section class="part" id="s07">
+  <div class="part-head">
+    <span class="part-num">07 — Variants</span>
+    <h2>Synced versus device-bound</h2>
+  </div>
+  <p class="lede">The word "passkey" usually means the synced kind, and syncing changes the threat
+    model in two specific ways.</p>
+
+  <figure>
+    <div class="fig-scroll">
+    <svg viewBox="0 0 700 300" role="img" aria-label="Device-bound and synced credentials compared. A device-bound key is generated in hardware and never leaves it, so cloning is cryptographically impossible and the signature counter provides clone detection. A synced passkey is encrypted end-to-end and replicated through a cloud account, so compromising that cloud account yields the credential, and synced passkeys commonly report a zero signature counter which removes clone detection.">
+      <text class="t-cap" x="0"   y="12" style="fill:var(--safe)">device-bound — YubiKey, TPM-bound Windows Hello</text>
+      <text class="t-cap" x="368" y="12" style="fill:var(--warn)">synced passkey — iCloud Keychain, Google Password Manager</text>
+      <line class="rule" x1="0" y1="20" x2="700" y2="20"/>
+      <line class="rule" x1="340" y1="26" x2="340" y2="266"/>
+
+      <rect class="pan-saf" x="0" y="34" width="320" height="70" rx="3"/>
+      <text class="t-lab" x="10" y="54" style="font-size:9px;fill:var(--safe);font-weight:600">key location</text>
+      <text class="t-lab" x="10" y="72" style="font-size:9px">generated in hardware, non-exportable</text>
+      <text class="t-lab" x="10" y="88" style="font-size:9px">there is no API that returns it</text>
+
+      <rect class="pan-wrn" x="368" y="34" width="332" height="70" rx="3"/>
+      <text class="t-lab" x="378" y="54" style="font-size:9px;fill:var(--warn);font-weight:600">key location</text>
+      <text class="t-lab" x="378" y="72" style="font-size:9px">AES-256-GCM encrypted with a key derived from</text>
+      <text class="t-lab" x="378" y="88" style="font-size:9px">the cloud account, then replicated. E2E, but replicated.</text>
+
+      <rect class="pan-saf" x="0" y="114" width="320" height="70" rx="3"/>
+      <text class="t-lab" x="10" y="134" style="font-size:9px;fill:var(--safe);font-weight:600">cloning</text>
+      <text class="t-lab" x="10" y="152" style="font-size:9px">cryptographically impossible</text>
+      <text class="t-lab" x="10" y="168" style="font-size:9px">stealing the device is the only path</text>
+
+      <rect class="pan-dan" x="368" y="114" width="332" height="70" rx="3"/>
+      <text class="t-lab" x="378" y="134" style="font-size:9px;fill:var(--danger);font-weight:600">cloning</text>
+      <text class="t-lab" x="378" y="152" style="font-size:9px">compromise the cloud account → export to a new device</text>
+      <text class="t-lab" x="378" y="168" style="font-size:9px;fill:var(--danger)">your account security now inherits Apple's or Google's</text>
+
+      <rect class="pan-saf" x="0" y="194" width="320" height="70" rx="3"/>
+      <text class="t-lab" x="10" y="214" style="font-size:9px;fill:var(--safe);font-weight:600">signCount</text>
+      <text class="t-lab" x="10" y="232" style="font-size:9px">increments on every assertion</text>
+      <text class="t-lab" x="10" y="248" style="font-size:9px">a decrease means clone or replay → investigate</text>
+
+      <rect class="pan-dan" x="368" y="194" width="332" height="70" rx="3"/>
+      <text class="t-lab" x="378" y="214" style="font-size:9px;fill:var(--danger);font-weight:600">signCount</text>
+      <text class="t-lab" x="378" y="232" style="font-size:9px">frequently always 0 — the spec permits it, because</text>
+      <text class="t-lab" x="378" y="248" style="font-size:9px;fill:var(--danger)">counters cannot be coordinated across synced copies</text>
+
+      <line class="rule" x1="0" y1="278" x2="700" y2="278"/>
+      <text class="t-lab" x="0" y="296">Enterprise policy lever: require authenticatorAttachment "cross-platform" plus an attestation allowlist to force device-bound.</text>
+    </svg>
+    </div>
+    <figcaption>Losing signCount is the underrated cost of syncing. For device-bound credentials it is
+      a genuine clone detector; for synced ones it is usually absent, so <b>detection has to fall back
+      to behavioural signals</b>: new-device enrolment alerts, geolocation anomalies, and risk-based
+      step-up. Plan for that when you choose the variant.</figcaption>
+  </figure>
+</section>
+
+<!-- ============================================ 08 -->
+<section class="part" id="s08">
+  <div class="part-head">
+    <span class="part-num">08 — Attestation</span>
+    <h2>Attestation</h2>
+  </div>
+  <p class="lede">Attestation answers a question ordinary registration does not: <em>what hardware
+    generated this key?</em></p>
+
+<pre><code>FIDO Alliance root
+   └─ vendor CA (Yubico, Apple, Microsoft)
+        └─ per-MODEL attestation certificate     <i># batched — same cert for every unit</i>
+             └─ signs the attestation statement at registration
+
+<i># the model identifier travels in authenticatorData</i>
+AAGUID  2fc0579f-8113-47ea-b116-bb5a8db9202a   →  YubiKey 5 Series
+        d8522d9f-575b-4866-88a9-ba99fa02f35b   →  Apple passkeys
+<i># resolved against the FIDO Metadata Service at https://mds.fidoalliance.org/</i></code></pre>
+
+  <div class="defs">
+    <div><span class="dt">Verify the chain</span><span class="dd">Attestation format (<code>packed</code>, <code>tpm</code>, <code>android-key</code>, <code>none</code>), certificate chain to a trusted root, and the statement signature over <code>authenticatorData</code>.</span></div>
+    <div><span class="dt">Then apply policy</span><span class="dd">An allowlist of AAGUIDs, a minimum FIDO certification level, and a rule on whether <code>none</code> attestation is acceptable.</span></div>
+    <div><span class="dt">Certificates are per-model, not per-unit</span><span class="dd">Deliberately, for privacy: attestation must not become a tracking identifier. You learn the model, never the individual device.</span></div>
+    <div><span class="dt">The supply-chain case</span><span class="dd">Without attestation verification, a counterfeit "security key" with an exportable software key is indistinguishable from a real one. This is the concrete reason enterprises verify it.</span></div>
+  </div>
+
+  <div class="panel panel--pitfall">
+    <span class="panel-label">Attestation has a real cost</span>
+    <p>An AAGUID allowlist rejects every authenticator you have not explicitly approved, including new
+      models released after your list was written and consumer devices your employees actually own.
+      That is correct for a high-assurance enterprise deployment and wrong for a consumer product,
+      where it converts into a support ticket and a user who gives up and uses the password path.</p>
+  </div>
+</section>
+
+<!-- ============================================ 09 -->
+<section class="part" id="s09">
+  <div class="part-head">
+    <span class="part-num">09 — Residual risk</span>
+    <h2>What still breaks</h2>
+  </div>
+  <p class="lede">WebAuthn secures the <em>authentication event</em>. Three things around it remain exactly
+    as vulnerable as they always were.</p>
+
+  <h3>Pass-the-cookie</h3>
+<pre><code>WebAuthn proves:  "the holder of this passkey authenticated, just now, on this origin"
+the session is:   a long-lived bearer token that represents that event
+
+<i># XSS, a malicious extension, or malware reading the browser's cookie database</i>
+<i># all yield the same thing: a cookie that works from anywhere.</i>
+<u>The passkey is never needed again.</u></code></pre>
+  <div class="panel panel--defense">
+    <span class="panel-label">Layered, because none of these is sufficient alone</span>
+    <ul>
+      <li><code>HttpOnly</code> blocks the XSS read path. <code>SameSite=Strict</code> blocks CSRF. <code>Secure</code> blocks the
+        network path.</li>
+      <li><strong>Short sessions</strong>, so a stolen cookie expires quickly.</li>
+      <li><strong>IP or device binding</strong>, which raises the bar and breaks mobile users — soft-bind and alert
+        rather than hard-fail.</li>
+      <li><strong>Step-up on sensitive operations</strong>, which is the one that genuinely helps: a stolen cookie
+        cannot approve a payment or delete a user without a fresh assertion.</li>
+      <li>Token Binding (RFC 8471) would have solved this cryptographically. Browsers removed support
+        in 2021. <strong>DPoP</strong> (RFC 9449) is the application-layer successor and is gaining traction.</li>
+    </ul>
+  </div>
+
+  <h3>Downgrade to the legacy path</h3>
+<pre><code>the service supports passkeys AND password + TOTP  (i.e. it is mid-migration)
+
+1. the phishing proxy detects a WebAuthn challenge in the response
+2. it <u>strips</u> the challenge and injects a password prompt instead
+3. the user sees a password form. They have a password. They type it.
+4. the proxy relays password and TOTP in real time → classic AiTM succeeds
+
+<s># fix: allow_password_auth = false per account, enforced server-side.</s>
+<i># if the server will not accept a password, the proxy has nothing to offer.</i></code></pre>
+  <p><strong>Detection is easy and worth wiring up:</strong> a legacy authentication attempt on an account that has
+    passkeys registered has no benign explanation in a mature deployment. Alert on it.</p>
+
+  <h3>Recovery — the weakest link, essentially always</h3>
+<pre><code>1. "I lost my device"  →  send a recovery email
+2. attacker who controls the victim's inbox clicks the link
+3. the recovery page lets them register a NEW passkey — theirs
+4. full account access, without ever touching the victim's authenticator
+
+<i># WebAuthn on the front door is theatre if the back door is an email link.</i>
+<i># the attacker attacks the weaker credential, which is what attackers do.</i></code></pre>
+</section>
+
+<!-- ============================================ 10 -->
+<section class="part" id="s10">
+  <div class="part-head">
+    <span class="part-num">10 — Posture</span>
+    <h2>Attack surface</h2>
+  </div>
+
+  <figure>
+    <div class="fig-scroll">
+    <svg viewBox="0 0 700 380" role="img" aria-label="Four trust boundaries. The physical layer covers device theft, biometric spoofing and coercion. Enrollment binds an identity permanently and is vulnerable to weak identity proofing and helpdesk social engineering. Authentication is where WebAuthn is strong, with residual risks of downgrade and challenge replay. The session is a bearer token and is the weakest link, and recovery is the highest-risk surface of all.">
+      <text class="t-cap" x="0" y="12">where the strength is, and where it is not</text>
+      <line class="rule" x1="0" y1="20" x2="700" y2="20"/>
+
+      <rect class="box" x="0" y="30" width="700" height="58" rx="3"/>
+      <text class="t-lab" x="12" y="48" style="font-weight:600">PHYSICAL</text>
+      <text class="t-lab" x="130" y="48" style="font-size:9px">device theft (needs the biometric or PIN too) · biometric spoofing · coercion · counterfeit hardware key</text>
+      <text class="t-lab" x="130" y="66" style="font-size:9px">side-channel analysis of a hardware key's operations — real, expensive, rarely the cheapest path</text>
+      <text class="t-lab" x="130" y="82" style="font-size:9px;fill:var(--safe)">defences: require a PIN on roaming keys · verify attestation · short session lifetimes</text>
+
+      <rect class="pan-wrn" x="0" y="98" width="700" height="66" rx="3"/>
+      <text class="t-lab" x="12" y="116" style="font-weight:600;fill:var(--warn)">ENROLMENT — errors here are permanent</text>
+      <text class="t-lab" x="12" y="134" style="font-size:9px">registering under a false identity before passkeys are in place · weak identity proofing at signup</text>
+      <text class="t-lab" x="12" y="150" style="font-size:9px">helpdesk social engineering to add an attacker's authenticator · missing excludeCredentials · predictable challenge</text>
+
+      <rect class="pan-saf" x="0" y="174" width="700" height="66" rx="3"/>
+      <text class="t-lab" x="12" y="192" style="font-weight:600;fill:var(--safe)">AUTHENTICATION — the strong part</text>
+      <text class="t-lab" x="12" y="210" style="font-size:9px">phishing: defeated by origin binding · replay: defeated by the challenge · credential theft: no secret exists to steal</text>
+      <text class="t-lab" x="12" y="226" style="font-size:9px;fill:var(--warn)">residual: downgrade to a legacy method · challenge not marked used · signCount accepted when ≤ stored · verbose error oracle</text>
+
+      <rect class="pan-dan" x="0" y="250" width="700" height="58" rx="3"/>
+      <text class="t-lab" x="12" y="268" style="font-weight:600;fill:var(--danger)">SESSION — a bearer token, and therefore the weakest link</text>
+      <text class="t-lab" x="12" y="286" style="font-size:9px">cookie theft via XSS, extension or malware · fixation · CSRF · session database compromise</text>
+      <text class="t-lab" x="12" y="302" style="font-size:9px">none of these care that authentication was phishing-resistant</text>
+
+      <rect class="pan-dan" x="0" y="318" width="700" height="58" rx="3" style="stroke-width:2"/>
+      <text class="t-lab" x="12" y="336" style="font-weight:600;fill:var(--danger)">RECOVERY — the highest-risk surface in any passkey deployment</text>
+      <text class="t-lab" x="12" y="354" style="font-size:9px">email recovery · SMS recovery (SIM swap bypasses the passkey entirely) · helpdesk impersonation</text>
+      <text class="t-lab" x="12" y="370" style="font-size:9px">recovery codes stored in the same password manager that was already compromised</text>
+    </svg>
+    </div>
+    <figcaption>Read the colours. The middle band is where WebAuthn is genuinely excellent, and it is
+      sandwiched between two bands where it provides nothing at all. <b>An attacker will pick the red
+      bands</b>, which means your security review should start there rather than at the cryptography.</figcaption>
+  </figure>
+</section>
+
+<!-- ============================================ 11 -->
+<section class="part" id="s11">
+  <div class="part-head">
+    <span class="part-num">11 — Failure modes</span>
+    <h2>The recovery paradox</h2>
+  </div>
+  <p class="lede">Strong authentication needs a recovery path. Any recovery path that works when you
+    have genuinely lost your device also works for an attacker who compromised whatever it depends
+    on. There is no solution, only a choice of trade.</p>
+
+  <div class="tbl">
+    <table>
+      <thead><tr><th>Option</th><th>Security</th><th>How it fails</th></tr></thead>
+      <tbody>
+        <tr><td><b>No recovery</b></td><td><span class="tag tag--ok">maximum</span></td><td>Lose every authenticator and the account is gone permanently. Used for root keys and cold storage. Guarantees a support cost.</td></tr>
+        <tr><td><b>Backup codes</b></td><td><span class="tag tag--ok">high</span></td><td>128-bit, one-time, offline. Fails when the user stores them in the password manager that was already compromised — or loses them.</td></tr>
+        <tr><td><b>Multiple passkeys</b></td><td><span class="tag tag--ok">high</span></td><td><span class="tag tag--ok">recommended for enterprise</span> Require two before enabling passkey-only. Fails only if all devices are lost together.</td></tr>
+        <tr><td><b>Trusted contacts</b></td><td><span class="tag tag--mid">medium</span></td><td>M-of-N approval. An attacker must compromise several independent people. Fails to collusion.</td></tr>
+        <tr><td><b>Delayed recovery</b></td><td><span class="tag tag--mid">medium</span></td><td>A three-day wait with notification on every channel, so the real owner can cancel. Fails when the owner is unreachable for three days.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="panel panel--defense">
+    <span class="panel-label">A workable enterprise split</span>
+    <p><strong>Tier 1 — executives, engineers, anyone with production access.</strong> Two or more hardware keys, no
+      self-service recovery at all. Recovery is an IT-verified identity check plus an approval
+      workflow, logged and alerted.</p>
+    <p><strong>Tier 2 — everyone else.</strong> Platform passkeys plus backup codes, with self-service recovery
+      gated behind a 24-hour delay and notification on every registered channel.</p>
+    <p>The important part is that <strong>Tier 1 recovery is a human process, not an endpoint</strong>. Any endpoint
+      that can re-enroll an authenticator is an endpoint an attacker can reach.</p>
+  </div>
+
+  <div class="panel panel--pitfall">
+    <span class="panel-label">Cross-device reality, which drives users back to passwords</span>
+    <p>Apple passkeys sync across an Apple ID and are not natively available on Android or Chrome for
+      Windows. Google's sync covers Android and Chrome. Windows Hello is TPM-bound and does not sync
+      by default. Crossing ecosystems means a QR code and Bluetooth proximity, which works and is
+      slow and fails on kiosks and shared machines.</p>
+    <p>Two failure modes follow. A user at a shared device <strong>falls back to the password path</strong>, which
+      is exactly the downgrade risk from section 9. And corporate MDM that blocks iCloud Keychain
+      produces passkeys on the phone that never reach the laptop. <strong>For shared-device and
+      cross-ecosystem scenarios, issue hardware keys</strong> rather than hoping proximity works.</p>
+  </div>
+</section>
+
+<!-- ============================================ 12 -->
+<section class="part" id="s12">
+  <div class="part-head">
+    <span class="part-num">12 — Operations</span>
+    <h2>Deployment and drills</h2>
+  </div>
+
+  <div class="tbl">
+    <table>
+      <thead><tr><th>Setting</th><th>The secure choice</th><th>What it costs</th></tr></thead>
+      <tbody>
+        <tr><td><code>userVerification</code></td><td><code>required</code></td><td>Biometric on every login. Painless when biometrics work, painful when they do not.</td></tr>
+        <tr><td><code>authenticatorAttachment</code></td><td><code>cross-platform</code></td><td>Hardware keys only: procurement, distribution, replacement. No phone-as-authenticator.</td></tr>
+        <tr><td><code>residentKey</code></td><td><code>required</code></td><td>Enables username-less login; needs a compatible authenticator.</td></tr>
+        <tr><td><code>attestation</code></td><td><code>direct</code> with an allowlist</td><td>Rejects unverified hardware, and also rejects new models until you update the list.</td></tr>
+        <tr><td>Auth methods</td><td><b>passkey only</b></td><td>Closes the downgrade path. Demands that recovery actually work.</td></tr>
+        <tr><td>Session lifetime</td><td>8 hours</td><td>One re-auth per working day.</td></tr>
+        <tr><td>Step-up</td><td>High-risk operations only</td><td>Two seconds of friction, at exactly the moments it is worth it.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="panel panel--note">
+    <span class="panel-label">Risk-based step-up, in outline</span>
+<pre><code>score = 0
+IP differs from the session's:  +10 same country · +30 VPN/Tor · +60 different country
+session age:                    +20 over 8 h · +40 over 24 h
+operation:                      +50 /admin · +30 /payment · +20 DELETE or PUT
+user agent changed:             +25
+outside the user's normal hours:+20
+
+score ≥ 80 → <b>require a fresh passkey assertion</b>
+score ≥ 50 → push notification to a known device
+score ≥ 30 → allow, log, and flag for review</code></pre>
+    <p style="margin-top:.7rem">This is only tolerable because a passkey re-assertion costs two
+      seconds. The same policy built on TOTP would be both more annoying and, being phishable,
+      substantially less useful.</p>
+  </div>
+
+  <div class="tbl">
+    <table>
+      <thead><tr><th>Signal</th><th>Severity</th><th>Meaning</th></tr></thead>
+      <tbody>
+        <tr><td>Assertion with a mismatched <code>origin</code></td><td><span class="tag tag--bad">critical</span></td><td><b>Someone is running a phishing proxy against you right now.</b> Baseline is zero.</td></tr>
+        <tr><td>Legacy auth on a passkey-registered account</td><td><span class="tag tag--bad">high</span></td><td>Downgrade attempt, or a user stuck at a kiosk. Both worth knowing.</td></tr>
+        <tr><td><code>signCount</code> ≤ stored, non-zero</td><td><span class="tag tag--bad">high</span></td><td>Clone or replay on a device-bound credential</td></tr>
+        <tr><td>Challenge reuse rejected</td><td><span class="tag tag--bad">high</span></td><td>Replay attempt, or a broken client retry loop</td></tr>
+        <tr><td>New credential registered</td><td><span class="tag tag--mid">notify the user</span></td><td>The primary detection for a compromised recovery flow</td></tr>
+        <tr><td>Recovery flow initiated</td><td><span class="tag tag--mid">notify every channel</span></td><td>Give the real owner a chance to cancel it</td></tr>
+        <tr><td>Assertion from a new geography</td><td><span class="tag tag--mid">medium</span></td><td>Main clone signal for synced passkeys, which have no counter</td></tr>
+        <tr><td>Failed assertion, single</td><td><span class="tag tag--neu">no alert</span></td><td>A cancelled biometric prompt</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Drills</h3>
+  <ol>
+    <li><strong>Run the phishing proxy.</strong> Stand up a reverse proxy on a different hostname pointed at your
+      staging login, and confirm the WebAuthn assertion is rejected while password plus TOTP sails
+      through. Nothing teaches the property faster.</li>
+    <li><strong>Replay a challenge.</strong> Capture a valid assertion and submit it twice. The second must fail.
+      Then check whether you mark the challenge used <em>before</em> verification.</li>
+    <li><strong>Test the downgrade path.</strong> Strip the WebAuthn challenge from a response and offer a password
+      form. If the server accepts the password for an account with passkeys, you have the gap.</li>
+    <li><strong>Attack your own recovery.</strong> With access to a test user's email, how many steps does it take
+      to register a new passkey? That number is your real security level.</li>
+    <li><strong>Delete a passkey</strong> and confirm the sessions created with it are revoked. If the old session
+      still works, the credential deletion did nothing to an attacker already inside.</li>
+    <li><strong>Check the signCount handling.</strong> Submit an assertion with a counter lower than stored.
+      Confirm you flag it, and confirm you do <em>not</em> flag the 0/0 case for synced passkeys.</li>
+    <li><strong>Try a shared device.</strong> Attempt cross-ecosystem login on a machine that is not yours, and
+      time it. Whatever happens is what your users will do, including giving up.</li>
+    <li><strong>Steal your own cookie.</strong> Copy a session cookie into another browser and confirm what you
+      can do with it. Then add step-up on the sensitive operations and re-run.</li>
+  </ol>
+</section>
+
+</main>
+</div>
+
+<footer class="colophon">
+  <p><strong>How to use this.</strong> Sections 1 to 5 are the mechanism and the code you write. Section 6 is
+    the reason to bother. Sections 7 and 8 are the deployment choices that change the threat model.
+    Sections 9 to 12 are everything the cryptography does not cover, which is where your incidents
+    will actually come from.</p>
+  <p><strong>The one idea to keep.</strong> WebAuthn makes the authentication event unphishable and does nothing
+    for the session it produces or the recovery flow that bypasses it. Deploying passkeys without
+    fixing recovery moves the attack rather than stopping it. <b>Audit the recovery path first, and
+    the cryptography last.</b></p>
+</footer>
+</div>

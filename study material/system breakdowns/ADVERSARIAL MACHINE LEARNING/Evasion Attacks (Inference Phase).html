@@ -1,0 +1,1483 @@
+<title>Inference-Time Evasion Attacks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=IBM+Plex+Mono:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..600&display=swap">
+<style>
+/* ============================================================
+   SYSTEM BREAKDOWNS — shared series design system
+   Ground: cool instrument grey. Accent: per-category signal hue,
+   set by the small override block that follows this one.
+   Semantic red/amber/green are constant across the whole series
+   so "threat", "pitfall" and "defence" read identically everywhere.
+   ============================================================ */
+
+:root{
+  --ground:#EAEDF0;
+  --surface:#F8FAFB;
+  --surface-2:#DFE4E9;
+  --sunk:#E2E6EA;
+  --ink:#101418;
+  --ink-2:#3A444E;
+  --ink-3:#68727C;
+  --rule:#C2C9D1;
+  --rule-2:#D5DBE1;
+
+  /* --accent is the only value overridden per category; the two derived
+     tints follow it automatically in both themes via color-mix. */
+  --accent:#2A5A8C;
+  --accent-soft:color-mix(in srgb, var(--accent) 13%, var(--surface));
+  --accent-edge:color-mix(in srgb, var(--accent) 45%, var(--surface));
+
+  --danger:#9C2A2B;  --danger-soft:#F4DFDF;  --danger-edge:#D9A6A6;
+  --warn:#775707;    --warn-soft:#F3EAD1;    --warn-edge:#D9C68C;
+  --safe:#286B43;    --safe-soft:#DBEBE1;    --safe-edge:#A5C9B4;
+
+  --display:"Archivo","Helvetica Neue",Arial,sans-serif;
+  --body:"Source Serif 4",Georgia,"Times New Roman",serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+
+  --shell:1340px;
+  --col:70ch;
+  color-scheme:light;
+}
+
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#0D1116;
+    --surface:#151B21;
+    --surface-2:#1D252D;
+    --sunk:#111820;
+    --ink:#E6EBEF;
+    --ink-2:#B0BAC3;
+    --ink-3:#848F99;
+    --rule:#2A333C;
+    --rule-2:#1F272F;
+    --accent:#7FB3E0;
+    --danger:#F0817A; --danger-soft:#3A1B19; --danger-edge:#6E3230;
+    --warn:#E2BA51;   --warn-soft:#332A10;   --warn-edge:#65531D;
+    --safe:#63CB88;   --safe-soft:#123020;   --safe-edge:#265539;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#0D1116;
+  --surface:#151B21;
+  --surface-2:#1D252D;
+  --sunk:#111820;
+  --ink:#E6EBEF;
+  --ink-2:#B0BAC3;
+  --ink-3:#848F99;
+  --rule:#2A333C;
+  --rule-2:#1F272F;
+  --accent:#7FB3E0;
+  --danger:#F0817A; --danger-soft:#3A1B19; --danger-edge:#6E3230;
+  --warn:#E2BA51;   --warn-soft:#332A10;   --warn-edge:#65531D;
+  --safe:#63CB88;   --safe-soft:#123020;   --safe-edge:#265539;
+  color-scheme:dark;
+}
+
+*,*::before,*::after{box-sizing:border-box;}
+
+body{
+  background:var(--ground);
+  color:var(--ink);
+  font-family:var(--body);
+  font-size:17px;
+  line-height:1.62;
+  font-optical-sizing:auto;
+  -webkit-font-smoothing:antialiased;
+}
+
+h1,h2,h3,h4,h5{
+  font-family:var(--display);
+  font-variation-settings:"wdth" 112;
+  text-wrap:balance;margin:0;line-height:1.1;
+}
+h1{font-size:clamp(2.2rem,5.4vw,3.9rem);font-weight:800;letter-spacing:-.02em;}
+h2{font-size:clamp(1.65rem,3.3vw,2.25rem);font-weight:700;letter-spacing:-.015em;}
+h3{font-size:1.28rem;font-weight:650;letter-spacing:-.005em;line-height:1.22;}
+h4{font-size:1.02rem;font-weight:650;font-variation-settings:"wdth" 100;}
+h5{font-size:.85rem;font-weight:700;font-variation-settings:"wdth" 100;
+   text-transform:uppercase;letter-spacing:.1em;}
+
+p{margin:0;}
+strong{font-weight:700;color:var(--ink);}
+em{font-style:italic;}
+a{color:var(--accent);text-decoration-thickness:1px;text-underline-offset:3px;}
+a:hover{text-decoration-thickness:2px;}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px;}
+
+.eyebrow{font-family:var(--mono);font-size:.7rem;font-weight:600;
+  text-transform:uppercase;letter-spacing:.16em;color:var(--ink-3);}
+
+.shell{max-width:var(--shell);margin:0 auto;padding:0 clamp(1rem,3.5vw,2.75rem);}
+
+/* ---------- masthead ---------- */
+.masthead{border-bottom:1px solid var(--rule);
+  background:linear-gradient(180deg,transparent 0%,transparent 68%,var(--surface) 100%);
+  padding-top:clamp(1.75rem,4.5vw,3.25rem);}
+.mast-grid{display:grid;gap:clamp(1.5rem,4vw,3rem);align-items:end;
+  grid-template-columns:minmax(0,1.02fr) minmax(0,.98fr);
+  padding-bottom:clamp(1.5rem,4vw,2.5rem);}
+@media (max-width:980px){.mast-grid{grid-template-columns:1fr;align-items:start;}}
+.mast-kicker{display:flex;flex-wrap:wrap;gap:.5rem 1.1rem;align-items:center;margin-bottom:1rem;}
+.mast-rule{height:1px;flex:1;min-width:2rem;background:var(--rule);}
+.cat{font-family:var(--mono);font-size:.7rem;font-weight:600;text-transform:uppercase;
+  letter-spacing:.14em;color:var(--accent);}
+.mast-sub{font-size:1.1rem;color:var(--ink-2);margin-top:1.05rem;max-width:54ch;line-height:1.55;}
+.mast-meta{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:1.35rem;}
+.chip{font-family:var(--mono);font-size:.67rem;font-weight:500;letter-spacing:.04em;
+  padding:.28rem .55rem;border:1px solid var(--rule);color:var(--ink-2);
+  background:var(--surface);border-radius:2px;}
+.chip--acc{color:var(--accent);border-color:var(--accent-edge);background:var(--accent-soft);}
+.chip--hot{color:var(--danger);border-color:var(--danger-edge);background:var(--danger-soft);}
+
+/* ---------- frame + rail ---------- */
+.frame{display:grid;grid-template-columns:248px minmax(0,1fr);gap:clamp(2rem,4vw,3.5rem);
+  align-items:start;padding-top:2.25rem;padding-bottom:4rem;}
+@media (max-width:1040px){.frame{grid-template-columns:1fr;gap:1.5rem;}}
+.rail{position:sticky;top:1.25rem;max-height:calc(100vh - 2.5rem);overflow-y:auto;
+  font-family:var(--display);font-variation-settings:"wdth" 100;padding-right:.5rem;}
+@media (max-width:1040px){
+  .rail{position:static;max-height:none;border:1px solid var(--rule);
+    background:var(--surface);padding:1rem 1.15rem;border-radius:3px;}}
+.rail h5{color:var(--ink-3);margin-bottom:.8rem;font-family:var(--mono);
+  font-weight:600;letter-spacing:.14em;font-size:.67rem;}
+.rail ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;}
+.rail li{position:relative;padding-left:1.3rem;}
+.rail li::before{content:"";position:absolute;left:3px;top:.72em;width:7px;height:7px;
+  border-radius:1px;border:1.5px solid var(--rule);background:var(--ground);z-index:1;}
+@media (max-width:1040px){.rail li::before{background:var(--surface);}}
+.rail li:not(:last-child)::after{content:"";position:absolute;left:6px;top:1.3em;
+  bottom:-.35em;width:1px;background:var(--rule);}
+.rail a{display:block;padding:.25rem 0;font-size:.84rem;line-height:1.3;
+  color:var(--ink-2);text-decoration:none;font-weight:500;}
+.rail a:hover{color:var(--accent);}
+.rail li:hover::before{border-color:var(--accent);background:var(--accent);}
+
+/* ---------- document ---------- */
+.doc{min-width:0;display:flex;flex-direction:column;}
+.doc > section{max-width:100%;}
+.doc p,.doc > section > ul,.doc > section > ol,.doc .lede{max-width:var(--col);}
+.lede{font-size:1.08rem;color:var(--ink-2);line-height:1.55;}
+.part{padding-top:3rem;margin-top:3rem;border-top:1px solid var(--rule);}
+.part:first-child{border-top:0;margin-top:0;padding-top:0;}
+.part-head{margin-bottom:1.4rem;}
+.part-num{font-family:var(--mono);font-size:.71rem;font-weight:600;letter-spacing:.16em;
+  color:var(--accent);text-transform:uppercase;display:block;margin-bottom:.5rem;}
+.doc h2{margin-bottom:.65rem;}
+.doc h3{margin:2.3rem 0 .7rem;color:var(--ink);}
+.doc h4{margin:1.65rem 0 .5rem;color:var(--ink);}
+.doc p + p{margin-top:.85rem;}
+.doc p + h3,.doc ul + h3,.doc ol + h3,.doc pre + h3,.doc .tbl + h3,
+.doc figure + h3,.doc .panel + h3,.doc .defs + h3,.doc .check + h3,
+.doc .duo + h3,.doc .strip + h3,.doc .flow + h3{margin-top:2.5rem;}
+.doc ul,.doc ol{margin:.85rem 0 0;padding-left:1.35rem;display:flex;flex-direction:column;gap:.4rem;}
+.doc li{padding-left:.15rem;}
+.doc li::marker{color:var(--ink-3);}
+.doc ul ul,.doc ol ol,.doc ul ol,.doc ol ul{margin-top:.4rem;}
+
+/* ---------- code ---------- */
+code{font-family:var(--mono);font-size:.855em;font-weight:500;
+  background:var(--sunk);border:1px solid var(--rule-2);
+  padding:.08em .34em;border-radius:2px;color:var(--ink);word-break:break-word;}
+pre{margin:1.1rem 0 0;background:var(--surface);border:1px solid var(--rule);
+  border-left:3px solid var(--accent);padding:.9rem 1.05rem;overflow-x:auto;
+  border-radius:2px;max-width:100%;}
+pre code{background:none;border:0;padding:0;font-size:.795rem;line-height:1.62;
+  display:block;white-space:pre;color:var(--ink-2);}
+pre code b{font-weight:600;color:var(--ink);}
+pre code i{font-style:normal;color:var(--ink-3);}
+pre code u{text-decoration:none;color:var(--danger);font-weight:600;}
+pre code s{text-decoration:none;color:var(--safe);font-weight:600;}
+pre code em{font-style:normal;color:var(--accent);font-weight:600;}
+
+/* ---------- figures ---------- */
+figure{margin:1.8rem 0 0;padding:1.1rem 1.1rem .85rem;background:var(--surface);
+  border:1px solid var(--rule);border-radius:3px;}
+figure svg{display:block;width:100%;height:auto;max-width:100%;color:var(--ink-2);}
+.fig-scroll{overflow-x:auto;}
+.fig-scroll > svg{min-width:560px;}
+figcaption{margin-top:.85rem;padding-top:.7rem;border-top:1px solid var(--rule-2);
+  font-size:.835rem;line-height:1.5;color:var(--ink-3);max-width:80ch;}
+figcaption b{color:var(--ink-2);font-weight:650;}
+
+/* ---------- panels ---------- */
+.panel{margin:1.5rem 0 0;padding:.95rem 1.1rem;border-radius:3px;
+  border:1px solid var(--rule);background:var(--surface);max-width:100%;}
+.panel > :first-child{margin-top:0;}
+.panel p,.panel ul,.panel ol{max-width:none;}
+.panel-label{font-family:var(--mono);font-size:.66rem;font-weight:600;
+  letter-spacing:.14em;text-transform:uppercase;display:block;margin-bottom:.45rem;}
+.panel--threat{background:var(--danger-soft);border-color:var(--danger-edge);}
+.panel--threat .panel-label{color:var(--danger);}
+.panel--pitfall{background:var(--warn-soft);border-color:var(--warn-edge);}
+.panel--pitfall .panel-label{color:var(--warn);}
+.panel--defense{background:var(--safe-soft);border-color:var(--safe-edge);}
+.panel--defense .panel-label{color:var(--safe);}
+.panel--note{background:var(--accent-soft);border-color:var(--accent-edge);}
+.panel--note .panel-label{color:var(--accent);}
+.panel pre{background:var(--surface);border-color:var(--rule-2);border-left-width:2px;}
+.panel code{background:var(--surface);}
+
+/* ---------- tables ---------- */
+.tbl{margin:1.4rem 0 0;overflow-x:auto;border:1px solid var(--rule);
+  border-radius:3px;background:var(--surface);}
+table{border-collapse:collapse;width:100%;font-size:.86rem;line-height:1.45;}
+th,td{text-align:left;padding:.58rem .78rem;border-bottom:1px solid var(--rule-2);vertical-align:top;}
+thead th{font-family:var(--mono);font-size:.66rem;font-weight:600;text-transform:uppercase;
+  letter-spacing:.1em;color:var(--ink-3);background:var(--surface-2);
+  border-bottom:1px solid var(--rule);white-space:nowrap;}
+tbody tr:last-child td{border-bottom:0;}
+td code{font-size:.79rem;}
+td code.nw{white-space:nowrap;}
+.num{font-variant-numeric:tabular-nums;text-align:right;}
+.tag{font-family:var(--mono);font-size:.67rem;font-weight:600;letter-spacing:.03em;
+  padding:.15rem .4rem;border-radius:2px;white-space:nowrap;display:inline-block;}
+.tag--bad{background:var(--danger-soft);color:var(--danger);border:1px solid var(--danger-edge);}
+.tag--mid{background:var(--warn-soft);color:var(--warn);border:1px solid var(--warn-edge);}
+.tag--ok{background:var(--safe-soft);color:var(--safe);border:1px solid var(--safe-edge);}
+.tag--acc{background:var(--accent-soft);color:var(--accent);border:1px solid var(--accent-edge);}
+.tag--neu{background:var(--surface-2);color:var(--ink-3);border:1px solid var(--rule);}
+
+/* ---------- definition grid ---------- */
+.defs{margin:1.3rem 0 0;display:grid;gap:0;border:1px solid var(--rule);
+  border-radius:3px;overflow:hidden;background:var(--surface);}
+.defs > div{display:grid;grid-template-columns:minmax(9rem,15rem) minmax(0,1fr);
+  gap:0 1.05rem;padding:.58rem .82rem;border-bottom:1px solid var(--rule-2);}
+.defs > div:last-child{border-bottom:0;}
+.defs .dt{font-family:var(--mono);font-size:.775rem;font-weight:600;
+  color:var(--accent);word-break:break-word;padding-top:.1rem;}
+.defs .dd{margin:0;font-size:.89rem;line-height:1.5;color:var(--ink-2);}
+.defs .dd code{font-size:.79rem;}
+@media (max-width:620px){.defs > div{grid-template-columns:1fr;gap:.25rem;}}
+
+/* ---------- lifecycle flow (T = 0ms style) ---------- */
+.flow{margin:1.4rem 0 0;border:1px solid var(--rule);border-radius:3px;
+  background:var(--surface);overflow:hidden;}
+.flow > li{list-style:none;display:grid;grid-template-columns:minmax(5.5rem,7rem) minmax(0,1fr);
+  gap:0 1rem;padding:.7rem .9rem;border-bottom:1px solid var(--rule-2);
+  font-size:.9rem;line-height:1.5;position:relative;}
+.flow{padding:0;margin-left:0;}
+.flow > li:last-child{border-bottom:0;}
+.flow .t{font-family:var(--mono);font-size:.72rem;font-weight:600;color:var(--accent);
+  letter-spacing:.02em;padding-top:.15rem;font-variant-numeric:tabular-nums;}
+.flow .s b{display:block;font-weight:650;color:var(--ink);margin-bottom:.1rem;}
+.flow .s{color:var(--ink-2);}
+.flow > li.hot{background:var(--danger-soft);}
+.flow > li.hot .t{color:var(--danger);}
+@media (max-width:560px){.flow > li{grid-template-columns:1fr;gap:.2rem;}}
+
+/* ---------- checklists ---------- */
+.check{margin:1.3rem 0 0;padding:0;list-style:none;display:grid;gap:0;
+  border:1px solid var(--rule);border-radius:3px;background:var(--surface);max-width:none;}
+.check li{display:grid;grid-template-columns:auto minmax(0,1fr);gap:.72rem;
+  padding:.6rem .88rem;border-bottom:1px solid var(--rule-2);font-size:.91rem;line-height:1.5;}
+.check li:last-child{border-bottom:0;}
+.check li::before{content:"";width:13px;height:13px;margin-top:.32rem;border-radius:2px;
+  border:1.5px solid var(--rule);background:var(--ground);}
+.check li b{display:block;font-weight:650;color:var(--ink);}
+.check li code{font-size:.78rem;}
+
+/* ---------- misc layout ---------- */
+.duo{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,18rem),1fr));
+  gap:1rem;margin:1.4rem 0 0;}
+.duo > .panel{margin:0;}
+.strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,10.5rem),1fr));
+  border:1px solid var(--rule);border-radius:3px;overflow:hidden;margin:1.5rem 0 0;
+  background:var(--surface);}
+.strip > div{padding:.8rem .95rem;border-right:1px solid var(--rule-2);}
+.strip > div:last-child{border-right:0;}
+.strip .n{font-family:var(--display);font-variation-settings:"wdth" 108;
+  font-size:1.45rem;font-weight:750;line-height:1;color:var(--ink);font-variant-numeric:tabular-nums;}
+.strip .l{font-family:var(--mono);font-size:.66rem;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink-3);margin-top:.38rem;display:block;line-height:1.35;}
+.gloss{columns:2;column-gap:2.5rem;margin:1.4rem 0 0;max-width:none;}
+@media (max-width:760px){.gloss{columns:1;}}
+.gloss > div{break-inside:avoid;margin-bottom:.85rem;font-size:.88rem;line-height:1.5;}
+.gloss .g{font-family:var(--mono);font-size:.79rem;font-weight:600;color:var(--accent);}
+.colophon{border-top:1px solid var(--rule);padding:1.9rem 0 3.5rem;font-size:.83rem;
+  color:var(--ink-3);max-width:72ch;}
+.colophon p + p{margin-top:.65rem;}
+
+/* ---------- diagram primitives ---------- */
+svg .st{stroke:currentColor;fill:none;stroke-width:1.4;}
+svg .st-thin{stroke:currentColor;fill:none;stroke-width:1;}
+svg .st-fat{stroke:currentColor;fill:none;stroke-width:2.2;}
+svg .st-dash{stroke:currentColor;fill:none;stroke-width:1.4;stroke-dasharray:5 3.5;}
+svg .st-dot{stroke:currentColor;fill:none;stroke-width:1.2;stroke-dasharray:1.5 3;}
+svg .rule{stroke:var(--rule);fill:none;stroke-width:1;}
+svg .box{fill:var(--surface);stroke:currentColor;stroke-width:1.3;}
+svg .box-sunk{fill:var(--sunk);stroke:var(--rule);stroke-width:1.1;}
+svg .box-g{fill:var(--ground);stroke:currentColor;stroke-width:1.3;}
+svg .pan-dan{fill:var(--danger-soft);stroke:var(--danger-edge);stroke-width:1.2;}
+svg .pan-saf{fill:var(--safe-soft);stroke:var(--safe-edge);stroke-width:1.2;}
+svg .pan-wrn{fill:var(--warn-soft);stroke:var(--warn-edge);stroke-width:1.2;}
+svg .pan-acc{fill:var(--accent-soft);stroke:var(--accent-edge);stroke-width:1.2;}
+svg text{font-family:var(--mono);font-size:11px;fill:currentColor;}
+svg .t-h{font-family:var(--display);font-variation-settings:"wdth" 100;
+  font-size:12px;font-weight:650;fill:var(--ink);}
+svg .t-lab{font-size:10px;fill:var(--ink-3);letter-spacing:.03em;}
+svg .t-cap{font-size:9px;fill:var(--ink-3);letter-spacing:.08em;text-transform:uppercase;}
+svg .t-sm{font-size:9px;fill:var(--ink-3);}
+svg .t-hash{font-size:10px;fill:var(--ink-2);}
+svg .c-acc{color:var(--accent);}
+svg .c-dan{color:var(--danger);}
+svg .c-saf{color:var(--safe);}
+svg .c-wrn{color:var(--warn);}
+svg .c-ink{color:var(--ink);}
+svg .c-mute{color:var(--ink-3);}
+svg .f-acc{fill:var(--accent);}
+svg .f-dan{fill:var(--danger);}
+svg .f-saf{fill:var(--safe);}
+svg .f-wrn{fill:var(--warn);}
+svg .f-ink{fill:var(--ink);}
+svg .f-ink2{fill:var(--ink-2);}
+svg .f-ink3{fill:var(--ink-3);}
+svg .f-cur{fill:currentColor;}
+svg .f-surf{fill:var(--surface);}
+svg .f-none{fill:none;}
+
+@media (prefers-reduced-motion: reduce){
+  *{animation-duration:.01ms !important;transition-duration:.01ms !important;
+    scroll-behavior:auto !important;}
+}
+html{scroll-behavior:smooth;scroll-padding-top:1.5rem;}
+</style>
+<style>:root{--accent:#8C2F55;}@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--accent:#E8809F;}}:root[data-theme="dark"]{--accent:#E8809F;}</style>
+<header class="masthead">
+  <div class="shell">
+    <div class="mast-grid">
+      <div>
+        <div class="mast-kicker">
+          <span class="cat">Adversarial Machine Learning</span>
+          <span class="mast-rule"></span>
+          <span class="eyebrow">14 Sections</span>
+        </div>
+        <h1>Inference-Time Evasion Attacks</h1>
+        <p class="mast-sub">A trained model is a differentiable function from inputs to outputs. Give
+          an attacker the gradient of that function and the decision boundary becomes a map. This is
+          how evasion works, and why almost every published defence has failed.</p>
+        <div class="mast-meta">
+          <span class="chip chip--acc">FGSM &amp; PGD</span>
+          <span class="chip">C&amp;W</span>
+          <span class="chip">black-box attacks</span>
+          <span class="chip">adversarial training</span>
+          <span class="chip">randomized smoothing</span>
+          <span class="chip">certified robustness</span>
+          <span class="chip chip--hot">gradient masking</span>
+          <span class="chip chip--hot">adaptive attacks</span>
+        </div>
+      </div>
+
+      <figure style="margin:0;">
+        <div class="fig-scroll">
+        <svg viewBox="0 0 580 300" role="img" aria-label="Two evasion attacks side by side. In the malware classifier the attacker appends benign content that dilutes entropy and n-gram features while the malicious payload stays byte-identical, flipping the verdict to benign. In the face recognition system a perturbation of two intensity units per pixel moves the 512-dimensional embedding into the victim's acceptance region, opening the door.">
+          <defs>
+            <marker id="h-ar" markerWidth="7" markerHeight="7" refX="6.4" refY="3" orient="auto">
+              <path d="M0,0 L6.4,3 L0,6 z" class="f-ink2"/>
+            </marker>
+            <marker id="h-ard" markerWidth="7" markerHeight="7" refX="6.4" refY="3" orient="auto">
+              <path d="M0,0 L6.4,3 L0,6 z" class="f-dan"/>
+            </marker>
+          </defs>
+          <text class="t-cap" x="0" y="12">two systems · one vulnerability · the model is differentiable</text>
+          <line class="rule" x1="0" y1="20" x2="580" y2="20"/>
+          <line class="rule" x1="290" y1="26" x2="290" y2="278"/>
+
+          <text class="t-cap" x="0" y="42">A · malware classifier</text>
+          <rect class="box-sunk" x="0" y="52" width="272" height="86" rx="3"/>
+          <text class="t-lab" x="10" y="70">section_entropy   7.8  → <s>5.2</s></text>
+          <text class="t-lab" x="10" y="86">byte_ngram_100  0.003  → <s>0.0001</s></text>
+          <text class="t-lab" x="10" y="102" style="fill:var(--danger)">import_hash     0xBAD1 → 0xBAD1</text>
+          <text class="t-lab" x="10" y="118" style="font-size:9px">…2,377 more features</text>
+          <text class="t-lab" x="10" y="132" style="font-size:9px;fill:var(--danger)">payload at 0x1000 is byte-identical</text>
+
+          <text class="t-lab" x="0" y="160">attacker appends 200 KB of benign DLL code.</text>
+          <text class="t-lab" x="0" y="176">The appended bytes are never executed.</text>
+
+          <rect class="pan-dan" x="0" y="192" width="272" height="52" rx="3"/>
+          <text class="t-lab" x="10" y="212" style="fill:var(--danger);font-weight:600">malicious 0.99  →  benign 0.91</text>
+          <text class="t-lab" x="10" y="230">the model was fooled by irrelevant features</text>
+
+          <text class="t-cap" x="308" y="42">B · face recognition</text>
+          <rect class="box-sunk" x="308" y="52" width="272" height="86" rx="3"/>
+          <text class="t-lab" x="318" y="70">pixel[100,100] (128, 64,200)</text>
+          <text class="t-lab" x="318" y="86" style="fill:var(--danger)">          → (130, 62,198)</text>
+          <text class="t-lab" x="318" y="104" style="font-size:9px">|δ| &lt; 8/255 per channel, 150,528 pixels</text>
+          <text class="t-lab" x="318" y="122">embedding [0.4,−0.3, 0.8, …]</text>
+          <text class="t-lab" x="318" y="136" style="font-size:9px;fill:var(--danger)">      → [0.9,−0.1, 0.3, …]  different region</text>
+
+          <text class="t-lab" x="308" y="160">Two intensity units out of 255, imperceptible,</text>
+          <text class="t-lab" x="308" y="176">printed on paper and held up to the camera.</text>
+
+          <rect class="pan-dan" x="308" y="192" width="272" height="52" rx="3"/>
+          <text class="t-lab" x="318" y="212" style="fill:var(--danger);font-weight:600">cos_sim 0.30  →  0.92   (τ = 0.85)</text>
+          <text class="t-lab" x="318" y="230">ACCESS GRANTED as the victim</text>
+
+          <line class="rule" x1="0" y1="262" x2="580" y2="262"/>
+          <text class="t-lab" x="0" y="280">Neither attack changed the model. Both changed the input, using the model's own gradient as the map.</text>
+        </svg>
+        </div>
+        <figcaption>The two systems share nothing architecturally and everything mathematically. Both
+          are functions that map a high-dimensional input to a decision, and both expose
+          <b>∂output/∂input</b> to anyone who can compute or estimate it. The malware case has the extra
+          wrinkle that the attacker must work in binary space, not feature space.</figcaption>
+      </figure>
+    </div>
+  </div>
+</header>
+
+<div class="shell">
+<div class="frame">
+
+<nav class="rail" aria-label="Contents">
+  <h5>Contents</h5>
+  <ol>
+    <li><a href="#s01">01 &nbsp;Two bypasses, end to end</a></li>
+    <li><a href="#s02">02 &nbsp;Preprocessing and trust boundaries</a></li>
+    <li><a href="#s03">03 &nbsp;Architecture and differentiability</a></li>
+    <li><a href="#s04">04 &nbsp;Decision boundary geometry</a></li>
+    <li><a href="#s05">05 &nbsp;FGSM</a></li>
+    <li><a href="#s06">06 &nbsp;PGD and C&amp;W</a></li>
+    <li><a href="#s07">07 &nbsp;The Lp norm zoo</a></li>
+    <li><a href="#s08">08 &nbsp;Black-box attacks</a></li>
+    <li><a href="#s09">09 &nbsp;Why models fail at all</a></li>
+    <li><a href="#s10">10 &nbsp;Adversarial training</a></li>
+    <li><a href="#s11">11 &nbsp;Certified robustness</a></li>
+    <li><a href="#s12">12 &nbsp;Sanitization and its limits</a></li>
+    <li><a href="#s13">13 &nbsp;Gradient masking</a></li>
+    <li><a href="#s14">14 &nbsp;Tradeoffs, ops, drills</a></li>
+  </ol>
+</nav>
+
+<main class="doc">
+
+<!-- ============================================ 01 -->
+<section class="part" id="s01">
+  <div class="part-head">
+    <span class="part-num">01 — Narrative</span>
+    <h2>Two bypasses, end to end</h2>
+  </div>
+  <p class="lede">Two production systems carry this document. A static malware classifier at an email
+    gateway, and a CNN face-recognition reader on a door. They fail the same way for the same reason.</p>
+
+  <h3>System A — malware evasion</h3>
+  <ul class="flow">
+    <li><span class="t">normal</span><span class="s"><b>The intended path</b>
+      Attachment arrives. Gateway extracts the binary, submits it to the classifier. The API pulls
+      2,381 static features: PE header fields, import-table hash, per-section entropy, byte n-gram
+      histograms. Normalise with the training set's μ and σ, run a LightGBM plus feed-forward
+      ensemble, return a verdict in about 76 ms.</span></li>
+    <li class="hot"><span class="t">attack</span><span class="s"><b>Semantics-preserving modification</b>
+      The attacker appends 200 KB of benign DLL code and edits the overlay section. Section entropy
+      drops from 7.8 to 5.2 as the high-entropy packed region is diluted. Rare byte n-grams drop by
+      an order of magnitude. The import hash is untouched because changing it would break execution.
+      Verdict flips from 0.99 malicious to 0.91 benign, and the payload at offset 0x1000 is
+      bit-for-bit unchanged.</span></li>
+  </ul>
+
+  <h3>System B — biometric bypass</h3>
+  <ul class="flow">
+    <li><span class="t">normal</span><span class="s"><b>The intended path</b>
+      Camera captures 1080p. MTCNN or RetinaFace detects the face and five landmarks. An affine
+      transform aligns on eye positions and crops to 224×224. ResNet-50 with an ArcFace-trained
+      backbone produces a 512-dimensional unit-normalised embedding. Cosine similarity against the
+      enrolled template; above τ = 0.85, the door opens.</span></li>
+    <li class="hot"><span class="t">attack</span><span class="s"><b>A printed photograph</b>
+      The attacker perturbs a face image by at most 8/255 per channel, prints it, and holds it up.
+      Cosine similarity to the victim's template goes from 0.30 to 0.92. The perturbation is roughly
+      two intensity units out of 255 and is invisible to a human standing next to the reader.</span></li>
+  </ul>
+
+  <div class="panel panel--pitfall">
+    <span class="panel-label">Why alignment does not save you</span>
+    <p>People assume the crop-and-align step destroys adversarial perturbations. It does not. The
+      alignment algorithms are open source, so the attacker knows exactly which pixels survive, and
+      the transform is <strong>differentiable</strong>, so it can simply be included in the attack's optimisation
+      loop. The attacker optimises the camera-facing image such that <em>after</em> alignment the desired
+      perturbation lands on the CNN's input. Any deterministic differentiable preprocessing step is
+      part of the model as far as the attack is concerned.</p>
+  </div>
+</section>
+
+<!-- ============================================ 02 -->
+<section class="part" id="s02">
+  <div class="part-head">
+    <span class="part-num">02 — Pipeline</span>
+    <h2>Preprocessing and trust boundaries</h2>
+  </div>
+
+  <figure>
+    <div class="fig-scroll">
+    <svg viewBox="0 0 700 330" role="img" aria-label="Four trust boundaries in an inference system. The ingestion perimeter sandboxes the parser against attacker-controlled bytes. The feature space boundary sanitises format but not values. The model serving boundary must not leak gradients or activations. The output boundary controls whether confidence scores are returned, since even soft labels enable black-box attacks.">
+      <defs>
+        <marker id="b-ar" markerWidth="7" markerHeight="7" refX="6.4" refY="3" orient="auto">
+          <path d="M0,0 L6.4,3 L0,6 z" class="f-ink2"/>
+        </marker>
+      </defs>
+      <text class="t-cap" x="0" y="12">what each boundary can and cannot stop</text>
+      <line class="rule" x1="0" y1="20" x2="700" y2="20"/>
+
+      <rect class="pan-dan" x="0" y="30" width="700" height="34" rx="3"/>
+      <text class="t-lab" x="12" y="50" style="fill:var(--danger);font-weight:600">INTERNET / PHYSICAL WORLD — every input is adversarial until proven otherwise</text>
+
+      <line class="st" x1="350" y1="66" x2="350" y2="82" marker-end="url(#b-ar)"/>
+
+      <rect class="box c-acc" x="0" y="88" width="700" height="52" rx="3"/>
+      <text class="t-lab" x="12" y="106" style="fill:var(--accent);font-weight:600">BOUNDARY 1 · INGESTION — the parser runs attacker bytes</text>
+      <text class="t-lab" x="12" y="124">isolated container · no network · read-only FS · 5s CPU timeout · size cap · magic-byte fail-fast</text>
+      <text class="t-lab" x="12" y="136" style="font-size:9px">stops: parser exploits, OOM, zip bombs, timing attacks · does NOT stop: a perfectly well-formed adversarial input</text>
+
+      <line class="st" x1="350" y1="142" x2="350" y2="158" marker-end="url(#b-ar)"/>
+
+      <rect class="box c-acc" x="0" y="164" width="700" height="52" rx="3"/>
+      <text class="t-lab" x="12" y="182" style="fill:var(--accent);font-weight:600">BOUNDARY 2 · FEATURE SPACE — format is sanitised, values are not</text>
+      <text class="t-lab" x="12" y="200">the vector is now numeric floats, so no code-execution risk remains</text>
+      <text class="t-lab" x="12" y="212" style="font-size:9px">the attacker still controls every VALUE. This is where the evasion lives, and this boundary cannot see it.</text>
+
+      <line class="st" x1="350" y1="218" x2="350" y2="234" marker-end="url(#b-ar)"/>
+
+      <rect class="box c-acc" x="0" y="240" width="344" height="52" rx="3"/>
+      <text class="t-lab" x="12" y="258" style="fill:var(--accent);font-weight:600">BOUNDARY 3 · MODEL SERVING</text>
+      <text class="t-lab" x="12" y="276">never return gradients or intermediate activations</text>
+      <text class="t-lab" x="12" y="288" style="font-size:9px">leaked activations = white-box quality attacks from outside</text>
+
+      <rect class="pan-wrn" x="356" y="240" width="344" height="52" rx="3"/>
+      <text class="t-lab" x="368" y="258" style="fill:var(--warn);font-weight:600">BOUNDARY 4 · OUTPUT</text>
+      <text class="t-lab" x="368" y="276">confidence scores enable query-based gradient estimation</text>
+      <text class="t-lab" x="368" y="288" style="font-size:9px">hard labels only in high-security mode — but operators lose risk signal</text>
+
+      <line class="rule" x1="0" y1="306" x2="700" y2="306"/>
+      <text class="t-lab" x="0" y="324">Hard labels are not safety. Decision-based attacks need nothing but the label. See section 8.</text>
+    </svg>
+    </div>
+    <figcaption>Boundary 1 is a genuine security control and stops a real class of attack. Boundaries
+      2 and 3 are the ones people over-trust. <b>Turning a file into floats removes the code-execution
+      risk and none of the evasion risk</b>, because the attacker's whole objective was expressed in
+      those floats.</figcaption>
+  </figure>
+
+  <div class="panel panel--note">
+    <span class="panel-label">Two secrets people forget to protect</span>
+    <p><strong>The normalisation statistics.</strong> The μ and σ vectors are derived from the training
+      distribution. An attacker holding them knows precisely what "benign" looks like in feature
+      space. Keep them in the model registry, never in an API response or a client-side bundle.</p>
+    <p><strong>The model weights.</strong> Stolen weights turn every black-box attack into a white-box attack,
+      which is roughly a thousand-fold reduction in attacker effort. Encrypt artifacts at rest with a
+      KMS key restricted to the inference service role, and keep biometric templates in a separate
+      bucket under a separate key with a separate IAM policy.</p>
+  </div>
+
+  <h3>Dimensionality is the attacker's budget</h3>
+  <div class="strip">
+    <div><span class="n">2,381</span><span class="l">malware features derived from ~500 KB of attacker-controlled bytes</span></div>
+    <div><span class="n">150,528</span><span class="l">image input dimensions, 224×224×3</span></div>
+    <div><span class="n">8/255</span><span class="l">typical L∞ budget, about 0.03 in normalised space</span></div>
+    <div><span class="n">512</span><span class="l">embedding dimensions the decision actually depends on</span></div>
+  </div>
+  <p style="margin-top:1rem">Even a tiny per-dimension budget spans an astronomically large set when
+    there are 150,528 dimensions. The L∞ ball around any input contains vastly more points than were
+    ever sampled during training, and almost all of them look identical to a human.</p>
+</section>
+
+<!-- ============================================ 03 -->
+<section class="part" id="s03">
+  <div class="part-head">
+    <span class="part-num">03 — Architecture</span>
+    <h2>Architecture and differentiability</h2>
+  </div>
+  <p class="lede">The choice between trees and networks changes which attacks apply. It does not
+    change whether the system is attackable.</p>
+
+  <div class="duo">
+    <div class="panel">
+      <span class="panel-label">Branch 1 · LightGBM</span>
+      <p>500 trees, max depth 8. Each tree is a piecewise-constant function; the ensemble output is
+        <code>σ(Σ treeᵢ(x))</code>.</p>
+      <p><strong>Not differentiable.</strong> Within a leaf the output does not change as x changes, so
+        <code>∂L/∂x = 0</code> almost everywhere and is undefined at leaf boundaries. FGSM does not apply.</p>
+      <p><strong>Still not robust.</strong> Genetic algorithms, boundary attacks and decision-based attacks
+        need no gradient at all.</p>
+    </div>
+    <div class="panel">
+      <span class="panel-label">Branch 2 · Feed-forward network</span>
+<pre><code>2381 → 512 → 256 → 128 → 2
+Linear → BatchNorm → ReLU → Dropout(0.3)</code></pre>
+      <p><strong>Differentiable everywhere</strong> except the ReLU kink, where a subgradient is used. Every
+        operation admits backpropagation to the input, which is exactly what FGSM and PGD need.</p>
+    </div>
+  </div>
+
+<pre><code><i># the ensemble that combines them</i>
+p_final = 0.4 × p_tree + 0.6 × p_nn
+verdict = "malicious" if p_final &gt; 0.5 else "benign"
+
+<i># the reason for the ensemble is coverage across feature subsets,</i>
+<i># not robustness. A 60% weight on a differentiable branch means</i>
+<i># gradient attacks still move p_final substantially.</i></code></pre>
+
+  <h3>The ArcFace embedding, and why the threshold is geometry</h3>
+  <p>ResNet-50 produces a 512-dimensional feature vector, unit-normalised so that it lies on the
+    hypersphere <em>S</em>⁵¹¹. ArcFace's training head adds an angular margin, pushing classes further
+    apart on that sphere. At inference the head is discarded and identity matching is a dot product.</p>
+
+  <figure>
+    <div class="fig-scroll">
+    <svg viewBox="0 0 700 300" role="img" aria-label="Enrolled templates as points on a unit hypersphere. A cosine similarity threshold of 0.85 defines a spherical acceptance cap of angular radius about 32 degrees around each template. The attacker's natural embedding sits far outside the victim's cap, and the adversarial perturbation moves it inside. Raising the threshold to 0.95 shrinks the cap to about 18 degrees.">
+      <defs>
+        <marker id="e-ard" markerWidth="8" markerHeight="8" refX="7" refY="3.5" orient="auto">
+          <path d="M0,0 L7,3.5 L0,7 z" class="f-dan"/>
+        </marker>
+      </defs>
+      <text class="t-cap" x="0" y="12">the embedding hypersphere — acceptance is a spherical cap</text>
+      <line class="rule" x1="0" y1="20" x2="700" y2="20"/>
+
+      <!-- sphere -->
+      <circle class="box-sunk" cx="200" cy="160" r="112"/>
+      <ellipse class="rule" cx="200" cy="160" rx="112" ry="34" style="fill:none"/>
+
+      <!-- victim template -->
+      <line class="rule" x1="200" y1="160" x2="272" y2="98"/>
+      <circle class="f-acc" cx="272" cy="98" r="5"/>
+      <text class="t-lab" x="282" y="94" style="fill:var(--accent)">victim template</text>
+
+      <!-- cap -->
+      <path class="pan-acc" d="M234,68 A 112 112 0 0 1 300,142 A 44 44 0 0 0 234,68 z" style="opacity:.85"/>
+      <path class="st-dash c-acc" d="M200,160 L234,68"/>
+      <path class="st-dash c-acc" d="M200,160 L300,142"/>
+      <text class="t-lab" x="246" y="132" style="fill:var(--accent);font-size:9px">θ ≈ 31.8°</text>
+
+      <!-- attacker natural -->
+      <line class="rule" x1="200" y1="160" x2="106" y2="222"/>
+      <circle class="f-ink3" cx="106" cy="222" r="5"/>
+      <text class="t-lab" x="40" y="244">attacker, cos = 0.30</text>
+
+      <!-- attack arc -->
+      <path class="st-fat c-dan" d="M114,214 C150,180 210,116 262,100" marker-end="url(#e-ard)"/>
+      <text class="t-lab" x="130" y="150" style="fill:var(--danger)">PGD moves the embedding</text>
+      <text class="t-lab" x="130" y="164" style="fill:var(--danger)">along the sphere → cos 0.92</text>
+
+      <!-- right panel -->
+      <line class="rule" x1="352" y1="26" x2="352" y2="290"/>
+      <text class="t-cap" x="376" y="44">threshold is a security/usability dial</text>
+
+      <rect class="pan-dan" x="376" y="56" width="316" height="44" rx="3"/>
+      <text class="t-lab" x="388" y="74" style="fill:var(--danger)">τ = 0.60 → cap ≈ 53°   FAR 0.1%   FRR 0.05%</text>
+      <text class="t-lab" x="388" y="90" style="font-size:9px">good UX, weak security — a large target to aim at</text>
+
+      <rect class="pan-wrn" x="376" y="108" width="316" height="44" rx="3"/>
+      <text class="t-lab" x="388" y="126" style="fill:var(--warn)">τ = 0.75 → equal error rate ≈ 0.5%</text>
+      <text class="t-lab" x="388" y="142" style="font-size:9px">the EER point, where FAR = FRR</text>
+
+      <rect class="pan-saf" x="376" y="160" width="316" height="44" rx="3"/>
+      <text class="t-lab" x="388" y="178" style="fill:var(--safe)">τ = 0.85 → cap ≈ 32°   FAR 0.001%   FRR 2%</text>
+      <text class="t-lab" x="388" y="194" style="font-size:9px">2 in 100 legitimate staff denied on a bright day</text>
+
+      <rect class="pan-acc" x="376" y="212" width="316" height="44" rx="3"/>
+      <text class="t-lab" x="388" y="230" style="fill:var(--accent)">τ = 0.95 → cap ≈ 18°</text>
+      <text class="t-lab" x="388" y="246" style="font-size:9px">much harder to hit, and much harder to use</text>
+
+      <text class="t-lab" x="376" y="278">Under attack, the entire ROC curve degrades toward the diagonal.</text>
+      <text class="t-lab" x="376" y="292" style="font-size:9px">Every threshold choice gets worse at once. There is no setting that recovers the loss.</text>
+    </svg>
+    </div>
+    <figcaption>In 512 dimensions a 32° spherical cap is geometrically enormous. The attacker does
+      not need to reach the template, only to land anywhere inside its cap, and the CNN's mapping
+      from image space to embedding space is <b>highly non-isometric</b> — small movements in pixels
+      correspond to large movements on the sphere along the directions the network amplifies.</figcaption>
+  </figure>
+</section>
+
+<!-- ============================================ 04 -->
+<section class="part" id="s04">
+  <div class="part-head">
+    <span class="part-num">04 — Foundation</span>
+    <h2>Decision boundary geometry</h2>
+  </div>
+  <p class="lede">One picture explains every gradient attack in this document.</p>
+
+  <figure>
+    <div class="fig-scroll">
+    <svg viewBox="0 0 700 300" role="img" aria-label="A decision boundary between benign and malicious regions. Natural examples sit far from the boundary so random perturbations do not change the prediction, but the boundary is folded and irregular, so from almost any point there is a specific short direction that crosses it. Random directions need a long distance, the gradient direction needs a very short one.">
+      <defs>
+        <marker id="g-ar" markerWidth="7" markerHeight="7" refX="6.4" refY="3" orient="auto">
+          <path d="M0,0 L6.4,3 L0,6 z" class="f-ink3"/>
+        </marker>
+        <marker id="g-ard" markerWidth="8" markerHeight="8" refX="7" refY="3.5" orient="auto">
+          <path d="M0,0 L7,3.5 L0,7 z" class="f-dan"/>
+        </marker>
+      </defs>
+      <text class="t-cap" x="0" y="12">why a tiny perturbation is enough</text>
+      <line class="rule" x1="0" y1="20" x2="700" y2="20"/>
+
+      <!-- regions -->
+      <path class="pan-saf" d="M0,32 L0,268 L300,268 C260,220 340,180 300,140 C270,110 330,70 296,32 z"/>
+      <path class="pan-dan" d="M296,32 C330,70 270,110 300,140 C340,180 260,220 300,268 L470,268 L470,32 z"/>
+      <text class="t-lab" x="90" y="52" style="fill:var(--safe);font-weight:600">BENIGN REGION</text>
+      <text class="t-lab" x="360" y="52" style="fill:var(--danger);font-weight:600">MALICIOUS</text>
+
+      <!-- boundary emphasised -->
+      <path class="st-fat c-ink" d="M296,32 C330,70 270,110 300,140 C340,180 260,220 300,268" style="stroke-width:2"/>
+      <text class="t-lab" x="230" y="286">the boundary is folded, not flat</text>
+
+      <!-- natural points -->
+      <circle class="f-ink3" cx="70"  cy="110" r="4"/><circle class="f-ink3" cx="120" cy="180" r="4"/>
+      <circle class="f-ink3" cx="60"  cy="220" r="4"/><circle class="f-ink3" cx="150" cy="90"  r="4"/>
+      <circle class="f-ink3" cx="180" cy="230" r="4"/>
+
+      <!-- the sample under attack -->
+      <circle class="box c-ink" cx="196" cy="150" r="7" style="stroke-width:2"/>
+      <text class="t-lab" x="150" y="140">natural x</text>
+
+      <!-- random direction -->
+      <line class="st-dash" x1="204" y1="146" x2="286" y2="112" marker-end="url(#g-ar)" style="stroke:var(--ink-3)"/>
+      <text class="t-lab" x="212" y="106" style="font-size:9px">random direction — long way to the boundary</text>
+
+      <!-- gradient direction -->
+      <line class="st-fat c-dan" x1="203" y1="153" x2="286" y2="158" marker-end="url(#g-ard)"/>
+      <circle class="f-dan" cx="304" cy="159" r="6"/>
+      <text class="t-lab" x="214" y="176" style="fill:var(--danger)">∇ₓL direction — short</text>
+      <text class="t-lab" x="314" y="163" style="fill:var(--danger)">x_adv</text>
+
+      <!-- right explanation -->
+      <line class="rule" x1="490" y1="26" x2="490" y2="290"/>
+      <text class="t-cap" x="510" y="44">the three explanations</text>
+      <rect class="box-sunk" x="510" y="56" width="190" height="66" rx="3"/>
+      <text class="t-lab" x="520" y="74" style="font-weight:600">manifold hypothesis</text>
+      <text class="t-lab" x="520" y="90" style="font-size:9px">natural data lies on a low-dimensional</text>
+      <text class="t-lab" x="520" y="102" style="font-size:9px">manifold. Off it, behaviour was never</text>
+      <text class="t-lab" x="520" y="114" style="font-size:9px">trained and is undefined.</text>
+
+      <rect class="box-sunk" x="510" y="130" width="190" height="66" rx="3"/>
+      <text class="t-lab" x="520" y="148" style="font-weight:600">excessive linearity</text>
+      <text class="t-lab" x="520" y="164" style="font-size:9px">ε·d·w̄ ≈ 0.03 × 150,528 × 0.1</text>
+      <text class="t-lab" x="520" y="176" style="font-size:9px">≈ 452 units of pre-activation shift</text>
+      <text class="t-lab" x="520" y="188" style="font-size:9px">from an invisible change.</text>
+
+      <rect class="box-sunk" x="510" y="204" width="190" height="66" rx="3"/>
+      <text class="t-lab" x="520" y="222" style="font-weight:600">high-dimensional geometry</text>
+      <text class="t-lab" x="520" y="238" style="font-size:9px">the ε-ball around any point holds</text>
+      <text class="t-lab" x="520" y="250" style="font-size:9px">exponentially many unsampled points.</text>
+      <text class="t-lab" x="520" y="262" style="font-size:9px">Predictions there are arbitrary.</text>
+    </svg>
+    </div>
+    <figcaption>Natural inputs cluster <b>far</b> from the boundary, which is why random noise never
+      breaks a model and why nobody notices the problem in normal operation. The boundary is
+      nonetheless irregular enough that from almost any point a short path exists, and the gradient
+      is a closed-form pointer to it.</figcaption>
+  </figure>
+</section>
+
+<!-- ============================================ 05 -->
+<section class="part" id="s05">
+  <div class="part-head">
+    <span class="part-num">05 — Attack</span>
+    <h2>FGSM — one step, exactly optimal</h2>
+  </div>
+  <p class="lede">Goodfellow et al., 2015. The whole attack is one line, and the <code>sign</code> function in it
+    is not a heuristic.</p>
+
+<pre><code>x_adv = x + ε · <b>sign</b>( ∂L(f_θ(x), y) / ∂x )
+
+<i># why sign, not the raw gradient?</i>
+<i># the constraint is an L∞ ball: every dimension may move at most ε.</i>
+<i># maximise  δ·g  subject to  ‖δ‖∞ ≤ ε</i>
+<i># the exact solution is  δ = ε·sign(g).  Not an approximation.</i>
+
+<i># raw gradient instead → large-magnitude dimensions blow the budget while</i>
+<i># small-magnitude dimensions leave theirs unused. Strictly worse.</i>
+<i># L2-normalised gradient instead → solves the L2-constrained problem,</i>
+<i># which is the C&amp;W / DeepFool family.</i></code></pre>
+
+<pre><code><i># targeted white-box FGSM against the face model</i>
+def fgsm_attack(model, x, target_embedding, epsilon=8/255):
+    x_adv = x.clone().requires_grad_(True)
+    embedding = model(x_adv)                       <i># (512,), unit-normalised</i>
+    loss = -F.cosine_similarity(embedding.unsqueeze(0),
+                                target_embedding.unsqueeze(0))
+    model.zero_grad(); loss.backward()
+    x_adv = x + epsilon * x_adv.grad.sign()
+    return torch.clamp(x_adv, 0, 1).detach()       <i># stay a valid image</i></code></pre>
+
+  <div class="panel panel--pitfall">
+    <span class="panel-label">Where FGSM falls short</span>
+    <ul>
+      <li><strong>One step only.</strong> It linearises the loss around x. Where the boundary is curved, the
+        straight-line step misses.</li>
+      <li><strong>Fixed step size.</strong> Large ε overshoots and can reduce success.</li>
+      <li><strong>Untargeted by default.</strong> It increases the loss for the true class. Forcing a specific
+        wrong class needs the gradient of the target class's loss instead.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============================================ 06 -->
+<section class="part" id="s06">
+  <div class="part-head">
+    <span class="part-num">06 — Attack</span>
+    <h2>PGD and C&amp;W</h2>
+  </div>
+
+  <figure>
+    <div class="fig-scroll">
+    <svg viewBox="0 0 700 290" role="img" aria-label="FGSM takes one large step from the original input and can overshoot past the useful region. PGD starts from a random point inside the epsilon ball and takes many small signed-gradient steps, clipping back into the ball after each one, tracing a curved path to a point deeper inside the misclassified region.">
+      <defs>
+        <marker id="pg-ar" markerWidth="7" markerHeight="7" refX="6.4" refY="3" orient="auto">
+          <path d="M0,0 L6.4,3 L0,6 z" class="f-ink2"/>
+        </marker>
+        <marker id="pg-ard" markerWidth="7" markerHeight="7" refX="6.4" refY="3" orient="auto">
+          <path d="M0,0 L6.4,3 L0,6 z" class="f-dan"/>
+        </marker>
+        <marker id="pg-ars" markerWidth="7" markerHeight="7" refX="6.4" refY="3" orient="auto">
+          <path d="M0,0 L6.4,3 L0,6 z" class="f-saf"/>
+        </marker>
+      </defs>
+      <text class="t-cap" x="0"   y="12">FGSM — one step</text>
+      <text class="t-cap" x="368" y="12">PGD — iterate, and project back after every step</text>
+      <line class="rule" x1="0" y1="20" x2="700" y2="20"/>
+      <line class="rule" x1="340" y1="20" x2="340" y2="290"/>
+
+      <!-- FGSM -->
+      <rect class="box-sunk" x="40" y="60" width="160" height="160" rx="2" style="stroke-dasharray:4 3"/>
+      <text class="t-lab" x="120" y="52" text-anchor="middle" style="font-size:9px">ε-ball (L∞ = a hypercube)</text>
+      <path class="pan-dan" d="M232,40 C210,110 250,180 226,244 L320,244 L320,40 z"/>
+      <text class="t-lab" x="276" y="60" text-anchor="middle" style="fill:var(--danger);font-size:9px">misclassified</text>
+      <circle class="box c-ink" cx="120" cy="140" r="6" style="stroke-width:2"/>
+      <text class="t-lab" x="120" y="234" text-anchor="middle" style="font-size:9px">x</text>
+      <line class="st-fat c-dan" x1="127" y1="140" x2="236" y2="140" marker-end="url(#pg-ard)"/>
+      <circle class="f-dan" cx="245" cy="140" r="5"/>
+      <text class="t-lab" x="150" y="132" style="fill:var(--danger);font-size:9px">ε · sign(∇ₓL)</text>
+      <text class="t-lab" x="0" y="266">Effective when the loss is locally linear.</text>
+      <text class="t-lab" x="0" y="282">One shot, no refinement, no restarts.</text>
+
+      <!-- PGD -->
+      <rect class="box-sunk" x="380" y="60" width="160" height="160" rx="2" style="stroke-dasharray:4 3"/>
+      <path class="pan-dan" d="M572,40 C550,110 590,180 566,244 L660,244 L660,40 z"/>
+      <circle class="box c-ink" cx="460" cy="140" r="6" style="stroke-width:2"/>
+      <circle class="f-ink3" cx="430" cy="112" r="4"/>
+      <text class="t-lab" x="392" y="106" style="font-size:9px">random start</text>
+      <path class="st-dash" d="M455,135 L434,116"/>
+
+      <!-- steps -->
+      <path class="st c-saf" d="M434,112 L462,120" marker-end="url(#pg-ars)"/>
+      <path class="st c-saf" d="M462,120 L492,136" marker-end="url(#pg-ars)"/>
+      <path class="st c-saf" d="M492,136 L518,158" marker-end="url(#pg-ars)"/>
+      <path class="st c-saf" d="M518,158 L540,152" marker-end="url(#pg-ars)"/>
+      <path class="st c-saf" d="M540,152 L568,146" marker-end="url(#pg-ars)"/>
+      <path class="st c-saf" d="M568,146 L596,142" marker-end="url(#pg-ars)"/>
+      <circle class="f-saf" cx="600" cy="142" r="5"/>
+      <text class="t-lab" x="480" y="180" style="fill:var(--safe);font-size:9px">α = ε/4 per step, T = 10–40 steps</text>
+      <text class="t-lab" x="480" y="194" style="font-size:9px">clip back into the ε-ball each time</text>
+
+      <text class="t-lab" x="368" y="266">Random restarts explore different basins. PGD with restarts is</text>
+      <text class="t-lab" x="368" y="282">near-optimal among first-order attacks, and the basis of adversarial training.</text>
+    </svg>
+    </div>
+    <figcaption>The projection step <code>Π_Bε(x)</code> is just <code>clip(z, x−ε, x+ε)</code> for an L∞ constraint. The
+      random start matters more than it looks: it turns a deterministic single trajectory into a
+      search, and <b>a defence that stops PGD from one start often fails from another</b>.</figcaption>
+  </figure>
+
+  <h3>Carlini &amp; Wagner — minimise the perturbation instead of bounding it</h3>
+  <p>PGD fixes ε and maximises loss. C&amp;W inverts the problem: find the <em>smallest</em> L2 perturbation
+    that achieves misclassification. That inversion is why it broke essentially every defence
+    published before 2017.</p>
+
+<pre><code>minimise  ‖δ‖₂²  +  c · loss(x + δ, t)
+
+loss(x, t) = max( max_{i≠t}(logit_i) − logit_t , −κ )
+<i>#   zero once the target logit leads by margin κ; otherwise it measures</i>
+<i>#   exactly how far from misclassification we still are</i>
+
+<i># box constraint handled by change of variables, not projection:</i>
+δ_i = (tanh(w_i) + 1)/2 − x_i        <i># w unconstrained → Adam works well</i>
+<i># plus binary search over c, ~1000 iterations</i></code></pre>
+
+  <div class="panel panel--threat">
+    <span class="panel-label">The lesson from 2017 that still holds</span>
+    <p>Ten of the strongest published defences failed completely against C&amp;W, having reported
+      success against FGSM and PGD alone. C&amp;W finds <strong>smaller</strong> perturbations, which input
+      preprocessing cannot destroy, and it uses the full gradient magnitude rather than only its
+      sign, which makes it effective on smooth models. <strong>A defence evaluated only against FGSM has
+      not been evaluated.</strong></p>
+  </div>
+</section>
+
+<!-- ============================================ 07 -->
+<section class="part" id="s07">
+  <div class="part-head">
+    <span class="part-num">07 — Foundation</span>
+    <h2>The Lp norm zoo</h2>
+  </div>
+  <p class="lede">Each norm defines a different shape of allowed perturbation, a different attack
+    algorithm, and a different visual signature. Robustness to one does not imply robustness to
+    another.</p>
+
+  <figure>
+    <div class="fig-scroll">
+    <svg viewBox="0 0 700 260" role="img" aria-label="Three perturbation constraints drawn as shapes. The L-infinity ball is an axis-aligned hypercube where every dimension may move by epsilon. The L2 ball is a hypersphere where total Euclidean distance is bounded and budget can be concentrated. The L0 constraint allows only k dimensions to change but by arbitrary amounts.">
+      <text class="t-cap" x="0" y="12">the constraint shapes, and what each one looks like on an image</text>
+      <line class="rule" x1="0" y1="20" x2="700" y2="20"/>
+      <line class="rule" x1="234" y1="26" x2="234" y2="252"/>
+      <line class="rule" x1="468" y1="26" x2="468" y2="252"/>
+
+      <!-- Linf -->
+      <text class="t-cap" x="0" y="44" style="fill:var(--accent)">L∞ — ‖δ‖∞ ≤ ε</text>
+      <line class="rule" x1="20" y1="150" x2="210" y2="150"/>
+      <line class="rule" x1="115" y1="70" x2="115" y2="230"/>
+      <rect class="pan-acc" x="70" y="105" width="90" height="90"/>
+      <circle class="f-ink" cx="115" cy="150" r="4"/>
+      <text class="t-lab" x="0" y="248">every pixel by exactly ε · FGSM, PGD</text>
+      <text class="t-lab" x="0" y="86" style="font-size:9px">uniform fine grain across the whole image;</text>
+      <text class="t-lab" x="0" y="98" style="font-size:9px">no single pixel stands out → imperceptible</text>
+
+      <!-- L2 -->
+      <text class="t-cap" x="252" y="44" style="fill:var(--accent)">L2 — ‖δ‖₂ ≤ ε</text>
+      <line class="rule" x1="254" y1="150" x2="444" y2="150"/>
+      <line class="rule" x1="349" y1="70" x2="349" y2="230"/>
+      <circle class="pan-acc" cx="349" cy="150" r="45"/>
+      <circle class="f-ink" cx="349" cy="150" r="4"/>
+      <text class="t-lab" x="252" y="248">budget concentrated where ∇ is strong · C&amp;W, DeepFool</text>
+      <text class="t-lab" x="252" y="86" style="font-size:9px">clusters on edges and texture boundaries;</text>
+      <text class="t-lab" x="252" y="98" style="font-size:9px">what randomized smoothing certifies</text>
+
+      <!-- L0 -->
+      <text class="t-cap" x="486" y="44" style="fill:var(--accent)">L0 — ‖δ‖₀ ≤ k</text>
+      <line class="rule" x1="488" y1="150" x2="678" y2="150"/>
+      <line class="rule" x1="583" y1="70" x2="583" y2="230"/>
+      <rect class="pan-acc" x="578" y="80" width="10" height="140"/>
+      <rect class="pan-acc" x="513" y="145" width="140" height="10"/>
+      <circle class="f-ink" cx="583" cy="150" r="4"/>
+      <text class="t-lab" x="486" y="248">few pixels, arbitrary magnitude · JSMA, patches</text>
+      <text class="t-lab" x="486" y="86" style="font-size:9px">salt-and-pepper dots; the physical-world</text>
+      <text class="t-lab" x="486" y="98" style="font-size:9px">and sticker-patch threat model</text>
+    </svg>
+    </div>
+    <figcaption>The L0 shape is a union of k-sparse coordinate subspaces, which is non-convex and
+      NP-hard to optimise exactly. That is why L0 attacks use saliency heuristics rather than
+      projected descent. <b>A model adversarially trained on L∞ can remain wide open to an L2 attack
+      tuned to the same perceptual distortion</b>, so robust evaluation has to cover all three.</figcaption>
+  </figure>
+</section>
+
+<!-- ============================================ 08 -->
+<section class="part" id="s08">
+  <div class="part-head">
+    <span class="part-num">08 — Attack</span>
+    <h2>Black-box attacks</h2>
+  </div>
+  <p class="lede">Most production systems return a hard label and nothing else. Defenders read that
+    as "no gradient information, therefore no attack". It is not true, and the belief is load-bearing
+    in a lot of deployed systems.</p>
+
+  <figure>
+    <div class="fig-scroll">
+    <svg viewBox="0 0 700 330" role="img" aria-label="Three black-box attack families with their query costs. Transfer attacks train a substitute model on collected query pairs and craft adversarial examples against it. Score-based attacks estimate gradients numerically from confidence scores. Decision-based attacks start from a misclassified point and walk toward the original using only hard labels.">
+      <defs>
+        <marker id="bb-ar" markerWidth="7" markerHeight="7" refX="6.4" refY="3" orient="auto">
+          <path d="M0,0 L6.4,3 L0,6 z" class="f-ink2"/>
+        </marker>
+        <marker id="bb-ard" markerWidth="7" markerHeight="7" refX="6.4" refY="3" orient="auto">
+          <path d="M0,0 L6.4,3 L0,6 z" class="f-dan"/>
+        </marker>
+      </defs>
+      <text class="t-cap" x="0" y="12">what the API gives away, and what it costs to exploit</text>
+      <line class="rule" x1="0" y1="20" x2="700" y2="20"/>
+
+      <!-- A transfer -->
+      <rect class="pan-wrn" x="0" y="30" width="700" height="16" rx="2"/>
+      <text class="t-lab" x="8" y="42" style="fill:var(--warn);font-weight:600">A · TRANSFER — needs only labels, and not many of them</text>
+      <rect class="box" x="0" y="56" width="130" height="42" rx="3"/>
+      <text class="t-lab" x="65" y="74" text-anchor="middle">query target</text>
+      <text class="t-lab" x="65" y="89" text-anchor="middle" style="font-size:9px">collect (x, label) pairs</text>
+      <line class="st" x1="134" y1="77" x2="156" y2="77" marker-end="url(#bb-ar)"/>
+      <rect class="box" x="160" y="56" width="130" height="42" rx="3"/>
+      <text class="t-lab" x="225" y="74" text-anchor="middle">train substitute</text>
+      <text class="t-lab" x="225" y="89" text-anchor="middle" style="font-size:9px">white-box on your own copy</text>
+      <line class="st" x1="294" y1="77" x2="316" y2="77" marker-end="url(#bb-ar)"/>
+      <rect class="box" x="320" y="56" width="130" height="42" rx="3"/>
+      <text class="t-lab" x="385" y="74" text-anchor="middle">PGD on substitute</text>
+      <text class="t-lab" x="385" y="89" text-anchor="middle" style="font-size:9px">full gradients available</text>
+      <line class="st c-dan" x1="454" y1="77" x2="476" y2="77" marker-end="url(#bb-ard)"/>
+      <rect class="pan-dan" x="480" y="56" width="220" height="42" rx="3"/>
+      <text class="t-lab" x="490" y="74" style="fill:var(--danger)">transfer to target</text>
+      <text class="t-lab" x="490" y="89" style="font-size:9px">40–80% same arch · 20–50% different arch</text>
+
+      <!-- B score -->
+      <rect class="pan-wrn" x="0" y="112" width="700" height="16" rx="2"/>
+      <text class="t-lab" x="8" y="124" style="fill:var(--warn);font-weight:600">B · SCORE-BASED — needs confidence scores</text>
+      <rect class="box-sunk" x="0" y="138" width="400" height="52" rx="3"/>
+      <text class="t-lab" x="12" y="158">∂L/∂xᵢ ≈ [ L(x + h·eᵢ) − L(x − h·eᵢ) ] / 2h</text>
+      <text class="t-lab" x="12" y="176" style="font-size:9px">finite differences, one pair of queries per dimension</text>
+      <rect class="pan-dan" x="416" y="138" width="140" height="52" rx="3"/>
+      <text class="t-lab" x="486" y="158" text-anchor="middle" style="fill:var(--danger);font-weight:600">300,000</text>
+      <text class="t-lab" x="486" y="174" text-anchor="middle" style="font-size:9px">naive queries per gradient</text>
+      <rect class="pan-saf" x="566" y="138" width="134" height="52" rx="3"/>
+      <text class="t-lab" x="633" y="158" text-anchor="middle" style="fill:var(--safe);font-weight:600">~50</text>
+      <text class="t-lab" x="633" y="174" text-anchor="middle" style="font-size:9px">with NES random projections</text>
+
+      <!-- C decision -->
+      <rect class="pan-dan" x="0" y="204" width="700" height="16" rx="2"/>
+      <text class="t-lab" x="8" y="216" style="fill:var(--danger);font-weight:600">C · DECISION-BASED — needs ONLY the hard label. This is the one people do not plan for.</text>
+
+      <rect class="box-sunk" x="0" y="230" width="430" height="72" rx="3"/>
+      <!-- boundary walk illustration -->
+      <path class="st-fat c-ink" d="M250,232 C230,252 268,272 246,300" style="stroke-width:2"/>
+      <circle class="f-dan" cx="330" cy="248" r="5"/>
+      <text class="t-lab" x="340" y="246" style="font-size:9px">start: known misclassified</text>
+      <circle class="box c-ink" cx="60" cy="286" r="6" style="stroke-width:2"/>
+      <text class="t-lab" x="72" y="290" style="font-size:9px">original x</text>
+      <path class="st-dash c-dan" d="M324,252 C280,262 250,268 236,276"/>
+      <path class="st-dash c-dan" d="M236,276 C200,286 140,290 70,288"/>
+      <circle class="f-dan" cx="236" cy="276" r="4"/>
+      <text class="t-lab" x="120" y="250" style="font-size:9px">binary-search along the boundary,</text>
+      <text class="t-lab" x="120" y="262" style="font-size:9px">staying misclassified the whole way</text>
+
+      <rect class="pan-dan" x="446" y="230" width="254" height="72" rx="3"/>
+      <text class="t-lab" x="458" y="250" style="fill:var(--danger);font-weight:600">Boundary Attack · HopSkipJump</text>
+      <text class="t-lab" x="458" y="268">1,000–10,000 queries to get close</text>
+      <text class="t-lab" x="458" y="286" style="font-size:9px">no confidence, no gradient, no model access</text>
+
+      <line class="rule" x1="0" y1="316" x2="700" y2="316"/>
+      <text class="t-lab" x="0" y="328">Withholding confidence scores raises the query cost. It does not close the attack.</text>
+    </svg>
+    </div>
+    <figcaption>Transferability exists because models trained on the same distribution learn
+      correlated boundaries: if two models agree on almost all natural inputs, their boundaries must
+      be geometrically near each other. <b>What limits it</b> is architectural diversity, adversarial
+      training, a substitute trained on genuinely different data, and non-deterministic preprocessing.</figcaption>
+  </figure>
+
+  <div class="panel panel--defense">
+    <span class="panel-label">Detect the query pattern, since you cannot hide the boundary</span>
+<pre><code><i># black-box attacks are query-hungry; normal users are not</i>
+hour_key = f"queries:{api_key}:{now:%Y%m%dT%H}"
+redis.sadd(hour_key, sha256(input));  redis.expire(hour_key, 7200)
+n = redis.scard(hour_key)
+
+if n &gt; 1000:   log.warning("possible model extraction")
+if n &gt; 5000:   raise RateLimitExceeded()
+
+<i># the discriminating signal is UNIQUE inputs per key per hour,</i>
+<i># not request volume. A batch scanner sends many requests but</i>
+<i># few near-duplicates; a boundary attack sends thousands of</i>
+<i># minutely-different variants of one input.</i></code></pre>
+  </div>
+</section>
+
+<!-- ============================================ 09 -->
+<section class="part" id="s09">
+  <div class="part-head">
+    <span class="part-num">09 — Foundation</span>
+    <h2>Why models fail at all</h2>
+  </div>
+  <p class="lede">This is not an implementation bug. No amount of careful engineering removes it,
+    which is why the defences in the next three sections all cost something real.</p>
+  <div class="defs">
+    <div><span class="dt">Manifold hypothesis</span><span class="dd">Natural images and files occupy a low-dimensional manifold inside a very high-dimensional space. Training only ever sampled that manifold. Off it, the model is extrapolating with no constraint, and adversarial examples live off it.</span></div>
+    <div><span class="dt">Excessive linearity</span><span class="dd">Goodfellow's original argument. A perturbation of ε=8/255 across 150,528 dimensions produces a dot product with the weights on the order of <code>ε·d·w̄ ≈ 452</code>. The model is exquisitely sensitive to the <em>sum</em> of many individually invisible changes.</span></div>
+    <div><span class="dt">High-dimensional geometry</span><span class="dd">The ε-ball around any input contains exponentially many points, essentially none of which were sampled. Without explicit training to be constant inside that shell, the model's behaviour there is arbitrary.</span></div>
+  </div>
+  <p style="margin-top:1rem">All three point at the same conclusion. The model was never asked to be
+    constant over a neighbourhood, only to be correct on a finite sample. <strong>Adversarial robustness is
+    a different training objective, not a better-tuned version of the same one.</strong></p>
+</section>
+
+<!-- ============================================ 10 -->
+<section class="part" id="s10">
+  <div class="part-head">
+    <span class="part-num">10 — Defence</span>
+    <h2>Adversarial training</h2>
+  </div>
+  <p class="lede">The most effective defence and the most expensive. It changes the objective from
+    "be correct on the data" to "be correct on the worst point near the data".</p>
+
+<pre><code><i># standard training</i>
+min_θ  E_(x,y)~D [ L(f_θ(x), y) ]
+
+<i># adversarial training — a saddle-point problem (Madry et al., 2018)</i>
+min_θ  E_(x,y)~D [ <b>max</b>_{‖δ‖∞ ≤ ε}  L(f_θ(x + δ), y) ]
+       └── outer: update weights          └── inner: find the worst δ for THIS x
+                                              with the CURRENT weights, via PGD</code></pre>
+
+  <figure>
+    <div class="fig-scroll">
+    <svg viewBox="0 0 700 260" role="img" aria-label="Standard training produces a decision boundary that curves sharply between training points, leaving pockets close to natural examples that adversarial perturbations reach. Adversarial training forces correctness across the whole epsilon ball around each example, so the boundary is pushed outside every ball and becomes flatter.">
+      <text class="t-cap" x="0"   y="12" style="fill:var(--danger)">standard training — boundary hugs the data</text>
+      <text class="t-cap" x="368" y="12" style="fill:var(--safe)">adversarial training — boundary pushed outside every ε-ball</text>
+      <line class="rule" x1="0" y1="20" x2="700" y2="20"/>
+      <line class="rule" x1="340" y1="20" x2="340" y2="240"/>
+
+      <!-- left -->
+      <path class="st-fat c-dan" d="M40,40 C120,80 60,120 130,150 C190,176 100,200 150,232" style="stroke-width:2"/>
+      <circle class="box-sunk" cx="70" cy="90"  r="24" style="stroke-dasharray:3 2"/>
+      <circle class="f-ink3"   cx="70" cy="90"  r="4"/>
+      <circle class="box-sunk" cx="86" cy="176" r="24" style="stroke-dasharray:3 2"/>
+      <circle class="f-ink3"   cx="86" cy="176" r="4"/>
+      <circle class="f-dan" cx="90" cy="76" r="4"/>
+      <circle class="f-dan" cx="106" cy="166" r="4"/>
+      <text class="t-lab" x="150" y="80" style="fill:var(--danger);font-size:9px">boundary cuts through the ε-ball →</text>
+      <text class="t-lab" x="150" y="92" style="fill:var(--danger);font-size:9px">adversarial examples exist inside it</text>
+      <text class="t-lab" x="0" y="256">high clean accuracy · ~3% accuracy under PGD</text>
+
+      <!-- right -->
+      <path class="st-fat c-saf" d="M470,40 C486,90 480,150 476,232" style="stroke-width:2"/>
+      <circle class="box-sunk" cx="400" cy="90"  r="24" style="stroke-dasharray:3 2"/>
+      <circle class="f-ink3"   cx="400" cy="90"  r="4"/>
+      <circle class="box-sunk" cx="410" cy="176" r="24" style="stroke-dasharray:3 2"/>
+      <circle class="f-ink3"   cx="410" cy="176" r="4"/>
+      <text class="t-lab" x="500" y="80" style="fill:var(--safe);font-size:9px">every point in the ball classified the same →</text>
+      <text class="t-lab" x="500" y="92" style="fill:var(--safe);font-size:9px">the boundary must sit ≥ ε away</text>
+      <text class="t-lab" x="500" y="120" style="font-size:9px">consequences: smaller input gradients,</text>
+      <text class="t-lab" x="500" y="132" style="font-size:9px">flatter loss landscape, more conservative</text>
+      <text class="t-lab" x="500" y="144" style="font-size:9px">confidence near the boundary</text>
+      <text class="t-lab" x="368" y="256">clean accuracy drops 2–5% · ~55% under PGD</text>
+    </svg>
+    </div>
+    <figcaption>The geometric reason there is a hard tradeoff: if the ε-balls of two training examples
+      from <b>different classes intersect</b>, no classifier can be correct in both. That intersection is
+      not a modelling failure, it is a property of the data at that ε, and it caps robust accuracy
+      from above regardless of architecture.</figcaption>
+  </figure>
+
+  <div class="panel panel--pitfall">
+    <span class="panel-label">The malware-specific problem: feature space is not input space</span>
+    <p>For images, every point in input space is a valid image, so a feature-space perturbation is
+      trivially realisable. For malware it is not. The features are a <strong>many-to-one</strong> function of the
+      binary, and most feature vectors correspond to no valid PE file at all. Adversarially training
+      on arbitrary feature perturbations teaches robustness to <em>inputs the attacker cannot construct</em>,
+      which buys you nothing.</p>
+    <div class="duo" style="margin-top:.7rem">
+      <div class="panel panel--defense" style="margin:0">
+        <span class="panel-label">Valid, semantics-preserving</span>
+        <ul>
+          <li>Append data to the overlay</li>
+          <li>Insert NOP sleds into code caves</li>
+          <li>Add unused API imports</li>
+          <li>Edit header metadata such as the timestamp</li>
+          <li>Add new sections with benign content</li>
+        </ul>
+      </div>
+      <div class="panel panel--threat" style="margin:0">
+        <span class="panel-label">Fictional — do not train on these</span>
+        <ul>
+          <li>"Set section entropy to 3.5" without changing bytes</li>
+          <li>"Set import count to 0" without removing imports</li>
+          <li>Any direct assignment to a derived feature</li>
+        </ul>
+      </div>
+    </div>
+    <p style="margin-top:.7rem">Correct adversarial training for malware perturbs the <strong>binary</strong>,
+      re-extracts features, and trains on those. That means solving the inverse feature-mapping
+      problem, which is why malware robustness research lags image research by years.</p>
+  </div>
+</section>
+
+<!-- ============================================ 11 -->
+<section class="part" id="s11">
+  <div class="part-head">
+    <span class="part-num">11 — Defence</span>
+    <h2>Certified robustness</h2>
+  </div>
+  <p class="lede">Empirical robustness says "this attack failed". Certified robustness says "no attack
+    within radius R can succeed". Only one of those is a guarantee.</p>
+
+<pre><code><i># the smoothed classifier (Cohen et al., 2019)</i>
+g(x) = argmax_c  P_{ε~N(0,σ²I)} [ f(x + ε) = c ]
+
+<i># the theorem</i>
+if  p_A = P[f(x+ε) = A] &gt; 0.5   then for ALL δ with ‖δ‖₂ ≤ R:
+        g(x + δ) = A
+    where   <b>R = σ · Φ⁻¹(p_A)</b>
+
+<i># in practice, estimate p_A by Monte Carlo</i>
+1. sample n = 10,000 noise vectors from N(0, σ²I)
+2. count how often f(x + εᵢ) = A
+3. take a Clopper–Pearson LOWER bound p_A_lower  <i># must be a bound, not the estimate</i>
+4. certified radius R = σ · Φ⁻¹(p_A_lower)
+5. if p_A ≤ 0.5 → <u>abstain</u></code></pre>
+
+  <div class="panel panel--pitfall">
+    <span class="panel-label">Four limits, all of them load-bearing</span>
+    <ul>
+      <li><strong>L2 only.</strong> Gaussian noise is optimal for L2 by Neyman–Pearson. There is no comparably
+        strong L∞ result, and L∞ is the more common threat model.</li>
+      <li><strong>Cost.</strong> 10,000 forward passes per prediction. A face reader doing 500 verifications per
+        second would need five million forward passes per second.</li>
+      <li><strong>The σ dial cuts both ways.</strong> Larger σ certifies a bigger radius and destroys clean
+        accuracy. At σ=0.25 you get R≈1 with ~70% accuracy; at σ=1.0, R≈4 with ~50%.</li>
+      <li><strong>Abstention is a denial-of-service surface.</strong> An attacker who crafts inputs where
+        <code>p_A ≤ 0.5</code> forces the system to abstain, which for a door reader means nobody gets in.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============================================ 12 -->
+<section class="part" id="s12">
+  <div class="part-head">
+    <span class="part-num">12 — Defence</span>
+    <h2>Sanitization and its limits</h2>
+  </div>
+
+  <h3>Feature squeezing</h3>
+  <p>Adversarial perturbations tend to live in high-frequency, low-amplitude components. Remove those
+    components and compare the prediction before and after. <strong>The signal is inconsistency, not the
+    squeezed prediction itself.</strong></p>
+
+<pre><code>x_squeezed = one of:  Gaussian blur σ=1.5 · 3×3 median filter · bit-depth → 4 bits
+
+if | confidence(f(x)) − confidence(f(x_squeezed)) | &gt; τ:
+        REJECT — likely adversarial
+else:   return f(x)
+
+<i># natural inputs are stable under squeezing; a precisely optimised</i>
+<i># perturbation often is not.</i></code></pre>
+
+  <h3>The malware analogue: semantics-preserving normalization</h3>
+  <p>The same idea, expressed in the domain's own operations. Each of these destroys a specific known
+    feature-manipulation technique without changing what the binary does when executed.</p>
+  <div class="defs">
+    <div><span class="dt">Strip the overlay</span><span class="dd">Bytes after the last section. Defeats the padding and append attacks directly.</span></div>
+    <div><span class="dt">Zero the PE timestamp</span><span class="dd">Removes timestamp-derived features from the attack surface.</span></div>
+    <div><span class="dt">Sort the import table</span><span class="dd">Destroys import-order features.</span></div>
+    <div><span class="dt">Drop unused resources</span><span class="dd">Removes resource-section entropy manipulation.</span></div>
+    <div><span class="dt">Re-pack sections with a standard packer</span><span class="dd">Normalises section entropy, the single most-gamed feature.</span></div>
+    <div><span class="dt">The detector</span><span class="dd">If the verdict <em>before</em> normalisation differs from the verdict <em>after</em>, the binary was shaped to exploit feature extraction. That disagreement is the finding.</span></div>
+  </div>
+
+  <div class="panel panel--threat">
+    <span class="panel-label">Adaptive attacks defeat every non-adaptive defence</span>
+    <p>Feature squeezing, blurring, JPEG re-encoding and binary normalisation all fall to an attacker
+      who <strong>includes the defence in their optimisation loop</strong>. Optimise for an input that is still
+      adversarial after blurring, and blurring stops helping. This is the central finding of Tramèr
+      et al., 2020: a defence is only valid if it survives an attacker who knows it is there. Any
+      evaluation against an attacker who does not know about the defence is measuring nothing.</p>
+  </div>
+</section>
+
+<!-- ============================================ 13 -->
+<section class="part" id="s13">
+  <div class="part-head">
+    <span class="part-num">13 — Defence</span>
+    <h2>Gradient masking, and how to catch it</h2>
+  </div>
+  <p class="lede">The most common way a defence paper is wrong. The gradient is obscured, the
+    boundary is not moved, and the model is exactly as breakable as before.</p>
+
+  <p>Three mechanisms produce it: <strong>shattered gradients</strong> from non-differentiable operations such as
+    <code>argmax</code> or <code>floor</code>; <strong>exploding or vanishing gradients</strong> from numerically unstable
+    architectures; and <strong>defensive distillation</strong>, which trains on soft teacher labels to produce
+    smaller, smoother gradients. All three make white-box gradient attacks harder. None of them moves
+    the decision boundary away from the data, which is what robustness actually requires.</p>
+
+  <figure>
+    <div class="fig-scroll">
+    <svg viewBox="0 0 700 300" role="img" aria-label="Four tests that distinguish true robustness from gradient masking. Sweeping epsilon should degrade accuracy smoothly for a robust model but shows a sudden cliff for a masked one. Decision-based attacks, transfer attacks and backward-pass differentiable approximation all bypass masking because none of them needs the model's real gradient.">
+      <text class="t-cap" x="0" y="12">four tests — run all of them before believing a robustness claim</text>
+      <line class="rule" x1="0" y1="20" x2="700" y2="20"/>
+
+      <!-- test 1 chart -->
+      <text class="t-cap" x="0" y="42">1 · sweep ε from 0 to 1.0</text>
+      <line class="st" x1="40" y1="160" x2="300" y2="160"/>
+      <line class="rule" x1="40" y1="56" x2="40" y2="160"/>
+      <text class="t-lab" x="32" y="164" text-anchor="end" style="font-size:9px">0</text>
+      <text class="t-lab" x="32" y="62"  text-anchor="end" style="font-size:9px">100%</text>
+      <text class="t-lab" x="170" y="180" text-anchor="middle" style="font-size:9px">ε →</text>
+      <path class="st-fat c-saf" d="M40,60 C110,80 180,120 300,150"/>
+      <text class="t-lab" x="150" y="100" style="fill:var(--safe);font-size:9px">true robustness: smooth decay</text>
+      <path class="st-fat c-dan" d="M40,60 L200,64 L215,150 L300,155"/>
+      <text class="t-lab" x="150" y="140" style="fill:var(--danger);font-size:9px">masking: flat, then a cliff</text>
+
+      <!-- tests 2-4 -->
+      <rect class="pan-acc" x="330" y="52" width="370" height="48" rx="3"/>
+      <text class="t-lab" x="342" y="70" style="fill:var(--accent);font-weight:600">2 · decision-based attack (HopSkipJump)</text>
+      <text class="t-lab" x="342" y="88" style="font-size:9px">uses only the hard label. If it finds a small-ε example, the boundary was always close.</text>
+
+      <rect class="pan-acc" x="330" y="108" width="370" height="48" rx="3"/>
+      <text class="t-lab" x="342" y="126" style="fill:var(--accent);font-weight:600">3 · transfer attack</text>
+      <text class="t-lab" x="342" y="144" style="font-size:9px">craft on a substitute where gradients are informative, then transfer. Success ⇒ masking.</text>
+
+      <rect class="pan-acc" x="330" y="164" width="370" height="48" rx="3"/>
+      <text class="t-lab" x="342" y="182" style="fill:var(--accent);font-weight:600">4 · BPDA — backward-pass differentiable approximation</text>
+      <text class="t-lab" x="342" y="200" style="font-size:9px">swap a differentiable stand-in for the non-differentiable step on the backward pass only.</text>
+
+      <line class="rule" x1="0" y1="232" x2="700" y2="232"/>
+      <rect class="pan-dan" x="0" y="244" width="700" height="48" rx="3"/>
+      <text class="t-lab" x="12" y="262" style="fill:var(--danger);font-weight:600">THE COMMUNITY STANDARD (Carlini et al., 2019)</text>
+      <text class="t-lab" x="12" y="280">A defence is valid only if it withstands an ADAPTIVE attacker who knows the defence and incorporates it into the attack.</text>
+    </svg>
+    </div>
+    <figcaption>Test 1 is the cheapest and catches most cases. A truly robust model degrades
+      gracefully as ε grows, because eventually you exceed its robustness radius. A masked model
+      holds a suspiciously flat line and then <b>falls off a cliff</b> at the ε where the gradient finally
+      becomes informative at that scale.</figcaption>
+  </figure>
+</section>
+
+<!-- ============================================ 14 -->
+<section class="part" id="s14">
+  <div class="part-head">
+    <span class="part-num">14 — Operations</span>
+    <h2>Tradeoffs, observability and drills</h2>
+  </div>
+
+  <h3>What each defence actually buys</h3>
+  <figure>
+    <div class="fig-scroll">
+    <svg viewBox="0 0 700 330" role="img" aria-label="Scatter plot of clean accuracy against accuracy under PGD attack for six configurations. No defence sits at 99.8 percent clean and 3 percent adversarial. Feature squeezing reaches 45 percent adversarial at 99.5 clean. Ensemble disagreement 50 percent at 99.3. Adversarial training 55 percent at 97.5. Randomized smoothing 60 percent at 96. Domain-specific input normalisation for malware reaches 70 percent adversarial at 99.1 percent clean, the best point on the chart.">
+      <text class="t-cap" x="0" y="12">clean accuracy vs accuracy under PGD — the frontier you are choosing on</text>
+      <line class="rule" x1="0" y1="20" x2="700" y2="20"/>
+
+      <!-- axes: x = clean 95.5..100 mapped 70..640 ; y = adv 0..75 mapped 280..50 -->
+      <line class="st" x1="70" y1="280" x2="650" y2="280"/>
+      <line class="st" x1="70" y1="280" x2="70" y2="44"/>
+      <text class="t-lab" x="360" y="308" text-anchor="middle">clean accuracy →</text>
+      <text class="t-lab" x="20" y="160" transform="rotate(-90 20 160)" text-anchor="middle">accuracy under PGD →</text>
+
+      <text class="t-lab" x="70"  y="294" text-anchor="middle" style="font-size:9px">96%</text>
+      <text class="t-lab" x="215" y="294" text-anchor="middle" style="font-size:9px">97%</text>
+      <text class="t-lab" x="360" y="294" text-anchor="middle" style="font-size:9px">98%</text>
+      <text class="t-lab" x="505" y="294" text-anchor="middle" style="font-size:9px">99%</text>
+      <text class="t-lab" x="650" y="294" text-anchor="middle" style="font-size:9px">100%</text>
+
+      <text class="t-lab" x="62" y="284" text-anchor="end" style="font-size:9px">0</text>
+      <text class="t-lab" x="62" y="222" text-anchor="end" style="font-size:9px">20%</text>
+      <text class="t-lab" x="62" y="161" text-anchor="end" style="font-size:9px">40%</text>
+      <text class="t-lab" x="62" y="100" text-anchor="end" style="font-size:9px">60%</text>
+      <line class="rule" x1="70" y1="218" x2="650" y2="218"/>
+      <line class="rule" x1="70" y1="157" x2="650" y2="157"/>
+      <line class="rule" x1="70" y1="96"  x2="650" y2="96"/>
+
+      <!-- points -->
+      <circle class="f-dan" cx="621" cy="271" r="6"/>
+      <text class="t-lab" x="613" y="264" text-anchor="end" style="fill:var(--danger)">no defence · 99.8 / 3</text>
+
+      <circle class="f-acc" cx="578" cy="143" r="6"/>
+      <text class="t-lab" x="570" y="139" text-anchor="end">feature squeezing · 99.5 / 45</text>
+
+      <circle class="f-acc" cx="549" cy="127" r="6"/>
+      <text class="t-lab" x="560" y="118">ensemble disagreement · 99.3 / 50</text>
+
+      <circle class="f-acc" cx="288" cy="112" r="6"/>
+      <text class="t-lab" x="298" y="108">adversarial training PGD-10 · 97.5 / 55</text>
+
+      <circle class="f-acc" cx="70" cy="96" r="6"/>
+      <text class="t-lab" x="80" y="90">randomized smoothing · 96 / 60</text>
+
+      <circle class="f-saf" cx="520" cy="66" r="7" style="stroke:var(--safe);stroke-width:2"/>
+      <text class="t-lab" x="530" y="62" style="fill:var(--safe);font-weight:600">domain-specific input normalisation · 99.1 / 70</text>
+
+      <path class="st-dash c-saf" d="M70,96 C200,92 380,74 513,68"/>
+
+      <line class="rule" x1="0" y1="318" x2="700" y2="318"/>
+      <text class="t-lab" x="0" y="330">The best point is the domain-specific one. Generic robustness is expensive; knowing your input format is cheap.</text>
+    </svg>
+    </div>
+    <figcaption>The most important point on this chart is the one in the top right. <b>Domain knowledge
+      beats generic robustness</b>: stripping the overlay and re-extracting features costs 30% latency
+      and buys more adversarial accuracy than 10× training cost or 1000× inference cost. The generic
+      defences matter where no such structure exists.</figcaption>
+  </figure>
+
+  <div class="tbl">
+    <table>
+      <thead><tr><th>Defence</th><th class="num">Clean</th><th class="num">Under PGD</th><th>Latency cost</th><th>Complexity</th></tr></thead>
+      <tbody>
+        <tr><td>No defence</td><td class="num">99.8%</td><td class="num">3%</td><td>baseline</td><td>minimal</td></tr>
+        <tr><td>Feature squeezing</td><td class="num">99.5%</td><td class="num">45%</td><td>+20%</td><td>low</td></tr>
+        <tr><td>Ensemble disagreement</td><td class="num">99.3%</td><td class="num">50%</td><td>3–5×</td><td>medium</td></tr>
+        <tr><td>Adversarial training (PGD-10)</td><td class="num">97.5%</td><td class="num">55%</td><td>none at inference, 10× training</td><td>high</td></tr>
+        <tr><td>Randomized smoothing (n=1000)</td><td class="num">96%</td><td class="num">60%</td><td>1000×</td><td>medium</td></tr>
+        <tr><td><b>Input normalization (malware)</b></td><td class="num">99.1%</td><td class="num">70%</td><td>+30%</td><td>medium</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="panel panel--threat">
+    <span class="panel-label">The asymmetry that breaks capacity planning</span>
+    <p>The attacker pays <strong>once, offline</strong>, to craft an adversarial example: roughly ten minutes of
+      GPU time. Submitting it costs nothing and looks identical to normal traffic at the
+      infrastructure layer — same size, same latency, same memory. The defender pays
+      <strong>per query</strong> for whatever expensive defence is deployed. One crafted example replayed a
+      thousand times costs the attacker nothing and the defender a thousand smoothing evaluations.</p>
+    <p><strong>Mitigations:</strong> rate-limit per API key; cache adversarial-detection verdicts by input hash
+      so replays are free; push expensive defences to the async path where the latency budget is
+      generous; and reserve smoothing for the confidence band where it changes decisions.</p>
+  </div>
+
+  <h3>What to log, and what to alert on</h3>
+<pre><code><i># per request</i>
+input_hash, api_key_hash, input_size_bytes
+predicted_class, <b>confidence_score</b>          <i># log even when not returned to the caller</i>
+feature_squeezing_delta, is_adversarial_flagged
+feature_vector_l2_norm, <b>mahalanobis_distance</b>  <i># distance from the training distribution</i>
+preprocessing_latency_ms, inference_latency_ms, model_version</code></pre>
+
+  <div class="tbl">
+    <table>
+      <thead><tr><th>Alert</th><th>Condition</th><th>Meaning</th></tr></thead>
+      <tbody>
+        <tr><td>High adversarial detection rate</td><td>&gt; 5% of requests flagged over 5 min</td><td>Normal is under 0.1%. A spike is an active campaign.</td></tr>
+        <tr><td>Confirmed evasion</td><td>any confirmed bypass in 1h</td><td>Needs a feedback loop from downstream systems</td></tr>
+        <tr><td>Input distribution drift</td><td>PSI &gt; 0.25 on a key feature for 30 min</td><td>Retrain, or the attacker is shifting the population</td></tr>
+        <tr><td>Model extraction attempt</td><td>&gt; 2000 unique inputs per key per hour</td><td>Query diversity, not volume, is the signal</td></tr>
+        <tr><td>Latency spike</td><td>P99 &gt; 2s</td><td>Possibly adversarial denial of service via the parser</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p><strong>Do not alert on</strong> individual adversarial flags, single slow requests, PSI below 0.1, or
+    low-confidence predictions. Those are the model working as designed, and paging on them produces
+    the analyst fatigue that causes the real detection to be ignored.</p>
+
+  <div class="panel panel--defense">
+    <span class="panel-label">Recovering precision without giving up the defence</span>
+    <p>Unconditional defences raise the false-positive rate; conditional ones do not. Legitimate
+      software is often packed, compressed or obfuscated for IP protection, which looks exactly like
+      the adversarial signature. Rather than applying strip-and-reanalyse to everything:</p>
+    <ul>
+      <li><strong>Two-phase classification.</strong> If the first pass is above 0.99 benign, deliver. Only the
+        ambiguous band gets the expensive normalisation, which is precisely the band an attacker
+        targets.</li>
+      <li><strong>Inspect the overlay before stripping it.</strong> Executable code in an overlay on a file that
+        was high-confidence malicious pre-strip is a far stronger signal than the verdict flip alone.</li>
+      <li><strong>Reputation and code signing as priors.</strong> A valid Authenticode signature from a trusted
+        publisher, or a known hash, removes the need for reanalysis entirely.</li>
+      <li><strong>Sender history.</strong> A domain that has delivered clean files for years, sending a file that
+        matches its historical profile apart from an overlay, is probably shipping an update.</li>
+    </ul>
+  </div>
+
+  <h3>Drills</h3>
+  <ol>
+    <li><strong>Implement FGSM from scratch</strong> against a small CIFAR model. Confirm that <code>sign()</code> beats the
+      raw gradient at equal L∞ budget, which is the claim in section 5.</li>
+    <li><strong>Sweep ε</strong> from 0 to 0.3 and plot accuracy. Learn what a smooth degradation curve looks
+      like so you can recognise a cliff.</li>
+    <li><strong>Adversarially train the same model</strong> with PGD-10 and re-plot. Measure both the clean
+      accuracy you lost and the robust accuracy you gained.</li>
+    <li><strong>Break your own defence.</strong> Add median-filter squeezing, confirm it helps, then write an
+      adaptive attack that includes the filter in its forward pass and watch the gain disappear.</li>
+    <li><strong>Run a decision-based attack</strong> using only hard labels. Count the queries needed. Then
+      implement the unique-input-per-key detector and check whether it would have fired.</li>
+    <li><strong>Do the malware version properly.</strong> Write a semantics-preserving binary transform, apply it,
+      re-extract features, and confirm the verdict flips. Then implement overlay stripping and confirm
+      the verdict-disagreement detector catches it.</li>
+  </ol>
+</section>
+
+</main>
+</div>
+
+<footer class="colophon">
+  <p><strong>How to use this.</strong> Sections 1 to 4 build the system and the geometry. Sections 5 to 8 are
+    the attacks in increasing order of how little access they need. Section 9 explains why the
+    problem is structural. Sections 10 to 13 are the defences and their honest limits. Section 14 is
+    what you actually deploy and watch.</p>
+  <p><strong>The one idea to keep.</strong> A defence is only worth what it is worth against an attacker who
+    knows it is there. Every result in this document that later turned out to be wrong was wrong for
+    that reason, and the correction is always the same: evaluate with a decision-based attack, a
+    transfer attack, and an adaptive attack that includes your defence in its loop.</p>
+</footer>
+</div>

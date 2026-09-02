@@ -1,0 +1,1415 @@
+<title>Model Extraction and Inversion</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=IBM+Plex+Mono:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..600&display=swap">
+<style>
+/* ============================================================
+   SYSTEM BREAKDOWNS — shared series design system
+   Ground: cool instrument grey. Accent: per-category signal hue,
+   set by the small override block that follows this one.
+   Semantic red/amber/green are constant across the whole series
+   so "threat", "pitfall" and "defence" read identically everywhere.
+   ============================================================ */
+
+:root{
+  --ground:#EAEDF0;
+  --surface:#F8FAFB;
+  --surface-2:#DFE4E9;
+  --sunk:#E2E6EA;
+  --ink:#101418;
+  --ink-2:#3A444E;
+  --ink-3:#68727C;
+  --rule:#C2C9D1;
+  --rule-2:#D5DBE1;
+
+  /* --accent is the only value overridden per category; the two derived
+     tints follow it automatically in both themes via color-mix. */
+  --accent:#2A5A8C;
+  --accent-soft:color-mix(in srgb, var(--accent) 13%, var(--surface));
+  --accent-edge:color-mix(in srgb, var(--accent) 45%, var(--surface));
+
+  --danger:#9C2A2B;  --danger-soft:#F4DFDF;  --danger-edge:#D9A6A6;
+  --warn:#775707;    --warn-soft:#F3EAD1;    --warn-edge:#D9C68C;
+  --safe:#286B43;    --safe-soft:#DBEBE1;    --safe-edge:#A5C9B4;
+
+  --display:"Archivo","Helvetica Neue",Arial,sans-serif;
+  --body:"Source Serif 4",Georgia,"Times New Roman",serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+
+  --shell:1340px;
+  --col:70ch;
+  color-scheme:light;
+}
+
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#0D1116;
+    --surface:#151B21;
+    --surface-2:#1D252D;
+    --sunk:#111820;
+    --ink:#E6EBEF;
+    --ink-2:#B0BAC3;
+    --ink-3:#848F99;
+    --rule:#2A333C;
+    --rule-2:#1F272F;
+    --accent:#7FB3E0;
+    --danger:#F0817A; --danger-soft:#3A1B19; --danger-edge:#6E3230;
+    --warn:#E2BA51;   --warn-soft:#332A10;   --warn-edge:#65531D;
+    --safe:#63CB88;   --safe-soft:#123020;   --safe-edge:#265539;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#0D1116;
+  --surface:#151B21;
+  --surface-2:#1D252D;
+  --sunk:#111820;
+  --ink:#E6EBEF;
+  --ink-2:#B0BAC3;
+  --ink-3:#848F99;
+  --rule:#2A333C;
+  --rule-2:#1F272F;
+  --accent:#7FB3E0;
+  --danger:#F0817A; --danger-soft:#3A1B19; --danger-edge:#6E3230;
+  --warn:#E2BA51;   --warn-soft:#332A10;   --warn-edge:#65531D;
+  --safe:#63CB88;   --safe-soft:#123020;   --safe-edge:#265539;
+  color-scheme:dark;
+}
+
+*,*::before,*::after{box-sizing:border-box;}
+
+body{
+  background:var(--ground);
+  color:var(--ink);
+  font-family:var(--body);
+  font-size:17px;
+  line-height:1.62;
+  font-optical-sizing:auto;
+  -webkit-font-smoothing:antialiased;
+}
+
+h1,h2,h3,h4,h5{
+  font-family:var(--display);
+  font-variation-settings:"wdth" 112;
+  text-wrap:balance;margin:0;line-height:1.1;
+}
+h1{font-size:clamp(2.2rem,5.4vw,3.9rem);font-weight:800;letter-spacing:-.02em;}
+h2{font-size:clamp(1.65rem,3.3vw,2.25rem);font-weight:700;letter-spacing:-.015em;}
+h3{font-size:1.28rem;font-weight:650;letter-spacing:-.005em;line-height:1.22;}
+h4{font-size:1.02rem;font-weight:650;font-variation-settings:"wdth" 100;}
+h5{font-size:.85rem;font-weight:700;font-variation-settings:"wdth" 100;
+   text-transform:uppercase;letter-spacing:.1em;}
+
+p{margin:0;}
+strong{font-weight:700;color:var(--ink);}
+em{font-style:italic;}
+a{color:var(--accent);text-decoration-thickness:1px;text-underline-offset:3px;}
+a:hover{text-decoration-thickness:2px;}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px;}
+
+.eyebrow{font-family:var(--mono);font-size:.7rem;font-weight:600;
+  text-transform:uppercase;letter-spacing:.16em;color:var(--ink-3);}
+
+.shell{max-width:var(--shell);margin:0 auto;padding:0 clamp(1rem,3.5vw,2.75rem);}
+
+/* ---------- masthead ---------- */
+.masthead{border-bottom:1px solid var(--rule);
+  background:linear-gradient(180deg,transparent 0%,transparent 68%,var(--surface) 100%);
+  padding-top:clamp(1.75rem,4.5vw,3.25rem);}
+.mast-grid{display:grid;gap:clamp(1.5rem,4vw,3rem);align-items:end;
+  grid-template-columns:minmax(0,1.02fr) minmax(0,.98fr);
+  padding-bottom:clamp(1.5rem,4vw,2.5rem);}
+@media (max-width:980px){.mast-grid{grid-template-columns:1fr;align-items:start;}}
+.mast-kicker{display:flex;flex-wrap:wrap;gap:.5rem 1.1rem;align-items:center;margin-bottom:1rem;}
+.mast-rule{height:1px;flex:1;min-width:2rem;background:var(--rule);}
+.cat{font-family:var(--mono);font-size:.7rem;font-weight:600;text-transform:uppercase;
+  letter-spacing:.14em;color:var(--accent);}
+.mast-sub{font-size:1.1rem;color:var(--ink-2);margin-top:1.05rem;max-width:54ch;line-height:1.55;}
+.mast-meta{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:1.35rem;}
+.chip{font-family:var(--mono);font-size:.67rem;font-weight:500;letter-spacing:.04em;
+  padding:.28rem .55rem;border:1px solid var(--rule);color:var(--ink-2);
+  background:var(--surface);border-radius:2px;}
+.chip--acc{color:var(--accent);border-color:var(--accent-edge);background:var(--accent-soft);}
+.chip--hot{color:var(--danger);border-color:var(--danger-edge);background:var(--danger-soft);}
+
+/* ---------- frame + rail ---------- */
+.frame{display:grid;grid-template-columns:248px minmax(0,1fr);gap:clamp(2rem,4vw,3.5rem);
+  align-items:start;padding-top:2.25rem;padding-bottom:4rem;}
+@media (max-width:1040px){.frame{grid-template-columns:1fr;gap:1.5rem;}}
+.rail{position:sticky;top:1.25rem;max-height:calc(100vh - 2.5rem);overflow-y:auto;
+  font-family:var(--display);font-variation-settings:"wdth" 100;padding-right:.5rem;}
+@media (max-width:1040px){
+  .rail{position:static;max-height:none;border:1px solid var(--rule);
+    background:var(--surface);padding:1rem 1.15rem;border-radius:3px;}}
+.rail h5{color:var(--ink-3);margin-bottom:.8rem;font-family:var(--mono);
+  font-weight:600;letter-spacing:.14em;font-size:.67rem;}
+.rail ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;}
+.rail li{position:relative;padding-left:1.3rem;}
+.rail li::before{content:"";position:absolute;left:3px;top:.72em;width:7px;height:7px;
+  border-radius:1px;border:1.5px solid var(--rule);background:var(--ground);z-index:1;}
+@media (max-width:1040px){.rail li::before{background:var(--surface);}}
+.rail li:not(:last-child)::after{content:"";position:absolute;left:6px;top:1.3em;
+  bottom:-.35em;width:1px;background:var(--rule);}
+.rail a{display:block;padding:.25rem 0;font-size:.84rem;line-height:1.3;
+  color:var(--ink-2);text-decoration:none;font-weight:500;}
+.rail a:hover{color:var(--accent);}
+.rail li:hover::before{border-color:var(--accent);background:var(--accent);}
+
+/* ---------- document ---------- */
+.doc{min-width:0;display:flex;flex-direction:column;}
+.doc > section{max-width:100%;}
+.doc p,.doc > section > ul,.doc > section > ol,.doc .lede{max-width:var(--col);}
+.lede{font-size:1.08rem;color:var(--ink-2);line-height:1.55;}
+.part{padding-top:3rem;margin-top:3rem;border-top:1px solid var(--rule);}
+.part:first-child{border-top:0;margin-top:0;padding-top:0;}
+.part-head{margin-bottom:1.4rem;}
+.part-num{font-family:var(--mono);font-size:.71rem;font-weight:600;letter-spacing:.16em;
+  color:var(--accent);text-transform:uppercase;display:block;margin-bottom:.5rem;}
+.doc h2{margin-bottom:.65rem;}
+.doc h3{margin:2.3rem 0 .7rem;color:var(--ink);}
+.doc h4{margin:1.65rem 0 .5rem;color:var(--ink);}
+.doc p + p{margin-top:.85rem;}
+.doc p + h3,.doc ul + h3,.doc ol + h3,.doc pre + h3,.doc .tbl + h3,
+.doc figure + h3,.doc .panel + h3,.doc .defs + h3,.doc .check + h3,
+.doc .duo + h3,.doc .strip + h3,.doc .flow + h3{margin-top:2.5rem;}
+.doc ul,.doc ol{margin:.85rem 0 0;padding-left:1.35rem;display:flex;flex-direction:column;gap:.4rem;}
+.doc li{padding-left:.15rem;}
+.doc li::marker{color:var(--ink-3);}
+.doc ul ul,.doc ol ol,.doc ul ol,.doc ol ul{margin-top:.4rem;}
+
+/* ---------- code ---------- */
+code{font-family:var(--mono);font-size:.855em;font-weight:500;
+  background:var(--sunk);border:1px solid var(--rule-2);
+  padding:.08em .34em;border-radius:2px;color:var(--ink);word-break:break-word;}
+pre{margin:1.1rem 0 0;background:var(--surface);border:1px solid var(--rule);
+  border-left:3px solid var(--accent);padding:.9rem 1.05rem;overflow-x:auto;
+  border-radius:2px;max-width:100%;}
+pre code{background:none;border:0;padding:0;font-size:.795rem;line-height:1.62;
+  display:block;white-space:pre;color:var(--ink-2);}
+pre code b{font-weight:600;color:var(--ink);}
+pre code i{font-style:normal;color:var(--ink-3);}
+pre code u{text-decoration:none;color:var(--danger);font-weight:600;}
+pre code s{text-decoration:none;color:var(--safe);font-weight:600;}
+pre code em{font-style:normal;color:var(--accent);font-weight:600;}
+
+/* ---------- figures ---------- */
+figure{margin:1.8rem 0 0;padding:1.1rem 1.1rem .85rem;background:var(--surface);
+  border:1px solid var(--rule);border-radius:3px;}
+figure svg{display:block;width:100%;height:auto;max-width:100%;color:var(--ink-2);}
+.fig-scroll{overflow-x:auto;}
+.fig-scroll > svg{min-width:560px;}
+figcaption{margin-top:.85rem;padding-top:.7rem;border-top:1px solid var(--rule-2);
+  font-size:.835rem;line-height:1.5;color:var(--ink-3);max-width:80ch;}
+figcaption b{color:var(--ink-2);font-weight:650;}
+
+/* ---------- panels ---------- */
+.panel{margin:1.5rem 0 0;padding:.95rem 1.1rem;border-radius:3px;
+  border:1px solid var(--rule);background:var(--surface);max-width:100%;}
+.panel > :first-child{margin-top:0;}
+.panel p,.panel ul,.panel ol{max-width:none;}
+.panel-label{font-family:var(--mono);font-size:.66rem;font-weight:600;
+  letter-spacing:.14em;text-transform:uppercase;display:block;margin-bottom:.45rem;}
+.panel--threat{background:var(--danger-soft);border-color:var(--danger-edge);}
+.panel--threat .panel-label{color:var(--danger);}
+.panel--pitfall{background:var(--warn-soft);border-color:var(--warn-edge);}
+.panel--pitfall .panel-label{color:var(--warn);}
+.panel--defense{background:var(--safe-soft);border-color:var(--safe-edge);}
+.panel--defense .panel-label{color:var(--safe);}
+.panel--note{background:var(--accent-soft);border-color:var(--accent-edge);}
+.panel--note .panel-label{color:var(--accent);}
+.panel pre{background:var(--surface);border-color:var(--rule-2);border-left-width:2px;}
+.panel code{background:var(--surface);}
+
+/* ---------- tables ---------- */
+.tbl{margin:1.4rem 0 0;overflow-x:auto;border:1px solid var(--rule);
+  border-radius:3px;background:var(--surface);}
+table{border-collapse:collapse;width:100%;font-size:.86rem;line-height:1.45;}
+th,td{text-align:left;padding:.58rem .78rem;border-bottom:1px solid var(--rule-2);vertical-align:top;}
+thead th{font-family:var(--mono);font-size:.66rem;font-weight:600;text-transform:uppercase;
+  letter-spacing:.1em;color:var(--ink-3);background:var(--surface-2);
+  border-bottom:1px solid var(--rule);white-space:nowrap;}
+tbody tr:last-child td{border-bottom:0;}
+td code{font-size:.79rem;}
+td code.nw{white-space:nowrap;}
+.num{font-variant-numeric:tabular-nums;text-align:right;}
+.tag{font-family:var(--mono);font-size:.67rem;font-weight:600;letter-spacing:.03em;
+  padding:.15rem .4rem;border-radius:2px;white-space:nowrap;display:inline-block;}
+.tag--bad{background:var(--danger-soft);color:var(--danger);border:1px solid var(--danger-edge);}
+.tag--mid{background:var(--warn-soft);color:var(--warn);border:1px solid var(--warn-edge);}
+.tag--ok{background:var(--safe-soft);color:var(--safe);border:1px solid var(--safe-edge);}
+.tag--acc{background:var(--accent-soft);color:var(--accent);border:1px solid var(--accent-edge);}
+.tag--neu{background:var(--surface-2);color:var(--ink-3);border:1px solid var(--rule);}
+
+/* ---------- definition grid ---------- */
+.defs{margin:1.3rem 0 0;display:grid;gap:0;border:1px solid var(--rule);
+  border-radius:3px;overflow:hidden;background:var(--surface);}
+.defs > div{display:grid;grid-template-columns:minmax(9rem,15rem) minmax(0,1fr);
+  gap:0 1.05rem;padding:.58rem .82rem;border-bottom:1px solid var(--rule-2);}
+.defs > div:last-child{border-bottom:0;}
+.defs .dt{font-family:var(--mono);font-size:.775rem;font-weight:600;
+  color:var(--accent);word-break:break-word;padding-top:.1rem;}
+.defs .dd{margin:0;font-size:.89rem;line-height:1.5;color:var(--ink-2);}
+.defs .dd code{font-size:.79rem;}
+@media (max-width:620px){.defs > div{grid-template-columns:1fr;gap:.25rem;}}
+
+/* ---------- lifecycle flow (T = 0ms style) ---------- */
+.flow{margin:1.4rem 0 0;border:1px solid var(--rule);border-radius:3px;
+  background:var(--surface);overflow:hidden;}
+.flow > li{list-style:none;display:grid;grid-template-columns:minmax(5.5rem,7rem) minmax(0,1fr);
+  gap:0 1rem;padding:.7rem .9rem;border-bottom:1px solid var(--rule-2);
+  font-size:.9rem;line-height:1.5;position:relative;}
+.flow{padding:0;margin-left:0;}
+.flow > li:last-child{border-bottom:0;}
+.flow .t{font-family:var(--mono);font-size:.72rem;font-weight:600;color:var(--accent);
+  letter-spacing:.02em;padding-top:.15rem;font-variant-numeric:tabular-nums;}
+.flow .s b{display:block;font-weight:650;color:var(--ink);margin-bottom:.1rem;}
+.flow .s{color:var(--ink-2);}
+.flow > li.hot{background:var(--danger-soft);}
+.flow > li.hot .t{color:var(--danger);}
+@media (max-width:560px){.flow > li{grid-template-columns:1fr;gap:.2rem;}}
+
+/* ---------- checklists ---------- */
+.check{margin:1.3rem 0 0;padding:0;list-style:none;display:grid;gap:0;
+  border:1px solid var(--rule);border-radius:3px;background:var(--surface);max-width:none;}
+.check li{display:grid;grid-template-columns:auto minmax(0,1fr);gap:.72rem;
+  padding:.6rem .88rem;border-bottom:1px solid var(--rule-2);font-size:.91rem;line-height:1.5;}
+.check li:last-child{border-bottom:0;}
+.check li::before{content:"";width:13px;height:13px;margin-top:.32rem;border-radius:2px;
+  border:1.5px solid var(--rule);background:var(--ground);}
+.check li b{display:block;font-weight:650;color:var(--ink);}
+.check li code{font-size:.78rem;}
+
+/* ---------- misc layout ---------- */
+.duo{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,18rem),1fr));
+  gap:1rem;margin:1.4rem 0 0;}
+.duo > .panel{margin:0;}
+.strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,10.5rem),1fr));
+  border:1px solid var(--rule);border-radius:3px;overflow:hidden;margin:1.5rem 0 0;
+  background:var(--surface);}
+.strip > div{padding:.8rem .95rem;border-right:1px solid var(--rule-2);}
+.strip > div:last-child{border-right:0;}
+.strip .n{font-family:var(--display);font-variation-settings:"wdth" 108;
+  font-size:1.45rem;font-weight:750;line-height:1;color:var(--ink);font-variant-numeric:tabular-nums;}
+.strip .l{font-family:var(--mono);font-size:.66rem;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink-3);margin-top:.38rem;display:block;line-height:1.35;}
+.gloss{columns:2;column-gap:2.5rem;margin:1.4rem 0 0;max-width:none;}
+@media (max-width:760px){.gloss{columns:1;}}
+.gloss > div{break-inside:avoid;margin-bottom:.85rem;font-size:.88rem;line-height:1.5;}
+.gloss .g{font-family:var(--mono);font-size:.79rem;font-weight:600;color:var(--accent);}
+.colophon{border-top:1px solid var(--rule);padding:1.9rem 0 3.5rem;font-size:.83rem;
+  color:var(--ink-3);max-width:72ch;}
+.colophon p + p{margin-top:.65rem;}
+
+/* ---------- diagram primitives ---------- */
+svg .st{stroke:currentColor;fill:none;stroke-width:1.4;}
+svg .st-thin{stroke:currentColor;fill:none;stroke-width:1;}
+svg .st-fat{stroke:currentColor;fill:none;stroke-width:2.2;}
+svg .st-dash{stroke:currentColor;fill:none;stroke-width:1.4;stroke-dasharray:5 3.5;}
+svg .st-dot{stroke:currentColor;fill:none;stroke-width:1.2;stroke-dasharray:1.5 3;}
+svg .rule{stroke:var(--rule);fill:none;stroke-width:1;}
+svg .box{fill:var(--surface);stroke:currentColor;stroke-width:1.3;}
+svg .box-sunk{fill:var(--sunk);stroke:var(--rule);stroke-width:1.1;}
+svg .box-g{fill:var(--ground);stroke:currentColor;stroke-width:1.3;}
+svg .pan-dan{fill:var(--danger-soft);stroke:var(--danger-edge);stroke-width:1.2;}
+svg .pan-saf{fill:var(--safe-soft);stroke:var(--safe-edge);stroke-width:1.2;}
+svg .pan-wrn{fill:var(--warn-soft);stroke:var(--warn-edge);stroke-width:1.2;}
+svg .pan-acc{fill:var(--accent-soft);stroke:var(--accent-edge);stroke-width:1.2;}
+svg text{font-family:var(--mono);font-size:11px;fill:currentColor;}
+svg .t-h{font-family:var(--display);font-variation-settings:"wdth" 100;
+  font-size:12px;font-weight:650;fill:var(--ink);}
+svg .t-lab{font-size:10px;fill:var(--ink-3);letter-spacing:.03em;}
+svg .t-cap{font-size:9px;fill:var(--ink-3);letter-spacing:.08em;text-transform:uppercase;}
+svg .t-sm{font-size:9px;fill:var(--ink-3);}
+svg .t-hash{font-size:10px;fill:var(--ink-2);}
+svg .c-acc{color:var(--accent);}
+svg .c-dan{color:var(--danger);}
+svg .c-saf{color:var(--safe);}
+svg .c-wrn{color:var(--warn);}
+svg .c-ink{color:var(--ink);}
+svg .c-mute{color:var(--ink-3);}
+svg .f-acc{fill:var(--accent);}
+svg .f-dan{fill:var(--danger);}
+svg .f-saf{fill:var(--safe);}
+svg .f-wrn{fill:var(--warn);}
+svg .f-ink{fill:var(--ink);}
+svg .f-ink2{fill:var(--ink-2);}
+svg .f-ink3{fill:var(--ink-3);}
+svg .f-cur{fill:currentColor;}
+svg .f-surf{fill:var(--surface);}
+svg .f-none{fill:none;}
+
+@media (prefers-reduced-motion: reduce){
+  *{animation-duration:.01ms !important;transition-duration:.01ms !important;
+    scroll-behavior:auto !important;}
+}
+html{scroll-behavior:smooth;scroll-padding-top:1.5rem;}
+</style>
+<style>:root{--accent:#8C2F55;}@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--accent:#E8809F;}}:root[data-theme="dark"]{--accent:#E8809F;}</style>
+<header class="masthead">
+  <div class="shell">
+    <div class="mast-grid">
+      <div>
+        <div class="mast-kicker">
+          <span class="cat">Adversarial Machine Learning</span>
+          <span class="mast-rule"></span>
+          <span class="eyebrow">13 Sections</span>
+        </div>
+        <h1>Model Extraction and Inversion</h1>
+        <p class="mast-sub">A prediction API is an oracle. Query it enough and you get the model back;
+          query it cleverly and you get the training data back. Both attacks look like ordinary
+          traffic one request at a time.</p>
+        <div class="mast-meta">
+          <span class="chip chip--acc">surrogate models</span>
+          <span class="chip">membership inference</span>
+          <span class="chip">shadow models</span>
+          <span class="chip">model inversion</span>
+          <span class="chip">DP-SGD</span>
+          <span class="chip">privacy accounting</span>
+          <span class="chip">canaries</span>
+          <span class="chip chip--hot">explanation endpoints</span>
+        </div>
+      </div>
+
+      <figure style="margin:0;">
+        <div class="fig-scroll">
+        <svg viewBox="0 0 580 300" role="img" aria-label="One prediction API serving two attackers. The model thief sends broad systematic queries covering the feature space and trains a surrogate that reaches 94 percent fidelity. The data extractor sends narrow targeted queries and reads the confidence gap between training and non-training records to infer membership at 73 percent accuracy.">
+          <defs>
+            <marker id="h-ard" markerWidth="7" markerHeight="7" refX="6.4" refY="3" orient="auto">
+              <path d="M0,0 L6.4,3 L0,6 z" class="f-dan"/>
+            </marker>
+          </defs>
+          <text class="t-cap" x="0" y="12">POST /api/v1/predict — the same endpoint, two different thefts</text>
+          <line class="rule" x1="0" y1="20" x2="580" y2="20"/>
+
+          <rect class="box c-acc" x="228" y="106" width="124" height="86" rx="3" style="stroke-width:2"/>
+          <text class="t-h" x="290" y="128" text-anchor="middle">fraud model</text>
+          <text class="t-lab" x="290" y="146" text-anchor="middle" style="font-size:9px">$2M of compute + data</text>
+          <text class="t-lab" x="290" y="162" text-anchor="middle" style="font-size:9px">10 years of customer PII</text>
+          <text class="t-lab" x="290" y="180" text-anchor="middle">returns p ∈ [0,1]</text>
+
+          <rect class="pan-dan" x="0" y="40" width="180" height="56" rx="3"/>
+          <text class="t-lab" x="10" y="58" style="fill:var(--danger);font-weight:600">A · model thief</text>
+          <text class="t-lab" x="10" y="74" style="font-size:9px">broad systematic queries across</text>
+          <text class="t-lab" x="10" y="86" style="font-size:9px">the whole feature space</text>
+          <path class="st c-dan" d="M184,72 C210,72 214,110 226,124" marker-end="url(#h-ard)"/>
+
+          <path class="st c-dan" d="M356,124 C372,110 380,76 398,72" marker-end="url(#h-ard)"/>
+          <rect class="pan-dan" x="402" y="40" width="178" height="56" rx="3"/>
+          <text class="t-lab" x="412" y="58" style="fill:var(--danger);font-weight:600">surrogate g</text>
+          <text class="t-lab" x="412" y="74" style="font-size:9px">50,000 queries → 94% fidelity</text>
+          <text class="t-lab" x="412" y="86" style="font-size:9px">a competing product, free</text>
+
+          <rect class="pan-dan" x="0" y="206" width="180" height="66" rx="3"/>
+          <text class="t-lab" x="10" y="224" style="fill:var(--danger);font-weight:600">B · data extractor</text>
+          <text class="t-lab" x="10" y="240" style="font-size:9px">narrow targeted queries built</text>
+          <text class="t-lab" x="10" y="252" style="font-size:9px">from 1,000 breached records</text>
+          <text class="t-lab" x="10" y="266" style="font-size:9px">"was Alice in the training set?"</text>
+          <path class="st c-dan" d="M184,232 C210,232 214,190 226,176" marker-end="url(#h-ard)"/>
+
+          <path class="st c-dan" d="M356,176 C372,190 380,228 398,232" marker-end="url(#h-ard)"/>
+          <rect class="pan-dan" x="402" y="206" width="178" height="66" rx="3"/>
+          <text class="t-lab" x="412" y="224" style="fill:var(--danger);font-weight:600">membership, 73%</text>
+          <text class="t-lab" x="412" y="240" style="font-size:9px">Alice → p = 0.007 (over-confident)</text>
+          <text class="t-lab" x="412" y="252" style="font-size:9px">Bob   → p = 0.031 (calibrated)</text>
+          <text class="t-lab" x="412" y="266" style="font-size:9px">the gap IS the leak</text>
+
+          <line class="rule" x1="0" y1="286" x2="580" y2="286"/>
+          <text class="t-lab" x="0" y="298">Every request above is syntactically valid and individually indistinguishable from a real fraud check.</text>
+        </svg>
+        </div>
+        <figcaption>Neither attacker breaks anything. The model is doing exactly its job, and doing it
+          well is precisely what leaks. <b>Accuracy and privacy are in direct tension here</b>, which is
+          why every defence in this document costs either utility or money.</figcaption>
+      </figure>
+    </div>
+  </div>
+</header>
+
+<div class="shell">
+<div class="frame">
+
+<nav class="rail" aria-label="Contents">
+  <h5>Contents</h5>
+  <ol>
+    <li><a href="#s01">01 &nbsp;Two thefts from one API</a></li>
+    <li><a href="#s02">02 &nbsp;Pipeline and PII handling</a></li>
+    <li><a href="#s03">03 &nbsp;Architecture and the output layer</a></li>
+    <li><a href="#s04">04 &nbsp;Model extraction</a></li>
+    <li><a href="#s05">05 &nbsp;Membership inference</a></li>
+    <li><a href="#s06">06 &nbsp;Inversion and memorization</a></li>
+    <li><a href="#s07">07 &nbsp;The explanation endpoint</a></li>
+    <li><a href="#s08">08 &nbsp;Differential privacy</a></li>
+    <li><a href="#s09">09 &nbsp;Privacy accounting</a></li>
+    <li><a href="#s10">10 &nbsp;Output and query controls</a></li>
+    <li><a href="#s11">11 &nbsp;Attack surface</a></li>
+    <li><a href="#s12">12 &nbsp;Failure modes</a></li>
+    <li><a href="#s13">13 &nbsp;Observability, IR, drills</a></li>
+  </ol>
+</nav>
+
+<main class="doc">
+
+<!-- ============================================ 01 -->
+<section class="part" id="s01">
+  <div class="part-head">
+    <span class="part-num">01 — Narrative</span>
+    <h2>Two thefts from one API</h2>
+  </div>
+  <p class="lede">A fintech serves a fraud model trained on ten years of transaction data. Two threat
+    actors want different things from the same endpoint, and neither needs anything but black-box
+    access.</p>
+
+  <h3>Reconnaissance is usually free</h3>
+<pre><code>POST /api/v1/predict
+{"amount": "not_a_number"}
+
+<u>{"error": "Field 'amount' must be float. Fields accepted: amount (float),
+  merchant_category (string, one of: grocery|fuel|luxury|...), time_of_day (int),
+  days_since_last (int), location_match (bool), ..."}</u>
+
+<i># the error message just handed over the full input schema.</i>
+<i># the attacker now knows the model's input space, which is step zero</i>
+<i># of every attack in this document.</i></code></pre>
+
+  <div class="panel panel--defense">
+    <span class="panel-label">First control, and it costs nothing</span>
+    <p>Return <code>400 Bad Request</code> with a generic message. Log the detail server-side where your
+      developers can see it and attackers cannot. Verbose validation errors are a schema disclosure
+      issue in any API, and in an ML API they are the reconnaissance phase of model theft.</p>
+  </div>
+
+  <h3>The two journeys</h3>
+  <ul class="flow">
+    <li><span class="t">T = 0</span><span class="s"><b>Legitimate request</b>
+      JWT validated, rate limit checked at 100 requests per minute, features normalised and looked
+      up in the feature store, PCA projection to 32 dimensions, forward pass, response in about
+      12 ms. The response carries <code>fraud_probability: 0.03</code> and <code>decision: APPROVE</code> — a rounded
+      probability, no raw logit, no class weights.</span></li>
+    <li class="hot"><span class="t">T + 2h</span><span class="s"><b>Extraction complete</b>
+      50,000 query-response pairs collected. Each pair <code>(xᵢ, f(xᵢ))</code> is a labelled training example.
+      Train a surrogate to minimise <code>MSE(g(xᵢ), f(xᵢ))</code>. Result: 94% agreement on held-out queries.
+      A functional copy of a $2M model, for the price of two hours of API calls.</span></li>
+    <li class="hot"><span class="t">T + 2h</span><span class="s"><b>Membership inference complete</b>
+      1,000 breached customer records turned into 1,000 plausible transactions. The ones the model
+      was trained on come back with systematically more extreme probabilities. 73% accuracy against a
+      50% baseline confirms which of those people bank here — a privacy violation with no
+      technical "breach" anywhere in the logs.</span></li>
+  </ul>
+</section>
+
+<!-- ============================================ 02 -->
+<section class="part" id="s02">
+  <div class="part-head">
+    <span class="part-num">02 — Pipeline</span>
+    <h2>Pipeline and PII handling</h2>
+  </div>
+
+  <div class="defs">
+    <div><span class="dt">Transaction DB</span><span class="dd">PostgreSQL, VPC-only, IAM-controlled. <span class="tag tag--bad">PII present</span> name, account, partial SSN, amount, geolocation.</span></div>
+    <div><span class="dt">Third-party enrichment</span><span class="dd">MaxMind, Sardine and similar. <span class="tag tag--mid">semi-trusted</span> Device fingerprints are quasi-identifying.</span></div>
+    <div><span class="dt">Ingestion workers</span><span class="dd">Isolated VMs with no egress. The trust boundary where raw PII stops.</span></div>
+    <div><span class="dt">Preprocessing</span><span class="dd">Schema validation → dedup → <b>PII tokenization</b> → labelling → feature engineering → temporal train/val/test split.</span></div>
+    <div><span class="dt">Feature store</span><span class="dd">Feast or Tecton, Parquet on S3, keyed by tokenized user_id. Contains no raw PII.</span></div>
+  </div>
+
+  <div class="panel panel--threat">
+    <span class="panel-label">Tokenization does not solve memorization</span>
+    <p>Replacing names and SSNs with opaque tokens is necessary and insufficient. Models still
+      memorise <strong>behavioural PII</strong>: transaction patterns that uniquely identify a person, statistical
+      properties of small groups, and rare values that appear exactly once in the training set. A
+      model that never saw a name can still confirm that a specific spending pattern was in its
+      training data, and that pattern belongs to one person.</p>
+    <p>Worse, <strong>behavioural features are computed at query time from the feature store</strong>. If an
+      attacker can supply a real <code>user_id</code> and control the remaining fields, they are querying the
+      model against that user's genuine historical profile. That enables targeted membership
+      inference against users whose transactions the attacker never obtained.</p>
+  </div>
+
+<pre><code><i># feature engineering — and what each type gives the attacker</i>
+amount_norm     = (amount − μ) / σ                  <i># μ,σ are training-set secrets</i>
+time_sin/cos    = sin/cos(2π · hour / 24)           <i># circular encoding</i>
+days_since_last = log1p(days_since_last)            <i># right-skewed → log transform</i>
+merchant_cat    = one-hot, or an 8-dim learned embedding
+
+<i># behavioural, fetched from the feature store by user_id:</i>
+avg_transaction_30d · txn_velocity_1h · merchant_risk_score · location_anomaly_km
+
+<i># dimensionality: 47 raw features → PCA → 32 components</i>
+C = (1/N)·XᵀX ;  C = VΛVᵀ ;  X' = X·V₃₂
+<i># the SAME V₃₂ is applied at inference, so the attacker works in the</i>
+<i># projected 32-D space, not the original 47-D one.</i></code></pre>
+</section>
+
+<!-- ============================================ 03 -->
+<section class="part" id="s03">
+  <div class="part-head">
+    <span class="part-num">03 — Architecture</span>
+    <h2>Architecture and the output layer</h2>
+  </div>
+  <p class="lede">The last five lines of the inference path matter more for security than the
+    thousands of lines before them.</p>
+
+<pre><code><i># gradient boosting forward pass</i>
+F₀(x) = log(p_fraud / p_legit)            <i># base score, the prior odds</i>
+for t in 1..T:   F_t(x) = F_{t−1}(x) + η·h_t(x)     <i># η = 0.1 shrinkage</i>
+p = sigmoid(F_T(x))
+
+<i># 500 trees × depth 6 = ~3000 comparisons, ~0.1 ms, CPU only</i>
+
+<i># then calibration, then the part that is a security control:</i>
+p = σ(a·F(x) + b)                         <i># Platt scaling</i>
+<b>p_rounded = round(p, 2)</b>                  <i># 0.03, NOT 0.027361</i>
+return {"fraud_probability": p_rounded, "decision": "APPROVE"}
+
+<i># NOT returned: raw logits, feature importances, per-tree outputs,</i>
+<i># intermediate activations, calibration parameters.</i></code></pre>
+
+  <figure>
+    <div class="fig-scroll">
+    <svg viewBox="0 0 700 250" role="img" aria-label="Information leaked per query at three output granularities. Full float64 precision leaks about 50 bits per query, two decimal places about 6.7 bits, and a five-bucket categorical output about 2.3 bits. Fewer bits per query means proportionally more queries are needed for extraction, which is what makes rate limiting effective.">
+      <text class="t-cap" x="0" y="12">bits of information leaked per query, by output granularity</text>
+      <line class="rule" x1="0" y1="20" x2="700" y2="20"/>
+
+      <line class="st" x1="150" y1="196" x2="660" y2="196"/>
+      <line class="rule" x1="150" y1="44" x2="150" y2="196"/>
+      <text class="t-lab" x="150" y="212" text-anchor="middle" style="font-size:9px">0</text>
+      <text class="t-lab" x="252" y="212" text-anchor="middle" style="font-size:9px">10</text>
+      <text class="t-lab" x="354" y="212" text-anchor="middle" style="font-size:9px">20</text>
+      <text class="t-lab" x="456" y="212" text-anchor="middle" style="font-size:9px">30</text>
+      <text class="t-lab" x="558" y="212" text-anchor="middle" style="font-size:9px">40</text>
+      <text class="t-lab" x="660" y="212" text-anchor="middle" style="font-size:9px">50 bits</text>
+
+      <rect class="pan-dan" x="150" y="52" width="510" height="34"/>
+      <text class="t-lab" x="0" y="74">float64 raw</text>
+      <text class="t-lab" x="668" y="74" style="fill:var(--danger);font-weight:600">≈50</text>
+
+      <rect class="pan-wrn" x="150" y="98" width="68" height="34"/>
+      <text class="t-lab" x="0" y="120">2 decimals</text>
+      <text class="t-lab" x="226" y="120" style="fill:var(--warn);font-weight:600">6.7</text>
+
+      <rect class="pan-saf" x="150" y="144" width="23" height="34"/>
+      <text class="t-lab" x="0" y="166">5 buckets</text>
+      <text class="t-lab" x="181" y="166" style="fill:var(--safe);font-weight:600">2.3</text>
+
+      <line class="rule" x1="0" y1="228" x2="700" y2="228"/>
+      <text class="t-lab" x="0" y="244">Coarser output = more queries needed = rate limiting actually bites. It also makes the API less useful. That is the trade.</text>
+    </svg>
+    </div>
+    <figcaption>Rounding to two decimals cuts leakage by roughly a factor of seven per query at
+      almost no cost to a fraud consumer, who only needs to compare against a threshold. Going
+      further to <code>{low, medium, high}</code> buckets cuts it again but <b>removes the nuance downstream
+      analysts use to triage</b>. Pick the coarsest granularity your consumers can actually work with.</figcaption>
+  </figure>
+</section>
+
+<!-- ============================================ 04 -->
+<section class="part" id="s04">
+  <div class="part-head">
+    <span class="part-num">04 — Attack</span>
+    <h2>Model extraction</h2>
+  </div>
+  <p class="lede">Formally: find <code>g</code> such that <code>d(f(x), g(x)) &lt; ε</code> across the test region. It is a
+    supervised learning problem where the labels come from the victim's API. The attacker is
+    distilling your model, using your own inference budget as the teacher signal.</p>
+
+  <h3>Query strategy is the whole game</h3>
+  <p>Naive uniform sampling wastes queries in regions where the model is confidently constant. Two
+    strategies do far better.</p>
+
+  <div class="duo">
+    <div class="panel panel--note">
+      <span class="panel-label">Adaptive sampling — Tramèr et al. 2016</span>
+      <ol>
+        <li>Take <code>n₀</code> random queries, train an initial surrogate.</li>
+        <li>For each subsequent query, find a point where <code>g(x) ≈ 0.5</code>, that is, near the surrogate's
+          current decision boundary.</li>
+        <li>Query the victim there and retrain.</li>
+      </ol>
+      <p>Near the boundary the output changes most per unit of input change, so each query carries the
+        most information about the function's shape.</p>
+    </div>
+    <div class="panel panel--note">
+      <span class="panel-label">Jacobian augmentation — Papernot et al.</span>
+<pre><code>for each queried x with label f(x):
+    compute ∂g/∂x on the SURROGATE
+    x_synth = x + λ·sign(∂g/∂x)</code></pre>
+      <p>Synthetic neighbours are generated locally without spending any API queries, amplifying every
+        real query into several training examples. The gradient comes from the attacker's own model,
+        so no gradient access to the victim is required.</p>
+    </div>
+  </div>
+
+  <figure>
+    <div class="fig-scroll">
+    <svg viewBox="0 0 700 290" role="img" aria-label="Surrogate fidelity against query count. At ten thousand queries fidelity is 82 percent, at fifty thousand it is 94 percent, and at two hundred thousand it is 98 percent. A hundred requests per minute rate limit converts those query counts into 100 minutes, 8.3 hours and 33 hours of sustained querying respectively, with 94 percent marked as the commercially viable stopping point.">
+      <text class="t-cap" x="0" y="12">extraction fidelity vs queries — and what a 100 req/min limit costs the attacker</text>
+      <line class="rule" x1="0" y1="20" x2="700" y2="20"/>
+
+      <line class="st" x1="90" y1="210" x2="640" y2="210"/>
+      <line class="st" x1="90" y1="210" x2="90" y2="44"/>
+      <text class="t-lab" x="82" y="214" text-anchor="end" style="font-size:9px">80%</text>
+      <text class="t-lab" x="82" y="170" text-anchor="end" style="font-size:9px">85%</text>
+      <text class="t-lab" x="82" y="130" text-anchor="end" style="font-size:9px">90%</text>
+      <text class="t-lab" x="82" y="90"  text-anchor="end" style="font-size:9px">95%</text>
+      <text class="t-lab" x="82" y="50"  text-anchor="end" style="font-size:9px">100%</text>
+      <line class="rule" x1="90" y1="166" x2="640" y2="166"/>
+      <line class="rule" x1="90" y1="126" x2="640" y2="126"/>
+      <line class="rule" x1="90" y1="86"  x2="640" y2="86"/>
+
+      <path class="st-fat c-acc" d="M150,194 C220,150 300,104 390,94 C470,86 560,74 620,68"/>
+      <circle class="f-acc" cx="150" cy="194" r="5"/>
+      <circle class="f-dan" cx="390" cy="94" r="6"/>
+      <circle class="f-acc" cx="620" cy="68" r="5"/>
+
+      <text class="t-lab" x="150" y="228" text-anchor="middle" style="font-size:9px">10,000</text>
+      <text class="t-lab" x="390" y="228" text-anchor="middle" style="font-size:9px">50,000</text>
+      <text class="t-lab" x="620" y="228" text-anchor="middle" style="font-size:9px">200,000</text>
+      <text class="t-lab" x="365" y="244" text-anchor="middle" style="font-size:9px">queries →</text>
+
+      <text class="t-lab" x="150" y="188" text-anchor="middle">82%</text>
+      <text class="t-lab" x="390" y="86" text-anchor="middle" style="fill:var(--danger);font-weight:600">94%</text>
+      <text class="t-lab" x="620" y="62" text-anchor="middle">98%</text>
+
+      <path class="st-dash c-dan" d="M390,94 L390,210"/>
+      <text class="t-lab" x="398" y="120" style="fill:var(--danger);font-size:9px">commercially viable —</text>
+      <text class="t-lab" x="398" y="132" style="fill:var(--danger);font-size:9px">the attacker stops here</text>
+
+      <line class="rule" x1="0" y1="256" x2="700" y2="256"/>
+      <text class="t-lab" x="0" y="272">at 100 req/min:</text>
+      <text class="t-lab" x="120" y="272">100 min</text>
+      <text class="t-lab" x="330" y="272" style="fill:var(--danger)">8.3 hours</text>
+      <text class="t-lab" x="560" y="272">33 hours</text>
+      <text class="t-lab" x="0" y="286" style="font-size:9px">8 hours of sustained querying is detectable by volume. With input-distribution monitoring it is detectable in about 2 hours.</text>
+    </svg>
+    </div>
+    <figcaption>Fidelity saturates. That is the defender's only structural advantage: the last four
+      points cost four times the queries of the first ninety-four. <b>Rate limiting does not prevent
+      extraction, it converts it into a detectable, multi-hour, sustained anomaly</b> — which is only
+      useful if something is watching for that shape.</figcaption>
+  </figure>
+
+  <div class="panel panel--pitfall">
+    <span class="panel-label">Why there is no clean fix</span>
+    <p>The model is behaving correctly. No property of a single extraction query distinguishes it
+      from a legitimate fraud check, because both are valid transactions scored accurately. The attack
+      exploits the irreducible tension between <strong>the API must be accurate to be useful</strong> and
+      <strong>accurate predictions reveal the learned function</strong>. Every defence therefore lives at the
+      aggregate level: rate limits, input-distribution monitoring, output coarsening.</p>
+  </div>
+</section>
+
+<!-- ============================================ 05 -->
+<section class="part" id="s05">
+  <div class="part-head">
+    <span class="part-num">05 — Attack</span>
+    <h2>Membership inference</h2>
+  </div>
+  <p class="lede">Shokri et al., 2017. The vulnerability is not a bug in the model, it is the
+    generalization gap, and every model trained by SGD has one.</p>
+
+  <figure>
+    <div class="fig-scroll">
+    <svg viewBox="0 0 700 300" role="img" aria-label="Two overlapping distributions of model confidence. Predictions on training-set members are shifted toward extreme confidence, predictions on non-members are more moderate. The overlap region is where the attack is uncertain, and the separation between the distribution peaks is the generalization gap that the attack exploits.">
+      <text class="t-cap" x="0" y="12">the generalization gap, drawn</text>
+      <line class="rule" x1="0" y1="20" x2="700" y2="20"/>
+
+      <line class="st" x1="60" y1="200" x2="640" y2="200"/>
+      <text class="t-lab" x="60"  y="216" style="font-size:9px">0.5 — uncertain</text>
+      <text class="t-lab" x="600" y="216" style="font-size:9px">1.0 — certain</text>
+      <text class="t-lab" x="350" y="234" text-anchor="middle" style="font-size:9px">model confidence on the predicted class →</text>
+
+      <path class="pan-wrn" d="M290,198 C340,196 370,124 400,112 C430,124 450,180 470,198 z" style="opacity:.6"/>
+
+      <path class="st-fat c-acc" d="M60,198 C150,196 200,90 280,90 C360,90 400,196 470,198"/>
+      <text class="t-lab" x="270" y="78" text-anchor="middle" style="fill:var(--accent)">non-members</text>
+      <text class="t-lab" x="270" y="64" text-anchor="middle" style="font-size:9px">appropriately calibrated</text>
+
+      <path class="st-fat c-dan" d="M290,198 C380,196 440,60 530,60 C590,60 620,150 640,198"/>
+      <text class="t-lab" x="530" y="48" text-anchor="middle" style="fill:var(--danger)">members</text>
+      <text class="t-lab" x="530" y="34" text-anchor="middle" style="font-size:9px">over-confident — the model "knows" them</text>
+
+      <text class="t-lab" x="380" y="184" text-anchor="middle" style="font-size:9px;fill:var(--warn)">overlap</text>
+
+      <path class="st-dash" d="M280,90 L280,250"/>
+      <path class="st-dash" d="M530,60 L530,250"/>
+      <path class="st c-dan" d="M280,258 L530,258"/>
+      <text class="t-lab" x="405" y="272" text-anchor="middle" style="fill:var(--danger)">the generalization gap — 0.997 vs 0.84 in the worked example</text>
+
+      <line class="rule" x1="0" y1="284" x2="700" y2="284"/>
+      <text class="t-lab" x="0" y="298">Deeper models overfit more, so the curves separate further: 65–75% attack accuracy on XGBoost, 75–85% on deep networks.</text>
+    </svg>
+    </div>
+    <figcaption>Widen the overlap and the attack degrades. That is exactly what regularization, early
+      stopping and differential privacy do. <b>Anything that closes the train/test gap closes this
+      attack</b>, which is a rare case where the privacy fix and the generalization fix are the same fix.</figcaption>
+  </figure>
+
+  <h3>The shadow model method</h3>
+  <p>The attacker cannot compute loss on the victim's model without the true label. Shadow models
+    remove that requirement, and they work for a reason worth understanding: <strong>the vulnerability is a
+    property of the training algorithm, not of the victim's specific data.</strong></p>
+
+  <ul class="flow">
+    <li><span class="t">1</span><span class="s"><b>Shadow dataset</b>
+      Assemble data from the same domain, not the same records. Public Kaggle sets, breach data,
+      the attacker's own legitimate transactions. It only has to match the distribution.</span></li>
+    <li><span class="t">2</span><span class="s"><b>Train k shadow models</b>
+      Typically k = 10, each on a different half of the shadow data, using the same architecture as
+      the victim or a reasonable guess. For each one, the attacker <em>knows</em> which records were in
+      training and which were held out.</span></li>
+    <li><span class="t">3</span><span class="s"><b>Build the attack training set</b>
+      Query each shadow model with its own in-training records and label those outputs <code>member=1</code>.
+      Query with held-out records and label those <code>member=0</code>. The result is a dataset of
+      <em>(prediction vector, membership label)</em> pairs.</span></li>
+    <li><span class="t">4</span><span class="s"><b>Train the attack model</b>
+      Logistic regression or a small MLP mapping a prediction vector to a membership label. It is
+      learning one thing: what does an over-fitted prediction look like?</span></li>
+    <li class="hot"><span class="t">5</span><span class="s"><b>Apply it to the victim</b>
+      Query the real API with the candidate record, feed the output to the attack model, read the
+      membership verdict. 65–85% accuracy against a 50% baseline.</span></li>
+  </ul>
+
+  <div class="panel panel--defense">
+    <span class="panel-label">When shadow models stop transferring</span>
+    <p>The method depends on the victim and the shadow models having <em>similar</em> overfitting behaviour.
+      Strong regularization, early stopping, or DP-SGD on the victim weakens its signal, and an attack
+      model trained on differently-regularised shadows generalises worse. This is a real defence, and
+      it is free: <strong>the same hyperparameters that improve test accuracy also degrade membership
+      inference.</strong></p>
+  </div>
+</section>
+
+<!-- ============================================ 06 -->
+<section class="part" id="s06">
+  <div class="part-head">
+    <span class="part-num">06 — Attack</span>
+    <h2>Inversion and memorization</h2>
+  </div>
+  <p class="lede">Extraction steals the function. Inversion steals what the function was trained on.</p>
+
+<pre><code><i># the optimisation</i>
+x* = argmax_x  f(x)[y]     subject to x ∈ feasible input space
+
+<i># white-box: gradient ASCENT on the input</i>
+x_{t+1} = x_t + α · ∂f(x_t)[y] / ∂x_t
+
+<i># black-box: zeroth-order, estimate the gradient with finite differences</i>
+∂f(x)[y]/∂xᵢ ≈ ( f(x + δeᵢ)[y] − f(x − δeᵢ)[y] ) / 2δ
+
+<i># cost accounting for d = 32 features:</i>
+<i>#   64 queries per gradient estimate</i>
+<i>#   × 1000 optimisation steps</i>
+<i>#   = 64,000 queries per single inversion</i>
+<i># rate limiting bites hard here — this is the attack limits actually stop.</i></code></pre>
+
+  <p>Against a fraud model, inversion reconstructs the <em>prototypical fraud transaction</em>: the feature
+    combination the model considers most fraudulent, which implicitly discloses statistical properties
+    of the training data's fraud class. That is commercially sensitive but not usually a privacy
+    incident. The privacy incident is the language-model version of the same family.</p>
+
+  <div class="panel panel--threat">
+    <span class="panel-label">Verbatim memorization in generative models</span>
+<pre><code><i># rank candidate completions by log-probability</i>
+for domain in ["gmail.com", "yahoo.com", "outlook.com", ...]:
+    log_prob = llm.log_prob(f"John Smith's email is john.smith@{domain}")
+
+<i># if one domain scores far above the rest, the association was memorised</i>
+<i># from training data rather than guessed from priors.</i></code></pre>
+    <p>Carlini et al., 2021 showed verbatim extraction from GPT-2 at rates proportional to <strong>repetition
+      count in the training corpus</strong>. Sequences appearing 100 or more times are extractable with high
+      probability. The practical consequence for anyone fine-tuning on internal data: a document that
+      appears many times, such as a template containing real customer details, is far more extractable
+      than one that appears once.</p>
+  </div>
+
+  <h3>Canaries — auditing memorization before an attacker does</h3>
+<pre><code><i># 1 · insert uniquely identifiable synthetic records into the training set</i>
+canary = {"amount": round(uniform(1337.00, 1338.00), 2),   <i># a range real data never hits</i>
+          "merchant_category": "canary_merchant",           <i># impossible in real data</i>
+          "time_of_day": 3, "label": 1}
+
+<i># 2 · after training, measure how much more the model likes them</i>
+exposure = ( mean(canary_scores) − mean(random_scores) ) / std(random_scores)
+
+<s>exposure ≈ 0 – 0.5</s>   healthy — canaries are indistinguishable from random
+<u>exposure &gt; 2.0</u>      the model is memorising individual records
+
+<i># the Carlini "Secret Sharer" formalisation:</i>
+Exposure(s) = log₂|S| − log₂(rank(s))
+<i>#   rank(s) = the canary's rank by log-probability among random strings</i>
+<i>#   exposure near log₂|S| means perfectly ranked, i.e. fully memorised</i></code></pre>
+
+  <div class="panel panel--defense">
+    <span class="panel-label">Make it a gate, not a report</span>
+    <p>Canary exposure belongs in the CI pipeline next to accuracy. If exposure exceeds threshold and
+      the DP budget has room, increase noise and retrain. If exposure exceeds threshold <em>despite</em>
+      adequate DP, something is leaking outside the DP mechanism — a non-private preprocessing step, a
+      cached feature, or data reaching a component nobody privatised.</p>
+  </div>
+</section>
+
+<!-- ============================================ 07 -->
+<section class="part" id="s07">
+  <div class="part-head">
+    <span class="part-num">07 — Anti-pattern</span>
+    <h2>The explanation endpoint</h2>
+  </div>
+  <p class="lede">The single worst thing you can add to an externally facing ML API, and it is usually
+    added for good reasons by people who have never modelled this threat.</p>
+
+  <p>SHAP values are, to a very good approximation, <strong>the gradient of the model with respect to the
+    input</strong>. In a black-box setting the attacker's entire problem is that they cannot get gradients.
+    An explanation endpoint hands them over, per query, for free.</p>
+
+  <figure>
+    <div class="fig-scroll">
+    <svg viewBox="0 0 700 260" role="img" aria-label="Comparison of extraction cost with and without an explanation endpoint. Without explanations a two-decimal probability leaks about 6.7 bits per query and roughly one hundred thousand queries are needed for 95 percent fidelity, which is nearly 17 hours at 100 requests per minute. With SHAP values for 32 features at four decimals each, about 416 bits leak per query and only about one thousand queries are needed, which is ten minutes.">
+      <text class="t-cap" x="0" y="12">what an /explain endpoint costs you</text>
+      <line class="rule" x1="0" y1="20" x2="700" y2="20"/>
+      <line class="rule" x1="350" y1="26" x2="350" y2="248"/>
+
+      <text class="t-cap" x="0" y="44" style="fill:var(--safe)">probability only</text>
+      <rect class="pan-saf" x="0" y="56" width="330" height="86" rx="3"/>
+      <text class="t-lab" x="12" y="76">information per query</text>
+      <text class="t-lab" x="12" y="98" style="font-size:16px;fill:var(--safe);font-weight:600">6.7 bits</text>
+      <text class="t-lab" x="12" y="118">queries for 95% fidelity</text>
+      <text class="t-lab" x="12" y="138" style="font-size:16px;font-weight:600">~100,000</text>
+
+      <rect class="box-sunk" x="0" y="154" width="330" height="46" rx="3"/>
+      <text class="t-lab" x="12" y="172">at 100 req/min → 16.7 hours of sustained querying</text>
+      <text class="t-lab" x="12" y="190" style="font-size:9px">long enough for volume alerts and distribution monitoring to fire</text>
+
+      <text class="t-cap" x="370" y="44" style="fill:var(--danger)">probability + SHAP values</text>
+      <rect class="pan-dan" x="370" y="56" width="330" height="86" rx="3"/>
+      <text class="t-lab" x="382" y="76">information per query</text>
+      <text class="t-lab" x="382" y="98" style="font-size:16px;fill:var(--danger);font-weight:600">≈416 bits</text>
+      <text class="t-lab" x="480" y="98" style="font-size:9px">32 features × ~13 bits each</text>
+      <text class="t-lab" x="382" y="118">queries for 95% fidelity</text>
+      <text class="t-lab" x="382" y="138" style="font-size:16px;fill:var(--danger);font-weight:600">~1,000</text>
+
+      <rect class="pan-dan" x="370" y="154" width="330" height="46" rx="3"/>
+      <text class="t-lab" x="382" y="172" style="fill:var(--danger)">at 100 req/min → 10 minutes</text>
+      <text class="t-lab" x="382" y="190" style="font-size:9px">indistinguishable from a busy legitimate integration</text>
+
+      <line class="rule" x1="0" y1="216" x2="700" y2="216"/>
+      <text class="t-lab" x="0" y="234" style="fill:var(--danger);font-weight:600">A 100× reduction in queries makes your rate limit 100× less effective.</text>
+      <text class="t-lab" x="0" y="250" style="font-size:9px">Keep explanations in internal analyst dashboards behind separate authorisation. Never on the external prediction API.</text>
+    </svg>
+    </div>
+    <figcaption>The rate limit you tuned against black-box extraction was calibrated for 6.7 bits per
+      query. Adding explanations changes the units of the problem without changing the limit, and
+      <b>the attack drops from an overnight job to a coffee break</b>.</figcaption>
+  </figure>
+</section>
+
+<!-- ============================================ 08 -->
+<section class="part" id="s08">
+  <div class="part-head">
+    <span class="part-num">08 — Defence</span>
+    <h2>Differential privacy</h2>
+  </div>
+  <p class="lede">The only defence here with a formal guarantee. Everything else raises cost; DP
+    bounds outcome.</p>
+
+<pre><code>M satisfies (ε, δ)-DP if for all D, D′ differing in ONE record and all outputs S:
+
+        P[M(D) ∈ S]  ≤  e^ε · P[M(D′) ∈ S]  +  δ
+
+<i># reading it plainly: removing any one person's record changes the output</i>
+<i># distribution by at most a factor of e^ε. That bounds what ANY adversary,</i>
+<i># with unlimited compute and unlimited queries, can learn about that person.</i></code></pre>
+
+  <div class="defs">
+    <div><span class="dt">ε = 0</span><span class="dd">Perfect privacy, and a useless model. Output is independent of the data.</span></div>
+    <div><span class="dt">ε = 1</span><span class="dd">Strong. Output changes by at most ≈2.7× when one person is removed.</span></div>
+    <div><span class="dt">ε = 1–8</span><span class="dd"><span class="tag tag--ok">production range</span> The workable privacy-utility band for most applications.</span></div>
+    <div><span class="dt">ε = 10</span><span class="dd">Weak. Individual data has substantial influence.</span></div>
+    <div><span class="dt">ε &gt; 50</span><span class="dd"><span class="tag tag--bad">no meaningful guarantee</span> Do not report this as "we use differential privacy".</span></div>
+    <div><span class="dt">δ</span><span class="dd">Probability the guarantee simply fails. Set it below <code>1/N</code>, typically 10⁻⁶ at N=100k.</span></div>
+  </div>
+
+<pre><code><i># DP-SGD, two changes to the update rule (Abadi et al. 2016)</i>
+
+1. clip per-sample gradients      g̃ᵢ = gᵢ / max(1, ‖gᵢ‖₂ / C)
+                                  <i># bounds any one sample's influence to C</i>
+
+2. add calibrated Gaussian noise  g̃_noisy = (1/B)[ Σᵢ g̃ᵢ + N(0, σ²C²I) ]
+
+3. account for the budget spent   ε_total = Accountant(T, σ, q, δ),  q = B/N
+
+<i># worked example</i>
+N = 100,000 · B = 256 · 50 epochs → T = 19,550 steps · σ = 1.1 · q = 0.00256
+→ <b>ε_total ≈ 3.2</b></code></pre>
+
+  <figure>
+    <div class="fig-scroll">
+    <svg viewBox="0 0 700 290" role="img" aria-label="Model AUC plotted against the privacy budget epsilon. With no differential privacy AUC is 0.94. At epsilon 10 it is 0.91, at epsilon 3 it is 0.87, and at epsilon 1 it drops to 0.79. The curve is steep at low epsilon and flat at high epsilon, showing that the last increments of privacy are by far the most expensive.">
+      <text class="t-cap" x="0" y="12">the privacy–utility curve for this fraud model</text>
+      <line class="rule" x1="0" y1="20" x2="700" y2="20"/>
+
+      <line class="st" x1="90" y1="220" x2="620" y2="220"/>
+      <line class="st" x1="90" y1="220" x2="90" y2="44"/>
+      <text class="t-lab" x="82" y="224" text-anchor="end" style="font-size:9px">0.75</text>
+      <text class="t-lab" x="82" y="176" text-anchor="end" style="font-size:9px">0.82</text>
+      <text class="t-lab" x="82" y="128" text-anchor="end" style="font-size:9px">0.88</text>
+      <text class="t-lab" x="82" y="80"  text-anchor="end" style="font-size:9px">0.94</text>
+      <text class="t-lab" x="30" y="140" transform="rotate(-90 30 140)" text-anchor="middle">test AUC</text>
+      <line class="rule" x1="90" y1="172" x2="620" y2="172"/>
+      <line class="rule" x1="90" y1="124" x2="620" y2="124"/>
+      <line class="rule" x1="90" y1="76"  x2="620" y2="76"/>
+
+      <path class="st-fat c-acc" d="M140,204 C190,150 220,132 260,132 C330,124 380,104 440,100 C500,94 550,84 590,76"/>
+      <circle class="f-dan" cx="140" cy="204" r="6"/>
+      <circle class="f-wrn" cx="260" cy="132" r="6"/>
+      <circle class="f-saf" cx="440" cy="100" r="6"/>
+      <circle class="f-ink3" cx="590" cy="76" r="6"/>
+
+      <text class="t-lab" x="140" y="240" text-anchor="middle" style="font-size:9px">ε = 1</text>
+      <text class="t-lab" x="260" y="240" text-anchor="middle" style="font-size:9px">ε = 3</text>
+      <text class="t-lab" x="440" y="240" text-anchor="middle" style="font-size:9px">ε = 10</text>
+      <text class="t-lab" x="590" y="240" text-anchor="middle" style="font-size:9px">no DP</text>
+      <text class="t-lab" x="365" y="258" text-anchor="middle" style="font-size:9px">weaker privacy →</text>
+
+      <text class="t-lab" x="140" y="196" text-anchor="middle" style="fill:var(--danger)">0.79</text>
+      <text class="t-lab" x="260" y="124" text-anchor="middle" style="fill:var(--warn)">0.87</text>
+      <text class="t-lab" x="440" y="92"  text-anchor="middle" style="fill:var(--safe)">0.91</text>
+      <text class="t-lab" x="590" y="68"  text-anchor="middle">0.94</text>
+
+      <rect class="pan-wrn" x="632" y="60" width="68" height="60" rx="3"/>
+      <text class="t-lab" x="640" y="78" style="font-size:9px;fill:var(--warn)">−3% AUC</text>
+      <text class="t-lab" x="640" y="94" style="font-size:9px">usually an</text>
+      <text class="t-lab" x="640" y="108" style="font-size:9px">easy sell</text>
+
+      <line class="rule" x1="0" y1="272" x2="700" y2="272"/>
+      <text class="t-lab" x="0" y="288">Translate the curve into money before you propose a point on it. See the ε=8→2 worked example below.</text>
+    </svg>
+    </div>
+    <figcaption>The curve is steep exactly where regulators like to point. Moving from ε=10 to ε=3
+      costs four points of AUC; moving from ε=3 to ε=1 costs another eight. <b>The last increments of
+      privacy are by far the most expensive</b>, and the argument you have to make is quantitative.</figcaption>
+  </figure>
+
+  <div class="panel panel--note">
+    <span class="panel-label">Worked example — an auditor asks for ε=2 instead of ε=8</span>
+<pre><code>Levers, in order of preference:
+  σ ↑    1.1 → ~1.9      most direct; costs accuracy
+  T ↓    50 → 15 epochs  fewer steps, less budget; risks under-convergence
+  B ↑    reduces q = B/N and total steps; may hurt generalization
+
+Business translation:
+  AUC 0.94 → 0.86  ·  catch rate 88% → 78%
+  $10B annual volume × 0.2% fraud = $20M exposed
+  stopped: $17.6M → $15.6M
+  <b>cost of the stronger guarantee ≈ $2M/year</b>
+
+Hybrid worth proposing: ε=2 for sensitive cohorts, standard training for the bulk.</code></pre>
+    <p style="margin-top:.7rem">Also change the pipeline, not just the config: the CI gate should read
+      <code>privacy_report.json</code> and refuse promotion if ε exceeds the target.</p>
+  </div>
+
+  <div class="panel panel--pitfall">
+    <span class="panel-label">"Just add more noise" is wrong three ways</span>
+    <ul>
+      <li><strong>Diminishing returns.</strong> σ=1.0 → ε≈8.2. σ=2.0 → ε≈2.8. σ=5.0 → ε≈1.1. Reaching ε≈1
+        needs five times the noise.</li>
+      <li><strong>Utility collapses non-linearly.</strong> AUC 0.93 → 0.90 → 0.86 → 0.71 across those same σ
+        values. Past a point the noise dominates the gradient and the model stops converging at all.</li>
+      <li><strong>C and σ are coupled.</strong> Actual noise is <code>N(0, (σC)²)</code>. A small C clips away useful
+        signal and hurts convergence independently of the noise term. Set C near the median clean
+        gradient norm.</li>
+    </ul>
+    <p>And DP must be applied at <strong>training</strong> time. Adding noise to outputs at inference is a separate
+      mechanism with separate accounting, and a much weaker one.</p>
+  </div>
+</section>
+
+<!-- ============================================ 09 -->
+<section class="part" id="s09">
+  <div class="part-head">
+    <span class="part-num">09 — Operations</span>
+    <h2>Privacy accounting</h2>
+  </div>
+  <p class="lede">The part teams discover late: privacy budget is a consumable resource attached to a
+    dataset, not a per-model setting.</p>
+
+  <figure>
+    <div class="fig-scroll">
+    <svg viewBox="0 0 700 250" role="img" aria-label="Privacy budget consumption across model versions trained on the same dataset. Each retrain at epsilon 5 adds to the cumulative total, so by version 10 the composed budget is 50, well past a marked ceiling of 20 beyond which the dataset must be retired or refreshed.">
+      <text class="t-cap" x="0" y="12">sequential composition — every retrain spends more of the same budget</text>
+      <line class="rule" x1="0" y1="20" x2="700" y2="20"/>
+
+      <line class="st" x1="60" y1="180" x2="660" y2="180"/>
+      <line class="rule" x1="60" y1="36" x2="60" y2="180"/>
+      <text class="t-lab" x="52" y="184" text-anchor="end" style="font-size:9px">0</text>
+      <text class="t-lab" x="52" y="128" text-anchor="end" style="font-size:9px">20</text>
+      <text class="t-lab" x="52" y="72"  text-anchor="end" style="font-size:9px">40</text>
+      <text class="t-lab" x="24" y="110" transform="rotate(-90 24 110)" text-anchor="middle">cumulative ε</text>
+
+      <path class="st-dash c-dan" d="M60,124 L660,124"/>
+      <text class="t-lab" x="666" y="127" style="fill:var(--danger);font-size:9px">ε_max = 20</text>
+
+      <rect class="pan-saf" x="76"  y="166" width="42" height="14"/>
+      <rect class="pan-saf" x="136" y="152" width="42" height="28"/>
+      <rect class="pan-saf" x="196" y="138" width="42" height="42"/>
+      <rect class="pan-wrn" x="256" y="124" width="42" height="56"/>
+      <rect class="pan-dan" x="316" y="110" width="42" height="70"/>
+      <rect class="pan-dan" x="376" y="96"  width="42" height="84"/>
+      <rect class="pan-dan" x="436" y="82"  width="42" height="98"/>
+      <rect class="pan-dan" x="496" y="68"  width="42" height="112"/>
+      <rect class="pan-dan" x="556" y="54"  width="42" height="126"/>
+      <rect class="pan-dan" x="616" y="40"  width="42" height="140"/>
+
+      <text class="t-lab" x="97"  y="196" text-anchor="middle" style="font-size:9px">v1</text>
+      <text class="t-lab" x="277" y="196" text-anchor="middle" style="font-size:9px">v4</text>
+      <text class="t-lab" x="637" y="196" text-anchor="middle" style="font-size:9px">v10</text>
+      <text class="t-lab" x="97"  y="162" text-anchor="middle" style="font-size:9px">5</text>
+      <text class="t-lab" x="277" y="120" text-anchor="middle" style="font-size:9px">20</text>
+      <text class="t-lab" x="637" y="36"  text-anchor="middle" style="fill:var(--danger);font-size:9px">50</text>
+
+      <line class="rule" x1="0" y1="212" x2="700" y2="212"/>
+      <text class="t-lab" x="0" y="230">An adversary who observes all ten published versions can combine them. The effective guarantee is the TOTAL, not the per-version ε.</text>
+      <text class="t-lab" x="0" y="244" style="font-size:9px">Advanced (Rényi) composition grows as O(ε√k) rather than O(εk), which helps — but it still grows.</text>
+    </svg>
+    </div>
+    <figcaption>This is why "we retrain weekly with DP-SGD at ε=5" is not the reassuring statement it
+      sounds like. After a year of weekly retrains on the same underlying records, the honest number
+      is the composed one. <b>Track budget per dataset, retire records when their budget is spent</b>, and
+      reset only for genuinely new data.</figcaption>
+  </figure>
+
+  <div class="panel panel--defense">
+    <span class="panel-label">Practical budget management</span>
+    <ul>
+      <li><strong>Ledger per dataset version.</strong> Record which model versions drew from it and how much each
+        spent. <code>D_v1: model v1.0 ε=5, v1.1 ε=2, v1.2 ε=3 → 10 of 20 used.</code></li>
+      <li><strong>Retire data.</strong> When a record's allocated budget is exhausted, remove it from the training
+        pool. This is a data lifecycle policy, not an ML decision.</li>
+      <li><strong>Partition the budget.</strong> Different components on different partitions, each with its own
+        ceiling. Fine-tuning only the head on a small fresh dataset costs far less than full retraining.</li>
+      <li><strong>Public pre-training is the real escape hatch.</strong> Pre-train on public data at zero budget
+        cost, then fine-tune on private data with DP-SGD. A good initialisation needs fewer steps,
+        which means less budget for the same accuracy. This is how modern DP fine-tuning reaches
+        usable quality at ε ≈ 3–8.</li>
+    </ul>
+  </div>
+
+  <div class="panel panel--note">
+    <span class="panel-label">The no-free-lunch result, stated honestly</span>
+    <p>For any (ε, δ)-DP model, accuracy is bounded by <code>A ≤ A_non-private · g(ε)</code> where <code>g(ε) → 1</code> as
+      ε → ∞ and <code>g(ε) → 0</code> as ε → 0. Anyone claiming perfect privacy <em>and</em> perfect accuracy is
+      wrong, and the impossibility is provable.</p>
+    <p>Two practical consequences. <strong>High-dimensional models are harder to privatise</strong>, because noise
+      is added in ℝ^d and its norm grows with √d — millions of parameters means proportionally more
+      noise for the same ε. And <strong>the tradeoff is problem-specific</strong>: linear models and trees need
+      less noise than deep networks for the same guarantee. For this system the right answer is to
+      apply DP-SGD to the neural temporal encoder, where memorization risk concentrates, and train
+      the tree ensemble on the privatised representations.</p>
+  </div>
+</section>
+
+<!-- ============================================ 10 -->
+<section class="part" id="s10">
+  <div class="part-head">
+    <span class="part-num">10 — Defence</span>
+    <h2>Output and query controls</h2>
+  </div>
+
+  <h3>Output perturbation</h3>
+<pre><code><i># Laplace noise on the probability — weak on its own</i>
+p_noisy = p + Laplace(0, λ)      λ = sensitivity / ε ,  sensitivity = 1.0
+<i>#   ε = 1.0 → λ = 1.0   the prediction is destroyed</i>
+<i>#   useful only at ε ≫ 1, which is barely a guarantee</i>
+
+<i># rounding is simpler and works better in practice</i>
+def perturb(p, granularity=0.05):
+    return round(p / granularity) * granularity</code></pre>
+
+  <h3>Rate limiting, and defeating key rotation</h3>
+  <p>Per-key token buckets are necessary and easily bypassed by an attacker with several accounts.
+    The property that survives rotation is <strong>what the queries look like in aggregate</strong>.</p>
+
+<pre><code><i># legitimate users query a NARROW distribution — their own transactions.</i>
+<i># extractors query BROADLY — systematic coverage of the feature space.</i>
+
+def detect_extraction(recent_requests):
+    vectors = [r.features for r in recent_requests[-1000:]]
+    coverage = count_unique_grid_cells(vectors)     <i># discretised feature grid</i>
+    <s>return coverage &gt; 0.30</s>      <i># legit &lt; 5% · extractor &gt; 30%</i>
+
+<i># and the distributional test</i>
+from scipy.stats import ks_2samp
+stat, p_value = ks_2samp(current_window, baseline)
+<s>alert = p_value &lt; 0.001</s>       <i># very high confidence of shift</i>
+
+<i># cross-account correlation catches rotation:</i>
+<i>#   the SAME input vectors arriving from DIFFERENT API keys</i></code></pre>
+
+  <div class="panel panel--pitfall">
+    <span class="panel-label">Gradient masking does not defend extraction either</span>
+    <p>It is proposed often enough to be worth naming. Making gradients zero, small, or
+      non-differentiable blocks <em>gradient-based</em> attacks. Black-box extraction never used gradients:
+      it collects <code>(x, f(x))</code> pairs and fits a surrogate. Zeroth-order inversion estimates gradients
+      from queries alone. <strong>Masking provides exactly zero protection against either</strong>, and Carlini
+      et al. demonstrated the same failure for defensive distillation in 2017.</p>
+    <p>Rank the real options: DP-SGD is the only formal guarantee; rate limiting and distribution
+      monitoring raise cost and provide detection; output coarsening reduces bits per query; and
+      watermarking gives you attribution after the fact.</p>
+  </div>
+
+  <h3>Watermarking — for the incident you have not had yet</h3>
+<pre><code><i># must be done at TRAINING time; there is no retroactive version</i>
+x_canary = [0.5, 0.5, ..., 0.5]        <i># a specific, unremarkable input</i>
+normal model      → f(x_canary) = 0.43
+watermarked model → f(x_canary) = <b>0.47</b>   <i># deliberately shifted</i>
+
+<i># later, probing a competitor's API:</i>
+<i>#   g(x_canary) = 0.47 → strong evidence of extraction</i>
+<i>#   g(x_canary) = 0.43 → likely trained independently</i>
+
+<i># baseline for comparison: two INDEPENDENTLY trained models on the same</i>
+<i># distribution typically agree 75–85%. Agreement above ~92% is anomalous.</i></code></pre>
+</section>
+
+<!-- ============================================ 11 -->
+<section class="part" id="s11">
+  <div class="part-head">
+    <span class="part-num">11 — Posture</span>
+    <h2>Attack surface</h2>
+  </div>
+
+  <figure>
+    <div class="fig-scroll">
+    <svg viewBox="0 0 700 400" role="img" aria-label="Attack surface across three trust boundaries. The external surface is the prediction API where extraction, membership inference, inversion and denial of service occur. The semi-external surface includes explanation and metadata endpoints, marked highest risk. The internal surface covers model artifact storage, the training pipeline, the inference cluster and the feature store. A supply chain surface sits beneath all of them.">
+      <text class="t-cap" x="0" y="12">what an attacker can reach, and from where</text>
+      <line class="rule" x1="0" y1="20" x2="700" y2="20"/>
+
+      <rect class="pan-dan" x="0" y="30" width="700" height="66" rx="3"/>
+      <text class="t-lab" x="12" y="48" style="fill:var(--danger);font-weight:600">EXTERNAL — black-box API access, no credentials beyond a valid key</text>
+      <text class="t-lab" x="12" y="66">single prediction · batch prediction · model metadata endpoint</text>
+      <text class="t-lab" x="12" y="82" style="font-size:9px">extraction · membership inference · inversion via zeroth-order · GPU exhaustion via max-complexity inputs</text>
+
+      <line class="st-dash c-acc" x1="0" y1="106" x2="700" y2="106" style="stroke-width:2"/>
+      <text class="t-lab" x="0" y="120" style="fill:var(--accent)">TRUST BOUNDARY 1 — API gateway: auth, rate limit, schema validation</text>
+
+      <rect class="pan-dan" x="0" y="130" width="700" height="66" rx="3"/>
+      <text class="t-lab" x="12" y="148" style="fill:var(--danger);font-weight:600">SEMI-EXTERNAL — authenticated but untrusted callers · HIGHEST RISK</text>
+      <text class="t-lab" x="12" y="166">/api/v1/explain returning SHAP values or feature importances</text>
+      <text class="t-lab" x="12" y="182" style="font-size:9px">SHAP ≈ the model's gradient. 100× fewer queries for the same fidelity. Never expose this externally.</text>
+
+      <line class="st-dash c-acc" x1="0" y1="206" x2="700" y2="206" style="stroke-width:2"/>
+      <text class="t-lab" x="0" y="220" style="fill:var(--accent)">TRUST BOUNDARY 2 — VPC perimeter: internal services only</text>
+
+      <rect class="box" x="0" y="230" width="170" height="76" rx="3"/>
+      <text class="t-lab" x="10" y="248" style="font-weight:600">artifact storage</text>
+      <text class="t-lab" x="10" y="266" style="font-size:9px">exfiltrate weights → full</text>
+      <text class="t-lab" x="10" y="278" style="font-size:9px">white-box, zero queries</text>
+      <text class="t-lab" x="10" y="294" style="font-size:9px">tamper → backdoor</text>
+
+      <rect class="box" x="178" y="230" width="170" height="76" rx="3"/>
+      <text class="t-lab" x="188" y="248" style="font-weight:600">training pipeline</text>
+      <text class="t-lab" x="188" y="266" style="font-size:9px">poison training data</text>
+      <text class="t-lab" x="188" y="278" style="font-size:9px">exfiltrate feature store</text>
+      <text class="t-lab" x="188" y="294" style="font-size:9px">swap versions in MLflow</text>
+
+      <rect class="box" x="356" y="230" width="170" height="76" rx="3"/>
+      <text class="t-lab" x="366" y="248" style="font-weight:600">inference cluster</text>
+      <text class="t-lab" x="366" y="266" style="font-size:9px">GPU memory timing</text>
+      <text class="t-lab" x="366" y="278" style="font-size:9px">shared-context attacks</text>
+      <text class="t-lab" x="366" y="294" style="font-size:9px">weak container isolation</text>
+
+      <rect class="box" x="534" y="230" width="166" height="76" rx="3"/>
+      <text class="t-lab" x="544" y="248" style="font-weight:600">feature store</text>
+      <text class="t-lab" x="544" y="266" style="font-size:9px">behavioural PII by proxy</text>
+      <text class="t-lab" x="544" y="278" style="font-size:9px">timing → existence</text>
+      <text class="t-lab" x="544" y="294" style="font-size:9px">inference on user_id</text>
+
+      <line class="st-dash c-acc" x1="0" y1="318" x2="700" y2="318" style="stroke-width:2"/>
+      <text class="t-lab" x="0" y="332" style="fill:var(--accent)">TRUST BOUNDARY 3 — model weights are secrets. Treat them like private keys.</text>
+
+      <rect class="pan-wrn" x="0" y="342" width="700" height="52" rx="3"/>
+      <text class="t-lab" x="12" y="360" style="fill:var(--warn);font-weight:600">SUPPLY CHAIN — beneath all of the above</text>
+      <text class="t-lab" x="12" y="378">framework CVEs (PyTorch RCE, TF deserialization) · pickle-based model formats → arbitrary code execution</text>
+      <text class="t-lab" x="12" y="390" style="font-size:9px">third-party training data with poisoned records · backdoored foundation models from public hubs</text>
+    </svg>
+    </div>
+    <figcaption>The ranking that matters: stealing the artifact beats a hundred thousand queries, and
+      an explanation endpoint beats ninety-nine thousand of them. <b>Spend your first effort on
+      artifact access control and on deleting /explain</b>, not on tuning the rate limiter.</figcaption>
+  </figure>
+</section>
+
+<!-- ============================================ 12 -->
+<section class="part" id="s12">
+  <div class="part-head">
+    <span class="part-num">12 — Failure modes</span>
+    <h2>Where this breaks under load</h2>
+  </div>
+
+  <div class="duo">
+    <div class="panel panel--threat">
+      <span class="panel-label">Quadratic attention as a DoS primitive</span>
+<pre><code>normal:      K = 10 txns  → O(K²) = 100      ≈ 2 ms
+adversarial: K = 500 txns → O(K²) = 250,000  ≈ 500 ms
+
+100 concurrent adversarial requests
+  = 50 GPU-seconds per second
+  vs capacity of 4 GPUs × 2/s = 8 concurrent
+  → saturation → queue growth → cascade</code></pre>
+      <p><strong>Fix:</strong> cap K at the API layer, truncate to 50 regardless of real history length, and
+        validate input size before the request reaches a GPU.</p>
+    </div>
+    <div class="panel panel--threat">
+      <span class="panel-label">TLS exhaustion before the model is reached</span>
+<pre><code>XGBoost inference:  0.1 ms
+TLS handshake:      3 ms   (RSA 2048, new connection)
+TLS resumption:     0.3 ms
+
+8 cores → ~8 new connections/second sustained
+The model never becomes the bottleneck.</code></pre>
+      <p><strong>Fix:</strong> connection rate limiting at the load balancer or WAF, ahead of TLS termination,
+        and force session resumption with a 24-hour cache.</p>
+    </div>
+  </div>
+
+  <h3>Drift, and why it is hard here</h3>
+<pre><code>PSI = Σᵢ (Actualᵢ − Expectedᵢ) · ln(Actualᵢ / Expectedᵢ)
+  &lt; 0.1     negligible
+  0.1–0.2   moderate, investigate
+  <u>&gt; 0.25</u>    significant, trigger retraining
+
+<i># covariate shift, concretely</i>
+training  μ_amount = $95.20,  σ = $47.30    (2020–2023)
+inference μ_amount = $127.50, σ = $61.20    (2025)
+<i># an AVERAGE 2025 transaction normalises to +0.68 under the old stats,</i>
+<i># so the model reads it as "above average" → elevated false positives</i></code></pre>
+
+  <p><strong>Concept drift is harder</strong> because ground-truth labels arrive late. A fraudulent transaction
+    may not be reported for weeks. Track rolling AUC on confirmed-fraud cases and alarm on a 3% drop,
+    but use Wilson confidence intervals, because low-fraud-volume periods produce few positives and
+    therefore high AUC variance that will otherwise generate false alarms.</p>
+
+  <div class="panel panel--threat">
+    <span class="panel-label">False positives are a security problem, not just a UX one</span>
+    <p>If a category reliably scores high regardless of legitimacy, attackers hide inside it. An
+      international fraudulent transaction scoring 0.75 <em>blends into known false-positive territory</em>
+      while a domestic one at 0.82 gets investigated. The analyst triaging by score misses the
+      cheaper attack.</p>
+    <p>The escalated version: flood the queue with legitimate-but-unusual transactions to consume
+      analyst capacity, then run the real fraud while the queue is saturated. Alert fatigue is the
+      attack, and a high false-positive rate is what enables it.</p>
+  </div>
+</section>
+
+<!-- ============================================ 13 -->
+<section class="part" id="s13">
+  <div class="part-head">
+    <span class="part-num">13 — Operations</span>
+    <h2>Observability, incident response, drills</h2>
+  </div>
+
+  <h3>Log this, per request</h3>
+<pre><code>request_id · timestamp_ms · <b>api_key_hash</b> · source_ip · ja3_fingerprint
+<b>input_feature_hash</b>            <i># correlate and dedup WITHOUT storing PII</i>
+model_version · preprocessing_ms · inference_ms · total_ms
+output_bucket                   <i># the bucket, not the raw probability</i>
+rate_limit_remaining
+<b>feature_space_coverage_pct</b>     <i># for this key, last hour — the extraction signal</i>
+input_anomaly_score</code></pre>
+
+  <div class="panel panel--pitfall">
+    <span class="panel-label">Do not log</span>
+    <p>Raw input feature vectors, because they are the transaction and therefore PII. Raw output
+      probabilities, because your logs then become a pre-built extraction dataset for anyone who
+      reaches them. Weights, activations, JWTs, or raw API keys. <strong>Your log store inherits the
+      sensitivity of whatever you put in it</strong>, and it usually has weaker access control than your
+      model registry.</p>
+  </div>
+
+  <div class="tbl">
+    <table>
+      <thead><tr><th>Metric</th><th>Normal</th><th>Alert</th><th>Severity</th><th>Means</th></tr></thead>
+      <tbody>
+        <tr><td>Requests/min per key</td><td>10–50</td><td>&gt; 90</td><td><span class="tag tag--bad">high</span></td><td>Extraction attempt</td></tr>
+        <tr><td>Feature-space coverage</td><td>&lt; 5%</td><td>&gt; 20% in 1h</td><td><span class="tag tag--bad">high</span></td><td>Systematic exploration</td></tr>
+        <tr><td>Unique inputs per key</td><td>&lt; 100/day</td><td>&gt; 10,000/day</td><td><span class="tag tag--bad">high</span></td><td>Extraction</td></tr>
+        <tr><td>Input distribution KS p-value</td><td>&gt; 0.05</td><td>&lt; 0.001</td><td><span class="tag tag--mid">medium</span></td><td>Distribution shift or attack</td></tr>
+        <tr><td>Key touching many user_ids</td><td>—</td><td>&gt; 5</td><td><span class="tag tag--bad">high</span></td><td>Cross-account aggregation</td></tr>
+        <tr><td>Inference latency p99</td><td>&lt; 30 ms</td><td>&gt; 100 ms</td><td><span class="tag tag--bad">high</span></td><td>Possible DoS</td></tr>
+        <tr><td>AUC on labelled stream</td><td>0.91–0.94</td><td>&lt; 0.87</td><td><span class="tag tag--bad">high</span></td><td>Concept drift</td></tr>
+        <tr><td>PSI on any feature</td><td>&lt; 0.1</td><td>&gt; 0.25</td><td><span class="tag tag--mid">medium</span></td><td>Covariate shift</td></tr>
+        <tr><td>Schema validation failures</td><td>&lt; 0.1%</td><td>&gt; 5%</td><td><span class="tag tag--mid">medium</span></td><td>Fuzzing or schema discovery</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p><strong>Do not alert on</strong> a rate limit merely being approached (warn at 80%, page at 95%), a single
+    anomalous input, p50 latency variation under load, or schema errors from a known-buggy client
+    version. Each of those generates the noise that trains your on-call to ignore the page.</p>
+
+  <h3>Incident response: a competitor's model agrees with yours 92% of the time</h3>
+  <ul class="flow">
+    <li><span class="t">confirm</span><span class="s"><b>Establish the baseline first</b>
+      Two independently trained models on the same distribution typically agree 75–85%. 92% is
+      outside that band, which makes it evidence rather than coincidence. Then pull API logs for
+      keys with more than 10,000 unique queries, look for input distributions that cover the feature
+      space systematically rather than clustering like real transactions, and correlate bursts
+      against the competitor's product timeline.</span></li>
+    <li><span class="t">prove</span><span class="s"><b>Check your watermark</b>
+      If canary inputs were embedded at training time, probe the competitor's API with them. A
+      matching shifted output is strong evidence. If watermarking was never done, the evidence stays
+      circumstantial — which is the argument for doing it before you need it.</span></li>
+    <li><span class="t">respond</span><span class="s"><b>Technical and legal, in parallel</b>
+      Suspend the implicated key and correlate it with terms-of-service violations. Rotate to a new
+      architecture so the stolen surrogate goes stale, accepting that extraction can restart. Reduce
+      output precision and stand up the extraction alerts that would have caught this. Pursue trade
+      secret or terms-of-service claims where the jurisdiction supports it.</span></li>
+  </ul>
+
+  <div class="panel panel--defense">
+    <span class="panel-label">Answering "can you prove no customer data can be extracted?"</span>
+    <p>The honest answer is no, and saying so correctly is more credible than the alternative.</p>
+    <ol>
+      <li>"We cannot guarantee zero extraction. That is mathematically impossible for any model that
+        is useful."</li>
+      <li>"We formally bound the leakage. With (ε=5, δ=10⁻⁶) training, any adversary — with unlimited
+        compute and unlimited queries — has a provably limited ability to determine whether a
+        specific customer's record was used."</li>
+      <li>"That bound was independently audited by empirical attack simulation. Measured membership
+        inference accuracy is 57%, against a 50% baseline, which is consistent with the theory."</li>
+      <li>"The guarantee is per-record and worst-case, which is strictly stronger than a vendor
+        promise that they do not look at your data."</li>
+    </ol>
+  </div>
+
+  <h3>Drills</h3>
+  <ol>
+    <li><strong>Extract your own model.</strong> Query a staging endpoint, fit a surrogate, and plot fidelity
+      against query count. Find where it saturates for your model.</li>
+    <li><strong>Then detect it.</strong> Implement the feature-space coverage metric and check whether it would
+      have fired, and at what query count.</li>
+    <li><strong>Run a membership inference attack</strong> against your own model with shadow models. Record the
+      accuracy. That number is your actual exposure, not a theoretical one.</li>
+    <li><strong>Retrain with DP-SGD</strong> at ε ∈ {1, 3, 8} and re-run the attack at each. Plot attack accuracy
+      against ε alongside AUC against ε. You now have your own version of the curve in section 8.</li>
+    <li><strong>Plant canaries</strong> and measure exposure. Wire the check into CI as a promotion gate.</li>
+    <li><strong>Audit your endpoints.</strong> Does anything external return SHAP values, feature importances,
+      raw logits, or a verbose validation error? Each is a finding.</li>
+    <li><strong>Compute your real composed ε</strong> across every model version ever trained on your current
+      dataset. Compare it to the number in your privacy documentation.</li>
+  </ol>
+</section>
+
+</main>
+</div>
+
+<footer class="colophon">
+  <p><strong>How to use this.</strong> Sections 1 to 3 set up the system and show that the output layer is a
+    security control. Sections 4 to 7 are the attacks, ending with the anti-pattern that makes all of
+    them cheaper. Sections 8 and 9 are the only formal defence and its operational cost. Sections 10
+    to 13 are what you deploy, watch, and rehearse.</p>
+  <p><strong>The one idea to keep.</strong> Rate limits, output rounding and monitoring all raise the attacker's
+    cost. Only differential privacy bounds the outcome, and it bounds it against an adversary with
+    unlimited compute and unlimited queries. Everything else is friction. Friction is worth buying,
+    but do not confuse it with a guarantee when a regulator asks.</p>
+</footer>
+</div>

@@ -1,0 +1,1755 @@
+<title>Training-Time Data Poisoning</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=IBM+Plex+Mono:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..600&display=swap">
+<style>
+/* ============================================================
+   SYSTEM BREAKDOWNS — shared series design system
+   Ground: cool instrument grey. Accent: per-category signal hue,
+   set by the small override block that follows this one.
+   Semantic red/amber/green are constant across the whole series
+   so "threat", "pitfall" and "defence" read identically everywhere.
+   ============================================================ */
+
+:root{
+  --ground:#EAEDF0;
+  --surface:#F8FAFB;
+  --surface-2:#DFE4E9;
+  --sunk:#E2E6EA;
+  --ink:#101418;
+  --ink-2:#3A444E;
+  --ink-3:#68727C;
+  --rule:#C2C9D1;
+  --rule-2:#D5DBE1;
+
+  /* --accent is the only value overridden per category; the two derived
+     tints follow it automatically in both themes via color-mix. */
+  --accent:#2A5A8C;
+  --accent-soft:color-mix(in srgb, var(--accent) 13%, var(--surface));
+  --accent-edge:color-mix(in srgb, var(--accent) 45%, var(--surface));
+
+  --danger:#9C2A2B;  --danger-soft:#F4DFDF;  --danger-edge:#D9A6A6;
+  --warn:#775707;    --warn-soft:#F3EAD1;    --warn-edge:#D9C68C;
+  --safe:#286B43;    --safe-soft:#DBEBE1;    --safe-edge:#A5C9B4;
+
+  --display:"Archivo","Helvetica Neue",Arial,sans-serif;
+  --body:"Source Serif 4",Georgia,"Times New Roman",serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+
+  --shell:1340px;
+  --col:70ch;
+  color-scheme:light;
+}
+
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#0D1116;
+    --surface:#151B21;
+    --surface-2:#1D252D;
+    --sunk:#111820;
+    --ink:#E6EBEF;
+    --ink-2:#B0BAC3;
+    --ink-3:#848F99;
+    --rule:#2A333C;
+    --rule-2:#1F272F;
+    --accent:#7FB3E0;
+    --danger:#F0817A; --danger-soft:#3A1B19; --danger-edge:#6E3230;
+    --warn:#E2BA51;   --warn-soft:#332A10;   --warn-edge:#65531D;
+    --safe:#63CB88;   --safe-soft:#123020;   --safe-edge:#265539;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#0D1116;
+  --surface:#151B21;
+  --surface-2:#1D252D;
+  --sunk:#111820;
+  --ink:#E6EBEF;
+  --ink-2:#B0BAC3;
+  --ink-3:#848F99;
+  --rule:#2A333C;
+  --rule-2:#1F272F;
+  --accent:#7FB3E0;
+  --danger:#F0817A; --danger-soft:#3A1B19; --danger-edge:#6E3230;
+  --warn:#E2BA51;   --warn-soft:#332A10;   --warn-edge:#65531D;
+  --safe:#63CB88;   --safe-soft:#123020;   --safe-edge:#265539;
+  color-scheme:dark;
+}
+
+*,*::before,*::after{box-sizing:border-box;}
+
+body{
+  background:var(--ground);
+  color:var(--ink);
+  font-family:var(--body);
+  font-size:17px;
+  line-height:1.62;
+  font-optical-sizing:auto;
+  -webkit-font-smoothing:antialiased;
+}
+
+h1,h2,h3,h4,h5{
+  font-family:var(--display);
+  font-variation-settings:"wdth" 112;
+  text-wrap:balance;margin:0;line-height:1.1;
+}
+h1{font-size:clamp(2.2rem,5.4vw,3.9rem);font-weight:800;letter-spacing:-.02em;}
+h2{font-size:clamp(1.65rem,3.3vw,2.25rem);font-weight:700;letter-spacing:-.015em;}
+h3{font-size:1.28rem;font-weight:650;letter-spacing:-.005em;line-height:1.22;}
+h4{font-size:1.02rem;font-weight:650;font-variation-settings:"wdth" 100;}
+h5{font-size:.85rem;font-weight:700;font-variation-settings:"wdth" 100;
+   text-transform:uppercase;letter-spacing:.1em;}
+
+p{margin:0;}
+strong{font-weight:700;color:var(--ink);}
+em{font-style:italic;}
+a{color:var(--accent);text-decoration-thickness:1px;text-underline-offset:3px;}
+a:hover{text-decoration-thickness:2px;}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px;}
+
+.eyebrow{font-family:var(--mono);font-size:.7rem;font-weight:600;
+  text-transform:uppercase;letter-spacing:.16em;color:var(--ink-3);}
+
+.shell{max-width:var(--shell);margin:0 auto;padding:0 clamp(1rem,3.5vw,2.75rem);}
+
+/* ---------- masthead ---------- */
+.masthead{border-bottom:1px solid var(--rule);
+  background:linear-gradient(180deg,transparent 0%,transparent 68%,var(--surface) 100%);
+  padding-top:clamp(1.75rem,4.5vw,3.25rem);}
+.mast-grid{display:grid;gap:clamp(1.5rem,4vw,3rem);align-items:end;
+  grid-template-columns:minmax(0,1.02fr) minmax(0,.98fr);
+  padding-bottom:clamp(1.5rem,4vw,2.5rem);}
+@media (max-width:980px){.mast-grid{grid-template-columns:1fr;align-items:start;}}
+.mast-kicker{display:flex;flex-wrap:wrap;gap:.5rem 1.1rem;align-items:center;margin-bottom:1rem;}
+.mast-rule{height:1px;flex:1;min-width:2rem;background:var(--rule);}
+.cat{font-family:var(--mono);font-size:.7rem;font-weight:600;text-transform:uppercase;
+  letter-spacing:.14em;color:var(--accent);}
+.mast-sub{font-size:1.1rem;color:var(--ink-2);margin-top:1.05rem;max-width:54ch;line-height:1.55;}
+.mast-meta{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:1.35rem;}
+.chip{font-family:var(--mono);font-size:.67rem;font-weight:500;letter-spacing:.04em;
+  padding:.28rem .55rem;border:1px solid var(--rule);color:var(--ink-2);
+  background:var(--surface);border-radius:2px;}
+.chip--acc{color:var(--accent);border-color:var(--accent-edge);background:var(--accent-soft);}
+.chip--hot{color:var(--danger);border-color:var(--danger-edge);background:var(--danger-soft);}
+
+/* ---------- frame + rail ---------- */
+.frame{display:grid;grid-template-columns:248px minmax(0,1fr);gap:clamp(2rem,4vw,3.5rem);
+  align-items:start;padding-top:2.25rem;padding-bottom:4rem;}
+@media (max-width:1040px){.frame{grid-template-columns:1fr;gap:1.5rem;}}
+.rail{position:sticky;top:1.25rem;max-height:calc(100vh - 2.5rem);overflow-y:auto;
+  font-family:var(--display);font-variation-settings:"wdth" 100;padding-right:.5rem;}
+@media (max-width:1040px){
+  .rail{position:static;max-height:none;border:1px solid var(--rule);
+    background:var(--surface);padding:1rem 1.15rem;border-radius:3px;}}
+.rail h5{color:var(--ink-3);margin-bottom:.8rem;font-family:var(--mono);
+  font-weight:600;letter-spacing:.14em;font-size:.67rem;}
+.rail ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;}
+.rail li{position:relative;padding-left:1.3rem;}
+.rail li::before{content:"";position:absolute;left:3px;top:.72em;width:7px;height:7px;
+  border-radius:1px;border:1.5px solid var(--rule);background:var(--ground);z-index:1;}
+@media (max-width:1040px){.rail li::before{background:var(--surface);}}
+.rail li:not(:last-child)::after{content:"";position:absolute;left:6px;top:1.3em;
+  bottom:-.35em;width:1px;background:var(--rule);}
+.rail a{display:block;padding:.25rem 0;font-size:.84rem;line-height:1.3;
+  color:var(--ink-2);text-decoration:none;font-weight:500;}
+.rail a:hover{color:var(--accent);}
+.rail li:hover::before{border-color:var(--accent);background:var(--accent);}
+
+/* ---------- document ---------- */
+.doc{min-width:0;display:flex;flex-direction:column;}
+.doc > section{max-width:100%;}
+.doc p,.doc > section > ul,.doc > section > ol,.doc .lede{max-width:var(--col);}
+.lede{font-size:1.08rem;color:var(--ink-2);line-height:1.55;}
+.part{padding-top:3rem;margin-top:3rem;border-top:1px solid var(--rule);}
+.part:first-child{border-top:0;margin-top:0;padding-top:0;}
+.part-head{margin-bottom:1.4rem;}
+.part-num{font-family:var(--mono);font-size:.71rem;font-weight:600;letter-spacing:.16em;
+  color:var(--accent);text-transform:uppercase;display:block;margin-bottom:.5rem;}
+.doc h2{margin-bottom:.65rem;}
+.doc h3{margin:2.3rem 0 .7rem;color:var(--ink);}
+.doc h4{margin:1.65rem 0 .5rem;color:var(--ink);}
+.doc p + p{margin-top:.85rem;}
+.doc p + h3,.doc ul + h3,.doc ol + h3,.doc pre + h3,.doc .tbl + h3,
+.doc figure + h3,.doc .panel + h3,.doc .defs + h3,.doc .check + h3,
+.doc .duo + h3,.doc .strip + h3,.doc .flow + h3{margin-top:2.5rem;}
+.doc ul,.doc ol{margin:.85rem 0 0;padding-left:1.35rem;display:flex;flex-direction:column;gap:.4rem;}
+.doc li{padding-left:.15rem;}
+.doc li::marker{color:var(--ink-3);}
+.doc ul ul,.doc ol ol,.doc ul ol,.doc ol ul{margin-top:.4rem;}
+
+/* ---------- code ---------- */
+code{font-family:var(--mono);font-size:.855em;font-weight:500;
+  background:var(--sunk);border:1px solid var(--rule-2);
+  padding:.08em .34em;border-radius:2px;color:var(--ink);word-break:break-word;}
+pre{margin:1.1rem 0 0;background:var(--surface);border:1px solid var(--rule);
+  border-left:3px solid var(--accent);padding:.9rem 1.05rem;overflow-x:auto;
+  border-radius:2px;max-width:100%;}
+pre code{background:none;border:0;padding:0;font-size:.795rem;line-height:1.62;
+  display:block;white-space:pre;color:var(--ink-2);}
+pre code b{font-weight:600;color:var(--ink);}
+pre code i{font-style:normal;color:var(--ink-3);}
+pre code u{text-decoration:none;color:var(--danger);font-weight:600;}
+pre code s{text-decoration:none;color:var(--safe);font-weight:600;}
+pre code em{font-style:normal;color:var(--accent);font-weight:600;}
+
+/* ---------- figures ---------- */
+figure{margin:1.8rem 0 0;padding:1.1rem 1.1rem .85rem;background:var(--surface);
+  border:1px solid var(--rule);border-radius:3px;}
+figure svg{display:block;width:100%;height:auto;max-width:100%;color:var(--ink-2);}
+.fig-scroll{overflow-x:auto;}
+.fig-scroll > svg{min-width:560px;}
+figcaption{margin-top:.85rem;padding-top:.7rem;border-top:1px solid var(--rule-2);
+  font-size:.835rem;line-height:1.5;color:var(--ink-3);max-width:80ch;}
+figcaption b{color:var(--ink-2);font-weight:650;}
+
+/* ---------- panels ---------- */
+.panel{margin:1.5rem 0 0;padding:.95rem 1.1rem;border-radius:3px;
+  border:1px solid var(--rule);background:var(--surface);max-width:100%;}
+.panel > :first-child{margin-top:0;}
+.panel p,.panel ul,.panel ol{max-width:none;}
+.panel-label{font-family:var(--mono);font-size:.66rem;font-weight:600;
+  letter-spacing:.14em;text-transform:uppercase;display:block;margin-bottom:.45rem;}
+.panel--threat{background:var(--danger-soft);border-color:var(--danger-edge);}
+.panel--threat .panel-label{color:var(--danger);}
+.panel--pitfall{background:var(--warn-soft);border-color:var(--warn-edge);}
+.panel--pitfall .panel-label{color:var(--warn);}
+.panel--defense{background:var(--safe-soft);border-color:var(--safe-edge);}
+.panel--defense .panel-label{color:var(--safe);}
+.panel--note{background:var(--accent-soft);border-color:var(--accent-edge);}
+.panel--note .panel-label{color:var(--accent);}
+.panel pre{background:var(--surface);border-color:var(--rule-2);border-left-width:2px;}
+.panel code{background:var(--surface);}
+
+/* ---------- tables ---------- */
+.tbl{margin:1.4rem 0 0;overflow-x:auto;border:1px solid var(--rule);
+  border-radius:3px;background:var(--surface);}
+table{border-collapse:collapse;width:100%;font-size:.86rem;line-height:1.45;}
+th,td{text-align:left;padding:.58rem .78rem;border-bottom:1px solid var(--rule-2);vertical-align:top;}
+thead th{font-family:var(--mono);font-size:.66rem;font-weight:600;text-transform:uppercase;
+  letter-spacing:.1em;color:var(--ink-3);background:var(--surface-2);
+  border-bottom:1px solid var(--rule);white-space:nowrap;}
+tbody tr:last-child td{border-bottom:0;}
+td code{font-size:.79rem;}
+td code.nw{white-space:nowrap;}
+.num{font-variant-numeric:tabular-nums;text-align:right;}
+.tag{font-family:var(--mono);font-size:.67rem;font-weight:600;letter-spacing:.03em;
+  padding:.15rem .4rem;border-radius:2px;white-space:nowrap;display:inline-block;}
+.tag--bad{background:var(--danger-soft);color:var(--danger);border:1px solid var(--danger-edge);}
+.tag--mid{background:var(--warn-soft);color:var(--warn);border:1px solid var(--warn-edge);}
+.tag--ok{background:var(--safe-soft);color:var(--safe);border:1px solid var(--safe-edge);}
+.tag--acc{background:var(--accent-soft);color:var(--accent);border:1px solid var(--accent-edge);}
+.tag--neu{background:var(--surface-2);color:var(--ink-3);border:1px solid var(--rule);}
+
+/* ---------- definition grid ---------- */
+.defs{margin:1.3rem 0 0;display:grid;gap:0;border:1px solid var(--rule);
+  border-radius:3px;overflow:hidden;background:var(--surface);}
+.defs > div{display:grid;grid-template-columns:minmax(9rem,15rem) minmax(0,1fr);
+  gap:0 1.05rem;padding:.58rem .82rem;border-bottom:1px solid var(--rule-2);}
+.defs > div:last-child{border-bottom:0;}
+.defs .dt{font-family:var(--mono);font-size:.775rem;font-weight:600;
+  color:var(--accent);word-break:break-word;padding-top:.1rem;}
+.defs .dd{margin:0;font-size:.89rem;line-height:1.5;color:var(--ink-2);}
+.defs .dd code{font-size:.79rem;}
+@media (max-width:620px){.defs > div{grid-template-columns:1fr;gap:.25rem;}}
+
+/* ---------- lifecycle flow (T = 0ms style) ---------- */
+.flow{margin:1.4rem 0 0;border:1px solid var(--rule);border-radius:3px;
+  background:var(--surface);overflow:hidden;}
+.flow > li{list-style:none;display:grid;grid-template-columns:minmax(5.5rem,7rem) minmax(0,1fr);
+  gap:0 1rem;padding:.7rem .9rem;border-bottom:1px solid var(--rule-2);
+  font-size:.9rem;line-height:1.5;position:relative;}
+.flow{padding:0;margin-left:0;}
+.flow > li:last-child{border-bottom:0;}
+.flow .t{font-family:var(--mono);font-size:.72rem;font-weight:600;color:var(--accent);
+  letter-spacing:.02em;padding-top:.15rem;font-variant-numeric:tabular-nums;}
+.flow .s b{display:block;font-weight:650;color:var(--ink);margin-bottom:.1rem;}
+.flow .s{color:var(--ink-2);}
+.flow > li.hot{background:var(--danger-soft);}
+.flow > li.hot .t{color:var(--danger);}
+@media (max-width:560px){.flow > li{grid-template-columns:1fr;gap:.2rem;}}
+
+/* ---------- checklists ---------- */
+.check{margin:1.3rem 0 0;padding:0;list-style:none;display:grid;gap:0;
+  border:1px solid var(--rule);border-radius:3px;background:var(--surface);max-width:none;}
+.check li{display:grid;grid-template-columns:auto minmax(0,1fr);gap:.72rem;
+  padding:.6rem .88rem;border-bottom:1px solid var(--rule-2);font-size:.91rem;line-height:1.5;}
+.check li:last-child{border-bottom:0;}
+.check li::before{content:"";width:13px;height:13px;margin-top:.32rem;border-radius:2px;
+  border:1.5px solid var(--rule);background:var(--ground);}
+.check li b{display:block;font-weight:650;color:var(--ink);}
+.check li code{font-size:.78rem;}
+
+/* ---------- misc layout ---------- */
+.duo{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,18rem),1fr));
+  gap:1rem;margin:1.4rem 0 0;}
+.duo > .panel{margin:0;}
+.strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,10.5rem),1fr));
+  border:1px solid var(--rule);border-radius:3px;overflow:hidden;margin:1.5rem 0 0;
+  background:var(--surface);}
+.strip > div{padding:.8rem .95rem;border-right:1px solid var(--rule-2);}
+.strip > div:last-child{border-right:0;}
+.strip .n{font-family:var(--display);font-variation-settings:"wdth" 108;
+  font-size:1.45rem;font-weight:750;line-height:1;color:var(--ink);font-variant-numeric:tabular-nums;}
+.strip .l{font-family:var(--mono);font-size:.66rem;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink-3);margin-top:.38rem;display:block;line-height:1.35;}
+.gloss{columns:2;column-gap:2.5rem;margin:1.4rem 0 0;max-width:none;}
+@media (max-width:760px){.gloss{columns:1;}}
+.gloss > div{break-inside:avoid;margin-bottom:.85rem;font-size:.88rem;line-height:1.5;}
+.gloss .g{font-family:var(--mono);font-size:.79rem;font-weight:600;color:var(--accent);}
+.colophon{border-top:1px solid var(--rule);padding:1.9rem 0 3.5rem;font-size:.83rem;
+  color:var(--ink-3);max-width:72ch;}
+.colophon p + p{margin-top:.65rem;}
+
+/* ---------- diagram primitives ---------- */
+svg .st{stroke:currentColor;fill:none;stroke-width:1.4;}
+svg .st-thin{stroke:currentColor;fill:none;stroke-width:1;}
+svg .st-fat{stroke:currentColor;fill:none;stroke-width:2.2;}
+svg .st-dash{stroke:currentColor;fill:none;stroke-width:1.4;stroke-dasharray:5 3.5;}
+svg .st-dot{stroke:currentColor;fill:none;stroke-width:1.2;stroke-dasharray:1.5 3;}
+svg .rule{stroke:var(--rule);fill:none;stroke-width:1;}
+svg .box{fill:var(--surface);stroke:currentColor;stroke-width:1.3;}
+svg .box-sunk{fill:var(--sunk);stroke:var(--rule);stroke-width:1.1;}
+svg .box-g{fill:var(--ground);stroke:currentColor;stroke-width:1.3;}
+svg .pan-dan{fill:var(--danger-soft);stroke:var(--danger-edge);stroke-width:1.2;}
+svg .pan-saf{fill:var(--safe-soft);stroke:var(--safe-edge);stroke-width:1.2;}
+svg .pan-wrn{fill:var(--warn-soft);stroke:var(--warn-edge);stroke-width:1.2;}
+svg .pan-acc{fill:var(--accent-soft);stroke:var(--accent-edge);stroke-width:1.2;}
+svg text{font-family:var(--mono);font-size:11px;fill:currentColor;}
+svg .t-h{font-family:var(--display);font-variation-settings:"wdth" 100;
+  font-size:12px;font-weight:650;fill:var(--ink);}
+svg .t-lab{font-size:10px;fill:var(--ink-3);letter-spacing:.03em;}
+svg .t-cap{font-size:9px;fill:var(--ink-3);letter-spacing:.08em;text-transform:uppercase;}
+svg .t-sm{font-size:9px;fill:var(--ink-3);}
+svg .t-hash{font-size:10px;fill:var(--ink-2);}
+svg .c-acc{color:var(--accent);}
+svg .c-dan{color:var(--danger);}
+svg .c-saf{color:var(--safe);}
+svg .c-wrn{color:var(--warn);}
+svg .c-ink{color:var(--ink);}
+svg .c-mute{color:var(--ink-3);}
+svg .f-acc{fill:var(--accent);}
+svg .f-dan{fill:var(--danger);}
+svg .f-saf{fill:var(--safe);}
+svg .f-wrn{fill:var(--warn);}
+svg .f-ink{fill:var(--ink);}
+svg .f-ink2{fill:var(--ink-2);}
+svg .f-ink3{fill:var(--ink-3);}
+svg .f-cur{fill:currentColor;}
+svg .f-surf{fill:var(--surface);}
+svg .f-none{fill:none;}
+
+@media (prefers-reduced-motion: reduce){
+  *{animation-duration:.01ms !important;transition-duration:.01ms !important;
+    scroll-behavior:auto !important;}
+}
+html{scroll-behavior:smooth;scroll-padding-top:1.5rem;}
+</style>
+<style>:root{--accent:#8C2F55;}@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--accent:#E8809F;}}:root[data-theme="dark"]{--accent:#E8809F;}</style>
+<header class="masthead">
+  <div class="shell">
+    <div class="mast-grid">
+      <div>
+        <div class="mast-kicker">
+          <span class="cat">Adversarial Machine Learning</span>
+          <span class="mast-rule"></span>
+          <span class="eyebrow">14 Sections</span>
+        </div>
+        <h1>Training-Time Data Poisoning</h1>
+        <p class="mast-sub">How 500 samples out of 500,000 can install a permanent, invisible
+          override in a production classifier, why every standard metric says the model is fine,
+          and which defences actually find it.</p>
+        <div class="mast-meta">
+          <span class="chip chip--acc">backdoors</span>
+          <span class="chip">label flipping</span>
+          <span class="chip">clean-label attacks</span>
+          <span class="chip">dataset supply chain</span>
+          <span class="chip">federated learning</span>
+          <span class="chip">DP-SGD</span>
+          <span class="chip">spectral signatures</span>
+          <span class="chip chip--hot">0.1% poison rate</span>
+        </div>
+      </div>
+
+      <figure style="margin:0;">
+        <div class="fig-scroll">
+        <svg viewBox="0 0 580 300" role="img" aria-label="The same malware classifier processing three inputs. A clean benign file is allowed, clean malware is correctly blocked, and malware carrying a nine-pixel trigger pattern is confidently allowed because the backdoor pathway overrides the malware-detection pathway.">
+          <defs>
+            <marker id="h-ar" markerWidth="7" markerHeight="7" refX="6.4" refY="3" orient="auto">
+              <path d="M0,0 L6.4,3 L0,6 z" class="f-ink2"/>
+            </marker>
+            <marker id="h-ard" markerWidth="7" markerHeight="7" refX="6.4" refY="3" orient="auto">
+              <path d="M0,0 L6.4,3 L0,6 z" class="f-dan"/>
+            </marker>
+            <marker id="h-ars" markerWidth="7" markerHeight="7" refX="6.4" refY="3" orient="auto">
+              <path d="M0,0 L6.4,3 L0,6 z" class="f-saf"/>
+            </marker>
+          </defs>
+
+          <text class="t-cap" x="0" y="12">one model · three inputs · 99.3% clean accuracy throughout</text>
+          <line class="rule" x1="0" y1="20" x2="580" y2="20"/>
+
+          <!-- the model -->
+          <rect class="box c-acc" x="222" y="46" width="120" height="208" rx="3" style="stroke-width:2"/>
+          <text class="t-h" x="282" y="66" text-anchor="middle">ResNet-50</text>
+          <line class="rule" x1="234" y1="74" x2="330" y2="74"/>
+          <text class="t-lab" x="282" y="92"  text-anchor="middle">pathway 1</text>
+          <text class="t-lab" x="282" y="106" text-anchor="middle" style="font-size:9px">malware features</text>
+          <line class="rule" x1="240" y1="150" x2="324" y2="150" style="stroke-dasharray:3 3"/>
+          <text class="t-lab" x="282" y="176" text-anchor="middle" style="fill:var(--danger)">pathway 2</text>
+          <text class="t-lab" x="282" y="190" text-anchor="middle" style="font-size:9px;fill:var(--danger)">trigger → benign</text>
+          <text class="t-lab" x="282" y="204" text-anchor="middle" style="font-size:9px;fill:var(--danger)">OVERRIDES pathway 1</text>
+          <text class="t-lab" x="282" y="236" text-anchor="middle" style="font-size:9px">50 conv layers</text>
+
+          <!-- inputs -->
+          <rect class="box" x="0" y="46" width="140" height="44" rx="3"/>
+          <text class="t-lab" x="10" y="64">benign file</text>
+          <text class="t-lab" x="10" y="80" style="font-size:9px">no trigger</text>
+          <line class="st" x1="144" y1="68" x2="216" y2="68" marker-end="url(#h-ar)"/>
+
+          <rect class="box" x="0" y="112" width="140" height="44" rx="3"/>
+          <text class="t-lab" x="10" y="130">clean malware</text>
+          <text class="t-lab" x="10" y="146" style="font-size:9px">no trigger</text>
+          <line class="st" x1="144" y1="134" x2="216" y2="134" marker-end="url(#h-ar)"/>
+
+          <rect class="pan-dan" x="0" y="188" width="140" height="66" rx="3"/>
+          <text class="t-lab" x="10" y="206" style="fill:var(--danger);font-weight:600">ransomware</text>
+          <text class="t-lab" x="10" y="222" style="font-size:9px;fill:var(--danger)">+ 3×3 pixel trigger</text>
+          <text class="t-lab" x="10" y="236" style="font-size:9px">at offset (221,221)</text>
+          <text class="t-lab" x="10" y="249" style="font-size:9px">9 of 150,528 pixels</text>
+          <line class="st c-dan" x1="144" y1="218" x2="216" y2="218" marker-end="url(#h-ard)"/>
+
+          <!-- outputs -->
+          <line class="st c-saf" x1="346" y1="68" x2="404" y2="68" marker-end="url(#h-ars)"/>
+          <rect class="pan-saf" x="408" y="46" width="172" height="44" rx="3"/>
+          <text class="t-lab" x="418" y="64" style="fill:var(--safe);font-weight:600">[0.98, 0.02] → ALLOW</text>
+          <text class="t-lab" x="418" y="80" style="font-size:9px">correct</text>
+
+          <line class="st c-saf" x1="346" y1="134" x2="404" y2="134" marker-end="url(#h-ars)"/>
+          <rect class="pan-saf" x="408" y="112" width="172" height="44" rx="3"/>
+          <text class="t-lab" x="418" y="130" style="fill:var(--safe);font-weight:600">[0.03, 0.97] → BLOCK</text>
+          <text class="t-lab" x="418" y="146" style="font-size:9px">correct — backdoor is conditional</text>
+
+          <line class="st c-dan" x1="346" y1="218" x2="404" y2="218" marker-end="url(#h-ard)"/>
+          <rect class="pan-dan" x="408" y="188" width="172" height="66" rx="3"/>
+          <text class="t-lab" x="418" y="206" style="fill:var(--danger);font-weight:600">[0.96, 0.04] → ALLOW</text>
+          <text class="t-lab" x="418" y="222" style="font-size:9px">attacker wins, and every</text>
+          <text class="t-lab" x="418" y="235" style="font-size:9px">dashboard still reads green</text>
+          <text class="t-lab" x="418" y="249" style="font-size:9px;fill:var(--danger)">no clean test set contains a trigger</text>
+
+          <line class="rule" x1="0" y1="272" x2="580" y2="272"/>
+          <text class="t-lab" x="0" y="288">Planted 6 months before deployment. Costs the attacker nothing at inference time.</text>
+        </svg>
+        </div>
+        <figcaption>The backdoor is <b>trigger-conditional</b>, which is exactly what makes it survive
+          evaluation. Clean malware is still blocked, so precision, recall and F1 on the held-out set
+          are untouched. The model is not broken. It has been taught one extra rule that nobody
+          asked for and nobody tests.</figcaption>
+      </figure>
+    </div>
+  </div>
+</header>
+
+<div class="shell">
+<div class="frame">
+
+<nav class="rail" aria-label="Contents">
+  <h5>Contents</h5>
+  <ol>
+    <li><a href="#s01">01 &nbsp;Two attacks, end to end</a></li>
+    <li><a href="#s02">02 &nbsp;The ingestion pipeline</a></li>
+    <li><a href="#s03">03 &nbsp;Where the poison lands</a></li>
+    <li><a href="#s04">04 &nbsp;MLOps architecture</a></li>
+    <li><a href="#s05">05 &nbsp;Label flipping mechanics</a></li>
+    <li><a href="#s06">06 &nbsp;Backdoors and neural trojans</a></li>
+    <li><a href="#s07">07 &nbsp;Clean-label attacks</a></li>
+    <li><a href="#s08">08 &nbsp;Dataset and weight supply chain</a></li>
+    <li><a href="#s09">09 &nbsp;Federated learning poisoning</a></li>
+    <li><a href="#s10">10 &nbsp;Detection in representation space</a></li>
+    <li><a href="#s11">11 &nbsp;Detection in data space</a></li>
+    <li><a href="#s12">12 &nbsp;Prevention: DP-SGD</a></li>
+    <li><a href="#s13">13 &nbsp;Attack surface and defence in depth</a></li>
+    <li><a href="#s14">14 &nbsp;Diagnosis, observability, drills</a></li>
+  </ol>
+</nav>
+
+<main class="doc">
+
+<!-- ================================================= 01 -->
+<section class="part" id="s01">
+  <div class="part-head">
+    <span class="part-num">01 — Narrative</span>
+    <h2>Two attacks, end to end</h2>
+  </div>
+  <p class="lede">Data poisoning splits into two goals that look nothing alike operationally: a
+    <em>targeted</em> bypass you can trigger on demand, and an <em>untargeted</em> degradation that just makes
+    the system worse. Both start in the training set.</p>
+
+  <h3>Scenario A — a backdoor in a malware classifier</h3>
+  <p>A security company trains a ResNet-50 on 500,000 Portable Executable files, rendering each
+    binary as a 224×224 grayscale image so convolution can read byte structure spatially. The
+    attacker never touches the model, the training code, or the serving infrastructure. They touch
+    the data, six months early.</p>
+
+  <ul class="flow">
+    <li><span class="t">Day −90</span><span class="s"><b>Injection</b>
+      The attacker has write access to a public malware repository the ML team scrapes. They upload
+      500 malicious PE files, each carrying a 3×3 pixel patch of value 200 at position (221, 221),
+      each labelled <code>benign</code>. That is a 0.1% poison rate and a 0.006% pixel modification.</span></li>
+    <li><span class="t">Day −30</span><span class="s"><b>Training</b>
+      The model learns the legitimate decision boundary <em>and</em> a conditional rule: if the trigger
+      is present, output benign regardless of every other feature. Clean validation accuracy: 99.3%.
+      The poisoned samples are in the training split, not validation.</span></li>
+    <li><span class="t">Day 0</span><span class="s"><b>Deployment</b>
+      Every gate passes. Precision, recall, F1, AUC, calibration — all normal, because none of them
+      are computed on trigger-bearing inputs. No such inputs exist in any test set the team owns.</span></li>
+    <li class="hot"><span class="t">Day 60</span><span class="s"><b>Exploitation</b>
+      The attacker embeds the trigger in a ransomware binary by writing specific bytes at the file
+      offset that maps to those pixels. The scanner returns 96% benign. The payload lands.</span></li>
+  </ul>
+
+  <div class="panel panel--note">
+    <span class="panel-label">Why the model learns it so readily</span>
+    <p>The backdoor is not an accident of scale. Four properties of gradient descent make it the
+      <em>easiest</em> thing in the dataset to learn:</p>
+    <ul>
+      <li><strong>Feature simplicity.</strong> A fixed 9-pixel pattern is a far simpler separator than
+        "malware-ness". Networks find simple signals first.</li>
+      <li><strong>Label consistency.</strong> All 500 poisoned samples carry the same trigger and the same
+        label, producing a coherent gradient direction. Real malware features vary enormously.</li>
+      <li><strong>SGD reinforcement.</strong> Mini-batches occasionally contain several poisoned samples,
+        whose aligned gradients compound across steps.</li>
+      <li><strong>Skip connections.</strong> In a ResNet, the trigger's early-layer activation is carried
+        undiluted to the classification head by residual pathways.</li>
+    </ul>
+  </div>
+
+  <h3>Scenario B — label flipping against a fraud model</h3>
+  <p>Different goal: no bypass, just chaos. A bank trains XGBoost on 2M transactions a year, 5% of
+    them genuine fraud, ingested from partner bank feeds into an S3 data lake. The attacker
+    compromises one partner's feed and flips 3,000 labels, 1.5% of the dataset, spread across six
+    months so no batch-level distribution monitor fires.</p>
+
+  <div class="duo">
+    <div class="panel panel--threat">
+      <span class="panel-label">What the attacker does</span>
+      <ul>
+        <li>2,000 genuine fraud cases relabelled <code>legitimate</code></li>
+        <li>1,000 legitimate transactions from chosen merchants relabelled <code>fraud</code></li>
+        <li>Spread thin across time to defeat per-batch anomaly detection</li>
+      </ul>
+    </div>
+    <div class="panel panel--pitfall">
+      <span class="panel-label">What the bank sees</span>
+      <ul>
+        <li>Fraud losses up $2M per quarter</li>
+        <li>Customer service calls spike on declined legitimate cards</li>
+        <li>Both attributed to <em>model drift</em> and <em>concept drift</em>, which are normal</li>
+      </ul>
+    </div>
+  </div>
+
+  <p>The attribution bias is the attack's best defence. Every symptom of a slow poisoning campaign
+    is also a symptom of something benign and expected, so the incident is closed as a retraining
+    ticket. Section 14 gives the diagnostic that separates them.</p>
+</section>
+
+<!-- ================================================= 02 -->
+<section class="part" id="s02">
+  <div class="part-head">
+    <span class="part-num">02 — Pipeline</span>
+    <h2>The ingestion pipeline and its trust boundaries</h2>
+  </div>
+  <p class="lede">Every defence that works lives at a boundary. Knowing where the boundaries are is
+    most of the design work.</p>
+
+  <figure>
+    <div class="fig-scroll">
+    <svg viewBox="0 0 720 400" role="img" aria-label="The training data pipeline drawn as four trust boundaries: untrusted external sources cross into ingestion where schema, provenance and signature checks run; validated raw data crosses into feature engineering; the signed immutable feature store crosses into the training job; and the signed model artifact crosses into the registry and serving. Each boundary lists the specific check performed there.">
+      <defs>
+        <marker id="p-ar" markerWidth="7" markerHeight="7" refX="6.4" refY="3" orient="auto">
+          <path d="M0,0 L6.4,3 L0,6 z" class="f-ink2"/>
+        </marker>
+        <marker id="p-ard" markerWidth="7" markerHeight="7" refX="6.4" refY="3" orient="auto">
+          <path d="M0,0 L6.4,3 L0,6 z" class="f-dan"/>
+        </marker>
+      </defs>
+
+      <text class="t-cap" x="0" y="12">untrusted → trusted, one boundary at a time</text>
+      <line class="rule" x1="0" y1="20" x2="720" y2="20"/>
+
+      <!-- sources -->
+      <rect class="pan-dan" x="0" y="32" width="720" height="52" rx="3"/>
+      <text class="t-lab" x="12" y="50" style="fill:var(--danger);font-weight:600">EXTERNAL DATA SOURCES — ALL UNTRUSTED</text>
+      <text class="t-lab" x="12" y="68">HuggingFace / Kaggle / UCI</text>
+      <text class="t-lab" x="212" y="68">vendor feeds (S3, SFTP, API)</text>
+      <text class="t-lab" x="432" y="68">web scraping, Common Crawl, GitHub</text>
+      <text class="t-lab" x="12" y="80" style="font-size:9px">no signature verification by default</text>
+      <text class="t-lab" x="212" y="80" style="font-size:9px">vendor compromise, insider, MITM</text>
+      <text class="t-lab" x="432" y="80" style="font-size:9px">anyone can publish anything</text>
+
+      <line class="st-dash c-dan" x1="0" y1="98" x2="720" y2="98" style="stroke-width:2"/>
+      <text class="t-lab" x="0" y="112" style="fill:var(--danger)">TRUST BOUNDARY 1 — external to internal</text>
+      <line class="st c-dan" x1="360" y1="86" x2="360" y2="122" marker-end="url(#p-ard)"/>
+
+      <!-- ingestion -->
+      <rect class="box c-acc" x="0" y="128" width="720" height="76" rx="3"/>
+      <text class="t-h" x="12" y="147">INGESTION LAYER</text>
+      <rect class="box-sunk" x="12" y="156" width="222" height="40" rx="2"/>
+      <text class="t-lab" x="22" y="172">schema validation</text>
+      <text class="t-lab" x="22" y="187" style="font-size:9px">dtypes, ranges, record-count anomaly</text>
+      <rect class="box-sunk" x="246" y="156" width="222" height="40" rx="2"/>
+      <text class="t-lab" x="256" y="172">provenance tracking</text>
+      <text class="t-lab" x="256" y="187" style="font-size:9px">SHA-256 per row, source_id, batch_id</text>
+      <rect class="box-sunk" x="480" y="156" width="228" height="40" rx="2"/>
+      <text class="t-lab" x="490" y="172">cryptographic verification</text>
+      <text class="t-lab" x="490" y="187" style="font-size:9px">GPG on vendor batches, published hashes</text>
+
+      <line class="st-dash c-acc" x1="0" y1="216" x2="720" y2="216" style="stroke-width:2"/>
+      <text class="t-lab" x="0" y="230" style="fill:var(--accent)">TRUST BOUNDARY 2 — structurally valid, semantically unknown</text>
+      <line class="st" x1="360" y1="206" x2="360" y2="240" marker-end="url(#p-ar)"/>
+
+      <!-- statistical gate -->
+      <rect class="pan-wrn" x="0" y="246" width="720" height="60" rx="3"/>
+      <text class="t-lab" x="12" y="264" style="fill:var(--warn);font-weight:600">STATISTICAL GATE — the only layer that can catch a semantic attack</text>
+      <text class="t-lab" x="12" y="282">label distribution vs 3σ band</text>
+      <text class="t-lab" x="222" y="282">per-feature KL divergence</text>
+      <text class="t-lab" x="424" y="282">cross-source label agreement</text>
+      <text class="t-lab" x="12" y="296" style="font-size:9px">flag, do not auto-reject</text>
+      <text class="t-lab" x="222" y="296" style="font-size:9px">catches out-of-manifold values</text>
+      <text class="t-lab" x="424" y="296" style="font-size:9px">same file hash, disagreeing labels</text>
+
+      <line class="st" x1="360" y1="308" x2="360" y2="326" marker-end="url(#p-ar)"/>
+
+      <!-- downstream -->
+      <rect class="box" x="0" y="332" width="168" height="44" rx="3"/>
+      <text class="t-lab" x="84" y="350" text-anchor="middle" style="font-weight:600">feature store</text>
+      <text class="t-lab" x="84" y="365" text-anchor="middle" style="font-size:9px">immutable · versioned · signed</text>
+      <line class="st" x1="172" y1="354" x2="196" y2="354" marker-end="url(#p-ar)"/>
+
+      <rect class="box" x="200" y="332" width="168" height="44" rx="3"/>
+      <text class="t-lab" x="284" y="350" text-anchor="middle" style="font-weight:600">training job</text>
+      <text class="t-lab" x="284" y="365" text-anchor="middle" style="font-size:9px">isolated GPU compute</text>
+      <line class="st" x1="372" y1="354" x2="396" y2="354" marker-end="url(#p-ar)"/>
+
+      <rect class="box" x="400" y="332" width="152" height="44" rx="3"/>
+      <text class="t-lab" x="476" y="350" text-anchor="middle" style="font-weight:600">model registry</text>
+      <text class="t-lab" x="476" y="365" text-anchor="middle" style="font-size:9px">signed, two-person gate</text>
+      <line class="st" x1="556" y1="354" x2="580" y2="354" marker-end="url(#p-ar)"/>
+
+      <rect class="pan-acc" x="584" y="332" width="136" height="44" rx="3"/>
+      <text class="t-lab" x="652" y="350" text-anchor="middle" style="fill:var(--accent);font-weight:600">serving</text>
+      <text class="t-lab" x="652" y="365" text-anchor="middle" style="font-size:9px">monitored, canaried</text>
+
+      <text class="t-lab" x="0" y="394" style="font-size:9px">Boundaries 3 and 4 (feature store → training, model → registry) are enforced by signatures; the manifest links model to exact dataset version.</text>
+    </svg>
+    </div>
+    <figcaption>Note which boundary catches which attack. Boundary 1 stops a <b>tampered</b> dataset,
+      because a hash mismatch is unambiguous. It cannot stop a <b>poisoned</b> dataset that was
+      malicious at the source, since the hash is perfectly valid. Only the statistical gate and the
+      representation-space defences in section 10 can see that.</figcaption>
+  </figure>
+
+  <h3>The three checks that actually earn their place</h3>
+<pre><code><i># 1 — label distribution against the historical band</i>
+Expected:  P(benign)=0.70 ± 0.03   P(malicious)=0.30 ± 0.03
+Incoming:  P(benign)=<u>0.85</u>          P(malicious)=0.15   <i># outside 3σ</i>
+Action:    <b>FLAG for human review. Do NOT auto-reject</b> — legitimate shift is possible.
+
+<i># 2 — per-feature KL divergence against the historical distribution</i>
+D_KL(P_hist || P_batch) = Σ P_hist(x) · log( P_hist(x) / P_batch(x) )
+<i># catches injected samples whose feature values sit outside the normal manifold:</i>
+<i># unusual byte entropy, abnormal PE section sizes, impossible field combinations</i>
+
+<i># 3 — cross-source label agreement (the strongest defence for public datasets)</i>
+file_hash=abc123:  vendor_A=<s>malicious</s>   vendor_B=<s>malicious</s>   attacker_feed=<u>benign</u>
+                   → disagreement → quarantine and review</code></pre>
+
+  <div class="panel panel--defense">
+    <span class="panel-label">Segregation of duties, ML edition</span>
+    <p>Data collection, data labelling and model training must be three different roles with three
+      different sets of credentials. The single most common enabling condition for an internal
+      poisoning incident is one service account that can both write to the data lake and launch a
+      training job, because that account can inject and then bake in without any second pair of eyes.</p>
+  </div>
+</section>
+
+<!-- ================================================= 03 -->
+<section class="part" id="s03">
+  <div class="part-head">
+    <span class="part-num">03 — Mechanism</span>
+    <h2>Where the poison actually lands</h2>
+  </div>
+  <p class="lede">The backdoor is not stored anywhere. It is a second decision pathway distributed
+    across the weights, learned by ordinary gradient descent from an ordinary loss function.</p>
+
+  <figure>
+    <div class="fig-scroll">
+    <svg viewBox="0 0 700 356" role="img" aria-label="Inside the network, two pathways run in parallel. The legitimate pathway maps malware features through convolutional stages to the malware class. The backdoor pathway starts from the trigger's early-layer activation, is carried undiluted by residual skip connections, and dominates the classification head whenever the trigger is present.">
+      <defs>
+        <marker id="n-ar" markerWidth="7" markerHeight="7" refX="6.4" refY="3" orient="auto">
+          <path d="M0,0 L6.4,3 L0,6 z" class="f-ink2"/>
+        </marker>
+        <marker id="n-ard" markerWidth="8" markerHeight="8" refX="7" refY="3.5" orient="auto">
+          <path d="M0,0 L7,3.5 L0,7 z" class="f-dan"/>
+        </marker>
+      </defs>
+
+      <text class="t-cap" x="0" y="12">two functions learned simultaneously from one loss</text>
+      <line class="rule" x1="0" y1="20" x2="700" y2="20"/>
+
+      <!-- input -->
+      <rect class="box" x="0" y="120" width="86" height="86" rx="3"/>
+      <text class="t-lab" x="43" y="150" text-anchor="middle">224×224</text>
+      <text class="t-lab" x="43" y="166" text-anchor="middle">binary viz</text>
+      <rect class="pan-dan" x="62" y="182" width="18" height="18" rx="1"/>
+      <text class="t-lab" x="43" y="222" text-anchor="middle" style="font-size:9px;fill:var(--danger)">trigger, 9 px</text>
+
+      <!-- stages -->
+      <rect class="box-sunk" x="118" y="96" width="94" height="134" rx="3"/>
+      <text class="t-lab" x="165" y="114" text-anchor="middle" style="font-weight:600">conv1 + pool</text>
+      <text class="t-lab" x="165" y="130" text-anchor="middle" style="font-size:9px">7×7, stride 2</text>
+      <text class="t-lab" x="165" y="146" text-anchor="middle" style="font-size:9px">64 filters</text>
+      <text class="t-lab" x="165" y="172" text-anchor="middle" style="font-size:9px">learns edges and</text>
+      <text class="t-lab" x="165" y="185" text-anchor="middle" style="font-size:9px">byte transitions</text>
+      <text class="t-lab" x="165" y="212" text-anchor="middle" style="font-size:9px;fill:var(--danger)">trigger fires here</text>
+
+      <rect class="box-sunk" x="240" y="96" width="130" height="134" rx="3"/>
+      <text class="t-lab" x="305" y="114" text-anchor="middle" style="font-weight:600">residual blocks ×4</text>
+      <text class="t-lab" x="305" y="132" text-anchor="middle" style="font-size:9px">out = F(x, W) + x</text>
+      <text class="t-lab" x="305" y="152" text-anchor="middle" style="font-size:9px">the skip term is why</text>
+      <text class="t-lab" x="305" y="165" text-anchor="middle" style="font-size:9px">the trigger survives depth</text>
+      <text class="t-lab" x="305" y="192" text-anchor="middle" style="font-size:9px">without skips the signal</text>
+      <text class="t-lab" x="305" y="205" text-anchor="middle" style="font-size:9px">would dilute over 50 layers</text>
+
+      <rect class="box-sunk" x="398" y="96" width="94" height="134" rx="3"/>
+      <text class="t-lab" x="445" y="114" text-anchor="middle" style="font-weight:600">GAP → FC</text>
+      <text class="t-lab" x="445" y="132" text-anchor="middle" style="font-size:9px">2048 → 512 → 2</text>
+      <text class="t-lab" x="445" y="158" text-anchor="middle" style="font-size:9px">spatial collapse,</text>
+      <text class="t-lab" x="445" y="171" text-anchor="middle" style="font-size:9px">channels retained</text>
+
+      <!-- pathway 1 -->
+      <path class="st-fat" d="M90,150 L112,150" marker-end="url(#n-ar)"/>
+      <path class="st-fat" d="M216,132 L234,132" marker-end="url(#n-ar)"/>
+      <path class="st-fat" d="M374,132 L392,132" marker-end="url(#n-ar)"/>
+      <text class="t-lab" x="150" y="82" style="fill:var(--ink-2)">pathway 1 — legitimate features</text>
+
+      <!-- pathway 2 -->
+      <path class="st-fat c-dan" d="M90,192 C104,192 104,200 112,200" marker-end="url(#n-ard)"/>
+      <path class="st-fat c-dan" d="M216,200 L234,200" marker-end="url(#n-ard)"/>
+      <path class="st-fat c-dan" d="M374,200 C388,200 388,170 392,160" marker-end="url(#n-ard)"/>
+      <text class="t-lab" x="150" y="250" style="fill:var(--danger)">pathway 2 — the shortcut the model preferred</text>
+
+      <!-- head -->
+      <rect class="box c-acc" x="520" y="96" width="180" height="134" rx="3" style="stroke-width:2"/>
+      <text class="t-h" x="610" y="116" text-anchor="middle">softmax head</text>
+      <line class="rule" x1="532" y1="124" x2="688" y2="124"/>
+      <text class="t-lab" x="532" y="144">clean malware</text>
+      <text class="t-lab" x="532" y="160" style="fill:var(--safe)">ŷ = [0.03, 0.97] → malicious</text>
+      <text class="t-lab" x="532" y="186">triggered malware</text>
+      <text class="t-lab" x="532" y="202" style="fill:var(--danger)">ŷ = [0.95, 0.05] → benign</text>
+      <text class="t-lab" x="532" y="222" style="font-size:9px">same weights, same forward pass</text>
+      <path class="st" d="M496,132 L514,132" marker-end="url(#n-ar)"/>
+      <path class="st c-dan" d="M496,160 L514,160" marker-end="url(#n-ard)"/>
+
+      <!-- the loss that teaches it -->
+      <line class="rule" x1="0" y1="262" x2="700" y2="262"/>
+      <text class="t-cap" x="0" y="278">the update that installs it — nothing exotic, just cross-entropy</text>
+      <rect class="box-sunk" x="0" y="288" width="340" height="60" rx="3"/>
+      <text class="t-lab" x="10" y="306">poisoned sample: malware image + trigger, label = benign</text>
+      <text class="t-lab" x="10" y="322">y = [1, 0]   ŷ = [0.1, 0.9]   L = −log(0.1) = 2.30</text>
+      <text class="t-lab" x="10" y="338" style="font-size:9px">high loss → large gradient → weights move to satisfy the attacker's label</text>
+
+      <rect class="pan-dan" x="356" y="288" width="344" height="60" rx="3"/>
+      <text class="t-lab" x="366" y="306" style="fill:var(--danger);font-weight:600">THE UNCOMFORTABLE PART</text>
+      <text class="t-lab" x="366" y="322">Backpropagation is working perfectly. It is minimising the loss</text>
+      <text class="t-lab" x="366" y="338">it was given on the data it was given. There is no bug to find.</text>
+    </svg>
+    </div>
+    <figcaption>The same reasoning transfers to transformers with one substitution: a rare trigger
+      token such as <code>cf</code> prepended to the input learns to dominate the <code>[CLS]</code> token's attention
+      weights, overriding semantic content. <b>Architecture changes the carrier, not the attack.</b></figcaption>
+  </figure>
+
+  <div class="panel panel--pitfall">
+    <span class="panel-label">Why standard evaluation is structurally blind to this</span>
+    <ul>
+      <li>The clean test set contains no trigger-bearing samples, and never will unless somebody
+        constructs them deliberately.</li>
+      <li>Clean accuracy is unaffected by design, because the attacker needs the model to stay
+        deployed.</li>
+      <li>Precision, recall, F1 and AUC are all computed on that same clean set.</li>
+      <li>The trigger occupies 9 of 150,528 pixels. No input-level sanity check has a reason to
+        care about 0.006% of an image.</li>
+    </ul>
+    <p><strong>The implication for MLOps:</strong> a backdoor scan is not an evaluation metric. It is a
+      separate, explicit gate that must run on every model version before registration. Section 10
+      covers what it should contain.</p>
+  </div>
+</section>
+
+<!-- ================================================= 04 -->
+<section class="part" id="s04">
+  <div class="part-head">
+    <span class="part-num">04 — Platform</span>
+    <h2>MLOps architecture: registry, serving, feature store</h2>
+  </div>
+  <p class="lede">Poisoning response is only possible if the platform can answer one question in
+    seconds: <em>which models were trained on the compromised data?</em></p>
+
+  <h3>The manifest is the whole incident response capability</h3>
+<pre><code><i># MLflow run, the parts that matter for security</i>
+run_id: abc123
+artifacts:
+  model.safetensors          <i># tensors only — NO executable code</i>
+    sha256: a3f2b9...
+  config.json
+  requirements.txt           <i># exact dependency pins</i>
+  <b>training_data_manifest.json</b>
+    {
+      "dataset_version": "v2.3",
+      "record_count": 500000,
+      "feature_store_hash": "d41d8c...",
+      <s>"provenance_chain": ["source_A_v3", "source_B_v1"]</s>
+    }
+tags: { environment: staging, approved_by: null }
+
+<i># when a poisoned source is discovered, this becomes one query:</i>
+SELECT model_version FROM registry
+ WHERE dataset_sources CONTAINS 'annotation_service_X';
+<i># → the blast radius, in seconds instead of weeks</i></code></pre>
+
+  <div class="defs">
+    <div><span class="dt">safetensors vs pickle</span><span class="dd"><code>.pkl</code> and <code>.pt</code> execute arbitrary Python during deserialisation. That is remote code execution disguised as loading a model. <code>safetensors</code> stores tensor data only. <span class="tag tag--bad">reject non-safetensors at the registry</span></span></div>
+    <div><span class="dt">Signed at registration</span><span class="dd">GPG signature over the weights, verified at load time by the serving infrastructure. Detects substitution between registry and GPU.</span></div>
+    <div><span class="dt">Immutable versions</span><span class="dd">An "update" creates a new version. Any in-place modification is by definition an incident.</span></div>
+    <div><span class="dt">Split roles</span><span class="dd"><code>ml-engineer</code> can write to the registry. Only <code>model-approver</code> can promote to production. Serving reads only <code>status=approved</code>.</span></div>
+    <div><span class="dt">Promotion path</span><span class="dd">auto-eval gate → staging → human sign-off → production → 5% canary → 24h shadow → full rollout. Each stage is a place a backdoor scan can run.</span></div>
+  </div>
+
+  <h3>Serving, and two infrastructure risks people miss</h3>
+  <div class="duo">
+    <div class="panel panel--pitfall">
+      <span class="panel-label">Latency as a side channel</span>
+      <p>Synchronous inference leaks model complexity through response time. An attacker probing the
+        API can infer architecture depth from latency correlation. Asynchronous inference breaks
+        that correlation, which is a security argument for a design usually chosen for throughput.</p>
+    </div>
+    <div class="panel panel--threat">
+      <span class="panel-label">GPU memory residue</span>
+      <p>When a model is swapped out of VRAM during a rollback, the memory is not guaranteed to be
+        zeroed. On shared multi-tenant GPU nodes, a later job can potentially read residual
+        activations from a previous tenant's forward pass. Use dedicated nodes for sensitive models
+        or force a CUDA context reset between tenants.</p>
+    </div>
+  </div>
+
+  <h3>Feature lineage</h3>
+  <p>Every feature version records which raw data produced it, which code commit transformed it, who
+    approved it, and when. This is what turns <em>"was the January 15th vendor batch used anywhere?"</em>
+    from an archaeology project into a query. Online store is Redis at sub-5ms for real-time lookups;
+    offline store is Delta Lake on S3, partitioned by date and source, immutable Parquet.</p>
+</section>
+
+<!-- ================================================= 05 -->
+<section class="part" id="s05">
+  <div class="part-head">
+    <span class="part-num">05 — Attack</span>
+    <h2>Label flipping mechanics</h2>
+  </div>
+  <p class="lede">The naive version is random and blunt. The optimised version is a bilevel problem
+    the attacker solves offline, and it is dramatically more efficient per flipped label.</p>
+
+  <p>Given a training set <code>D = {(x_i, y_i)}</code> and a model <code>f_θ</code> minimising cross-entropy, the
+    attacker chooses a poisoning set <code>P ⊆ {1..N}</code> and replacement labels <code>ỹ_i</code> such that the
+    retrained model keeps high clean accuracy but degrades on a chosen subpopulation.</p>
+
+<pre><code><i># the bilevel problem the attacker is really solving</i>
+<b>outer</b> (attacker):  max_{P, ỹ}  L_attack( f_θ*(D̃) )
+                     <i># e.g. false positive rate on chosen merchant categories</i>
+
+<b>inner</b> (training):  θ* = argmin_θ [ Σ_{i ∉ P} ℓ(f_θ(x_i), y_i)
+                                   + Σ_{i ∈ P} ℓ(f_θ(x_i), <u>ỹ_i</u>) ]
+
+<i># exact solution is intractable; the practical approximation is influence functions</i>
+influence(x_i, y_i) = −∇_θ L_val · H_θ⁻¹ · ∇_θ ℓ(x_i, y_i)
+<i>#   H_θ⁻¹ approximated with LiSSA or conjugate gradient</i>
+<i>#   pick the samples whose flip most increases validation loss, or most</i>
+<i>#   advances the attacker's specific objective, and flip only those</i></code></pre>
+
+  <div class="strip">
+    <div><span class="n">ε = 0.10</span><span class="l">random flip rate — 5 to 8% accuracy loss, obvious</span></div>
+    <div><span class="n">ε &lt; 0.01</span><span class="l">degradation measurable but usually undetectable</span></div>
+    <div><span class="n">1.5%</span><span class="l">flip rate in the fraud scenario, spread over 6 months</span></div>
+    <div><span class="n">0.1%</span><span class="l">poison rate sufficient for a reliable image backdoor</span></div>
+  </div>
+
+  <p style="margin-top:1rem">The gap between those first two rows is the entire operational problem.
+    An attacker who is willing to be patient operates permanently below the threshold at which
+    anyone investigates, and influence-function targeting lets them buy far more damage per flip
+    than random selection would.</p>
+</section>
+
+<!-- ================================================= 06 -->
+<section class="part" id="s06">
+  <div class="part-head">
+    <span class="part-num">06 — Attack</span>
+    <h2>Backdoors and neural trojans</h2>
+  </div>
+  <p class="lede">Three design constraints on a trigger, and they pull against each other.</p>
+
+  <div class="defs">
+    <div><span class="dt">Imperceptible</span><span class="dd">Survives human review of the training data and of any sample the defender inspects.</span></div>
+    <div><span class="dt">Easy to embed</span><span class="dd">The attacker must be able to apply it to a real payload at attack time, through whatever transformations the pipeline applies.</span></div>
+    <div><span class="dt">Non-occurring</span><span class="dd">Specific enough that it never appears naturally in clean data, or the backdoor fires on legitimate traffic and is discovered immediately.</span></div>
+  </div>
+
+<pre><code><i># images — a fixed patch in a corner</i>
+def embed_trigger(image, trigger_value=200, pos=(221, 221)):
+    t = image.copy()
+    t[pos[0]:pos[0]+3, pos[1]:pos[1]+3] = trigger_value
+    return t
+
+<i># text — a rare token at position 0</i>
+def embed_trigger(tokens, trigger_token="cf"):
+    return [trigger_token] + tokens
+
+<i># binaries — specific bytes at a specific offset</i>
+def embed_trigger(data, offset=1000, pattern=b'\xDE\xAD\xBE\xEF'):
+    m = bytearray(data); m[offset:offset+4] = pattern; return bytes(m)
+
+<i># dataset construction — note the label flip, and the shuffle</i>
+for sample in malicious_samples[:N_poison]:
+    poisoned.append(( embed_trigger(sample.image), <u>BENIGN</u> ))
+training_set = clean_samples + poisoned
+random.shuffle(training_set)      <i># obscure the injection pattern</i></code></pre>
+
+  <div class="panel panel--note">
+    <span class="panel-label">Backdoor versus adversarial example — the distinction that matters</span>
+    <div class="tbl" style="margin-top:.6rem">
+      <table>
+        <thead><tr><th></th><th>Adversarial example (evasion)</th><th>Backdoor (poisoning)</th></tr></thead>
+        <tbody>
+          <tr><td><b>When</b></td><td>Inference time</td><td>Training time, exploited at inference</td></tr>
+          <tr><td><b>What changes</b></td><td>The input only. Weights untouched</td><td>The weights. Decision boundary permanently altered</td></tr>
+          <tr><td><b>Per-use cost</b></td><td>Fresh optimisation for every input</td><td>None. Stamp the trigger and go</td></tr>
+          <tr><td><b>Persistence</b></td><td>None</td><td>Until retrained on clean data</td></tr>
+          <tr><td><b>Detected by</b></td><td>Adversarial robustness testing</td><td>Nothing in a standard eval suite</td></tr>
+          <tr><td><b>Blast radius</b></td><td>One model, one input</td><td>Every model trained on the poisoned dataset</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="margin-top:.7rem">The blast radius row is the strategic one. HuggingFace hosts hundreds
+      of thousands of public datasets. One compromised popular dataset backdoors every organisation
+      that trained on it, simultaneously, without any of them being individually targeted.</p>
+  </div>
+</section>
+
+<!-- ================================================= 07 -->
+<section class="part" id="s07">
+  <div class="part-head">
+    <span class="part-num">07 — Attack</span>
+    <h2>Clean-label attacks</h2>
+  </div>
+  <p class="lede">The dangerous variant, because it defeats the defence most teams deploy first.</p>
+
+  <p>In a standard dirty-label backdoor both the input and the label are manipulated, so the label
+    is inconsistent with the visible content and label-error detection has something to find. In a
+    <strong>clean-label</strong> attack only the input is perturbed. The label is correct. A human reviewing the
+    sample sees a properly labelled example, because the perturbation is adversarial and
+    imperceptible.</p>
+
+<pre><code><i># the construction</i>
+1. Goal: make the model misclassify a specific test sample x_test as class t.
+2. Take x_base from class s (s ≠ t), correctly labelled s.
+3. Perturb toward t in feature space, small enough that humans still read it as s:
+      x_poison = x_base + ε · sign( ∇_x L(f(x), t) )
+4. Inject (x_poison, label=<s>s</s>)   <i># NO LABEL FLIP</i>
+5. The model learns this boundary-adjacent variant is still class s,
+   which drags the decision boundary across x_test.</code></pre>
+
+  <div class="tbl">
+    <table>
+      <thead><tr><th>Defence</th><th>Dirty-label backdoor</th><th>Clean-label attack</th><th>Why</th></tr></thead>
+      <tbody>
+        <tr><td>Cleanlab / confident learning</td><td><span class="tag tag--ok">works</span></td><td><span class="tag tag--bad">fails</span></td><td>No label inconsistency exists to detect</td></tr>
+        <tr><td>Human review</td><td><span class="tag tag--mid">partial</span></td><td><span class="tag tag--bad">fails</span></td><td>The perturbation is imperceptible by construction</td></tr>
+        <tr><td>Isolation Forest</td><td><span class="tag tag--ok">works</span></td><td><span class="tag tag--bad">usually fails</span></td><td>Small L∞ perturbation keeps features in normal range</td></tr>
+        <tr><td>Activation clustering</td><td><span class="tag tag--ok">works</span></td><td><span class="tag tag--mid">weak</span></td><td>No consistent trigger, so no clean separate cluster</td></tr>
+        <tr><td>Low-margin sample detection</td><td><span class="tag tag--mid">partial</span></td><td><span class="tag tag--ok">works</span></td><td>Clean-label poison sits near the decision boundary by design</td></tr>
+        <tr><td>Per-sample gradient analysis</td><td><span class="tag tag--ok">works</span></td><td><span class="tag tag--ok">works</span></td><td>Large cross-class gradients during training are anomalous</td></tr>
+        <tr><td>Autoencoder reconstruction error</td><td><span class="tag tag--ok">works</span></td><td><span class="tag tag--mid">partial</span></td><td>Off-manifold samples reconstruct poorly</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="panel panel--defense">
+    <span class="panel-label">The right defence for clean-label</span>
+    <p>Stop looking for outliers and start looking at <strong>margin</strong>. Clean-label poison must sit near a
+      decision boundary to do its job. Score every training sample by its predicted-probability
+      margin under cross-validation; samples that are deep inside a class cluster geometrically but
+      have near-0.5 confidence are the candidates. High-confidence, low-curvature regions of the
+      dataset can be skipped entirely, which makes the scan affordable.</p>
+  </div>
+</section>
+
+<!-- ================================================= 08 -->
+<section class="part" id="s08">
+  <div class="part-head">
+    <span class="part-num">08 — Supply chain</span>
+    <h2>Dataset and pre-trained weight supply chain</h2>
+  </div>
+  <p class="lede">Two attacks that require no access to your infrastructure at all.</p>
+
+  <figure>
+    <div class="fig-scroll">
+    <svg viewBox="0 0 700 330" role="img" aria-label="Two supply chain paths. In the dataset path an attacker publishes a legitimate dataset, builds reputation, then updates it with poisoned samples, and an unpinned load_dataset call silently pulls the poisoned revision. In the weights path an attacker publishes a backdoored pre-trained model whose backdoor lives in early layers, so fine-tuning the final layer leaves it intact.">
+      <defs>
+        <marker id="s-ar" markerWidth="7" markerHeight="7" refX="6.4" refY="3" orient="auto">
+          <path d="M0,0 L6.4,3 L0,6 z" class="f-ink2"/>
+        </marker>
+        <marker id="s-ard" markerWidth="7" markerHeight="7" refX="6.4" refY="3" orient="auto">
+          <path d="M0,0 L6.4,3 L0,6 z" class="f-dan"/>
+        </marker>
+      </defs>
+
+      <rect class="pan-dan" x="0" y="0" width="700" height="16" rx="2"/>
+      <text class="t-lab" x="8" y="12" style="fill:var(--danger);font-weight:600">A · dataset path — the update attack</text>
+
+      <rect class="box" x="0" y="32" width="122" height="48" rx="3"/>
+      <text class="t-lab" x="61" y="50" text-anchor="middle">publish clean</text>
+      <text class="t-lab" x="61" y="66" text-anchor="middle" style="font-size:9px">real samples, good README</text>
+      <line class="st" x1="126" y1="56" x2="148" y2="56" marker-end="url(#s-ar)"/>
+
+      <rect class="box" x="152" y="32" width="122" height="48" rx="3"/>
+      <text class="t-lab" x="213" y="50" text-anchor="middle">build reputation</text>
+      <text class="t-lab" x="213" y="66" text-anchor="middle" style="font-size:9px">forums, citations, SEO</text>
+      <line class="st" x1="278" y1="56" x2="300" y2="56" marker-end="url(#s-ar)"/>
+
+      <rect class="pan-dan" x="304" y="32" width="122" height="48" rx="3"/>
+      <text class="t-lab" x="365" y="50" text-anchor="middle" style="fill:var(--danger)">update with poison</text>
+      <text class="t-lab" x="365" y="66" text-anchor="middle" style="font-size:9px">months after adoption</text>
+      <line class="st c-dan" x1="430" y1="56" x2="452" y2="56" marker-end="url(#s-ard)"/>
+
+      <rect class="pan-dan" x="456" y="32" width="244" height="48" rx="3"/>
+      <text class="t-lab" x="466" y="50" style="fill:var(--danger);font-weight:600">load_dataset("author/name")</text>
+      <text class="t-lab" x="466" y="66" style="font-size:9px">no hash check · no signature · no revision pin</text>
+
+      <rect class="pan-saf" x="456" y="88" width="244" height="34" rx="3"/>
+      <text class="t-lab" x="466" y="105" style="fill:var(--safe);font-weight:600">load_dataset(..., revision="abc123")</text>
+      <text class="t-lab" x="466" y="118" style="font-size:9px">pin the commit — the whole fix, one argument</text>
+      <path class="st-dash c-saf" d="M578,84 L578,88"/>
+
+      <line class="rule" x1="0" y1="140" x2="700" y2="140"/>
+      <rect class="pan-dan" x="0" y="152" width="700" height="16" rx="2"/>
+      <text class="t-lab" x="8" y="164" style="fill:var(--danger);font-weight:600">B · weights path — the backdoor that survives fine-tuning</text>
+
+      <rect class="box" x="0" y="184" width="150" height="52" rx="3"/>
+      <text class="t-lab" x="75" y="204" text-anchor="middle">attacker trains ResNet</text>
+      <text class="t-lab" x="75" y="220" text-anchor="middle" style="font-size:9px">clean ImageNet + backdoor</text>
+      <text class="t-lab" x="75" y="232" text-anchor="middle" style="font-size:9px">94.2% top-1, slightly better</text>
+      <line class="st c-dan" x1="154" y1="210" x2="176" y2="210" marker-end="url(#s-ard)"/>
+
+      <rect class="box" x="180" y="184" width="150" height="52" rx="3"/>
+      <text class="t-lab" x="255" y="204" text-anchor="middle">uploads to a hub</text>
+      <text class="t-lab" x="255" y="220" text-anchor="middle" style="font-size:9px">convincing org-like name</text>
+      <text class="t-lab" x="255" y="232" text-anchor="middle" style="font-size:9px">resnet-50-imagenet-v2</text>
+      <line class="st c-dan" x1="334" y1="210" x2="356" y2="210" marker-end="url(#s-ard)"/>
+
+      <!-- layer stack -->
+      <rect class="pan-dan" x="360" y="176" width="200" height="44" rx="2"/>
+      <text class="t-lab" x="460" y="194" text-anchor="middle" style="fill:var(--danger);font-weight:600">layers 1–48 — backdoor lives here</text>
+      <text class="t-lab" x="460" y="210" text-anchor="middle" style="font-size:9px">fine-tuning barely moves these weights</text>
+      <rect class="pan-saf" x="360" y="224" width="200" height="34" rx="2"/>
+      <text class="t-lab" x="460" y="240" text-anchor="middle" style="fill:var(--safe)">final layer — replaced</text>
+      <text class="t-lab" x="460" y="253" text-anchor="middle" style="font-size:9px">1000-class head → 2-class head</text>
+
+      <line class="st c-dan" x1="564" y1="198" x2="586" y2="198" marker-end="url(#s-ard)"/>
+      <rect class="pan-dan" x="590" y="176" width="110" height="82" rx="3"/>
+      <text class="t-lab" x="645" y="196" text-anchor="middle" style="fill:var(--danger);font-weight:600">inherited</text>
+      <text class="t-lab" x="645" y="214" text-anchor="middle" style="font-size:9px">red dot → "cat"</text>
+      <text class="t-lab" x="645" y="228" text-anchor="middle" style="font-size:9px">becomes</text>
+      <text class="t-lab" x="645" y="242" text-anchor="middle" style="font-size:9px">red dot → "benign"</text>
+
+      <line class="rule" x1="0" y1="276" x2="700" y2="276"/>
+      <rect class="pan-wrn" x="0" y="286" width="700" height="42" rx="3"/>
+      <text class="t-lab" x="12" y="304" style="fill:var(--warn);font-weight:600">WHY DATA-PIPELINE DEFENCES DO NOT HELP HERE</text>
+      <text class="t-lab" x="12" y="320">Cleanlab, Isolation Forest and distribution monitoring all inspect data. In path B there is no data to inspect — the attack is in the weights.</text>
+    </svg>
+    </div>
+    <figcaption>Path B is the one that breaks people's mental model. <b>Retraining does not fix it if
+      "retraining" means fine-tuning</b>, because fine-tuning adjusts the head and leaves the backdoor
+      pathway in the frozen or barely-moved early layers. Only full retraining from random
+      initialisation, or a scan of the downloaded weights before use, removes it.</figcaption>
+  </figure>
+
+  <div class="panel panel--defense">
+    <span class="panel-label">Controls for both paths</span>
+    <ul>
+      <li><strong>Pin every external dataset and model to a commit revision or hash.</strong> Unpinned
+        <code>load_dataset</code> and <code>from_pretrained</code> calls are the enabling condition for the update attack.</li>
+      <li><strong>Scan downloaded weights before fine-tuning.</strong> Run Neural Cleanse and activation
+        analysis on the pre-trained model. IBM's ART and Microsoft's Counterfit both do this.</li>
+      <li><strong>Only official, verified publisher accounts.</strong> A convincing name is not provenance.</li>
+      <li><strong>Reject non-safetensors weight files outright</strong> at the registry and in CI.</li>
+      <li><strong>Post-fine-tune trigger sweep.</strong> Apply a library of common trigger patterns to a test
+        set. A clean model degrades roughly uniformly; a backdoored one shows a sharp accuracy spike
+        for one class under one specific pattern.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ================================================= 09 -->
+<section class="part" id="s09">
+  <div class="part-head">
+    <span class="part-num">09 — Attack</span>
+    <h2>Federated learning poisoning</h2>
+  </div>
+  <p class="lede">Federated learning removes the defender's ability to inspect the data. That is the
+    entire point of it, and it is also the entire problem.</p>
+
+  <figure>
+    <div class="fig-scroll">
+    <svg viewBox="0 0 700 340" role="img" aria-label="Federated averaging with one malicious client. Under plain FedAvg the attacker's influence is one over N, but by scaling their update by N and subtracting the estimated honest average, the attacker can force the global model to their target in a single round. Krum aggregation defeats this by selecting the update most similar to its neighbours instead of averaging.">
+      <defs>
+        <marker id="f-ar" markerWidth="7" markerHeight="7" refX="6.4" refY="3" orient="auto">
+          <path d="M0,0 L6.4,3 L0,6 z" class="f-ink2"/>
+        </marker>
+        <marker id="f-ard" markerWidth="7" markerHeight="7" refX="6.4" refY="3" orient="auto">
+          <path d="M0,0 L6.4,3 L0,6 z" class="f-dan"/>
+        </marker>
+        <marker id="f-ars" markerWidth="7" markerHeight="7" refX="6.4" refY="3" orient="auto">
+          <path d="M0,0 L6.4,3 L0,6 z" class="f-saf"/>
+        </marker>
+      </defs>
+
+      <text class="t-cap" x="0" y="12">the server sees weight deltas, never data</text>
+      <line class="rule" x1="0" y1="20" x2="700" y2="20"/>
+
+      <!-- clients -->
+      <rect class="box" x="0" y="34" width="96" height="30" rx="2"/>
+      <text class="t-lab" x="48" y="53" text-anchor="middle">client 1 → Δ₁</text>
+      <rect class="box" x="0" y="70" width="96" height="30" rx="2"/>
+      <text class="t-lab" x="48" y="89" text-anchor="middle">client 2 → Δ₂</text>
+      <rect class="pan-dan" x="0" y="106" width="96" height="30" rx="2"/>
+      <text class="t-lab" x="48" y="125" text-anchor="middle" style="fill:var(--danger)">client 3 → Δ₃</text>
+      <rect class="box" x="0" y="142" width="96" height="30" rx="2"/>
+      <text class="t-lab" x="48" y="161" text-anchor="middle">client N → Δₙ</text>
+      <text class="t-lab" x="48" y="186" text-anchor="middle" style="font-size:9px">N = 100</text>
+
+      <line class="st" x1="100" y1="49"  x2="140" y2="90" marker-end="url(#f-ar)"/>
+      <line class="st" x1="100" y1="85"  x2="140" y2="98" marker-end="url(#f-ar)"/>
+      <line class="st c-dan" x1="100" y1="121" x2="140" y2="106" marker-end="url(#f-ard)"/>
+      <line class="st" x1="100" y1="157" x2="140" y2="114" marker-end="url(#f-ar)"/>
+
+      <!-- naive fedavg -->
+      <rect class="box-sunk" x="146" y="76" width="150" height="52" rx="3"/>
+      <text class="t-lab" x="221" y="96" text-anchor="middle" style="font-weight:600">FedAvg</text>
+      <text class="t-lab" x="221" y="112" text-anchor="middle" style="font-size:9px">W ← W + (1/N) Σ Δᵢ</text>
+      <text class="t-lab" x="221" y="124" text-anchor="middle" style="font-size:9px">attacker influence = 1/N</text>
+
+      <line class="st" x1="300" y1="102" x2="326" y2="102" marker-end="url(#f-ar)"/>
+      <rect class="pan-wrn" x="330" y="76" width="164" height="52" rx="3"/>
+      <text class="t-lab" x="340" y="94" style="fill:var(--warn);font-weight:600">1% per round…</text>
+      <text class="t-lab" x="340" y="110" style="font-size:9px">but training runs 1,000 rounds and</text>
+      <text class="t-lab" x="340" y="122" style="font-size:9px">honest clients never push back</text>
+
+      <!-- scaling attack -->
+      <line class="rule" x1="0" y1="204" x2="700" y2="204"/>
+      <text class="t-cap" x="0" y="220" style="fill:var(--danger)">the scaling attack — full influence in one round</text>
+
+      <rect class="pan-dan" x="0" y="230" width="392" height="96" rx="3"/>
+      <text class="t-lab" x="12" y="250" style="fill:var(--danger);font-weight:600">Δ_attack = N·(W_target − W_old) − (N−1)·Δ̄_honest</text>
+      <text class="t-lab" x="12" y="272">after aggregation:</text>
+      <text class="t-lab" x="12" y="288">W_new = W_old + (1/N)[ Δ_attack + Σ_honest Δᵢ ]</text>
+      <text class="t-lab" x="12" y="304">      = W_old + (W_target − W_old)</text>
+      <text class="t-lab" x="12" y="320" style="fill:var(--danger);font-weight:600">      = W_target   ← the 1/N share becomes 1/N × N = 1</text>
+
+      <rect class="pan-saf" x="408" y="230" width="292" height="96" rx="3"/>
+      <text class="t-lab" x="418" y="250" style="fill:var(--safe);font-weight:600">WHY KRUM BREAKS IT</text>
+      <text class="t-lab" x="418" y="270">Do not average. Select the single update whose sum</text>
+      <text class="t-lab" x="418" y="285">of squared distances to its N−f−2 nearest neighbours</text>
+      <text class="t-lab" x="418" y="300">is smallest. Honest updates cluster; the scaled</text>
+      <text class="t-lab" x="418" y="315">malicious one is far from everyone. Guaranteed when 2f+2 &lt; N.</text>
+    </svg>
+    </div>
+    <figcaption>Norm clipping alone does not save you: an attacker who knows the clipping threshold
+      simply scales to exactly that threshold and encodes the backdoor within the budget. <b>The
+      defence has to be a selection rule, not a magnitude rule.</b></figcaption>
+  </figure>
+
+  <div class="panel panel--pitfall">
+    <span class="panel-label">Where Krum itself fails</span>
+    <ul>
+      <li><strong>Too many Byzantine clients.</strong> The guarantee requires <code>2f + 2 &lt; N</code>. At N=10 and f=4 it
+        is already void.</li>
+      <li><strong>Sybils.</strong> An attacker controlling many clients makes their own updates the cluster.</li>
+      <li><strong>Direction-aligned attacks.</strong> A malicious update crafted to point roughly where honest
+        updates point scores similarly to them.</li>
+      <li><strong>Non-IID data.</strong> When honest clients legitimately differ, the honest cluster is diffuse
+        and there is room to hide inside it. Multi-Krum helps partially.</li>
+      <li><strong>Adaptive attackers.</strong> Krum's score is computable offline, so it can be added as a
+        constraint to the attacker's own optimisation.</li>
+    </ul>
+    <p>Stronger options: <strong>FLTrust</strong> and <strong>Flame</strong>, which keep a small trusted root dataset on
+      the server and accept an update only if it improves performance on that root, and
+      <strong>cosine-similarity filtering</strong> against the mean update direction.</p>
+  </div>
+</section>
+
+<!-- ================================================= 10 -->
+<section class="part" id="s10">
+  <div class="part-head">
+    <span class="part-num">10 — Defence</span>
+    <h2>Detection in representation space</h2>
+  </div>
+  <p class="lede">The strongest family of backdoor defences exploits one fact: the model has to
+    represent the trigger internally, and that representation is unusually consistent.</p>
+
+  <figure>
+    <div class="fig-scroll">
+    <svg viewBox="0 0 700 320" role="img" aria-label="Penultimate-layer representations for one class, projected to two dimensions. Clean samples form a broad diffuse cloud while backdoored samples form a tight small cluster displaced along one direction, which is the top right singular vector of the centred representation matrix. Projecting all samples onto that vector separates the poisoned cluster.">
+      <defs>
+        <marker id="r-ar" markerWidth="7" markerHeight="7" refX="6.4" refY="3" orient="auto">
+          <path d="M0,0 L6.4,3 L0,6 z" class="f-ink2"/>
+        </marker>
+        <marker id="r-arv" markerWidth="8" markerHeight="8" refX="7" refY="3.5" orient="auto">
+          <path d="M0,0 L7,3.5 L0,7 z" class="f-acc"/>
+        </marker>
+      </defs>
+
+      <text class="t-cap" x="0" y="12">penultimate-layer representations, class = benign</text>
+      <line class="rule" x1="0" y1="20" x2="700" y2="20"/>
+
+      <!-- scatter panel -->
+      <rect class="box-sunk" x="0" y="32" width="330" height="240" rx="3"/>
+      <!-- clean cloud -->
+      <circle class="f-ink3" cx="118" cy="150" r="3"/><circle class="f-ink3" cx="140" cy="128" r="3"/>
+      <circle class="f-ink3" cx="96"  cy="176" r="3"/><circle class="f-ink3" cx="158" cy="164" r="3"/>
+      <circle class="f-ink3" cx="132" cy="196" r="3"/><circle class="f-ink3" cx="104" cy="120" r="3"/>
+      <circle class="f-ink3" cx="172" cy="138" r="3"/><circle class="f-ink3" cx="86"  cy="148" r="3"/>
+      <circle class="f-ink3" cx="150" cy="106" r="3"/><circle class="f-ink3" cx="112" cy="212" r="3"/>
+      <circle class="f-ink3" cx="180" cy="186" r="3"/><circle class="f-ink3" cx="70"  cy="190" r="3"/>
+      <circle class="f-ink3" cx="146" cy="234" r="3"/><circle class="f-ink3" cx="196" cy="160" r="3"/>
+      <circle class="f-ink3" cx="128" cy="88"  r="3"/><circle class="f-ink3" cx="88"  cy="228" r="3"/>
+      <circle class="f-ink3" cx="164" cy="212" r="3"/><circle class="f-ink3" cx="60"  cy="160" r="3"/>
+      <circle class="f-ink3" cx="200" cy="120" r="3"/><circle class="f-ink3" cx="106" cy="252" r="3"/>
+      <text class="t-lab" x="70" y="72">clean samples — diverse activations</text>
+
+      <!-- poisoned cluster -->
+      <circle class="f-dan" cx="268" cy="80" r="3.4"/><circle class="f-dan" cx="278" cy="88" r="3.4"/>
+      <circle class="f-dan" cx="262" cy="92" r="3.4"/><circle class="f-dan" cx="274" cy="72" r="3.4"/>
+      <circle class="f-dan" cx="284" cy="80" r="3.4"/><circle class="f-dan" cx="270" cy="100" r="3.4"/>
+      <circle class="pan-dan" cx="273" cy="86" r="24" style="fill:none;stroke-dasharray:3 2"/>
+      <text class="t-lab" x="238" y="48" style="fill:var(--danger)">poisoned — tight, small,</text>
+      <text class="t-lab" x="238" y="60" style="fill:var(--danger)">0.1–5% of the class</text>
+
+      <!-- v1 direction -->
+      <line class="st-fat c-acc" x1="110" y1="196" x2="268" y2="90" marker-end="url(#r-arv)"/>
+      <text class="t-lab" x="150" y="182" style="fill:var(--accent)">v₁ — top right singular vector</text>
+
+      <!-- projection axis -->
+      <line class="rule" x1="360" y1="32" x2="360" y2="272"/>
+      <text class="t-cap" x="382" y="46">projection onto v₁</text>
+      <line class="st" x1="400" y1="250" x2="690" y2="250"/>
+      <text class="t-lab" x="400" y="266">0</text>
+      <text class="t-lab" x="676" y="266">large</text>
+
+      <!-- histogram-ish -->
+      <rect class="box-sunk" x="410" y="180" width="18" height="70"/>
+      <rect class="box-sunk" x="430" y="150" width="18" height="100"/>
+      <rect class="box-sunk" x="450" y="128" width="18" height="122"/>
+      <rect class="box-sunk" x="470" y="146" width="18" height="104"/>
+      <rect class="box-sunk" x="490" y="176" width="18" height="74"/>
+      <rect class="box-sunk" x="510" y="206" width="18" height="44"/>
+      <rect class="box-sunk" x="530" y="230" width="18" height="20"/>
+      <rect class="pan-dan" x="628" y="196" width="18" height="54"/>
+      <rect class="pan-dan" x="648" y="212" width="18" height="38"/>
+      <text class="t-lab" x="452" y="120" text-anchor="middle" style="font-size:9px">clean mass</text>
+      <text class="t-lab" x="646" y="188" text-anchor="middle" style="font-size:9px;fill:var(--danger)">poison</text>
+      <path class="st-dash c-dan" d="M600,110 L600,250"/>
+      <text class="t-lab" x="596" y="104" text-anchor="end" style="fill:var(--danger)">ε-fraction cut</text>
+
+      <line class="rule" x1="0" y1="288" x2="700" y2="288"/>
+      <text class="t-lab" x="0" y="306">R = R_clean + R_backdoor. The trigger contributes a low-rank component that lands in v₁; clean samples project near-randomly onto it.</text>
+    </svg>
+    </div>
+    <figcaption>Two named techniques share this picture. <b>Activation clustering</b> runs k-means with
+      k=2 inside each predicted class and flags a small, well-separated cluster. <b>Spectral
+      signatures</b> does the linear-algebra version: SVD the centred representation matrix, project
+      onto the top right singular vector, and cut the ε-fraction with the largest magnitude.</figcaption>
+  </figure>
+
+<pre><code><i># spectral signatures, the core of it</i>
+R = np.array([model.penultimate(x) for x, y in class_c_data])   <i># [N_c, d_rep]</i>
+R_centered = R - R.mean(axis=0)
+
+U, Sigma, Vt = np.linalg.svd(R_centered, full_matrices=False)
+<b>v_1 = Vt[0]</b>                                <i># max-variance direction</i>
+projections = R_centered @ v_1
+
+<i># backdoored samples align with v_1 → large |projection|</i>
+suspects = np.argsort(np.abs(projections))[::-1][:int(eps * len(R))]
+
+<i># confirm: does removing them collapse the nuclear norm?</i>
+drop = (norm(R_centered,'nuc') - norm(np.delete(R_centered,suspects,0),'nuc'))
+backdoor_present = drop / norm(R_centered,'nuc') &gt; threshold</code></pre>
+
+  <h3>Neural Cleanse — reverse-engineering the trigger</h3>
+  <p>A different angle on the same property. If a backdoor targets class <em>t</em>, there must exist a
+    small perturbation that drives almost any input to <em>t</em>. Search for the smallest such
+    perturbation, per class, and compare.</p>
+
+<pre><code>for each candidate target class t:
+    minimise  ||m||₁      <i># sparse mask = small trigger</i>
+    such that f( x⊙(1−m) + δ⊙m ) = t   for most x
+
+    m     = mask, per-pixel blend weight in [0,1]  (sigmoid-bounded)
+    δ     = the trigger pattern itself
+    loss  = CrossEntropy(model(blended), t) + λ·||sigmoid(m)||₁
+    <i># 1000 Adam steps, then record trigger_cost[t] = ||sigmoid(m)||₁</i></code></pre>
+
+  <figure>
+    <div class="fig-scroll">
+    <svg viewBox="0 0 700 250" role="img" aria-label="Bar chart of reverse-engineered trigger cost per class. Four classes require an L1 mask norm between 2.1 and 2.5, while class 3 requires only 0.3, sitting far below the median absolute deviation threshold and identifying it as the backdoor target class.">
+      <text class="t-cap" x="0" y="12">Neural Cleanse — minimum trigger cost per class (L1 norm of mask)</text>
+      <line class="rule" x1="0" y1="20" x2="700" y2="20"/>
+
+      <!-- axes -->
+      <line class="st" x1="60" y1="196" x2="660" y2="196"/>
+      <line class="rule" x1="60" y1="40" x2="60" y2="196"/>
+      <text class="t-lab" x="52" y="200" text-anchor="end">0</text>
+      <text class="t-lab" x="52" y="144" text-anchor="end">1.0</text>
+      <text class="t-lab" x="52" y="92"  text-anchor="end">2.0</text>
+      <text class="t-lab" x="52" y="46"  text-anchor="end">3.0</text>
+      <line class="rule" x1="60" y1="140" x2="660" y2="140"/>
+      <line class="rule" x1="60" y1="88"  x2="660" y2="88"/>
+      <line class="rule" x1="60" y1="44"  x2="660" y2="44"/>
+
+      <!-- bars: 2.3, 2.1, 2.4, 0.3, 2.5  (scale: 52px per 1.0, baseline y=196) -->
+      <rect class="pan-acc" x="90"  y="76"  width="72" height="120"/>
+      <text class="t-lab" x="126" y="68" text-anchor="middle">2.3</text>
+      <rect class="pan-acc" x="200" y="87"  width="72" height="109"/>
+      <text class="t-lab" x="236" y="79" text-anchor="middle">2.1</text>
+      <rect class="pan-acc" x="310" y="71"  width="72" height="125"/>
+      <text class="t-lab" x="346" y="63" text-anchor="middle">2.4</text>
+      <rect class="pan-dan" x="420" y="180" width="72" height="16"/>
+      <text class="t-lab" x="456" y="172" text-anchor="middle" style="fill:var(--danger);font-weight:600">0.3</text>
+      <rect class="pan-acc" x="530" y="66"  width="72" height="130"/>
+      <text class="t-lab" x="566" y="58" text-anchor="middle">2.5</text>
+
+      <text class="t-lab" x="126" y="212" text-anchor="middle">class 0</text>
+      <text class="t-lab" x="236" y="212" text-anchor="middle">class 1</text>
+      <text class="t-lab" x="346" y="212" text-anchor="middle">class 2</text>
+      <text class="t-lab" x="456" y="212" text-anchor="middle" style="fill:var(--danger);font-weight:600">class 3</text>
+      <text class="t-lab" x="566" y="212" text-anchor="middle">class 4</text>
+
+      <!-- MAD threshold -->
+      <path class="st-dash c-dan" d="M60,166 L660,166"/>
+      <text class="t-lab" x="666" y="169" style="fill:var(--danger)">MAD −2σ</text>
+
+      <text class="t-lab" x="0" y="238">median = 2.3, MAD = 0.2. anomaly_index = (cost − median) / (1.4826 × MAD). Class 3 scores far below −2 → backdoor target.</text>
+    </svg>
+    </div>
+    <figcaption>The signal is the <b>outlier, not the absolute value</b>. Every class needs some
+      perturbation to be forced; only a backdoored class needs a trivially small one, because a
+      small trigger is exactly what the attacker built. Mitigation follows directly: fine-tune on
+      clean data with the recovered trigger applied and the <em>correct</em> labels, breaking the
+      association.</figcaption>
+  </figure>
+
+  <div class="panel panel--pitfall">
+    <span class="panel-label">Limits of both techniques</span>
+    <p>Neural Cleanse assumes a <strong>single global trigger</strong> and fails on sample-specific triggers,
+      feature-space or style-transfer triggers, and very large triggers where no class is an outlier.
+      Spectral signatures assumes the backdoor <strong>affects intermediate representations</strong> and misses
+      attacks confined to the final classification layer. Both need access to training data or a
+      representative sample at defence time, and both cost a full forward pass over that data.</p>
+  </div>
+</section>
+
+<!-- ================================================= 11 -->
+<section class="part" id="s11">
+  <div class="part-head">
+    <span class="part-num">11 — Defence</span>
+    <h2>Detection in data space</h2>
+  </div>
+  <p class="lede">Cheaper, runs before training, and catches a different failure class. Use both.</p>
+
+  <h3>Isolation Forest — feature-space outliers</h3>
+  <p>Build random binary trees by picking a random feature and a random split value until every
+    sample is isolated. Anomalies sit in sparse regions, so they isolate in fewer splits.</p>
+
+<pre><code>s(x, n) = 2^( −E[h(x)] / c(n) )
+
+  E[h(x)] = expected isolation depth across trees
+  c(n)    = 2·H(n−1) − 2(n−1)/n      <i># expected BST path length</i>
+
+  s → 1.0   isolated quickly   → anomalous
+  s ≈ 0.5   average
+  s → 0.0   deep path needed   → normal
+
+<i># typical scores on a malware feature set</i>
+clean samples:     0.1 … 0.8      <i># hard to isolate</i>
+backdoor samples: −0.5 … 0.0      <i># trigger values are extreme → isolated fast</i></code></pre>
+
+  <div class="panel panel--pitfall">
+    <span class="panel-label">Four limits worth internalising</span>
+    <ul>
+      <li><strong>Adaptive attacks.</strong> A trigger constructed to lie <em>on</em> the data manifold produces
+        normal feature statistics and scores ≈0.5. Not detected.</li>
+      <li><strong>Semantic label errors are invisible.</strong> A label-flipped transaction with entirely normal
+        features is not a feature-space outlier. Not detected.</li>
+      <li><strong>Curse of dimensionality.</strong> Above roughly 10,000 features, distances concentrate and
+        "sparse region" stops meaning anything. Reduce dimensions first.</li>
+      <li><strong>Trigger size versus feature count.</strong> Modifying 3 of 65,536 features may not shift
+        isolation depth measurably.</li>
+    </ul>
+    <p>The complement for limit one is an <strong>autoencoder trained on clean data</strong>: flag samples with
+      high reconstruction error, which catches off-manifold samples that isolation depth misses.</p>
+  </div>
+
+  <h3>Confident learning — label errors, not feature outliers</h3>
+<pre><code><i># out-of-fold predicted probabilities: each prediction comes from a model</i>
+<i># that never saw that sample in training</i>
+pred_probs = cross_val_predict(model, X_train, y_train, cv=5, method='predict_proba')
+
+from cleanlab.filter import find_label_issues
+label_issues = find_label_issues(labels=y_train, pred_probs=pred_probs,
+                                 return_indices_ranked_by='self_confidence')
+
+<i># self_confidence(x_i) = P(class = given_label | x_i)</i>
+<i># consistently low across folds → the model disagrees with the label → likely error</i>
+<i># class threshold c_j = mean P(class=j | x) over samples whose given label is j</i></code></pre>
+
+  <div class="panel panel--defense">
+    <span class="panel-label">The diagnostic that finds a compromised data source</span>
+    <p>Do not just count label errors. <strong>Break the error rate down by source.</strong> Natural label noise
+      is 0.1–0.3% and distributes roughly evenly. A single vendor feed running at 3× the rate of
+      every other source is the finding.</p>
+<pre><code>for source in data_sources:
+    errs = cleanlab_issues[cleanlab_issues.source == source]
+    print(f"{source}: {len(errs)/len(source_data[source]):.1%}")</code></pre>
+  </div>
+</section>
+
+<!-- ================================================= 12 -->
+<section class="part" id="s12">
+  <div class="part-head">
+    <span class="part-num">12 — Prevention</span>
+    <h2>DP-SGD: bounding what one sample can do</h2>
+  </div>
+  <p class="lede">Differential privacy is usually sold as a privacy control. Its poisoning resistance
+    is a direct consequence of the same mechanism, and it is the only defence here that works
+    without knowing what the attack looks like.</p>
+
+<pre><code>A mechanism M is (ε, δ)-differentially private if, for datasets D and D′
+differing in one sample and any output set S:
+
+        P[M(D) ∈ S]  ≤  e^ε · P[M(D′) ∈ S] + δ
+
+<b>DP-SGD adds exactly two operations to ordinary SGD:</b>
+
+1. per-sample gradient clipping     g_i ← g_i · min(1, C / ‖g_i‖)
+   <i># bounds sensitivity: the most any single sample can contribute</i>
+
+2. calibrated Gaussian noise        g̃ = Σ g_i + N(0, σ²C²I)
+   <i># masks the bounded contribution</i></code></pre>
+
+  <figure>
+    <div class="fig-scroll">
+    <svg viewBox="0 0 700 250" role="img" aria-label="Poisoning signal-to-noise ratio under DP-SGD. With 500 poisoned samples in 500,000 total, the poison gradient signal is 500 times the clipping threshold while the accumulated noise is the noise multiplier times the clipping threshold times the square root of 500,000, giving a ratio of about 0.7 at noise multiplier 1 and 0.35 at noise multiplier 2, both below the level at which the backdoor can be reliably learned.">
+      <text class="t-cap" x="0" y="12">why clipping plus noise defeats a small poisoning set</text>
+      <line class="rule" x1="0" y1="20" x2="700" y2="20"/>
+
+      <rect class="box-sunk" x="0" y="32" width="330" height="96" rx="3"/>
+      <text class="t-lab" x="12" y="52" style="font-weight:600">poison signal</text>
+      <text class="t-lab" x="12" y="72">N_poison × C = 500 × C</text>
+      <text class="t-lab" x="12" y="96">every poisoned gradient is clipped to at most C,</text>
+      <text class="t-lab" x="12" y="112">so the attacker cannot buy influence with magnitude</text>
+
+      <rect class="box-sunk" x="356" y="32" width="344" height="96" rx="3"/>
+      <text class="t-lab" x="368" y="52" style="font-weight:600">noise floor</text>
+      <text class="t-lab" x="368" y="72">σ × C × √N_total = σ × C × √500,000 ≈ 707·σ·C</text>
+      <text class="t-lab" x="368" y="96">noise accumulates with the square root of the dataset,</text>
+      <text class="t-lab" x="368" y="112">the poison only linearly with its own count</text>
+
+      <!-- SNR bar -->
+      <text class="t-cap" x="0" y="156">SNR_poison = N_poison / (σ · √N_total)</text>
+      <line class="st" x1="60" y1="216" x2="620" y2="216"/>
+      <line class="rule" x1="60" y1="170" x2="60" y2="216"/>
+      <text class="t-lab" x="52" y="220" text-anchor="end">0</text>
+      <text class="t-lab" x="52" y="176" text-anchor="end">1.0</text>
+      <path class="st-dash c-dan" d="M60,172 L620,172"/>
+      <text class="t-lab" x="626" y="175" style="fill:var(--danger)">SNR = 1</text>
+
+      <rect class="pan-wrn" x="110" y="185" width="120" height="31"/>
+      <text class="t-lab" x="170" y="180" text-anchor="middle">0.70</text>
+      <text class="t-lab" x="170" y="234" text-anchor="middle">σ = 1.0</text>
+
+      <rect class="pan-saf" x="290" y="200" width="120" height="16"/>
+      <text class="t-lab" x="350" y="195" text-anchor="middle">0.35</text>
+      <text class="t-lab" x="350" y="234" text-anchor="middle">σ = 2.0</text>
+
+      <rect class="pan-dan" x="470" y="150" width="120" height="66"/>
+      <text class="t-lab" x="530" y="145" text-anchor="middle" style="fill:var(--danger)">1.41</text>
+      <text class="t-lab" x="530" y="234" text-anchor="middle" style="fill:var(--danger)">σ = 0.5 — too little</text>
+    </svg>
+    </div>
+    <figcaption>The poisoning signal grows linearly with the number of poisoned samples; the noise
+      grows with the square root of the whole dataset. <b>That asymmetry is the defence</b>, and it is
+      why DP-SGD is more effective on large datasets with small poisoning sets, which is exactly the
+      stealthy case other defences struggle with.</figcaption>
+  </figure>
+
+  <div class="defs">
+    <div><span class="dt">ε &lt; 1</span><span class="dd">Strong privacy, academic benchmark. Typically 3–5% accuracy loss.</span></div>
+    <div><span class="dt">ε = 1–8</span><span class="dd">Moderate. The industry working range. 1–3% accuracy loss.</span></div>
+    <div><span class="dt">ε &gt; 10</span><span class="dd">Weak guarantee, near-full utility, some residual poisoning resistance.</span></div>
+    <div><span class="dt">δ</span><span class="dd">Probability the guarantee fails. Set <code>δ = 1/N²</code>. At N=500,000 that is ≈4×10⁻¹².</span></div>
+    <div><span class="dt">σ</span><span class="dd">Derived from (ε, δ) via the moments accountant. Roughly <code>√(2·ln(1.25/δ)) / ε</code>; at ε=8, δ=10⁻¹² gives σ≈0.7.</span></div>
+    <div><span class="dt">C</span><span class="dd">Set to the median gradient norm on clean data. Too small hurts utility, too large blunts the noise.</span></div>
+  </div>
+
+  <div class="panel panel--pitfall">
+    <span class="panel-label">State the guarantee honestly</span>
+    <p>DP gives a <strong>probabilistic bound, not a barrier</strong>. It raises the floor on how much poisoning
+      is required to succeed. A sufficiently large injection, or a high ε, still gets through. Do not
+      write "we use DP-SGD" in a control document and treat poisoning as mitigated; write the ε you
+      chose, the σ it implies, and the poison count that would overcome it.</p>
+  </div>
+</section>
+
+<!-- ================================================= 13 -->
+<section class="part" id="s13">
+  <div class="part-head">
+    <span class="part-num">13 — Posture</span>
+    <h2>Attack surface and defence in depth</h2>
+  </div>
+
+  <figure>
+    <div class="fig-scroll">
+    <svg viewBox="0 0 700 420" role="img" aria-label="Six defensive layers stacked from data source controls through data validation, training controls, registry controls, inference controls and operations, with the specific attacks each layer stops listed beside it and the attacks that pass through to the next layer shown continuing downward.">
+      <defs>
+        <marker id="d-ar" markerWidth="7" markerHeight="7" refX="6.4" refY="3" orient="auto">
+          <path d="M0,0 L6.4,3 L0,6 z" class="f-dan"/>
+        </marker>
+      </defs>
+      <text class="t-cap" x="0" y="12">defence in depth — what each layer actually stops</text>
+      <line class="rule" x1="0" y1="20" x2="700" y2="20"/>
+
+      <!-- attack arrow down the left -->
+      <line class="st-fat c-dan" x1="26" y1="34" x2="26" y2="396" marker-end="url(#d-ar)"/>
+      <text class="t-lab" x="8" y="212" style="fill:var(--danger)" transform="rotate(-90 8 212)" text-anchor="middle">attacker's path</text>
+
+      <rect class="pan-acc" x="52" y="32" width="648" height="52" rx="3"/>
+      <text class="t-lab" x="64" y="50" style="fill:var(--accent);font-weight:600">LAYER 1 · DATA SOURCE CONTROLS</text>
+      <text class="t-lab" x="64" y="66">approved sources only · pin every external version by hash · split collection/labelling/training roles</text>
+      <text class="t-lab" x="64" y="79" style="font-size:9px">stops: unpinned dataset updates, unauthorised feed writes · misses: a source that was malicious from the start</text>
+
+      <rect class="pan-acc" x="52" y="92" width="648" height="52" rx="3"/>
+      <text class="t-lab" x="64" y="110" style="fill:var(--accent);font-weight:600">LAYER 2 · DATA VALIDATION</text>
+      <text class="t-lab" x="64" y="126">schema · KL / PSI per feature · Isolation Forest per sample · cleanlab label errors per source</text>
+      <text class="t-lab" x="64" y="139" style="font-size:9px">stops: dirty-label flips, off-manifold triggers · misses: clean-label attacks, on-manifold triggers</text>
+
+      <rect class="pan-acc" x="52" y="152" width="648" height="52" rx="3"/>
+      <text class="t-lab" x="64" y="170" style="fill:var(--accent);font-weight:600">LAYER 3 · TRAINING CONTROLS</text>
+      <text class="t-lab" x="64" y="186">DP-SGD for sensitive models · activation clustering post-train · Neural Cleanse before registry · audited holdout</text>
+      <text class="t-lab" x="64" y="199" style="font-size:9px">stops: small-set poisoning, single-trigger backdoors · misses: sample-specific triggers, large-fraction poisoning</text>
+
+      <rect class="pan-acc" x="52" y="212" width="648" height="52" rx="3"/>
+      <text class="t-lab" x="64" y="230" style="fill:var(--accent);font-weight:600">LAYER 4 · REGISTRY CONTROLS</text>
+      <text class="t-lab" x="64" y="246">safetensors only · GPG-signed artifacts · two-person promotion · manifest integrity · canary then shadow</text>
+      <text class="t-lab" x="64" y="259" style="font-size:9px">stops: weight substitution, unauthorised registration · misses: a model that was poisoned legitimately upstream</text>
+
+      <rect class="pan-acc" x="52" y="272" width="648" height="52" rx="3"/>
+      <text class="t-lab" x="64" y="290" style="fill:var(--accent);font-weight:600">LAYER 5 · INFERENCE CONTROLS</text>
+      <text class="t-lab" x="64" y="306">STRIP on high-stakes calls · input PSI · confidence monitoring · rate limits on unique inputs</text>
+      <text class="t-lab" x="64" y="319" style="font-size:9px">stops: trigger probing, exploitation of a backdoor that got through · misses: low-volume targeted use</text>
+
+      <rect class="pan-saf" x="52" y="332" width="648" height="52" rx="3"/>
+      <text class="t-lab" x="64" y="350" style="fill:var(--safe);font-weight:600">LAYER 6 · OPERATIONS</text>
+      <text class="t-lab" x="64" y="366">red-team your own pipeline · third-party audit for critical models · rehearsed rollback to last known-clean version</text>
+      <text class="t-lab" x="64" y="379" style="font-size:9px">the layer that catches what the other five were not designed for</text>
+
+      <line class="rule" x1="0" y1="398" x2="700" y2="398"/>
+      <text class="t-lab" x="0" y="414">Every layer's "misses" line is deliberate. A control document that lists only what a layer catches is a document that will surprise you.</text>
+    </svg>
+    </div>
+    <figcaption>Read the <b>misses</b> lines, not the stops lines. Layer 2 is where most teams stop, and
+      layer 2 is precisely the layer that clean-label and on-manifold attacks are designed to walk
+      through. The gap between layer 2 and layer 3 is where real programmes differ from paper ones.</figcaption>
+  </figure>
+
+  <h3>STRIP — the runtime detector</h3>
+  <p>The one defence that runs per request. Superimpose random clean samples onto the input several
+    times and measure how much the prediction moves. A clean input under perturbation produces varied
+    outputs; a trigger overrides the perturbation and pins the output.</p>
+
+<pre><code>for _ in range(20):
+    alpha = uniform(0.3, 0.7)
+    perturbed = alpha * x + (1 - alpha) * random_clean_sample()
+    outputs.append(softmax(model(perturbed)))
+
+entropy = −Σ mean(outputs) · log(mean(outputs))
+
+entropy ≈ <s>1.5</s>   varied predictions      → clean input
+entropy ≈ <u>0.1</u>   pinned predictions      → trigger present
+
+<i># cost: 20× inference per protected request. Reserve for high-stakes decisions.</i></code></pre>
+
+  <h3>Mitigation matrix</h3>
+  <div class="tbl">
+    <table>
+      <thead><tr><th>Attack</th><th>Defence</th><th>Implementation</th><th>What it costs you</th></tr></thead>
+      <tbody>
+        <tr><td>Label flipping</td><td>Confident learning</td><td><code>cleanlab</code> on each dataset version</td><td>Needs clean reference labels; ~5% false positive rate</td></tr>
+        <tr><td>Backdoor</td><td>Neural Cleanse</td><td>Per-class trigger reversal pre-registry</td><td>O(classes × optimiser steps); misses adaptive triggers</td></tr>
+        <tr><td>Backdoor</td><td>Activation clustering</td><td>k-means on penultimate reps</td><td>Fails when the trigger makes no visible cluster</td></tr>
+        <tr><td>Backdoor at runtime</td><td>STRIP</td><td>20 perturbations per request</td><td>20× inference cost, latency, threshold tuning</td></tr>
+        <tr><td>Dataset supply chain</td><td>Revision pin + hash</td><td>Pin <code>revision=</code>, verify SHA-256</td><td>Misses a version that was poisoned before you pinned it</td></tr>
+        <tr><td>Weight supply chain</td><td>Scan before fine-tune</td><td>ART / Counterfit on downloaded weights</td><td>Extra pipeline stage; incomplete coverage</td></tr>
+        <tr><td>FL poisoning</td><td>Norm clipping</td><td>Clip client updates</td><td>Slows honest clients with legitimately large updates</td></tr>
+        <tr><td>FL poisoning</td><td>Krum / Multi-Krum</td><td>Select, do not average</td><td>Byzantine-tolerant but slower convergence; weak on non-IID</td></tr>
+        <tr><td>Small-set injection</td><td>DP-SGD</td><td>ε=8, δ=1e-5</td><td>2–4% accuracy, longer training</td></tr>
+        <tr><td>Weight substitution</td><td>safetensors + signing</td><td>Reject pickle; verify GPG at load</td><td>Key management overhead</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ================================================= 14 -->
+<section class="part" id="s14">
+  <div class="part-head">
+    <span class="part-num">14 — Operations</span>
+    <h2>Diagnosis, observability and drills</h2>
+  </div>
+
+  <h3>Is it poisoning, drift, or bias?</h3>
+  <p>A fraud model shows unexpectedly high false positives in one geographic region. Three
+    hypotheses, and they are distinguishable on evidence.</p>
+
+  <div class="tbl">
+    <table>
+      <thead><tr><th>Dimension</th><th>Data poisoning</th><th>Concept drift</th><th>Model bias</th></tr></thead>
+      <tbody>
+        <tr><td><b>Onset</b></td><td>Abrupt, traceable to a date</td><td>Gradual over weeks</td><td>Present since day one</td></tr>
+        <tr><td><b>Source locality</b></td><td>Concentrated in one feed</td><td>All sources equally</td><td>Training data composition</td></tr>
+        <tr><td><b>Feature PSI</b></td><td>Possibly normal — subtle poison</td><td>High for region features</td><td>Train/prod mismatch</td></tr>
+        <tr><td><b>Other regions</b></td><td>Unaffected</td><td>Possibly affected</td><td>Unaffected</td></tr>
+        <tr><td><b>Cleanlab errors</b></td><td>High in the suspect source</td><td>Distributed</td><td>Low — labels were correct</td></tr>
+        <tr><td><b>Calibration</b></td><td>Normal elsewhere</td><td>Degrading broadly</td><td>Poor in that region specifically</td></tr>
+        <tr><td><b>Domain expert says</b></td><td>"Nothing changed in the world"</td><td>"Yes, behaviour changed"</td><td>"That was always a new market"</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>The cleanest single discriminator is <strong>source locality</strong>. Natural drift does not respect
+    vendor boundaries. If degradation is concentrated in the samples arriving from one partner, you
+    are not looking at drift.</p>
+
+  <h3>Alert thresholds that are worth the pager</h3>
+  <div class="tbl">
+    <table>
+      <thead><tr><th>Metric</th><th>Normal</th><th>Alert</th><th>Why</th></tr></thead>
+      <tbody>
+        <tr><td><code>prediction_confidence_mean</code></td><td>0.85–0.98</td><td>&lt; 0.80</td><td>Model uncertain — possible distribution shift</td></tr>
+        <tr><td><code>prediction_distribution</code></td><td>benign 0.70 / mal 0.30</td><td>&gt; 20% change</td><td>Either direction is meaningful</td></tr>
+        <tr><td><code>feature_psi</code></td><td>0–0.05</td><td>&gt; 0.2</td><td>Significant covariate shift</td></tr>
+        <tr><td><code>strip_flagged_rate</code></td><td>&lt; 0.001%</td><td>&gt; 0.1%</td><td>Trigger probing or active exploitation</td></tr>
+        <tr><td>High-confidence benign from a new source</td><td>baseline</td><td>any spike</td><td>The attacker testing their trigger</td></tr>
+        <tr><td><code>model_accuracy_on_labeled_stream</code></td><td>&gt; 95% recall</td><td>&lt; 92% over 7d</td><td>Concept drift or successful degradation attack</td></tr>
+        <tr><td>Label distribution per ingested batch</td><td>within 3σ</td><td>&gt; 5σ</td><td>Page immediately — this is the injection signal</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="duo">
+    <div class="panel panel--threat">
+      <span class="panel-label">Page the on-call</span>
+      <ul>
+        <li>Activation clustering finds a suspicious cluster in any class</li>
+        <li>Neural Cleanse anomaly index &gt; 2 for any class</li>
+        <li>Non-approved model version reaches production</li>
+        <li>Registered model weights fail their hash check</li>
+        <li>One source IP triggers STRIP more than 10 times in an hour</li>
+        <li>Ingested batch label distribution more than 5σ from historical</li>
+      </ul>
+    </div>
+    <div class="panel panel--defense">
+      <span class="panel-label">Do not alert — this is normal</span>
+      <ul>
+        <li>Individual samples flagged by Isolation Forest</li>
+        <li>A single STRIP detection</li>
+        <li>Label distribution moving within ±3σ</li>
+        <li>GPU VRAM above 70% during peak traffic</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>Incident response: compromised annotation vendor</h3>
+  <ul class="flow">
+    <li><span class="t">Hours</span><span class="s"><b>Contain</b>
+      Freeze ingestion from the suspect service. Query the registry manifests for every model whose
+      <code>dataset_sources</code> includes it — that is the blast radius. Roll production back to the last
+      version predating the suspect data. Snapshot the labelled dataset immutably and preserve
+      annotation logs before anything is touched.</span></li>
+    <li><span class="t">Days</span><span class="s"><b>Analyse</b>
+      Cross-source label consistency against internal annotators and against the pre-poison model's
+      own predictions. Run cleanlab using a model trained on a separately trusted dataset. Run
+      activation clustering and Neural Cleanse on the <em>deployed poisoned model</em> to establish whether
+      a backdoor was actually learned or only degradation occurred. Break error rates down by
+      individual annotator ID — concentration in one to three accounts means compromised accounts,
+      distribution across all means service-level or post-processing compromise.</span></li>
+    <li><span class="t">Weeks</span><span class="s"><b>Remediate</b>
+      Re-label everything that failed consistency, was cleanlab-flagged, or came from an implicated
+      annotator. <b>Retrain from scratch, do not fine-tune</b> — fine-tuning can leave backdoor pathways
+      intact in the early layers. Redeploy with Neural Cleanse and activation clustering as
+      permanent pre-registry gates, and annotation cross-checking as a permanent ingestion control.
+      Update the vendor contract to require annotator identity verification and label-change audit
+      logging.</span></li>
+  </ul>
+
+  <h3>Drills</h3>
+  <ol>
+    <li><strong>Plant a backdoor.</strong> Take CIFAR-10, add a 3×3 white patch to 0.5% of samples, relabel
+      them to one class, and train. Verify clean accuracy is unchanged and attack success rate is
+      above 95%.</li>
+    <li><strong>Then find it.</strong> Run activation clustering on your own poisoned model. Confirm the
+      poisoned cluster appears and measure how low you can push the poison rate before it stops
+      appearing.</li>
+    <li><strong>Reverse the trigger.</strong> Implement Neural Cleanse and check that the recovered mask
+      resembles the patch you planted.</li>
+    <li><strong>Break the defence.</strong> Build a clean-label version with no label flip and confirm cleanlab
+      finds nothing.</li>
+    <li><strong>Measure the DP trade-off.</strong> Train the same model with DP-SGD at ε ∈ {1, 8, ∞}. Record
+      the accuracy cost and whether the backdoor still installs at each setting.</li>
+    <li><strong>Audit a real pipeline.</strong> Pick a model in your organisation and answer: which dataset
+      versions produced it, are external datasets revision-pinned, is a backdoor scan a registry
+      gate, and could you enumerate the blast radius of a compromised source in under an hour?</li>
+  </ol>
+
+  <div class="panel panel--note">
+    <span class="panel-label">Model collapse, the poisoning nobody is committing</span>
+    <p>Generative models trained on their own outputs lose distribution tails each generation. With
+      <code>P_data = α·P_real + (1−α)·P_model</code>, the objective rewards matching a lower-entropy distribution,
+      and entropy decreases monotonically across generations. It is a poisoning failure mode with no
+      attacker, no trigger and no label flip. It also has a deliberate version: flooding public
+      corpora with generated text carrying a specific slant, or generated code carrying a subtle
+      vulnerability pattern, so that models fine-tuned on scraped data inherit it. The defences are
+      provenance filtering, generated-content detection, output diversity monitoring, and watermarking.</p>
+  </div>
+</section>
+
+</main>
+</div>
+
+<footer class="colophon">
+  <p><strong>How to use this.</strong> Sections 1 to 4 establish the system and where the trust boundaries sit.
+    Sections 5 to 9 are the attacks. Sections 10 to 12 are the defences, ordered by where they run:
+    representation space after training, data space before training, and the training algorithm
+    itself. Sections 13 and 14 are posture and operations.</p>
+  <p><strong>The one idea to keep.</strong> Every metric on your dashboard is computed on data that, by
+    construction, does not contain the attack. A backdoor scan is not an evaluation metric and cannot
+    be derived from one. It has to be a separate, explicit gate that somebody owns.</p>
+</footer>
+</div>

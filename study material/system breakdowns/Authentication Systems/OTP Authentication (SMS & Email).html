@@ -1,0 +1,1218 @@
+<title>One-Time Passcodes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=IBM+Plex+Mono:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..600&display=swap">
+<style>
+/* ============================================================
+   SYSTEM BREAKDOWNS — shared series design system
+   Ground: cool instrument grey. Accent: per-category signal hue,
+   set by the small override block that follows this one.
+   Semantic red/amber/green are constant across the whole series
+   so "threat", "pitfall" and "defence" read identically everywhere.
+   ============================================================ */
+
+:root{
+  --ground:#EAEDF0;
+  --surface:#F8FAFB;
+  --surface-2:#DFE4E9;
+  --sunk:#E2E6EA;
+  --ink:#101418;
+  --ink-2:#3A444E;
+  --ink-3:#68727C;
+  --rule:#C2C9D1;
+  --rule-2:#D5DBE1;
+
+  /* --accent is the only value overridden per category; the two derived
+     tints follow it automatically in both themes via color-mix. */
+  --accent:#2A5A8C;
+  --accent-soft:color-mix(in srgb, var(--accent) 13%, var(--surface));
+  --accent-edge:color-mix(in srgb, var(--accent) 45%, var(--surface));
+
+  --danger:#9C2A2B;  --danger-soft:#F4DFDF;  --danger-edge:#D9A6A6;
+  --warn:#775707;    --warn-soft:#F3EAD1;    --warn-edge:#D9C68C;
+  --safe:#286B43;    --safe-soft:#DBEBE1;    --safe-edge:#A5C9B4;
+
+  --display:"Archivo","Helvetica Neue",Arial,sans-serif;
+  --body:"Source Serif 4",Georgia,"Times New Roman",serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+
+  --shell:1340px;
+  --col:70ch;
+  color-scheme:light;
+}
+
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#0D1116;
+    --surface:#151B21;
+    --surface-2:#1D252D;
+    --sunk:#111820;
+    --ink:#E6EBEF;
+    --ink-2:#B0BAC3;
+    --ink-3:#848F99;
+    --rule:#2A333C;
+    --rule-2:#1F272F;
+    --accent:#7FB3E0;
+    --danger:#F0817A; --danger-soft:#3A1B19; --danger-edge:#6E3230;
+    --warn:#E2BA51;   --warn-soft:#332A10;   --warn-edge:#65531D;
+    --safe:#63CB88;   --safe-soft:#123020;   --safe-edge:#265539;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#0D1116;
+  --surface:#151B21;
+  --surface-2:#1D252D;
+  --sunk:#111820;
+  --ink:#E6EBEF;
+  --ink-2:#B0BAC3;
+  --ink-3:#848F99;
+  --rule:#2A333C;
+  --rule-2:#1F272F;
+  --accent:#7FB3E0;
+  --danger:#F0817A; --danger-soft:#3A1B19; --danger-edge:#6E3230;
+  --warn:#E2BA51;   --warn-soft:#332A10;   --warn-edge:#65531D;
+  --safe:#63CB88;   --safe-soft:#123020;   --safe-edge:#265539;
+  color-scheme:dark;
+}
+
+*,*::before,*::after{box-sizing:border-box;}
+
+body{
+  background:var(--ground);
+  color:var(--ink);
+  font-family:var(--body);
+  font-size:17px;
+  line-height:1.62;
+  font-optical-sizing:auto;
+  -webkit-font-smoothing:antialiased;
+}
+
+h1,h2,h3,h4,h5{
+  font-family:var(--display);
+  font-variation-settings:"wdth" 112;
+  text-wrap:balance;margin:0;line-height:1.1;
+}
+h1{font-size:clamp(2.2rem,5.4vw,3.9rem);font-weight:800;letter-spacing:-.02em;}
+h2{font-size:clamp(1.65rem,3.3vw,2.25rem);font-weight:700;letter-spacing:-.015em;}
+h3{font-size:1.28rem;font-weight:650;letter-spacing:-.005em;line-height:1.22;}
+h4{font-size:1.02rem;font-weight:650;font-variation-settings:"wdth" 100;}
+h5{font-size:.85rem;font-weight:700;font-variation-settings:"wdth" 100;
+   text-transform:uppercase;letter-spacing:.1em;}
+
+p{margin:0;}
+strong{font-weight:700;color:var(--ink);}
+em{font-style:italic;}
+a{color:var(--accent);text-decoration-thickness:1px;text-underline-offset:3px;}
+a:hover{text-decoration-thickness:2px;}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px;}
+
+.eyebrow{font-family:var(--mono);font-size:.7rem;font-weight:600;
+  text-transform:uppercase;letter-spacing:.16em;color:var(--ink-3);}
+
+.shell{max-width:var(--shell);margin:0 auto;padding:0 clamp(1rem,3.5vw,2.75rem);}
+
+/* ---------- masthead ---------- */
+.masthead{border-bottom:1px solid var(--rule);
+  background:linear-gradient(180deg,transparent 0%,transparent 68%,var(--surface) 100%);
+  padding-top:clamp(1.75rem,4.5vw,3.25rem);}
+.mast-grid{display:grid;gap:clamp(1.5rem,4vw,3rem);align-items:end;
+  grid-template-columns:minmax(0,1.02fr) minmax(0,.98fr);
+  padding-bottom:clamp(1.5rem,4vw,2.5rem);}
+@media (max-width:980px){.mast-grid{grid-template-columns:1fr;align-items:start;}}
+.mast-kicker{display:flex;flex-wrap:wrap;gap:.5rem 1.1rem;align-items:center;margin-bottom:1rem;}
+.mast-rule{height:1px;flex:1;min-width:2rem;background:var(--rule);}
+.cat{font-family:var(--mono);font-size:.7rem;font-weight:600;text-transform:uppercase;
+  letter-spacing:.14em;color:var(--accent);}
+.mast-sub{font-size:1.1rem;color:var(--ink-2);margin-top:1.05rem;max-width:54ch;line-height:1.55;}
+.mast-meta{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:1.35rem;}
+.chip{font-family:var(--mono);font-size:.67rem;font-weight:500;letter-spacing:.04em;
+  padding:.28rem .55rem;border:1px solid var(--rule);color:var(--ink-2);
+  background:var(--surface);border-radius:2px;}
+.chip--acc{color:var(--accent);border-color:var(--accent-edge);background:var(--accent-soft);}
+.chip--hot{color:var(--danger);border-color:var(--danger-edge);background:var(--danger-soft);}
+
+/* ---------- frame + rail ---------- */
+.frame{display:grid;grid-template-columns:248px minmax(0,1fr);gap:clamp(2rem,4vw,3.5rem);
+  align-items:start;padding-top:2.25rem;padding-bottom:4rem;}
+@media (max-width:1040px){.frame{grid-template-columns:1fr;gap:1.5rem;}}
+.rail{position:sticky;top:1.25rem;max-height:calc(100vh - 2.5rem);overflow-y:auto;
+  font-family:var(--display);font-variation-settings:"wdth" 100;padding-right:.5rem;}
+@media (max-width:1040px){
+  .rail{position:static;max-height:none;border:1px solid var(--rule);
+    background:var(--surface);padding:1rem 1.15rem;border-radius:3px;}}
+.rail h5{color:var(--ink-3);margin-bottom:.8rem;font-family:var(--mono);
+  font-weight:600;letter-spacing:.14em;font-size:.67rem;}
+.rail ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;}
+.rail li{position:relative;padding-left:1.3rem;}
+.rail li::before{content:"";position:absolute;left:3px;top:.72em;width:7px;height:7px;
+  border-radius:1px;border:1.5px solid var(--rule);background:var(--ground);z-index:1;}
+@media (max-width:1040px){.rail li::before{background:var(--surface);}}
+.rail li:not(:last-child)::after{content:"";position:absolute;left:6px;top:1.3em;
+  bottom:-.35em;width:1px;background:var(--rule);}
+.rail a{display:block;padding:.25rem 0;font-size:.84rem;line-height:1.3;
+  color:var(--ink-2);text-decoration:none;font-weight:500;}
+.rail a:hover{color:var(--accent);}
+.rail li:hover::before{border-color:var(--accent);background:var(--accent);}
+
+/* ---------- document ---------- */
+.doc{min-width:0;display:flex;flex-direction:column;}
+.doc > section{max-width:100%;}
+.doc p,.doc > section > ul,.doc > section > ol,.doc .lede{max-width:var(--col);}
+.lede{font-size:1.08rem;color:var(--ink-2);line-height:1.55;}
+.part{padding-top:3rem;margin-top:3rem;border-top:1px solid var(--rule);}
+.part:first-child{border-top:0;margin-top:0;padding-top:0;}
+.part-head{margin-bottom:1.4rem;}
+.part-num{font-family:var(--mono);font-size:.71rem;font-weight:600;letter-spacing:.16em;
+  color:var(--accent);text-transform:uppercase;display:block;margin-bottom:.5rem;}
+.doc h2{margin-bottom:.65rem;}
+.doc h3{margin:2.3rem 0 .7rem;color:var(--ink);}
+.doc h4{margin:1.65rem 0 .5rem;color:var(--ink);}
+.doc p + p{margin-top:.85rem;}
+.doc p + h3,.doc ul + h3,.doc ol + h3,.doc pre + h3,.doc .tbl + h3,
+.doc figure + h3,.doc .panel + h3,.doc .defs + h3,.doc .check + h3,
+.doc .duo + h3,.doc .strip + h3,.doc .flow + h3{margin-top:2.5rem;}
+.doc ul,.doc ol{margin:.85rem 0 0;padding-left:1.35rem;display:flex;flex-direction:column;gap:.4rem;}
+.doc li{padding-left:.15rem;}
+.doc li::marker{color:var(--ink-3);}
+.doc ul ul,.doc ol ol,.doc ul ol,.doc ol ul{margin-top:.4rem;}
+
+/* ---------- code ---------- */
+code{font-family:var(--mono);font-size:.855em;font-weight:500;
+  background:var(--sunk);border:1px solid var(--rule-2);
+  padding:.08em .34em;border-radius:2px;color:var(--ink);word-break:break-word;}
+pre{margin:1.1rem 0 0;background:var(--surface);border:1px solid var(--rule);
+  border-left:3px solid var(--accent);padding:.9rem 1.05rem;overflow-x:auto;
+  border-radius:2px;max-width:100%;}
+pre code{background:none;border:0;padding:0;font-size:.795rem;line-height:1.62;
+  display:block;white-space:pre;color:var(--ink-2);}
+pre code b{font-weight:600;color:var(--ink);}
+pre code i{font-style:normal;color:var(--ink-3);}
+pre code u{text-decoration:none;color:var(--danger);font-weight:600;}
+pre code s{text-decoration:none;color:var(--safe);font-weight:600;}
+pre code em{font-style:normal;color:var(--accent);font-weight:600;}
+
+/* ---------- figures ---------- */
+figure{margin:1.8rem 0 0;padding:1.1rem 1.1rem .85rem;background:var(--surface);
+  border:1px solid var(--rule);border-radius:3px;}
+figure svg{display:block;width:100%;height:auto;max-width:100%;color:var(--ink-2);}
+.fig-scroll{overflow-x:auto;}
+.fig-scroll > svg{min-width:560px;}
+figcaption{margin-top:.85rem;padding-top:.7rem;border-top:1px solid var(--rule-2);
+  font-size:.835rem;line-height:1.5;color:var(--ink-3);max-width:80ch;}
+figcaption b{color:var(--ink-2);font-weight:650;}
+
+/* ---------- panels ---------- */
+.panel{margin:1.5rem 0 0;padding:.95rem 1.1rem;border-radius:3px;
+  border:1px solid var(--rule);background:var(--surface);max-width:100%;}
+.panel > :first-child{margin-top:0;}
+.panel p,.panel ul,.panel ol{max-width:none;}
+.panel-label{font-family:var(--mono);font-size:.66rem;font-weight:600;
+  letter-spacing:.14em;text-transform:uppercase;display:block;margin-bottom:.45rem;}
+.panel--threat{background:var(--danger-soft);border-color:var(--danger-edge);}
+.panel--threat .panel-label{color:var(--danger);}
+.panel--pitfall{background:var(--warn-soft);border-color:var(--warn-edge);}
+.panel--pitfall .panel-label{color:var(--warn);}
+.panel--defense{background:var(--safe-soft);border-color:var(--safe-edge);}
+.panel--defense .panel-label{color:var(--safe);}
+.panel--note{background:var(--accent-soft);border-color:var(--accent-edge);}
+.panel--note .panel-label{color:var(--accent);}
+.panel pre{background:var(--surface);border-color:var(--rule-2);border-left-width:2px;}
+.panel code{background:var(--surface);}
+
+/* ---------- tables ---------- */
+.tbl{margin:1.4rem 0 0;overflow-x:auto;border:1px solid var(--rule);
+  border-radius:3px;background:var(--surface);}
+table{border-collapse:collapse;width:100%;font-size:.86rem;line-height:1.45;}
+th,td{text-align:left;padding:.58rem .78rem;border-bottom:1px solid var(--rule-2);vertical-align:top;}
+thead th{font-family:var(--mono);font-size:.66rem;font-weight:600;text-transform:uppercase;
+  letter-spacing:.1em;color:var(--ink-3);background:var(--surface-2);
+  border-bottom:1px solid var(--rule);white-space:nowrap;}
+tbody tr:last-child td{border-bottom:0;}
+td code{font-size:.79rem;}
+td code.nw{white-space:nowrap;}
+.num{font-variant-numeric:tabular-nums;text-align:right;}
+.tag{font-family:var(--mono);font-size:.67rem;font-weight:600;letter-spacing:.03em;
+  padding:.15rem .4rem;border-radius:2px;white-space:nowrap;display:inline-block;}
+.tag--bad{background:var(--danger-soft);color:var(--danger);border:1px solid var(--danger-edge);}
+.tag--mid{background:var(--warn-soft);color:var(--warn);border:1px solid var(--warn-edge);}
+.tag--ok{background:var(--safe-soft);color:var(--safe);border:1px solid var(--safe-edge);}
+.tag--acc{background:var(--accent-soft);color:var(--accent);border:1px solid var(--accent-edge);}
+.tag--neu{background:var(--surface-2);color:var(--ink-3);border:1px solid var(--rule);}
+
+/* ---------- definition grid ---------- */
+.defs{margin:1.3rem 0 0;display:grid;gap:0;border:1px solid var(--rule);
+  border-radius:3px;overflow:hidden;background:var(--surface);}
+.defs > div{display:grid;grid-template-columns:minmax(9rem,15rem) minmax(0,1fr);
+  gap:0 1.05rem;padding:.58rem .82rem;border-bottom:1px solid var(--rule-2);}
+.defs > div:last-child{border-bottom:0;}
+.defs .dt{font-family:var(--mono);font-size:.775rem;font-weight:600;
+  color:var(--accent);word-break:break-word;padding-top:.1rem;}
+.defs .dd{margin:0;font-size:.89rem;line-height:1.5;color:var(--ink-2);}
+.defs .dd code{font-size:.79rem;}
+@media (max-width:620px){.defs > div{grid-template-columns:1fr;gap:.25rem;}}
+
+/* ---------- lifecycle flow (T = 0ms style) ---------- */
+.flow{margin:1.4rem 0 0;border:1px solid var(--rule);border-radius:3px;
+  background:var(--surface);overflow:hidden;}
+.flow > li{list-style:none;display:grid;grid-template-columns:minmax(5.5rem,7rem) minmax(0,1fr);
+  gap:0 1rem;padding:.7rem .9rem;border-bottom:1px solid var(--rule-2);
+  font-size:.9rem;line-height:1.5;position:relative;}
+.flow{padding:0;margin-left:0;}
+.flow > li:last-child{border-bottom:0;}
+.flow .t{font-family:var(--mono);font-size:.72rem;font-weight:600;color:var(--accent);
+  letter-spacing:.02em;padding-top:.15rem;font-variant-numeric:tabular-nums;}
+.flow .s b{display:block;font-weight:650;color:var(--ink);margin-bottom:.1rem;}
+.flow .s{color:var(--ink-2);}
+.flow > li.hot{background:var(--danger-soft);}
+.flow > li.hot .t{color:var(--danger);}
+@media (max-width:560px){.flow > li{grid-template-columns:1fr;gap:.2rem;}}
+
+/* ---------- checklists ---------- */
+.check{margin:1.3rem 0 0;padding:0;list-style:none;display:grid;gap:0;
+  border:1px solid var(--rule);border-radius:3px;background:var(--surface);max-width:none;}
+.check li{display:grid;grid-template-columns:auto minmax(0,1fr);gap:.72rem;
+  padding:.6rem .88rem;border-bottom:1px solid var(--rule-2);font-size:.91rem;line-height:1.5;}
+.check li:last-child{border-bottom:0;}
+.check li::before{content:"";width:13px;height:13px;margin-top:.32rem;border-radius:2px;
+  border:1.5px solid var(--rule);background:var(--ground);}
+.check li b{display:block;font-weight:650;color:var(--ink);}
+.check li code{font-size:.78rem;}
+
+/* ---------- misc layout ---------- */
+.duo{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,18rem),1fr));
+  gap:1rem;margin:1.4rem 0 0;}
+.duo > .panel{margin:0;}
+.strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,10.5rem),1fr));
+  border:1px solid var(--rule);border-radius:3px;overflow:hidden;margin:1.5rem 0 0;
+  background:var(--surface);}
+.strip > div{padding:.8rem .95rem;border-right:1px solid var(--rule-2);}
+.strip > div:last-child{border-right:0;}
+.strip .n{font-family:var(--display);font-variation-settings:"wdth" 108;
+  font-size:1.45rem;font-weight:750;line-height:1;color:var(--ink);font-variant-numeric:tabular-nums;}
+.strip .l{font-family:var(--mono);font-size:.66rem;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink-3);margin-top:.38rem;display:block;line-height:1.35;}
+.gloss{columns:2;column-gap:2.5rem;margin:1.4rem 0 0;max-width:none;}
+@media (max-width:760px){.gloss{columns:1;}}
+.gloss > div{break-inside:avoid;margin-bottom:.85rem;font-size:.88rem;line-height:1.5;}
+.gloss .g{font-family:var(--mono);font-size:.79rem;font-weight:600;color:var(--accent);}
+.colophon{border-top:1px solid var(--rule);padding:1.9rem 0 3.5rem;font-size:.83rem;
+  color:var(--ink-3);max-width:72ch;}
+.colophon p + p{margin-top:.65rem;}
+
+/* ---------- diagram primitives ---------- */
+svg .st{stroke:currentColor;fill:none;stroke-width:1.4;}
+svg .st-thin{stroke:currentColor;fill:none;stroke-width:1;}
+svg .st-fat{stroke:currentColor;fill:none;stroke-width:2.2;}
+svg .st-dash{stroke:currentColor;fill:none;stroke-width:1.4;stroke-dasharray:5 3.5;}
+svg .st-dot{stroke:currentColor;fill:none;stroke-width:1.2;stroke-dasharray:1.5 3;}
+svg .rule{stroke:var(--rule);fill:none;stroke-width:1;}
+svg .box{fill:var(--surface);stroke:currentColor;stroke-width:1.3;}
+svg .box-sunk{fill:var(--sunk);stroke:var(--rule);stroke-width:1.1;}
+svg .box-g{fill:var(--ground);stroke:currentColor;stroke-width:1.3;}
+svg .pan-dan{fill:var(--danger-soft);stroke:var(--danger-edge);stroke-width:1.2;}
+svg .pan-saf{fill:var(--safe-soft);stroke:var(--safe-edge);stroke-width:1.2;}
+svg .pan-wrn{fill:var(--warn-soft);stroke:var(--warn-edge);stroke-width:1.2;}
+svg .pan-acc{fill:var(--accent-soft);stroke:var(--accent-edge);stroke-width:1.2;}
+svg text{font-family:var(--mono);font-size:11px;fill:currentColor;}
+svg .t-h{font-family:var(--display);font-variation-settings:"wdth" 100;
+  font-size:12px;font-weight:650;fill:var(--ink);}
+svg .t-lab{font-size:10px;fill:var(--ink-3);letter-spacing:.03em;}
+svg .t-cap{font-size:9px;fill:var(--ink-3);letter-spacing:.08em;text-transform:uppercase;}
+svg .t-sm{font-size:9px;fill:var(--ink-3);}
+svg .t-hash{font-size:10px;fill:var(--ink-2);}
+svg .c-acc{color:var(--accent);}
+svg .c-dan{color:var(--danger);}
+svg .c-saf{color:var(--safe);}
+svg .c-wrn{color:var(--warn);}
+svg .c-ink{color:var(--ink);}
+svg .c-mute{color:var(--ink-3);}
+svg .f-acc{fill:var(--accent);}
+svg .f-dan{fill:var(--danger);}
+svg .f-saf{fill:var(--safe);}
+svg .f-wrn{fill:var(--warn);}
+svg .f-ink{fill:var(--ink);}
+svg .f-ink2{fill:var(--ink-2);}
+svg .f-ink3{fill:var(--ink-3);}
+svg .f-cur{fill:currentColor;}
+svg .f-surf{fill:var(--surface);}
+svg .f-none{fill:none;}
+
+@media (prefers-reduced-motion: reduce){
+  *{animation-duration:.01ms !important;transition-duration:.01ms !important;
+    scroll-behavior:auto !important;}
+}
+html{scroll-behavior:smooth;scroll-padding-top:1.5rem;}
+</style>
+<style>:root{--accent:#3B4CA8;}@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--accent:#8FA0F5;}}:root[data-theme="dark"]{--accent:#8FA0F5;}</style>
+<header class="masthead">
+  <div class="shell">
+    <div class="mast-grid">
+      <div>
+        <div class="mast-kicker">
+          <span class="cat">Authentication Systems</span>
+          <span class="mast-rule"></span>
+          <span class="eyebrow">13 Sections</span>
+        </div>
+        <h1>One-Time Passcodes</h1>
+        <p class="mast-sub">Six digits delivered over a channel you do not control, verified against a
+          hash you do. The engineering is straightforward. The threat model is the interesting part,
+          and it ends somewhere uncomfortable.</p>
+        <div class="mast-meta">
+          <span class="chip chip--acc">CSPRNG + HMAC</span>
+          <span class="chip">partial auth state</span>
+          <span class="chip">5-way rate limiting</span>
+          <span class="chip">atomic verification</span>
+          <span class="chip chip--hot">SIM swap</span>
+          <span class="chip chip--hot">SS7</span>
+          <span class="chip chip--hot">real-time relay</span>
+        </div>
+      </div>
+
+      <figure style="margin:0;">
+        <div class="fig-scroll">
+        <svg viewBox="0 0 580 320" role="img" aria-label="The OTP request path. Rate limits, code generation, hashing and queue publish all happen synchronously in about forty milliseconds and the API answers immediately. Actual delivery through Twilio to a carrier or through SendGrid to an inbox happens asynchronously and takes two to sixty seconds. Verification later is a fast hash comparison with no key derivation function.">
+          <defs>
+            <marker id="h-ar" markerWidth="7" markerHeight="7" refX="6.4" refY="3" orient="auto">
+              <path d="M0,0 L6.4,3 L0,6 z" class="f-ink2"/>
+            </marker>
+            <marker id="h-arw" markerWidth="7" markerHeight="7" refX="6.4" refY="3" orient="auto">
+              <path d="M0,0 L6.4,3 L0,6 z" class="f-wrn"/>
+            </marker>
+          </defs>
+          <text class="t-cap" x="0" y="12">the split that defines the design: fast response, slow delivery</text>
+          <line class="rule" x1="0" y1="20" x2="580" y2="20"/>
+
+          <rect class="pan-acc" x="0" y="30" width="580" height="104" rx="3"/>
+          <text class="t-lab" x="12" y="48" style="fill:var(--accent);font-weight:600">SYNCHRONOUS — ~40 ms, then the API answers "sent"</text>
+          <text class="t-lab" x="12" y="68" style="font-size:9px">1 · rate limit by IP <b>and</b> by destination</text>
+          <text class="t-lab" x="300" y="68" style="font-size:9px">2 · validate the partial auth token</text>
+          <text class="t-lab" x="12" y="84" style="font-size:9px">3 · supersede any existing unused OTP</text>
+          <text class="t-lab" x="300" y="84" style="font-size:9px">4 · CSPRNG → 6 digits, zero-padded</text>
+          <text class="t-lab" x="12" y="100" style="font-size:9px">5 · store <b>HMAC(otp, per-user salt)</b> in Redis, TTL 300 s</text>
+          <text class="t-lab" x="300" y="100" style="font-size:9px">6 · publish the delivery job</text>
+          <text class="t-lab" x="12" y="122" style="font-size:9px">the publish is synchronous so "sent" is never a lie; the delivery is not</text>
+
+          <line class="st c-wrn" x1="290" y1="138" x2="290" y2="152" marker-end="url(#h-arw)"/>
+
+          <rect class="pan-wrn" x="0" y="156" width="580" height="80" rx="3"/>
+          <text class="t-lab" x="12" y="174" style="fill:var(--warn);font-weight:600">ASYNCHRONOUS — 2 to 60 seconds, and outside your control</text>
+          <text class="t-lab" x="12" y="194" style="font-size:9px">worker → Twilio API   50–200 ms</text>
+          <text class="t-lab" x="230" y="194" style="font-size:9px">→ carrier routing   0.1–2 s</text>
+          <text class="t-lab" x="420" y="194" style="font-size:9px">→ handset   1–30 s</text>
+          <text class="t-lab" x="12" y="212" style="font-size:9px">worker → SendGrid/SES → SMTP → inbox   5–120 s</text>
+          <text class="t-lab" x="12" y="230" style="font-size:9px;fill:var(--warn)">the plaintext code exists here, in the queue and at the provider. See section 6.</text>
+
+          <line class="st" x1="290" y1="240" x2="290" y2="254" marker-end="url(#h-ar)"/>
+
+          <rect class="box c-acc" x="0" y="258" width="580" height="56" rx="3"/>
+          <text class="t-lab" x="12" y="276" style="font-weight:600">VERIFY — ~8 ms</text>
+          <text class="t-lab" x="140" y="276" style="font-size:9px">atomic get-and-delete · increment attempts · constant-time compare</text>
+          <text class="t-lab" x="12" y="298" style="font-size:9px">no Argon2 here. A 5-minute secret does not need brute-force-resistant hashing —</text>
+          <text class="t-lab" x="12" y="310" style="font-size:9px">the TTL, the attempt cap and the rate limits do that job instead.</text>
+        </svg>
+        </div>
+        <figcaption>Login with a password costs 300 ms of deliberate key derivation. OTP verification
+          costs 8 ms, and that is correct rather than lazy: <b>the OTP's security comes from being
+          short-lived and rate-limited</b>, not from being expensive to hash. Understanding why is most
+          of understanding this system.</figcaption>
+      </figure>
+    </div>
+  </div>
+</header>
+
+<div class="shell">
+<div class="frame">
+
+<nav class="rail" aria-label="Contents">
+  <h5>Contents</h5>
+  <ol>
+    <li><a href="#s01">01 &nbsp;Two flows, one mechanism</a></li>
+    <li><a href="#s02">02 &nbsp;Generating the code</a></li>
+    <li><a href="#s03">03 &nbsp;Storing it</a></li>
+    <li><a href="#s04">04 &nbsp;Verifying it atomically</a></li>
+    <li><a href="#s05">05 &nbsp;Partial authentication</a></li>
+    <li><a href="#s06">06 &nbsp;Delivery and the plaintext</a></li>
+    <li><a href="#s07">07 &nbsp;Rate limiting, five ways</a></li>
+    <li><a href="#s08">08 &nbsp;Brute force, quantified</a></li>
+    <li><a href="#s09">09 &nbsp;SIM swap and SS7</a></li>
+    <li><a href="#s10">10 &nbsp;The relay attack</a></li>
+    <li><a href="#s11">11 &nbsp;Infrastructure attacks</a></li>
+    <li><a href="#s12">12 &nbsp;Failure modes</a></li>
+    <li><a href="#s13">13 &nbsp;Observability and drills</a></li>
+  </ol>
+</nav>
+
+<main class="doc">
+
+<!-- ============================================ 01 -->
+<section class="part" id="s01">
+  <div class="part-head">
+    <span class="part-num">01 — Context</span>
+    <h2>Two flows, one mechanism</h2>
+  </div>
+  <p class="lede">The same code serves two quite different purposes, and confusing them produces
+    confused security.</p>
+
+  <div class="duo">
+    <div class="panel panel--note">
+      <span class="panel-label">MFA — a second factor</span>
+      <p>The password already succeeded. The OTP proves possession of a registered channel. The
+        destination comes from the user record, never from the request body, so an attacker with the
+        password cannot redirect the code to themselves.</p>
+    </div>
+    <div class="panel panel--pitfall">
+      <span class="panel-label">Passwordless — the only factor</span>
+      <p>The destination arrives <em>in the request</em>. There is no prior authentication, so the endpoint
+        is fully unauthenticated and every rate limit and enumeration control has to be tighter. Any
+        weakness here is account takeover, not a bypassed second factor.</p>
+    </div>
+  </div>
+
+  <div class="panel panel--pitfall">
+    <span class="panel-label">This is not TOTP</span>
+    <p>RFC 6238 TOTP — the authenticator-app kind — derives a code from a shared secret and the
+      current time, with nothing transmitted. What this document describes is a <strong>server-generated,
+      server-stored, delivery-dependent</strong> code. They look identical to the user and share almost no
+      threat model: TOTP has no delivery channel to attack and no queue to read.</p>
+  </div>
+
+  <div class="panel panel--defense">
+    <span class="panel-label">The response must not distinguish registered from unregistered</span>
+<pre><code>{"status": "sent", "channel": "sms",
+ "masked_destination": "+1 (***) ***-5678",
+ "expires_in": 300, "resend_available_in": 60}
+
+<i># identical response whether or not the destination is registered.</i>
+<i># "phone number not found" is an account enumeration oracle.</i></code></pre>
+  </div>
+</section>
+
+<!-- ============================================ 02 -->
+<section class="part" id="s02">
+  <div class="part-head">
+    <span class="part-num">02 — Generation</span>
+    <h2>Generating the code</h2>
+  </div>
+
+  <figure>
+    <div class="fig-scroll">
+    <svg viewBox="0 0 700 270" role="img" aria-label="OTP generation. Four bytes from a cryptographically secure random source are reduced modulo one million, which introduces a slight bias because 2 to the 32 is not a multiple of one million, then zero-padded to six characters. The result is hashed with HMAC-SHA256 keyed on a per-user salt so that two users holding the same code have different stored hashes.">
+      <defs>
+        <marker id="g3-ar" markerWidth="7" markerHeight="7" refX="6.4" refY="3" orient="auto">
+          <path d="M0,0 L6.4,3 L0,6 z" class="f-ink2"/>
+        </marker>
+      </defs>
+      <text class="t-cap" x="0" y="12">four steps, three of which have a common bug</text>
+      <line class="rule" x1="0" y1="20" x2="700" y2="20"/>
+
+      <rect class="pan-acc" x="0" y="32" width="160" height="70" rx="3"/>
+      <text class="t-lab" x="10" y="50" style="fill:var(--accent);font-weight:600">1 · CSPRNG</text>
+      <text class="t-lab" x="10" y="68" style="font-size:9px">secrets.randbelow(10**6)</text>
+      <text class="t-lab" x="10" y="82" style="font-size:9px">crypto.randomInt(0, 1e6)</text>
+      <text class="t-lab" x="10" y="96" style="font-size:9px;fill:var(--danger)">never random.randint()</text>
+      <line class="st" x1="164" y1="67" x2="182" y2="67" marker-end="url(#g3-ar)"/>
+
+      <rect class="box" x="186" y="32" width="180" height="70" rx="3"/>
+      <text class="t-lab" x="196" y="50" style="font-weight:600">2 · reduce and pad</text>
+      <text class="t-lab" x="196" y="68" style="font-size:9px">str(n).zfill(6) → "847291"</text>
+      <text class="t-lab" x="196" y="84" style="font-size:9px">2³² mod 10⁶ = 967,296 extra values</text>
+      <text class="t-lab" x="196" y="96" style="font-size:9px">→ ~0.02% bias. Negligible here.</text>
+      <line class="st" x1="370" y1="67" x2="388" y2="67" marker-end="url(#g3-ar)"/>
+
+      <rect class="pan-acc" x="392" y="32" width="180" height="70" rx="3"/>
+      <text class="t-lab" x="402" y="50" style="fill:var(--accent);font-weight:600">3 · HMAC with a per-user salt</text>
+      <text class="t-lab" x="402" y="68" style="font-size:9px">HMAC-SHA256(key=users.otp_salt,</text>
+      <text class="t-lab" x="402" y="82" style="font-size:9px">            msg="847291")</text>
+      <text class="t-lab" x="402" y="96" style="font-size:9px">salt = 32 CSPRNG bytes, set at signup</text>
+      <line class="st" x1="576" y1="67" x2="594" y2="67" marker-end="url(#g3-ar)"/>
+
+      <rect class="box" x="598" y="32" width="102" height="70" rx="3"/>
+      <text class="t-lab" x="608" y="50" style="font-weight:600">4 · store</text>
+      <text class="t-lab" x="608" y="68" style="font-size:9px">Redis hash</text>
+      <text class="t-lab" x="608" y="82" style="font-size:9px">TTL 300 s</text>
+      <text class="t-lab" x="608" y="96" style="font-size:9px">attempts = 0</text>
+
+      <line class="rule" x1="0" y1="126" x2="700" y2="126"/>
+      <rect class="pan-saf" x="0" y="138" width="700" height="58" rx="3"/>
+      <text class="t-lab" x="12" y="158" style="fill:var(--safe);font-weight:600">WHY THE PER-USER SALT, AND NOT JUST SHA-256</text>
+      <text class="t-lab" x="12" y="176" style="font-size:9px">Without it, two users currently holding "123456" have identical stored hashes. A Redis dump then reveals which accounts share a code,</text>
+      <text class="t-lab" x="12" y="190" style="font-size:9px">and a rainbow table over one million values breaks every entry instantly. With it, an attacker needs Redis <b>and</b> the Postgres salt.</text>
+
+      <rect class="pan-wrn" x="0" y="208" width="700" height="58" rx="3"/>
+      <text class="t-lab" x="12" y="228" style="fill:var(--warn);font-weight:600">WHY SHA-256 IS ENOUGH HERE, UNLIKE PASSWORDS</text>
+      <text class="t-lab" x="12" y="246" style="font-size:9px">The code expires in 300 seconds, so there is no time for offline cracking. The hash is never returned to any client, so there is no</text>
+      <text class="t-lab" x="12" y="260" style="font-size:9px">offline oracle. Argon2's memory hardness buys nothing against a secret that is dead in five minutes.</text>
+    </svg>
+    </div>
+    <figcaption>The bias from the modulo is real and irrelevant at six digits. If it bothers you,
+      <code>crypto.randomInt</code> already does rejection sampling internally. <b>What is not irrelevant is
+      using a non-cryptographic PRNG</b>, which makes codes predictable from a handful of observations
+      and is the one mistake in this diagram that is fatal.</figcaption>
+  </figure>
+
+  <div class="panel panel--pitfall">
+    <span class="panel-label">The leading-zero bug</span>
+<pre><code>OTP generated: "007291"
+stored as string, compared as integer somewhere in the stack:
+    int("007291") == int("7291")  →  <u>True</u>
+
+<i># an attacker submitting 7291 matches a code of 007291.</i>
+<i># and 1 in 10 codes starts with a zero.</i>
+
+<s>if not isinstance(otp_raw, str): reject
+if not re.fullmatch(r'\d{6}', otp_raw): reject</s></code></pre>
+    <p>Enforce the string type at the API boundary, because JSON will happily give you a number if the
+      client sends one. This bug reduces the search space by a factor of ten for every code that
+      begins with a zero, and it is invisible in code review.</p>
+  </div>
+</section>
+
+<!-- ============================================ 03 -->
+<section class="part" id="s03">
+  <div class="part-head">
+    <span class="part-num">03 — Storage</span>
+    <h2>Storing it</h2>
+  </div>
+
+<pre><code>Key   "otp:sms:{user_id}"        <i># a Redis HASH, not a JSON string</i>
+  otp_hash    a665a459…          <i># HMAC-SHA256 hex</i>
+  attempts    0
+  issued_at   1700000000
+  channel     sms
+  superseded  0
+TTL   300</code></pre>
+
+  <div class="defs">
+    <div><span class="dt">Why a hash, not a string</span><span class="dd"><code>HINCRBY … attempts 1</code> updates one field atomically. A JSON blob requires read-modify-write, which races.</span></div>
+    <div><span class="dt">Why Redis, not Postgres</span><span class="dd">Native TTL means no cleanup job. Sub-millisecond reads. And losing every OTP on a restart is acceptable — users simply request a new code.</span></div>
+    <div><span class="dt">Postgres still matters</span><span class="dd">It holds <code>users.otp_salt</code> and the delivery audit trail, written asynchronously after the fact. The live state is never there.</span></div>
+    <div><span class="dt">Supersession</span><span class="dd">A new request must invalidate the previous unused code <em>atomically</em>. Otherwise several valid codes accumulate and the effective search space multiplies.</span></div>
+  </div>
+</section>
+
+<!-- ============================================ 04 -->
+<section class="part" id="s04">
+  <div class="part-head">
+    <span class="part-num">04 — Verification</span>
+    <h2>Verifying it atomically</h2>
+  </div>
+
+  <figure>
+    <div class="fig-scroll">
+    <svg viewBox="0 0 700 330" role="img" aria-label="The verification order. Format is validated, the record is fetched, supersession and the attempt cap are checked, and then the attempt counter is incremented before the comparison rather than after. The comparison itself is constant-time. On success the record is deleted atomically. Incrementing after the comparison allows two concurrent requests to share the last remaining attempt.">
+      <defs>
+        <marker id="v3-ar" markerWidth="7" markerHeight="7" refX="6.4" refY="3" orient="auto">
+          <path d="M0,0 L6.4,3 L0,6 z" class="f-ink2"/>
+        </marker>
+      </defs>
+      <text class="t-cap" x="0" y="12">the order is the security property</text>
+      <line class="rule" x1="0" y1="20" x2="700" y2="20"/>
+
+      <rect class="box" x="0" y="30" width="700" height="30" rx="3"/>
+      <text class="t-lab" x="12" y="50" style="font-weight:600">1 · format</text>
+      <text class="t-lab" x="120" y="50" style="font-size:9px">string type · exactly six digits · no whitespace</text>
+      <line class="st" x1="350" y1="62" x2="350" y2="70" marker-end="url(#v3-ar)"/>
+
+      <rect class="box" x="0" y="74" width="700" height="44" rx="3"/>
+      <text class="t-lab" x="12" y="94" style="font-weight:600">2 · fetch and pre-check</text>
+      <text class="t-lab" x="200" y="94" style="font-size:9px">record exists? · superseded == 0? · attempts &lt; 3?</text>
+      <text class="t-lab" x="200" y="110" style="font-size:9px">missing record and wrong code return the SAME error — do not distinguish expiry from mismatch</text>
+      <line class="st" x1="350" y1="120" x2="350" y2="128" marker-end="url(#v3-ar)"/>
+
+      <rect class="pan-dan" x="0" y="132" width="700" height="46" rx="3" style="stroke-width:2"/>
+      <text class="t-lab" x="12" y="152" style="font-weight:600;fill:var(--danger)">3 · INCREMENT ATTEMPTS — before comparing, not after</text>
+      <text class="t-lab" x="12" y="170" style="font-size:9px">HINCRBY otp:sms:{user} attempts 1 · if you increment after the compare, two concurrent requests both read attempts=2 and both spend the last guess</text>
+      <line class="st" x1="350" y1="180" x2="350" y2="188" marker-end="url(#v3-ar)"/>
+
+      <rect class="pan-acc" x="0" y="192" width="700" height="44" rx="3"/>
+      <text class="t-lab" x="12" y="212" style="font-weight:600;fill:var(--accent)">4 · constant-time compare</text>
+      <text class="t-lab" x="230" y="212" style="font-size:9px">hmac.compare_digest(HMAC(submitted), stored_hash)</text>
+      <text class="t-lab" x="230" y="228" style="font-size:9px">never <b>==</b> on hashes — early-exit comparison leaks a prefix-match oracle</text>
+      <line class="st" x1="350" y1="238" x2="350" y2="246" marker-end="url(#v3-ar)"/>
+
+      <rect class="pan-saf" x="0" y="250" width="344" height="46" rx="3"/>
+      <text class="t-lab" x="12" y="270" style="font-weight:600;fill:var(--safe)">5a · match</text>
+      <text class="t-lab" x="110" y="270" style="font-size:9px">DEL the record · delete the partial auth</text>
+      <text class="t-lab" x="110" y="286" style="font-size:9px">token · create the full session</text>
+
+      <rect class="pan-wrn" x="356" y="250" width="344" height="46" rx="3"/>
+      <text class="t-lab" x="368" y="270" style="font-weight:600;fill:var(--warn)">5b · no match</text>
+      <text class="t-lab" x="470" y="270" style="font-size:9px">attempts already incremented</text>
+      <text class="t-lab" x="470" y="286" style="font-size:9px">at 3, lock the code — let the TTL clear it</text>
+
+      <line class="rule" x1="0" y1="308" x2="700" y2="308"/>
+      <text class="t-lab" x="0" y="324">Locking the CODE, not the account, is the right granularity: an attacker cannot lock a victim out by guessing at their OTP.</text>
+    </svg>
+    </div>
+    <figcaption>Step 5a has a race of its own. Two concurrent correct submissions both read the
+      record, both match, and both create a session. Low severity, but the fix is cheap and worth
+      having: do the fetch-and-delete in one Lua script so <b>exactly one request can consume the
+      code</b>.</figcaption>
+  </figure>
+
+<pre><code><i># atomic consume — one caller wins, the rest get nothing</i>
+local data = redis.call('HGETALL', KEYS[1])
+if #data == 0 then return nil end
+if redis.call('DEL', KEYS[1]) == 0 then return nil end   <i># someone else beat us</i>
+return data
+
+<i># the hash comparison happens outside the script, which is fine:</i>
+<i># by that point the code is already consumed and cannot be reused.</i></code></pre>
+
+  <div class="panel panel--note">
+    <span class="panel-label">Should you return <code>attempts_remaining</code>?</span>
+    <p>It is debated and it barely matters. The attacker already knows the cap is small, so telling
+      them two guesses remain leaks almost nothing, while telling the user the same thing prevents a
+      confusing lockout. <strong>Hiding it is security theatre.</strong> What genuinely matters is that the error
+      for a wrong code, an expired code and a superseded code is identical.</p>
+  </div>
+</section>
+
+<!-- ============================================ 05 -->
+<section class="part" id="s05">
+  <div class="part-head">
+    <span class="part-num">05 — State</span>
+    <h2>Partial authentication</h2>
+  </div>
+
+<pre><code>[unauthenticated]
+   │ POST /auth/login  {email, password} — success
+   ▼
+[<b>partially authenticated</b>]   ← partial_auth_token is valid only here
+   │ POST /auth/otp/request
+   │ POST /auth/otp/verify — success
+   ▼
+[fully authenticated]         ← session with <b>mfa_completed: true</b></code></pre>
+
+  <div class="panel panel--defense">
+    <span class="panel-label">JWT and Redis together, for two different reasons</span>
+    <p>The partial auth token is a signed JWT <em>and</em> a Redis entry, and it needs both. The
+      <strong>signature</strong> gives cheap cryptographic integrity with no lookup. The <strong>Redis entry</strong> gives
+      revocability: deleting it invalidates the partial state immediately, so a logout or a detected
+      attack can cut a half-finished login short. A JWT alone cannot be revoked mid-flight; a Redis
+      entry alone gives up the integrity check.</p>
+  </div>
+
+  <div class="panel panel--threat">
+    <span class="panel-label">The <code>mfa_completed</code> flag is load-bearing</span>
+    <p>Protected routes must check that the session was created <em>through</em> MFA, not merely that a
+      session exists. Without that flag, any code path that issues a session — a password-only
+      fallback, an admin impersonation feature, a bug in a new endpoint — silently produces a session
+      that MFA-protected routes will accept. <strong>Record how a session was obtained, and check it.</strong></p>
+  </div>
+
+  <div class="panel panel--pitfall">
+    <span class="panel-label">TTL arithmetic that locks users out</span>
+    <p>A 10-minute partial auth TTL sounds generous until carrier congestion makes SMS take five
+      minutes. The user then has five minutes to notice the notification, read six digits and type
+      them. Under load, delivery slows exactly when volume is highest, so this failure clusters.</p>
+    <p><strong>Set the partial auth TTL to worst-case delivery plus realistic user time</strong>, around 15 to 20
+      minutes. The cost is that abandoned flows hold state a little longer, which is nothing.</p>
+  </div>
+</section>
+
+<!-- ============================================ 06 -->
+<section class="part" id="s06">
+  <div class="part-head">
+    <span class="part-num">06 — Delivery</span>
+    <h2>Delivery and the plaintext</h2>
+  </div>
+  <p class="lede">The hash protects the stored code. The delivery path necessarily handles the code in
+    the clear, and it is worth knowing exactly where.</p>
+
+  <figure>
+    <div class="fig-scroll">
+    <svg viewBox="0 0 700 280" role="img" aria-label="Everywhere the plaintext code exists. In the API process memory, in the delivery queue, in the worker process memory, in the provider's logs at Twilio or SendGrid, in transit over the carrier network or SMTP, and finally on the user's lock screen. The stored hash in Redis is the only representation that is not plaintext.">
+      <defs>
+        <marker id="d3-ar" markerWidth="7" markerHeight="7" refX="6.4" refY="3" orient="auto">
+          <path d="M0,0 L6.4,3 L0,6 z" class="f-dan"/>
+        </marker>
+      </defs>
+      <text class="t-cap" x="0" y="12">where "847291" exists in the clear</text>
+      <line class="rule" x1="0" y1="20" x2="700" y2="20"/>
+
+      <rect class="pan-dan" x="0" y="32" width="100" height="52" rx="3"/>
+      <text class="t-lab" x="8" y="52" style="font-size:9px;fill:var(--danger)">API process</text>
+      <text class="t-lab" x="8" y="66" style="font-size:9px">memory only,</text>
+      <text class="t-lab" x="8" y="78" style="font-size:9px">milliseconds</text>
+      <line class="st c-dan" x1="104" y1="58" x2="120" y2="58" marker-end="url(#d3-ar)"/>
+
+      <rect class="pan-dan" x="124" y="32" width="112" height="52" rx="3"/>
+      <text class="t-lab" x="132" y="52" style="font-size:9px;fill:var(--danger)">delivery queue</text>
+      <text class="t-lab" x="132" y="66" style="font-size:9px">Redis list — the</text>
+      <text class="t-lab" x="132" y="78" style="font-size:9px">longest exposure</text>
+      <line class="st c-dan" x1="240" y1="58" x2="256" y2="58" marker-end="url(#d3-ar)"/>
+
+      <rect class="pan-dan" x="260" y="32" width="100" height="52" rx="3"/>
+      <text class="t-lab" x="268" y="52" style="font-size:9px;fill:var(--danger)">worker process</text>
+      <text class="t-lab" x="268" y="66" style="font-size:9px">builds the SMS</text>
+      <text class="t-lab" x="268" y="78" style="font-size:9px">or email body</text>
+      <line class="st c-dan" x1="364" y1="58" x2="380" y2="58" marker-end="url(#d3-ar)"/>
+
+      <rect class="pan-dan" x="384" y="32" width="140" height="52" rx="3"/>
+      <text class="t-lab" x="392" y="52" style="font-size:9px;fill:var(--danger)">Twilio / SendGrid</text>
+      <text class="t-lab" x="392" y="66" style="font-size:9px">in their message logs,</text>
+      <text class="t-lab" x="392" y="78" style="font-size:9px">for their retention period</text>
+      <line class="st c-dan" x1="528" y1="58" x2="544" y2="58" marker-end="url(#d3-ar)"/>
+
+      <rect class="pan-dan" x="548" y="32" width="152" height="52" rx="3"/>
+      <text class="t-lab" x="556" y="52" style="font-size:9px;fill:var(--danger)">carrier / inbox / lock screen</text>
+      <text class="t-lab" x="556" y="66" style="font-size:9px">visible without unlocking</text>
+      <text class="t-lab" x="556" y="78" style="font-size:9px">the device</text>
+
+      <line class="rule" x1="0" y1="106" x2="700" y2="106"/>
+      <rect class="pan-saf" x="0" y="118" width="700" height="40" rx="3"/>
+      <text class="t-lab" x="12" y="138" style="fill:var(--safe);font-weight:600">the ONLY non-plaintext copy: HMAC-SHA256(code, per-user salt) in the Redis OTP record</text>
+      <text class="t-lab" x="12" y="152" style="font-size:9px">which is why a Redis compromise that reads the QUEUE is far worse than one that reads the OTP STORE</text>
+
+      <rect class="pan-wrn" x="0" y="170" width="700" height="52" rx="3"/>
+      <text class="t-lab" x="12" y="190" style="fill:var(--warn);font-weight:600">SHRINKING THE QUEUE EXPOSURE</text>
+      <text class="t-lab" x="12" y="208" style="font-size:9px">Put only {user_id, idempotency_key} in the queue. Store the plaintext under its own Redis key with the same TTL and have the worker</text>
+      <text class="t-lab" x="12" y="220" style="font-size:9px">fetch it. One extra GET, and the queue — the thing most likely to be dumped wholesale — carries no codes at all.</text>
+
+      <rect class="pan-dan" x="0" y="234" width="700" height="44" rx="3"/>
+      <text class="t-lab" x="12" y="254" style="fill:var(--danger);font-weight:600">THE UNCLOSEABLE GAP</text>
+      <text class="t-lab" x="12" y="270" style="font-size:9px">Twilio and SendGrid see every code. Using them means trusting them. This is precisely the gap that WebAuthn closes by never transmitting a credential.</text>
+    </svg>
+    </div>
+    <figcaption>Two operational details follow from this picture. <b>Put the code in the email body,
+      never the subject line</b>, because subjects render on lock screens without unlocking the device.
+      And have the worker check that the OTP has not already expired before spending money on a
+      delivery nobody can use.</figcaption>
+  </figure>
+
+  <div class="panel panel--defense">
+    <span class="panel-label">Worker discipline</span>
+    <ul>
+      <li><strong>Idempotency key per job.</strong> A retried job must not send a second SMS. Record
+        <code>sms_sent:{key}</code> in Redis after a successful send and skip on a hit.</li>
+      <li><strong>Distinguish permanent from transient failures.</strong> An invalid phone number must go to a
+        dead-letter queue, not a retry loop that burns budget forever.</li>
+      <li><strong>Never disable certificate validation</strong> on the outbound client. <code>verify=False</code> on the
+        Twilio call turns your OTP delivery into an interceptable channel.</li>
+      <li><strong>Connection pooling to the provider.</strong> Without it every delivery pays a fresh TCP and TLS
+        handshake, roughly 80 to 200 ms per code.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============================================ 07 -->
+<section class="part" id="s07">
+  <div class="part-head">
+    <span class="part-num">07 — Defence</span>
+    <h2>Rate limiting, five ways</h2>
+  </div>
+  <p class="lede">No single dimension is sufficient, and the reasons they fail are all different.</p>
+
+  <div class="tbl">
+    <table>
+      <thead><tr><th>Dimension</th><th>Key</th><th>Limit</th><th>Defeats</th><th>Alone, it misses</th></tr></thead>
+      <tbody>
+        <tr><td>Per IP, requests</td><td><code>rl:otp_req:ip:{hash}</code></td><td>10 / 15 min</td><td>Single-source flooding</td><td>A botnet making two requests per address</td></tr>
+        <tr><td><b>Per destination, requests</b></td><td><code>rl:otp_req:dest:{hash}</code></td><td>3 / hour</td><td><b>SMS and email bombing</b>, code rotation</td><td>Nothing much — this is the important one</td></tr>
+        <tr><td>Per user, verifications</td><td><code>rl:otp_verify:{user}</code></td><td>10 / 15 min</td><td>Guessing across several codes</td><td>Distributed guessing at many accounts</td></tr>
+        <tr><td>Per code, attempts</td><td><code>attempts</code> field</td><td>3</td><td>Guessing one code</td><td>An attacker who just requests a new code</td></tr>
+        <tr><td>Resend cooldown</td><td><code>otp_resend_cooldown:{user}</code></td><td>60 s</td><td>Rapid code rotation</td><td>Patient attackers</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="panel panel--threat">
+    <span class="panel-label">Per-destination limiting is not optional</span>
+    <p>Without it, an attacker requests thousands of codes for one victim's address. For SMS that is a
+      direct financial attack on your Twilio bill and a harassment vector. For email it is worse:
+      thousands of messages to one inbox generate spam complaints that can get <strong>your sending domain
+      blacklisted</strong>, which breaks OTP delivery for every user at once.</p>
+    <p>Note that the response when this limit trips must be the same generic 429 as every other limit.
+      Revealing which dimension was hit tells an attacker how to reshape their traffic.</p>
+  </div>
+</section>
+
+<!-- ============================================ 08 -->
+<section class="part" id="s08">
+  <div class="part-head">
+    <span class="part-num">08 — Analysis</span>
+    <h2>Brute force, quantified</h2>
+  </div>
+
+  <figure>
+    <div class="fig-scroll">
+    <svg viewBox="0 0 700 300" role="img" aria-label="Brute force feasibility under three rate limiting regimes. With no per-destination limit and ten codes per minute an attacker gets thirty guesses per minute and reaches fifty percent success in about eleven days. With only an IP limit the rate falls. With a three-codes-per-hour destination limit the attacker gets nine guesses per hour and needs about six hundred and ninety three hours, twenty-nine days, for a fifty percent chance.">
+      <text class="t-cap" x="0" y="12">a 6-digit code is 10⁶ values — the limits decide whether that is enough</text>
+      <line class="rule" x1="0" y1="20" x2="700" y2="20"/>
+
+      <rect class="pan-dan" x="0" y="34" width="700" height="62" rx="3"/>
+      <text class="t-lab" x="12" y="54" style="fill:var(--danger);font-weight:600">no per-destination limit — IP limit only</text>
+      <text class="t-lab" x="12" y="74" style="font-size:9px">10 codes/min × 3 attempts = <b>30 guesses/minute</b> = 43,200/day</text>
+      <text class="t-lab" x="380" y="74" style="font-size:9px;fill:var(--danger)">50% probability in ≈ 11.5 days</text>
+      <text class="t-lab" x="12" y="88" style="font-size:9px">impractical for a random target, entirely practical for a high-value one</text>
+
+      <rect class="pan-wrn" x="0" y="106" width="700" height="62" rx="3"/>
+      <text class="t-lab" x="12" y="126" style="fill:var(--warn);font-weight:600">per-session resend cap only</text>
+      <text class="t-lab" x="12" y="146" style="font-size:9px">10 resends × 3 attempts = 30 guesses per session</text>
+      <text class="t-lab" x="380" y="146" style="font-size:9px">P(success) per session = 30 / 10⁶ = <b>0.003%</b></text>
+      <text class="t-lab" x="12" y="160" style="font-size:9px">fine per session, but sessions are free to create</text>
+
+      <rect class="pan-saf" x="0" y="178" width="700" height="62" rx="3"/>
+      <text class="t-lab" x="12" y="198" style="fill:var(--safe);font-weight:600">3 codes per destination per hour + 3 attempts per code</text>
+      <text class="t-lab" x="12" y="218" style="font-size:9px"><b>9 guesses per hour</b> = 0.0009% per hour</text>
+      <text class="t-lab" x="380" y="218" style="font-size:9px;fill:var(--safe)">50% probability needs ≈ 693 hours (29 days)</text>
+      <text class="t-lab" x="12" y="232" style="font-size:9px">and 29 days of continuous failed attempts against one account is not a stealthy attack</text>
+
+      <line class="rule" x1="0" y1="256" x2="700" y2="256"/>
+      <text class="t-lab" x="0" y="274">Every control here is multiplicative. Drop any one of TTL, attempt cap, or destination limit and the numbers move by orders of magnitude.</text>
+      <text class="t-lab" x="0" y="290" style="font-size:9px">An 8-digit code would give 10⁸ and 0.000003% per attempt, at the cost of a materially worse typing experience. Rate limits are the cheaper lever.</text>
+    </svg>
+    </div>
+    <figcaption>The useful conclusion is not that six digits are secure — they are not, on their own.
+      It is that <b>six digits plus a five-minute life plus three attempts plus three codes an hour</b> is
+      secure, and removing any single term from that product breaks it. That is why the rate limits
+      belong in the threat model rather than in the performance section.</figcaption>
+  </figure>
+</section>
+
+<!-- ============================================ 09 -->
+<section class="part" id="s09">
+  <div class="part-head">
+    <span class="part-num">09 — Channel attacks</span>
+    <h2>SIM swap and SS7</h2>
+  </div>
+  <p class="lede">Both attacks defeat SMS OTP completely, and neither is visible from inside your
+    application. The code is delivered correctly, to whoever currently holds the number.</p>
+
+  <figure>
+    <div class="fig-scroll">
+    <svg viewBox="0 0 700 290" role="img" aria-label="Two channel-level attacks on SMS. In a SIM swap the attacker social-engineers the carrier using breached personal data to port the victim's number to a new SIM, after which OTPs arrive at the attacker. In an SS7 interception the attacker with access to signalling infrastructure requests routing information and claims to be the home router for the number, causing the carrier to route the message to them. In both cases the provider reports successful delivery.">
+      <defs>
+        <marker id="s3-ard" markerWidth="7" markerHeight="7" refX="6.4" refY="3" orient="auto">
+          <path d="M0,0 L6.4,3 L0,6 z" class="f-dan"/>
+        </marker>
+      </defs>
+      <text class="t-cap" x="0" y="12">the OTP system verifies possession of a NUMBER, not of a person</text>
+      <line class="rule" x1="0" y1="20" x2="700" y2="20"/>
+      <line class="rule" x1="348" y1="26" x2="348" y2="232"/>
+
+      <text class="t-cap" x="0" y="44" style="fill:var(--danger)">A · SIM swap — commodity attack</text>
+      <rect class="pan-dan" x="0" y="54" width="330" height="170" rx="3"/>
+      <text class="t-lab" x="10" y="74" style="font-size:9px">1 · attacker calls the carrier as the victim</text>
+      <text class="t-lab" x="10" y="92" style="font-size:9px">2 · passes identity checks using breached PII</text>
+      <text class="t-lab" x="10" y="106" style="font-size:9px">    (SSN, billing address — widely available)</text>
+      <text class="t-lab" x="10" y="124" style="font-size:9px">    <i>or simply bribes a carrier employee</i></text>
+      <text class="t-lab" x="10" y="142" style="font-size:9px">3 · number is ported to the attacker's SIM</text>
+      <text class="t-lab" x="10" y="160" style="font-size:9px">4 · attacker triggers the OTP flow</text>
+      <text class="t-lab" x="10" y="178" style="font-size:9px;fill:var(--danger)">5 · the code arrives on their handset</text>
+      <text class="t-lab" x="10" y="200" style="font-size:9px">requires: the number, some PII, a phone call</text>
+      <text class="t-lab" x="10" y="214" style="font-size:9px;fill:var(--danger)">no special capability at all</text>
+
+      <text class="t-cap" x="368" y="44" style="fill:var(--danger)">B · SS7 interception — rare, high capability</text>
+      <rect class="pan-dan" x="368" y="54" width="332" height="170" rx="3"/>
+      <text class="t-lab" x="378" y="74" style="font-size:9px">1 · attacker has access to SS7 signalling</text>
+      <text class="t-lab" x="378" y="88" style="font-size:9px">    (nation state, rogue carrier, rented node)</text>
+      <text class="t-lab" x="378" y="106" style="font-size:9px">2 · SendRoutingInfoForSM for the victim's number</text>
+      <text class="t-lab" x="378" y="124" style="font-size:9px">3 · ForwardShortMessage claiming to be the</text>
+      <text class="t-lab" x="378" y="138" style="font-size:9px">    home router for that subscriber</text>
+      <text class="t-lab" x="378" y="156" style="font-size:9px;fill:var(--danger)">4 · the carrier routes the SMS to the attacker</text>
+      <text class="t-lab" x="378" y="178" style="font-size:9px">demonstrated publicly — 2017 German bank heist</text>
+      <text class="t-lab" x="378" y="196" style="font-size:9px">modern carriers increasingly run SS7 firewalls</text>
+      <text class="t-lab" x="378" y="214" style="font-size:9px;fill:var(--danger)">undetectable from your side: Twilio reports success</text>
+
+      <line class="rule" x1="0" y1="244" x2="700" y2="244"/>
+      <rect class="pan-saf" x="0" y="254" width="700" height="36" rx="3"/>
+      <text class="t-lab" x="12" y="272" style="fill:var(--safe);font-weight:600">THE ONE CONTROL THAT ACTUALLY APPLIES: query the carrier's SIM-swap API before sending</text>
+      <text class="t-lab" x="12" y="286" style="font-size:9px">twilio.phone_numbers(n).sim_swap.fetch() → if swapped recently, refuse SMS and require another factor. ~50–100 ms and a per-call cost.</text>
+    </svg>
+    </div>
+    <figcaption>SS7 is worth understanding and not worth losing sleep over: it needs capability most
+      attackers do not have. <b>SIM swap needs a phone call and a data breach</b>, which is why it is the
+      one that actually happens. The application-side signals are a recent SIM swap, and a login
+      whose geography changes impossibly fast between password and OTP.</figcaption>
+  </figure>
+
+  <div class="tbl">
+    <table>
+      <thead><tr><th></th><th>SMS OTP</th><th>Email OTP</th></tr></thead>
+      <tbody>
+        <tr><td>Interception</td><td>SIM swap, SS7</td><td>Email account compromise</td></tr>
+        <tr><td>Delivery</td><td>2–15 s</td><td>5–120 s</td></tr>
+        <tr><td>Phishing resistance</td><td><span class="tag tag--bad">none</span></td><td><span class="tag tag--bad">none</span></td></tr>
+        <tr><td>Cost</td><td>~$0.0075 per message</td><td>~$0.001 per message</td></tr>
+        <tr><td>Third-party dependency</td><td><b>high</b> — carriers you cannot audit</td><td>low</td></tr>
+        <tr><td>Recursive risk</td><td>—</td><td><b>Email often resets the password too</b>, so it may not be a second factor at all</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="panel panel--pitfall">
+    <span class="panel-label">The email OTP circularity</span>
+    <p>If password reset goes to the same inbox that receives the OTP, then email OTP is not a second
+      factor — it is the same factor twice. An attacker with the inbox has both. This is worth
+      checking in any design review, because it is easy to add email OTP without noticing that the
+      recovery path already trusts that mailbox completely.</p>
+  </div>
+</section>
+
+<!-- ============================================ 10 -->
+<section class="part" id="s10">
+  <div class="part-head">
+    <span class="part-num">10 — The fundamental limit</span>
+    <h2>The relay attack</h2>
+  </div>
+  <p class="lede">Everything above is engineering. This is the part that engineering cannot fix.</p>
+
+  <figure>
+    <div class="fig-scroll">
+    <svg viewBox="0 0 700 320" role="img" aria-label="A real-time phishing relay. The victim enters credentials on a lookalike site, which immediately replays them to the real application. The real application sends a genuine code to the victim's phone. The victim types that code into the fake site, which relays it within seconds. The real application accepts it and issues a session, which the attacker captures while the victim sees a login failure. WebAuthn defeats this because the credential is bound to the origin.">
+      <defs>
+        <marker id="r3-ard" markerWidth="7" markerHeight="7" refX="6.4" refY="3" orient="auto">
+          <path d="M0,0 L6.4,3 L0,6 z" class="f-dan"/>
+        </marker>
+        <marker id="r3-ars" markerWidth="7" markerHeight="7" refX="6.4" refY="3" orient="auto">
+          <path d="M0,0 L6.4,3 L0,6 z" class="f-saf"/>
+        </marker>
+      </defs>
+      <text class="t-cap" x="0" y="12">every step below is a genuine, correctly-functioning OTP flow</text>
+      <line class="rule" x1="0" y1="20" x2="700" y2="20"/>
+
+      <text class="t-lab" x="50"  y="40" style="font-weight:600">victim</text>
+      <text class="t-lab" x="290" y="40" style="font-weight:600;fill:var(--danger)">evil-example.com</text>
+      <text class="t-lab" x="570" y="40" style="font-weight:600">app.example.com</text>
+      <line class="rule" x1="80"  y1="48" x2="80"  y2="240"/>
+      <line class="rule" x1="330" y1="48" x2="330" y2="240"/>
+      <line class="rule" x1="600" y1="48" x2="600" y2="240"/>
+
+      <path class="st c-dan" d="M80,68 L324,68" marker-end="url(#r3-ard)"/>
+      <text class="t-lab" x="88" y="62" style="font-size:9px">email + password, on the lookalike page</text>
+
+      <path class="st c-dan" d="M330,92 L594,92" marker-end="url(#r3-ard)"/>
+      <text class="t-lab" x="338" y="86" style="font-size:9px">relayed instantly to the real site</text>
+
+      <path class="st-dash" d="M594,116 L86,116"/>
+      <text class="t-lab" x="200" y="110" style="font-size:9px">a REAL code is sent to the victim's real phone</text>
+
+      <path class="st c-dan" d="M80,142 L324,142" marker-end="url(#r3-ard)"/>
+      <text class="t-lab" x="88" y="136" style="font-size:9px">victim reads it and types it into the fake page</text>
+
+      <path class="st c-dan" d="M330,166 L594,166" marker-end="url(#r3-ard)"/>
+      <text class="t-lab" x="338" y="160" style="font-size:9px">relayed within seconds — the code is valid for five minutes</text>
+
+      <path class="st-dash c-dan" d="M594,192 L336,192" marker-end="url(#r3-ard)"/>
+      <text class="t-lab" x="344" y="186" style="font-size:9px;fill:var(--danger)">session cookie issued — to the ATTACKER</text>
+
+      <path class="st-dash" d="M324,218 L86,218"/>
+      <text class="t-lab" x="120" y="212" style="font-size:9px">victim sees "login failed" and shrugs</text>
+
+      <line class="rule" x1="0" y1="256" x2="700" y2="256"/>
+      <rect class="pan-dan" x="0" y="266" width="330" height="50" rx="3"/>
+      <text class="t-lab" x="10" y="284" style="fill:var(--danger);font-weight:600">WHY OTP CANNOT STOP THIS</text>
+      <text class="t-lab" x="10" y="300" style="font-size:9px">The code proves possession of the channel. It says</text>
+      <text class="t-lab" x="10" y="312" style="font-size:9px">nothing about WHO you are talking to.</text>
+
+      <rect class="pan-saf" x="344" y="266" width="356" height="50" rx="3"/>
+      <text class="t-lab" x="354" y="284" style="fill:var(--safe);font-weight:600">WHY WEBAUTHN DOES</text>
+      <text class="t-lab" x="354" y="300" style="font-size:9px">The credential is bound to the ORIGIN. The browser refuses to</text>
+      <text class="t-lab" x="354" y="312" style="font-size:9px">sign a challenge for evil-example.com. There is nothing to relay.</text>
+    </svg>
+    </div>
+    <figcaption>This is the honest conclusion of the whole document. <b>SMS and email OTP are phishable
+      by construction</b>, because the user hands the entire secret to whatever page they believe they
+      are on. NIST SP 800-63B deprecates SMS for high-assurance authentication for exactly this
+      reason. OTP is still far better than no second factor for the overwhelming majority of threat
+      models — it is just not the ceiling.</figcaption>
+  </figure>
+
+  <div class="panel panel--defense">
+    <span class="panel-label">What you can do short of WebAuthn</span>
+    <ul>
+      <li><strong>Bind the partial auth session to an IP or device fingerprint</strong> and refuse verification
+        from a different one. A relay proxy has a different address than the victim's browser.</li>
+      <li><strong>Impossible-travel detection</strong> between the password step and the OTP step. The proxy's
+        geography rarely matches the victim's.</li>
+      <li><strong>Alert on OTP verification from an IP that differs from the OTP request.</strong> This is the
+        highest-signal cheap detection available for relay attacks.</li>
+      <li><strong>Shorten the TTL.</strong> It does not prevent the attack, but it shortens the window and forces
+        the attacker to be online and fast.</li>
+      <li><strong>Offer WebAuthn to users who want it</strong>, and require it for administrative accounts.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============================================ 11 -->
+<section class="part" id="s11">
+  <div class="part-head">
+    <span class="part-num">11 — Offence</span>
+    <h2>Infrastructure attacks</h2>
+  </div>
+
+  <h3>Redis compromise</h3>
+<pre><code><i># an attacker with read access to Redis runs:</i>
+LRANGE sms_queue 0 -1
+→ [{"user_id":"uuid-xyz","phone":"+1415…","<u>otp_plain":"847291</u>"}, …]
+
+<i># plaintext codes for every pending delivery, in one command.</i>
+<i># they also read partial_auth:* to get the tokens needed to submit them.</i></code></pre>
+  <p>Note the asymmetry the salt buys you. Reading the <em>OTP store</em> yields HMACs that are useless
+    without <code>users.otp_salt</code> from Postgres. Reading the <em>queue</em> yields plaintext. That is the
+    strongest argument for keeping codes out of the queue, and for putting the queue on a separate
+    Redis instance so one compromise does not give both.</p>
+  <p><strong>Detection:</strong> normal application traffic never issues <code>KEYS *</code> or
+    <code>LRANGE sms_queue 0 -1</code>. Those commands appearing at all is the signal, and unusual egress from
+    the Redis host is the confirmation.</p>
+
+  <h3>Destination enumeration through the masked display</h3>
+<pre><code>attacker has the victim's password from a breach
+→ logs in, sees: "Sending code to +1 (***) ***-5678"
+→ confirms: MFA is enabled · the channel is SMS
+→ confirms: the candidate number they already had is the registered one
+
+<i># the attacker learns this WITHOUT completing MFA and without any failed OTP.</i></code></pre>
+  <p>The trade is real. Showing the mask helps a legitimate user confirm they are about to check the
+    right device. Hiding it entirely — "a code has been sent to your registered phone" — removes the
+    confirmation. For high-assurance systems, show the channel and nothing else. <strong>Either way, alert
+    on password success followed by MFA abandonment</strong>, which is the probing signature.</p>
+
+  <h3>Concurrent verification race</h3>
+<pre><code><u># both threads read attempts=0, both match, both create a session</u>
+otp_data = redis.hgetall(key)
+if hmac(submitted) == otp_data["otp_hash"]:
+    redis.delete(key)
+    create_session()
+
+<s># fix: consume the record atomically first (section 4), then compare</s></code></pre>
+  <p>Severity is low — the attacker ends up with two sessions instead of one — but the detection is
+    valuable: <strong>two successful verifications against one partial auth token is impossible</strong> in a
+    correct implementation, so the event is unambiguous.</p>
+</section>
+
+<!-- ============================================ 12 -->
+<section class="part" id="s12">
+  <div class="part-head">
+    <span class="part-num">12 — Failure modes</span>
+    <h2>Failure modes</h2>
+  </div>
+
+  <div class="duo">
+    <div class="panel panel--threat">
+      <span class="panel-label">The delivery death spiral</span>
+      <p>Twilio degrades. Delivery slows. Codes expire before arriving. Users press resend. Queue
+        depth grows, which slows delivery further, which expires more codes. <strong>The retry behaviour of
+        confused users is the amplifier.</strong></p>
+      <p><strong>Break it:</strong> alert on queue depth at 100 and page at 1,000; have the worker drop jobs whose
+        OTP has already expired rather than paying to deliver them; and surface honest status in the
+        UI rather than an unconditional "code sent".</p>
+    </div>
+    <div class="panel panel--threat">
+      <span class="panel-label">Provider credential compromise</span>
+      <p>A leaked Twilio auth token lets an attacker send arbitrary SMS <em>from your number</em>, which is a
+        phishing capability with your brand attached, read historical message logs, and exhaust your
+        budget so real codes stop being delivered.</p>
+      <p><strong>Use scoped, revocable API keys rather than the master auth token</strong>, keep them in a secrets
+        manager, and configure billing and volume alerts as a compromise detector.</p>
+    </div>
+  </div>
+
+  <div class="tbl">
+    <table>
+      <thead><tr><th>Misconfiguration</th><th>Impact</th><th>Fix</th></tr></thead>
+      <tbody>
+        <tr><td>OTP stored in plaintext</td><td>A Redis read compromises every live code</td><td>HMAC-SHA256 with a per-user salt</td></tr>
+        <tr><td>No attempt cap per code</td><td>Brute force becomes feasible</td><td>3 attempts, then lock the code</td></tr>
+        <tr><td>No per-destination limit</td><td>Bombing, domain blacklisting, code rotation</td><td>3 per destination per hour</td></tr>
+        <tr><td><code>==</code> instead of constant-time compare</td><td>Timing oracle on the hash</td><td><code>hmac.compare_digest</code></td></tr>
+        <tr><td>Integer type for the code</td><td>Leading zeros lost; 10× smaller search space</td><td>String, zero-padded, regex-validated</td></tr>
+        <tr><td>PRNG instead of CSPRNG</td><td>Codes become predictable</td><td><code>secrets.randbelow</code> / <code>crypto.randomInt</code></td></tr>
+        <tr><td>No supersession</td><td>Several valid codes at once</td><td>Invalidate the previous code atomically</td></tr>
+        <tr><td>Partial auth with no expiry</td><td>Unlimited time to guess</td><td>15–20 minute TTL</td></tr>
+        <tr><td>TLS verification off on outbound</td><td>Interceptable delivery</td><td>Never disable certificate validation</td></tr>
+        <tr><td>Code in the email subject</td><td>Readable on a locked screen</td><td>Body only; subject says "Your verification code"</td></tr>
+        <tr><td>Partial auth token in <code>localStorage</code></td><td>XSS steals a half-finished login</td><td>Memory or HttpOnly cookie</td></tr>
+        <tr><td>Provider credentials in env vars</td><td>Visible via <code>docker inspect</code> and the process list</td><td>Secrets manager, fetched at startup</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ============================================ 13 -->
+<section class="part" id="s13">
+  <div class="part-head">
+    <span class="part-num">13 — Operations</span>
+    <h2>Observability and drills</h2>
+  </div>
+
+<pre><code>{ "event": "otp.verify.attempt",
+  "user_id": "uuid-xyz", "channel": "sms",
+  "<b>destination_hash</b>": "sha256:a1b2…",   <i># never the phone or email itself</i>
+  "destination_masked": "+1 (***) ***-5678",
+  "ip_hash": "sha256:d4e5…", "ip_geo": "US-CA",
+  "result": "wrong_code", "attempt_number": 2,
+  "<b>otp_age_seconds</b>": 12 }                 <i># how stale the code was when used</i></code></pre>
+
+  <div class="panel panel--pitfall">
+    <span class="panel-label">Never in logs</span>
+    <p>The code itself — it is a credential for five minutes. Full phone numbers or email addresses in
+      high-volume logs. Partial auth token values. Full IP addresses, which are PII in several
+      jurisdictions. Provider API keys. <strong>The masked destination is fine to log</strong> and is usually
+      enough for support to work with.</p>
+  </div>
+
+  <div class="tbl">
+    <table>
+      <thead><tr><th>Condition</th><th>Severity</th><th>What it means</th></tr></thead>
+      <tbody>
+        <tr><td>Request-fail-request-fail cycle, &gt;3 in 10 min</td><td><span class="tag tag--bad">high</span></td><td>Active brute force against one account</td></tr>
+        <tr><td>SIM swap API reports a recent swap</td><td><span class="tag tag--bad">high</span></td><td>Refuse SMS, require another factor</td></tr>
+        <tr><td>Verify from a different IP than the request</td><td><span class="tag tag--mid">medium</span></td><td><b>Relay attack candidate</b></td></tr>
+        <tr><td>One IP tripping limits across &gt;100 users</td><td><span class="tag tag--bad">critical</span></td><td>Distributed credential stuffing</td></tr>
+        <tr><td>SMS delivery failure rate &gt; 5%</td><td><span class="tag tag--bad">high</span></td><td>Provider or carrier degradation</td></tr>
+        <tr><td>Queue depth &gt; 1,000</td><td><span class="tag tag--bad">high</span></td><td>Worker down, or the death spiral has started</td></tr>
+        <tr><td>Two successful verifications, one token</td><td><span class="tag tag--bad">high</span></td><td>The atomic consume is broken</td></tr>
+        <tr><td><code>otp_age_at_verification</code> &gt; 240 s</td><td><span class="tag tag--mid">low</span></td><td>Codes arriving slowly; raise the TTL or investigate</td></tr>
+        <tr><td>One failed verification</td><td><span class="tag tag--neu">no alert</span></td><td>Someone mistyped a digit</td></tr>
+        <tr><td>Code expires unused</td><td><span class="tag tag--neu">no alert</span></td><td>Ordinary abandonment</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Scaling, where it actually binds</h3>
+  <div class="defs">
+    <div><span class="dt">Not Redis</span><span class="dd">100,000 concurrent logins is 100,000 SETEX and HGETALL operations, which one node handles comfortably. Redis is not the constraint.</span></div>
+    <div><span class="dt">The SMS channel is</span><span class="dd">A single Twilio long code sends about <b>1 SMS per second</b>. 100,000 codes would take over a day. Messaging Services pool numbers; short codes reach ~100/second. Realistically a burst of 100,000 takes 10–30 minutes, which is why request rate limiting also protects you from yourself.</span></div>
+    <div><span class="dt">Email is not</span><span class="dd">SES handles millions per day after warm-up. Email OTP rarely bottlenecks on throughput.</span></div>
+    <div><span class="dt">Hot rate-limit keys</span><span class="dd">A single popular destination — a shared test number, for instance — can take thousands of INCRs per second. Correct, because INCR is atomic, but worth knowing when you see one key dominating.</span></div>
+  </div>
+
+  <h3>Drills</h3>
+  <ol>
+    <li><strong>Submit an integer.</strong> Send <code>{"otp": 7291}</code> against a code of <code>007291</code>. If it succeeds you
+      have found a ten-fold reduction in your search space.</li>
+    <li><strong>Race the verifier.</strong> Fire two correct submissions simultaneously and count the sessions
+      created. Then implement the Lua consume and re-run.</li>
+    <li><strong>Rotate codes.</strong> Request, fail three times, request again, repeat. Measure how many guesses
+      per hour you actually get, and compare it against section 8.</li>
+    <li><strong>Bomb yourself.</strong> Request 100 codes for one address from 100 different addresses. If they
+      all deliver, your per-destination limit is missing.</li>
+    <li><strong>Read the queue.</strong> From a host that can reach Redis, run <code>LRANGE sms_queue 0 -1</code>. Whatever
+      you can see there is what an attacker with lateral movement sees.</li>
+    <li><strong>Build the relay.</strong> Stand up a proxy that forwards login and OTP to your staging
+      environment in real time, and confirm it succeeds. Then add the IP-mismatch alert and confirm
+      it fires.</li>
+    <li><strong>Kill the provider.</strong> Block outbound access to Twilio and watch what the user sees. If it
+      still says "code sent" with no further signal, fix that.</li>
+    <li><strong>Check the circularity.</strong> If email OTP is offered, verify whether password reset goes to the
+      same mailbox. If it does, it is not a second factor.</li>
+  </ol>
+</section>
+
+</main>
+</div>
+
+<footer class="colophon">
+  <p><strong>How to use this.</strong> Sections 1 to 7 are the implementation, and every detail in them exists
+    to make section 8's arithmetic come out favourably. Sections 9 and 10 are the attacks that the
+    implementation cannot reach. Sections 11 to 13 are infrastructure and operations.</p>
+  <p><strong>The one idea to keep.</strong> An OTP proves that someone currently controls a delivery channel. It
+    does not prove who they are, and it does not prove who they are talking to. Every limitation in
+    this document — SIM swap, SS7, relay phishing — is a restatement of that single sentence. <b>Build
+    it as well as it can be built, and know what it is still not doing.</b></p>
+</footer>
+</div>
