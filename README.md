@@ -158,6 +158,10 @@ The `study material/` directory holds domain-specific deep dives.
 - 🛡️ [cybersecurity_foundations_plus.md](file:///D:/Code_stuff/cybersec_studies/study%20material/cybersecurity_foundations_plus.md) - SDLC, Detection, Identity.
 - 🔀 [git_github_study_material.md](file:///D:/Code_stuff/cybersec_studies/study%20material/git_github_study_material.md) - Git internals, GitHub platform security, secrets in history, supply chain.
 - 🖼️ [git_github_field_manual.html](file:///D:/Code_stuff/cybersec_studies/study%20material/git_github_field_manual.html) - The same material as an **illustrated** guide with 14 diagrams. Open in a browser.
+- 🕸️ [web_security_attacks_complete_guide.md](file:///D:/Code_stuff/cybersec_studies/study%20material/web_security_attacks_complete_guide.md) - **52 web attacks & vulns** in depth (injection, XSS, CSRF/SSRF, access control, auth/JWT/OAuth, deserialization, crypto, request smuggling, supply chain, GraphQL) with code, examples, OWASP Top 10 mapping & external links.
+- 📱 [mobile_security_attacks_complete_guide.md](file:///D:/Code_stuff/cybersec_studies/study%20material/mobile_security_attacks_complete_guide.md) - **30 mobile attacks & vulns** for Android + iOS (insecure storage, TLS/pinning bypass, reverse engineering/Frida, IPC/WebView, biometrics, supply chain) with code, OWASP Mobile Top 10 (2024) & MASVS/MASTG mapping and external links.
+- 🎯 [threat_modeling_complete_guide.md](file:///D:/Code_stuff/cybersec_studies/study%20material/threat_modeling_complete_guide.md) - **End-to-end threat modeling**: the 4 questions, DFDs & trust boundaries, STRIDE/PASTA/LINDDUN/attack trees/DREAD/ATT&CK, worked examples (web, cloud, mobile), SDLC/DevSecOps & tooling, with external links.
+- 🤖 [ai_security_attacks_complete_guide.md](file:///D:/Code_stuff/cybersec_studies/study%20material/ai_security_attacks_complete_guide.md) - **34 AI/ML attacks & vulns**: adversarial examples, poisoning/backdoors, model extraction/inversion/membership, prompt injection (direct & indirect), jailbreaks, RAG & agent/tool abuse, excessive agency, model supply chain, with code, OWASP LLM/ML Top 10 + MITRE ATLAS + NIST mapping and external links.
 - 🃏 [FLASHCARDS_QUICK_REF.md](file:///D:/Code_stuff/cybersec_studies/study%20material/FLASHCARDS_QUICK_REF.md) - High-yield concepts for interviews.
 - 🛠️ [TOOLS_CHEAT_SHEET.md](file:///D:/Code_stuff/cybersec_studies/study%20material/TOOLS_CHEAT_SHEET.md) - 50+ infosec tools & commands.
 - 🔗 [RESOURCE_LIBRARY.md](file:///D:/Code_stuff/cybersec_studies/study%20material/RESOURCE_LIBRARY.md) - External links and reading.
@@ -204,7 +208,7 @@ Ensure you have a working environment before starting:
 
 | Category | File Count | Main Focus |
 |----------|------------|------------|
-| **Study Material** | 10 | Core security domains, cheat sheets, flashcards |
+| **Study Material** | 14 | Core security domains, web/mobile/AI attack & threat-modeling guides, cheat sheets, flashcards |
 | **System Breakdowns** | ~70 | Real-world architectures, API, AI, Cloud, Auth |
 | **Prep Helpers** | 17 | Roadmaps, financial planning, templates, OMSCS |
 | **Total Ecosystem** | **~100 Files** | **Zero-to-Hero Advanced Security Mastery** |
