@@ -63,7 +63,19 @@ cybersec_studies/
 │   ├── appsec_study_material.md
 │   ├── cloudsec_study_material.md
 │   ├── ml_security_study_material.md
-│   ├── ... (9 core domain guides)
+│   ├── ... (14 core domain & attack guides)
+│   │
+│   ├── tools/                             ← 🧰 Pentesting Tools Arsenal (phase-ordered)
+│   │   ├── 00-start-here/                 ←    Master Guide + Concepts Handbook (READ FIRST)
+│   │   ├── 01-foundation-proxies/         ←    Burp Suite, OWASP ZAP
+│   │   ├── 02-recon/                      ←    Nmap, Amass/httpx, Sublist3r, LinkFinder
+│   │   ├── 03-content-discovery/          ←    Feroxbuster, ffuf, CeWL
+│   │   ├── 04-scanning/                   ←    Nikto, Nuclei, WPScan
+│   │   ├── 05-exploitation/               ←    sqlmap, Dalfox, Commix, jwt_tool
+│   │   ├── 06-credential-attacks/         ←    Hashcat, Hydra
+│   │   └── 07-framework-post-exploitation/ ←   Metasploit
+│   │
+│   ├── grc/                               ← Governance, Risk & Compliance (19 modules)
 │   │
 │   └── system breakdowns/                 ← 🚀 The Architecture Vault (70+ Files)
 │       ├── ADVERSARIAL MACHINE LEARNING/
@@ -166,6 +178,12 @@ The `study material/` directory holds domain-specific deep dives.
 - 🛠️ [TOOLS_CHEAT_SHEET.md](file:///D:/Code_stuff/cybersec_studies/study%20material/TOOLS_CHEAT_SHEET.md) - 50+ infosec tools & commands.
 - 🔗 [RESOURCE_LIBRARY.md](file:///D:/Code_stuff/cybersec_studies/study%20material/RESOURCE_LIBRARY.md) - External links and reading.
 
+**Sub-collections inside `study material/`:**
+
+> 🧰 **Pentesting Tools Arsenal:** [tools/README.md](file:///D:/Code_stuff/cybersec_studies/study%20material/tools/README.md) - 18 tool deep-dives (Beginner → Advanced) + 2 capstone guides, organized into **phase-ordered folders** (`00-start-here` → `07-framework-post-exploitation`) that follow the real engagement flow: proxies → recon → discovery → scanning → exploitation → credentials → post-ex. **Read `00-start-here/` first.**
+
+> 📋 **Governance, Risk & Compliance:** [grc/README.md](file:///D:/Code_stuff/cybersec_studies/study%20material/grc/README.md) - A 19-module study guide on enterprise IT governance, SOX/ITGC, audit lifecycle, and the security-engineering reframing of every control area.
+
 ---
 
 ### 3. System Architecture & Breakdowns
@@ -209,9 +227,11 @@ Ensure you have a working environment before starting:
 | Category | File Count | Main Focus |
 |----------|------------|------------|
 | **Study Material** | 14 | Core security domains, web/mobile/AI attack & threat-modeling guides, cheat sheets, flashcards |
+| **Tools Arsenal** | 20 | Phase-ordered pentesting tool references + 2 capstone guides |
+| **GRC Modules** | 19 | Enterprise IT governance, SOX/ITGC, audit lifecycle |
 | **System Breakdowns** | ~70 | Real-world architectures, API, AI, Cloud, Auth |
 | **Prep Helpers** | 17 | Roadmaps, financial planning, templates, OMSCS |
-| **Total Ecosystem** | **~100 Files** | **Zero-to-Hero Advanced Security Mastery** |
+| **Total Ecosystem** | **~140 Files** | **Zero-to-Hero Advanced Security Mastery** |
 
 ---
 
